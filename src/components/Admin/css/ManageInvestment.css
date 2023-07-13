@@ -1,0 +1,29 @@
+.manage-investment-page{
+    width:100%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Calibri;
+}
+.manage-investment-card{
+    width: 80%;
+    height: 95%;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px; 
+    overflow: hidden;
+}
+.manage-investment-heading p{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* media query */
+@media screen and (max-width: 576px) { 
+    .manage-investment-card{
+        width: 90%;
+    }
+}

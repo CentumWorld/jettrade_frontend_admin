@@ -1,0 +1,31 @@
+.refferral-dashboard{
+    width:100%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.refferal-dashboard-card{
+    width: 80%;
+    height: 95%;
+    background: #fff;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px; 
+    overflow: scroll;
+}
+.refferal-profile-verification-heading h5{
+    font-weight: 600;
+    color: blueviolet;
+}
+
+
+@media only screen and (max-width: 768px){
+    .refferal-dashboard-card{
+        width: 100%;
+    }    
+}
+
+
+

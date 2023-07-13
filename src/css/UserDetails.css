@@ -1,0 +1,76 @@
+.user_details{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+ 
+}
+
+.user_card{
+    width: 80%;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 15px;
+   
+}
+.user_main_heading p{
+    font-size: 20px;
+    font-weight: 700;
+}
+.user_main_heading_paragraph p{
+    font-size: 16px;
+    color:rgb(134, 133, 133)
+}
+.user_head{
+    color: rgb(197, 195, 195);
+}
+.row_content{
+    display: flex;
+    justify-content: space-between;
+}
+.user_head_data{
+    display: flex;
+    justify-content: space-between;
+}
+.user_head_data h6{
+    margin-right: 2px;
+}
+.user_profile{
+    display: flex;
+    justify-content: center;
+}
+.pic img{
+    border-radius: 50%;
+}
+.upload_file button{
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .user_deatails_main_div {
+        position: relative;
+
+    }
+    .user_profile{
+        position: absolute;
+
+    }
+    .user_profile img{
+        width: 100px;
+        height: 100px;
+    }
+    .user_details_content{
+        position: absolute;
+        margin-top: 60%;
+    }
+    .user_card{
+        overflow:scroll;
+    }
+}
