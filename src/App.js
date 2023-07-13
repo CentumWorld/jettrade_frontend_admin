@@ -45,6 +45,7 @@ import FirstChartPage from './components/Admin/AdminSideBarPages/FirstChartPage'
 import DisplayCard from './components/Admin/AdminSideBarPages/DisplayCard';
 import Withdrawal from '../src/components/Admin/AdminSideBarPages/withdrawal';
 
+import Uservideo from './components/uservideo/Uservideo';
 
 
 
@@ -122,6 +123,8 @@ function App() {
               <Route path='refferal' element={<Refferal/>} /> 
               <Route path='createuser' element={<CreateUserInAdmin/>} />
               <Route path='withdrawal' element={<Withdrawal/>} />
+              <Route path='video' element={<Uservideo/>}/>
+
               <Route path='manage/push-notification' element={<ManageNotification/>} />
               <Route path='manage/subscription' element={<ManageSubscription/>} />
               <Route path='manage/investment' element={<ManageInvestment/>} />

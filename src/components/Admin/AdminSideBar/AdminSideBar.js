@@ -1,7 +1,7 @@
 import React,{useState} from "react"
 import { motion } from "framer-motion"
 import '../AdminSideBar/AdminSideBar.css'
-import { MdDashboard, MdSend } from 'react-icons/md';
+import { MdDashboard, MdSend, MdCloudUpload } from 'react-icons/md';
 import { BsFillChatTextFill } from 'react-icons/bs'
 import { FaMoneyBillWaveAlt, FaBars, FaCarrot, FaUserPlus, FaBullseye,FaSlideshare,FaUserTie,FaThemeco } from 'react-icons/fa'
 import {SiManageiq} from 'react-icons/si'
@@ -168,6 +168,11 @@ const routes = [
     //     name: "Promocode",
     //     icon: <TfiGift />,
     // },
+    {
+        path:'/admindashboard/video',
+        name:"upload videos",
+        icon:<MdCloudUpload />
+    }
 
 ]
 
