@@ -6,14 +6,14 @@
     justify-content: center;
 }
 .admin-dashboard-card{
-    width: 80%;
-    height: 95%;
+    width: 95%;
+    height: 100%;
     background: #fff;
     align-items: center;
     justify-content: center;
     padding: 15px;
     border-radius: 15px; 
-    overflow: hidden;
+    overflow:scroll;
 }
 .user-table{
     overflow: hidden;

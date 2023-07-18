@@ -639,7 +639,7 @@ function Dashboard() {
                         size="large"
                         onSearch={searchUser}
                     />
-                    <div className='user-table'>
+                    <div className='user-table' style={{ marginTop: "64px", height: "calc(100vh - 64px)", overflow: "auto" }}>
                         <Table
                             dataSource={filteredDataSource}
                             // dataSource={data}

@@ -3,7 +3,6 @@ import '../css/Home.css'
 import { NavLink } from 'react-router-dom';
 import ForexTricker from './ForexTricker';
 
-
 function Home() {
     return (
         <>
@@ -11,6 +10,7 @@ function Home() {
 
                 <div className='home_heading1'>
                     {/* <MoveStuffAround/> */}
+                   
                     <div className='forex-ticker d-block'>
 
                         <p>ETHUSDT see forex chart <NavLink to={'/chart'} target="_blank">View</NavLink></p>

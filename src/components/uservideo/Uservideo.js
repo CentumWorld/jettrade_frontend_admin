@@ -10,14 +10,26 @@ const Uservideo = () => {
     setVideoTitle(event.target.value);
   };
 
-  const handleUpload = (e) => {
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    
     const formdata=new FormData();
     formdata.append("title",videoTitle);
     for(var i=0;i<upload.length;i++){
       formdata.append("videoOne",upload[i]);
     }
-    axios.post("/admin/createvideo",formdata)
+    try {
+      await axios.post('/admin/createvideo', formdata, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+        },
+      });
+      alert('Video uploaded successfully!');
+    } catch (error) {
+      alert('Failed to upload video!');
+    }
   };
+
 
   return (
     <div
