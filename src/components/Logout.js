@@ -1,6 +1,9 @@
 import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../App';
+import baseUrl from '../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 function Logout() {
     const { state, dispatch } = useContext(UserContext);
@@ -8,7 +11,7 @@ function Logout() {
     console.log("Badal")
 
     useEffect(() => {
-        fetch("/admin/logout", {
+        fetch(`${apiurl}`+"/admin/logout", {
             method: "GET",
             headers: {
                 Accept: "application/json",

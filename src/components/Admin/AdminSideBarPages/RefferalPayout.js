@@ -3,6 +3,9 @@ import '../css/RefferalPayout.css'
 import axios from 'axios';
 import { Table, Button, Modal, message, Tabs } from 'antd';
 import moment from 'moment';
+import baseUrl from '../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 const RefferalPayout = () => {
@@ -24,7 +27,7 @@ const RefferalPayout = () => {
       headers: { 'Authorization': `Bearer ${token}` }
     }
 
-    axios.get('/admin/fetch-refferal-payout-withdrawal-request', config)
+    axios.get(`${apiurl}`+'/admin/fetch-refferal-payout-withdrawal-request', config)
       .then((res) => {
         setReferralsDetails(res.data.result)
       })

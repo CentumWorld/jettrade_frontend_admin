@@ -8,7 +8,9 @@ import { MailOutlined, FlagOutlined, CalendarOutlined } from '@ant-design/icons'
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
+import baseUrl from '../../../baseUrl';
 
+const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 
 const CreateUserInAdmin = () => {
@@ -141,7 +143,7 @@ const CreateUserInAdmin = () => {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             }
         }
-        axios.post('/admin/user-registration-by-admin', formData,config)
+        axios.post(`${apiurl}`+"/admin/user-registration-by-admin", formData,config)
             .then((res) => {
                 setLoading(false);
                 message.success('Registration successful');

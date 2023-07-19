@@ -7,7 +7,10 @@ import aadharImage from '../../../img/aadhar.jpg';
 import aadharBackImage from '../../../img/Aadhaar-back.jpg'
 import panImage from '../../../img/pan.jpg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import baseUrl from '../../../baseUrl';
 
+
+const apiurl =  baseUrl.apiUrl
 const { Option } = Select;
 const { Search } = Input;
 
@@ -178,7 +181,7 @@ const Refferal = () => {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             },
         };
-        axios.post('/admin/verify-member', data, config)
+        axios.post(`${apiurl}`+"/admin/verify-member", data, config)
             .then((res) => {
                 message.success('Verify Successfully');
                 callApiRefferalDetails();
@@ -202,7 +205,7 @@ const Refferal = () => {
             },
         };
 
-        axios.post('/admin/fetch-particular-member-details', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
             .then((res) => {
                 console.log(res.data.result._id)
 
@@ -237,7 +240,7 @@ const Refferal = () => {
             },
         };
 
-        axios.post('/admin/fetch-particular-member-details', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
             .then((res) => {
 
                 console.log(res.data.result.length)
@@ -268,7 +271,7 @@ const Refferal = () => {
             },
         };
         try {
-            const response = await axios.get('/admin/fetch-member-details', config);
+            const response = await axios.get(`${apiurl}`+"/admin/fetch-member-details", config);
             setRefferalData(response.data.result);
             console.log(response);
             //setLength(response.data.result.length);
@@ -320,7 +323,7 @@ const Refferal = () => {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             }
         }
-        axios.post('/admin/fetch-particular-member-details', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
             .then((result) => {
                 setUserType(result.data.result.userType);
                 console.log(result.data.result);
@@ -412,7 +415,7 @@ const Refferal = () => {
                     Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
                 }
             }
-            axios.post('/admin/member-details-edit-admin', data, config)
+            axios.post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
                 .then((res) => {
                     message.success('Updated Successfully');
                     setIsEditModalVisible(false);
@@ -441,7 +444,7 @@ const Refferal = () => {
                     Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
                 }
             }
-            axios.post('/admin/member-details-edit-admin', data, config)
+            axios.post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
                 .then((res) => {
                     message.success('Updated Successfully');
                     setIsEditModalVisible(false);
@@ -476,7 +479,7 @@ const Refferal = () => {
                     id: id,
                     block: !isBlocked
                 }
-                axios.post('/admin/block-member', data, config)
+                axios.post(`${apiurl}`+"/admin/block-member", data, config)
                     .then((res) => {
                         message.success(res.data.message)
                         callApiRefferalDetails();

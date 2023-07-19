@@ -9,7 +9,9 @@ import aadharBackImage from '../../../img/Aadhaar-back.jpg'
 import panImage from '../../../img/pan.jpg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { NavLink, useNavigate } from 'react-router-dom';
+import baseUrl from '../../../baseUrl';
 
+const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 const { Search } = Input;
 
@@ -85,7 +87,7 @@ function Dashboard() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/admin/fetch-user-details');
+            const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details");
 
             setData(response.data.result);
             //console.log(typeof(response.data.result[0].phone));
@@ -108,7 +110,7 @@ function Dashboard() {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             },
         };
-        axios.post('/admin/verify-user', data, config)
+        axios.post(`${apiurl}`+"/admin/verify-user", data, config)
             .then((res) => {
                 toast.success('User Verify Successfully', {
                     autoClose: 2000,
@@ -134,7 +136,7 @@ function Dashboard() {
             },
         };
 
-        axios.post('/admin/fetch-particular-user-details', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
             .then((res) => {
                 console.log(res.data)
                 setAadhar(res.data.result.aadhar);
@@ -261,7 +263,7 @@ function Dashboard() {
             },
         };
 
-        axios.post('/admin/fetch-user-document-adminside', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-user-document-adminside", data, config)
             .then((res) => {
 
                 //console.log(res.data.result)
@@ -324,7 +326,7 @@ function Dashboard() {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             }
         }
-        axios.post('/admin/fetch-particular-user-details', data, config)
+        axios.post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
             .then((result) => {
                 console.log(result.data.result,'327');
                 setUserType(result.data.result.userType);
@@ -416,7 +418,7 @@ function Dashboard() {
                     Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
                 }
             }
-            axios.post('/admin/user-details-edit-admin', data, config)
+            axios.post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
                 .then((res) => {
                     message.success('Updated Successfully');
                     setIsEditModalVisible(false);
@@ -444,7 +446,7 @@ function Dashboard() {
                     Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
                 }
             }
-            axios.post('/admin/user-details-edit-admin', data, config)
+            axios.post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
                 .then((res) => {
                     message.success('Updated Successfully');
                     setIsEditModalVisible(false);
@@ -485,7 +487,7 @@ function Dashboard() {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             }
         }
-        axios.post('/admin/delete-user-admin', data, config)
+        axios.post(`${apiurl}`+"/admin/delete-user-admin", data, config)
             .then((res) => {
                 fetchData();
                 message.success('Deleted Successfully');
@@ -514,7 +516,7 @@ function Dashboard() {
                     id: id,
                     block: !isBlocked
                 }
-                axios.post('/admin/block-user', data, config)
+                axios.post(`${apiurl}`+"/admin/block-user", data, config)
                     .then((res) => {
                         message.success(res.data.message)
                         fetchData();

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { AiOutlineSend } from 'react-icons/ai'
 import { BiArrowBack } from 'react-icons/bi'
-import axios from 'axios'
+import axios from 'axios';
+import baseUrl from '../../../baseUrl'
+
+const apiurl = baseUrl.apiUrl
 
 const Chat = ({ socket ,username, room, sendDataToParent }) => {
 
@@ -73,7 +76,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
           };
-        axios.post('/admin/fetch-chat-message-admin',data,config)
+        axios.post(`${apiurl}`+'/admin/fetch-chat-message-admin',data,config)
         .then((result)=>{
             console.log(result.data.adminChatMessage)
             //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -96,7 +99,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/admin/user-online-or-not',data1,config)
+        axios.post(`${apiurl}`+'/admin/user-online-or-not',data1,config)
         .then((res)=>{
             setUserOnline(res.data.isOnline)
         })

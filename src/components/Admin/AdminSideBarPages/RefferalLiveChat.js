@@ -5,10 +5,11 @@ import '../css/LiveChat.css'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import axios from 'axios';
 import chatIcon from '../../../img/user_profile.png'
-import { AiOutlineBell } from 'react-icons/ai'
+import { AiOutlineBell } from 'react-icons/ai';
+import baseUrl from '../../../baseUrl';
 
-
-const socket = io.connect('http://localhost:4000');
+const apiurl = baseUrl.apiUrl
+const socket = io.connect('http://103.149.68.19:8081');
 
 const LiveChat = () => {
 
@@ -53,7 +54,7 @@ const LiveChat = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/admin/fetch-refferal-chat-count', config)
+        axios.get(`${apiurl}`+'/admin/fetch-refferal-chat-count', config)
             .then((result) => {
 
                 setChatUser(result.data.result);

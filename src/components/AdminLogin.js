@@ -8,6 +8,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Input, message } from 'antd';
 import { UserOutlined,UnlockOutlined } from '@ant-design/icons';
+import baseUrl from '../baseUrl'
+
+const apiurl = baseUrl.apiUrl
 function AdminLogin(props) {
     const { state, dispatch } = useContext(UserContext);
     let navigate = useNavigate()
@@ -26,7 +29,7 @@ function AdminLogin(props) {
 
     const adminLogin = (e) => {
         e.preventDefault();
-        Axios.post("/admin/login", {
+        Axios.post(`${apiurl}`+"/admin/login", {
             admin_id: admin.admin_id,
             password: admin.admin_password
         })

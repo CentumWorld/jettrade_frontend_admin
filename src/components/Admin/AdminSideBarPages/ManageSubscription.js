@@ -4,6 +4,9 @@ import axios from 'axios';
 import { Table, Modal, Row, Col, Menu, Dropdown, message } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import baseUrl from '../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 const ManageSubscription = () => {
   const [data, setData] = useState([]);
@@ -20,7 +23,7 @@ const ManageSubscription = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('/admin/fetch-user-details');
+      const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details");
       setData(response.data.result);
       console.log(response.data.result);
       // setFilteredDataSource(response.data.result);
@@ -42,7 +45,7 @@ const ManageSubscription = () => {
         Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
       },
     };
-    axios.post('/admin/verify-user', data, config)
+    axios.post(`${apiurl}`+"/admin/verify-user", data, config)
       .then((res) => {
         toast.success('User Verify Successfully', {
           autoClose: 2000,
@@ -172,7 +175,7 @@ const ManageSubscription = () => {
           id: id,
           block: !isBlocked
         }
-        axios.post('/admin/block-user', data, config)
+        axios.post(`${apiurl}`+"/admin/block-user", data, config)
           .then((res) => {
             message.success(res.data.message)
             fetchData();

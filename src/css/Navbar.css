@@ -1,4 +1,15 @@
+/* .container-fluid  {
+    width: 100%;
+    border: 1px solid black;
+} */
+
+.navbar-brand{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 .navbar-brand h3 {
+
     color: rgb(54, 8, 54);
     font-weight: bold;
    
