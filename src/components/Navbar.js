@@ -6,7 +6,7 @@ import UserRegistration from './UserRegistration';
 import AdminLogin from './AdminLogin';
 import UserLogin from './UserLogin';
 import Button from 'react-bootstrap/Button';
-import logo from './../img/logo.png';
+import logo from './../img/logo1.png';
 
 
 function Navbar() {
@@ -64,7 +64,7 @@ function Navbar() {
         <>
             <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                <div className="navbar-brand"><h3>JETTRADE FX <span><img src={logo} alt="" style={{width:'100px', height:'80px', marginLeft:"530px"}} /></span></h3>
+                <div className="navbar-brand"><h3>JETTRADE FX <span><img src={logo} alt="" style={{width:'100px', height:'35px', marginLeft:"530px"}} /></span></h3>
                     </div>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
