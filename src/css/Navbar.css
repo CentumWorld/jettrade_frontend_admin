@@ -7,11 +7,13 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin:0 auto;
 }
 .navbar-brand h3 {
 
     color: rgb(54, 8, 54);
     font-weight: bold;
+    margin-left: .5rem;
    
 }
 .navbar{
