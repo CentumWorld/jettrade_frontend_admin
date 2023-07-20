@@ -3,10 +3,6 @@
     border: 1px solid black;
 } */
 
-.navbar{
-    padding: 1rem;
-}
-
 .navbar-brand{
     width: 100%;
     display: flex;
@@ -40,13 +36,3 @@ form label {
 .navbar-box {
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
-.btn{
-    margin-right: .5rem;
-}
-
-@media only screen and (max-width: 365px) {
-    img{
-        display: none;
-    }
-  }
