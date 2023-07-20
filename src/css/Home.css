@@ -3,7 +3,7 @@
     padding: 0;
 }
 .home_container{
-    height: 93vh;
+    height: calc(100vh - 10vh);
     display: flex;
     background-image:-webkit-linear-gradient(purple,black);
     justify-content: center;
@@ -17,7 +17,7 @@
     left: 0;
     top: 0;
     width: 100vw;
-    height: 93vh;
+    height: calc(100vh - 10vh);
     opacity: 0.6;
     background-image:url("/src/img/pip7.jpg");
     background-repeat: no-repeat;
