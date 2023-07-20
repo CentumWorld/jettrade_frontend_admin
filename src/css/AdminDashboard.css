@@ -7,9 +7,9 @@
 .admin-main-container{
     display: flex;
     width: 100%;
-    height: auto;
     background: rgb(243,245,254);
-
+    height: calc(100vh - 11vh);
+    overflow-y: hidden;
 }
 .admin_content_container{
     margin-left: 2px;
