@@ -1,10 +1,9 @@
 *{
     margin: 0;
     padding: 0;
-    overflow-y: hidden;
 }
 .home_container{
-    height: 100vh;
+    height: 90vh;
     display: flex;
     background-image:-webkit-linear-gradient(purple,black);
     justify-content: center;
@@ -23,7 +22,7 @@
     background-image:url("/src/img/pip7.jpg");
     background-repeat: no-repeat;
     background-position: 50% 0;
-    background-size:cover;
+    background-size: cover;
 
   }
 .home_heading1{
@@ -32,7 +31,7 @@
     font-size: 35px;
     font-weight: bold;
     color: #fff;
-    position: relative; 
+    position: relative;
  
 }
 .home_heading1 p{
