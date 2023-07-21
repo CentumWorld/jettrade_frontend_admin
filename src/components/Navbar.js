@@ -31,7 +31,7 @@ function Navbar() {
               className="btn rounded btn-outline-primary rounded-pill"
               to="/logout"
               aria-current="page"
-              style={{ marginRight: "1rem", display:'flex', alignItems:'center', gap:'.5rem' }}
+              style={{ marginRight: "1rem", display:'flex', alignItems:'center', gap:'.5rem', width:"max-content"}}
             >
               Logout
               <RiLogoutBoxLine style={{height:'1rem', width:'1rem'}}/>
