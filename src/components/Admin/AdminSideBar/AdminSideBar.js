@@ -6,6 +6,7 @@ import { BsFillChatTextFill } from 'react-icons/bs'
 import { FaMoneyBillWaveAlt, FaBars, FaCarrot, FaUserPlus, FaBullseye,FaSlideshare,FaUserTie,FaThemeco } from 'react-icons/fa'
 import {SiManageiq} from 'react-icons/si'
 import{FcNeutralTrading} from 'react-icons/fc'
+import {MdBarChart} from "react-icons/md"
 import { RxCountdownTimer } from 'react-icons/rx'
 import { TfiMenuAlt, TfiGift } from 'react-icons/tfi'
 import { IoTrophy } from 'react-icons/io5'
@@ -24,7 +25,7 @@ const routes = [
     {
         path:'/admindashboard/chart',
         name:"Chart",
-        icon:<FcNeutralTrading/>
+        icon:<MdBarChart />
     },
     {
         path: '/admindashboard/user',
