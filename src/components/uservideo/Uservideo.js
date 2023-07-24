@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import axios from "axios";
+import { FiUploadCloud } from "react-icons/fi";
+
+import baseUrl from "../../baseUrl";
+import "../../css/Uservideo.css"; // Import the CSS file for styling
+
+const apiurl = baseUrl.apiUrl;
 
 const Uservideo = () => {
-  const [videoTitle, setVideoTitle] = useState('');
+  const [videoTitle, setVideoTitle] = useState("");
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0); // New state for upload progress
 
   const handleTitleChange = (event) => {
     setVideoTitle(event.target.value);
@@ -22,7 +32,7 @@ const Uservideo = () => {
     e.preventDefault();
 
     if (!videoTitle || !videoFile || !thumbnailFile) {
-      alert('Please fill all fields and select both video and thumbnail files');
+      alert("Please fill all fields and select both video and thumbnail files");
       return;
     }
 
@@ -32,98 +42,201 @@ const Uservideo = () => {
     formData.append("thumbnail", thumbnailFile);
 
     try {
-      await axios.post('/admin/createvideo', formData, {
+      setIsUploading(true);
+      setUploadProgress(0); // Reset progress before starting the upload
+
+      await axios.post(`${apiurl}/admin/createvideo`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
-          'Content-Type': 'multipart/form-data', // Set the content type to 'multipart/form-data'
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          const progress = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(progress); // Update the progress state with the current percentage
         },
       });
 
-      alert('Video and Thumbnail uploaded successfully!');
-      // Optionally, you can reset the form after successful upload
-      setVideoTitle('');
+      setUploadSuccess(true);
       setVideoFile(null);
       setThumbnailFile(null);
+      // Clear the file inputs by resetting their values to an empty string
+      document.getElementById("videoFile").value = "";
+      document.getElementById("thumbnailFile").value = "";
     } catch (error) {
-      alert('Failed to upload video and/or thumbnail!');
+      setUploadError(true);
+    } finally {
+      setIsUploading(false);
+      setVideoTitle("");
     }
   };
 
- 
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          maxWidth: '400px',
-          height: '400px',
-          padding: '20px',
-          margin: '50px auto',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-          boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-          boxSizing: 'border-box',
-          transition: 'box-shadow 0.3s ease-in-out',
-        }}
-      >
-        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Video Upload</h1>
-        <div style={{ marginBottom: '20px', width: '100%' }}>
-          <label htmlFor="videoTitle" style={{ marginBottom: '5px', display: 'block' }}>
-            Video Title:
-          </label>
-          <input
-            type="text"
-            id="videoTitle"
-            value={videoTitle}
-            onChange={handleTitleChange}
-            style={{ width: '100%', padding: '5px' }}
-          />
+  return (
+    <div className="upload-container">
+      <h1 className="upload-heading">Video Upload</h1>
+      {isUploading && (
+        <div className="upload-loader">Uploading... {uploadProgress}%</div>
+      )}
+      {uploadSuccess && (
+        <div className="upload-success">
+          Video and Thumbnail uploaded successfully!
         </div>
-        <div style={{ marginBottom: '20px', width: '100%' }}>
-          <label htmlFor="videoFile" style={{ marginBottom: '5px', display: 'block' }}>
-            Video File:
-          </label>
-          <input
-            type="file"
-            id="videoFile"
-            onChange={handleVideoFileChange}
-            style={{ width: '100%' }}
-          />
+      )}
+      {uploadError && (
+        <div className="upload-error">
+          Failed to upload video and/or thumbnail!
         </div>
-        <div style={{ marginBottom: '20px', width: '100%' }}>
-          <label htmlFor="thumbnailFile" style={{ marginBottom: '5px', display: 'block' }}>
-            Thumbnail:
-          </label>
-          <input
-            type="file"
-            id="thumbnailFile"
-            onChange={handleThumbnailFileChange}
-            style={{ width: '100%' }}
-          />
-        </div>
-        <br />
-        <button
-          onClick={handleUpload}
-          style={{
-            backgroundColor: '#3b03d8',
-            color: 'white',
-            padding: '10px',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            width: '100%',
-            maxWidth: '300px',
-            transition: 'background-color 0.2s ease',
-          }}
-        >
-          Upload Video
-        </button>
+      )}
+      <div className="form-group">
+        <label htmlFor="videoTitle" className="form-label">
+          Video Title:
+        </label>
+        <input
+          type="text"
+          id="videoTitle"
+          value={videoTitle}
+          onChange={handleTitleChange}
+          className="form-input"
+        />
       </div>
-    );
-  };
-  
-  export default Uservideo;
-  
+      <div className="form-group">
+        <label htmlFor="videoFile" className="form-label">
+          Video File:
+        </label>
+        <input
+          type="file"
+          id="videoFile"
+          onChange={handleVideoFileChange}
+          className="form-input"
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="thumbnailFile" className="form-label">
+          Thumbnail:
+        </label>
+        <input
+          type="file"
+          id="thumbnailFile"
+          onChange={handleThumbnailFileChange}
+          className="form-input"
+        />
+      </div>
+      <br />
+      <button onClick={handleUpload} className="upload-button">
+        {isUploading ? (
+          <FiUploadCloud className="upload-icon" />
+        ) : (
+          "Upload Video"
+        )}
+      </button>
+    </div>
+  );
+};
+
+export default Uservideo;
+
+//jjjjjjjj
+
+// import React, { useState } from "react";
+// import { Upload, message, Button, Input } from "antd";
+// import { UploadOutlined } from "@ant-design/icons";
+// import axios from "axios";
+// import baseUrl from "../../baseUrl";
+// import "../../css/Uservideo.css"; // Import the CSS file for styling
+
+// const apiurl = baseUrl.apiUrl;
+
+// const Uservideo = () => {
+//   const [videoTitle, setVideoTitle] = useState("");
+//   const [videoFile, setVideoFile] = useState(null);
+//   const [thumbnailFile, setThumbnailFile] = useState(null);
+
+//   const handleTitleChange = (event) => {
+//     setVideoTitle(event.target.value);
+//   };
+
+//   const handleVideoFileChange = (file) => {
+//     setVideoFile(file);
+//   };
+
+//   const handleThumbnailFileChange = (file) => {
+//     setThumbnailFile(file);
+//   };
+
+//   const handleUpload = async () => {
+//     if (!videoTitle || !videoFile || !thumbnailFile) {
+//       message.error("Please fill all fields and select both video and thumbnail files");
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append("title", videoTitle);
+//     formData.append("videoOne", videoFile);
+//     formData.append("thumbnail", thumbnailFile);
+
+//     try {
+//       const response = await axios.post(`${apiurl}/admin/createvideo`, formData, {
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+
+//       if (response.status === 200) {
+//         message.success("Video and Thumbnail uploaded successfully!");
+//         setVideoTitle("");
+//         setVideoFile(null);
+//         setThumbnailFile(null);
+//       } else {
+//         message.error("Failed to upload video and/or thumbnail!");
+//       }
+//     } catch (error) {
+//       message.error("Failed to upload video and/or thumbnail!");
+//     }
+//   };
+
+//   const props = {
+//     beforeUpload: () => false,
+//   };
+
+//   return (
+//     <div className="upload-container">
+//       <h1 className="upload-heading">Video Upload</h1>
+//       <div className="form-group">
+//         <label htmlFor="videoTitle" className="form-label">
+//           Video Title:
+//         </label>
+//         <Input
+//           type="text"
+//           id="videoTitle"
+//           value={videoTitle}
+//           onChange={handleTitleChange}
+//           className="form-input"
+//         />
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="videoFile" className="form-label">
+//           Video File:
+//         </label>
+//         <Upload {...props} onChange={handleVideoFileChange}>
+//           <Button icon={<UploadOutlined />}>Select Video</Button>
+//         </Upload>
+//       </div>
+//       <div className="form-group">
+//         <label htmlFor="thumbnailFile" className="form-label">
+//           Thumbnail:
+//         </label>
+//         <Upload {...props} onChange={handleThumbnailFileChange}>
+//           <Button icon={<UploadOutlined />}>Select Thumbnail</Button>
+//         </Upload>
+//       </div>
+//       <br />
+//       <Button onClick={handleUpload} className="upload-button" type="primary">
+//         Upload Video
+//       </Button>
+//     </div>
+//   );
+// };
+
+// export default Uservideo;

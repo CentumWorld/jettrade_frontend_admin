@@ -87,7 +87,7 @@ function Dashboard() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("/admin/fetch-user-details");
+            const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details");
 
             setData(response.data.result);
             //console.log(typeof(response.data.result[0].phone));

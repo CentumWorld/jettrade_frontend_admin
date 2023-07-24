@@ -1,0 +1,86 @@
+/* Style for the container */
+.upload-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for the heading */
+  .upload-heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the loader, success, and error messages */
+  .upload-loader,
+  .upload-success,
+  .upload-error {
+    text-align: center;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  
+  .upload-loader {
+    background-color: #e6e6e6;
+  }
+  
+  .upload-success {
+    background-color: #c1f0c1;
+    color: #006400;
+  }
+  
+  .upload-error {
+    background-color: #f9c0c0;
+    color: #ff0000;
+  }
+  
+  /* Style for form groups */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Style for the upload button */
+  .upload-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style for the upload icon */
+  .upload-icon {
+    margin-right: 5px;
+  }
+  
+  /* Optional: Add spacing between the form elements */
+  .form-group:not(:last-child) {
+    margin-bottom: 30px;
+  }
+  
