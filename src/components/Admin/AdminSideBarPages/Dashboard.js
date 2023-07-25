@@ -631,7 +631,7 @@ function Dashboard() {
                             // style={navLinkStyle}
                             activeStyle={activeStyle}
                         >
-                            + Crate User
+                            + Create User
                         </NavLink>
                     </div>
                     <Search
