@@ -37,42 +37,42 @@ const routes = [
         name: "Refferal",
         icon: <FaSlideshare />,
     },
-    {
-        path: '/admindashboard/withdrawal',
-        name: "Withdrawal",
-        icon: <FaMoneyBillWaveAlt />,
-    },
-    {
-        path: '/admindashboard/transfer',
-        name: "Internal transfer",
-        icon: <MdSend />,
-    },
+    // {
+    //     path: '/admindashboard/withdrawal',
+    //     name: "Withdrawal",
+    //     icon: <FaMoneyBillWaveAlt />,
+    // },
+    // {
+    //     path: '/admindashboard/transfer',
+    //     name: "Internal transfer",
+    //     icon: <MdSend />,
+    // },
     // {
     //     path: '/admindashboard/promotion',
     //     name: "Promotions",
     //     icon: <FaCarrot />,
     // },
-    {
-        path: '/admindashboard',
-        name: "Operation history",
-        icon: <RxCountdownTimer />,
-        subRoutes: [
-            {
-                path: "/admindashboard/deposite",
-                name: 'Deposite history',
-            },
-            {
-                path: "/admindashboard/withdrawlhistory",
-                name: 'Withdrawal history',
-            },
-            {
-                path: "/admindashboard/transferhistory",
-                name: 'Transfer history',
-            },
+    // {
+    //     path: '/admindashboard',
+    //     name: "Operation history",
+    //     icon: <RxCountdownTimer />,
+    //     subRoutes: [
+    //         {
+    //             path: "/admindashboard/deposite",
+    //             name: 'Deposite history',
+    //         },
+    //         {
+    //             path: "/admindashboard/withdrawlhistory",
+    //             name: 'Withdrawal history',
+    //         },
+    //         {
+    //             path: "/admindashboard/transferhistory",
+    //             name: 'Transfer history',
+    //         },
 
 
-        ],
-    },
+    //     ],
+    // },
     // {
     //     path: '/admindashboard',
     //     name: "Trading accounts",
@@ -130,10 +130,10 @@ const routes = [
                 path:"manage/subscription",
                 name:"Manage Subscription"
             },
-            {
-                path:"manage/investment",
-                name:"Manage Investment"
-            },
+            // {
+            //     path:"manage/investment",
+            //     name:"Manage Investment"
+            // },
             {
                 path:"manage/investor-refferal-payout",
                 name:" Investor Refferal Payout"
