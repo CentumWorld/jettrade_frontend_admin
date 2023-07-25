@@ -34,7 +34,7 @@ const routes = [
     },
     {
         path: '/admindashboard/refferal',
-        name: "Refferal",
+        name: "Referral",
         icon: <FaSlideshare />,
     },
     // {
@@ -136,11 +136,11 @@ const routes = [
             // },
             {
                 path:"manage/investor-refferal-payout",
-                name:" Investor Refferal Payout"
+                name:" Investor Referral Payout"
             },
             {
                 path:"manage/member-refferal-payout",
-                name:"Member Refferal Payout"
+                name:"Member Referral Payout"
             }
         ]
     },
@@ -155,7 +155,7 @@ const routes = [
             },
             {
                 path:"refferal-chat",
-                name:'Refferal'
+                name:'Referral'
             }
         ]
     },

@@ -172,7 +172,7 @@ function Dashboard() {
         { title: 'Email', dataIndex: 'email', key: 'email' },
         { title: 'Phone', dataIndex: 'phone', key: 'phone' },
         { title: 'Address', dataIndex: 'address', key: 'address' },
-        { title: 'Reffered ID', dataIndex: 'reffered_id', key: 'reffered_id' },
+        { title: 'Referred ID', dataIndex: 'reffered_id', key: 'reffered_id' },
         {
             title: 'Status', dataIndex: 'status', render: (status) => {
                 const cellStyle = status ? { color: 'green' } : { color: 'red' };

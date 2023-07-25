@@ -88,7 +88,7 @@ const Refferal = () => {
         { title: 'Email', dataIndex: 'email', key: 'email' },
         { title: 'Phone', dataIndex: 'phone', key: 'phone' },
         { title: 'Address', dataIndex: 'address', key: 'address' },
-        { title: 'Refferal', dataIndex: 'refferal_id', key: 'refferal_id' },
+        { title: 'Referral', dataIndex: 'refferal_id', key: 'refferal_id' },
         {
             title: 'Status', dataIndex: 'isBlocked', render: (isBlocked) => {
                 const cellStyle = isBlocked ? { color: 'red' } : { color: 'green' };
@@ -579,7 +579,7 @@ const Refferal = () => {
             <div className='refferral-dashboard'>
                 <div className='refferal-dashboard-card'>
                     <div className='refferal-profile-verification-heading'>
-                        <h5 style={{ fontFamily: 'Calibri' }}>Refferal Profile Details</h5>
+                        <h5 style={{ fontFamily: 'Calibri' }}>Referral Profile Details</h5>
                     </div>
 
                     <div >

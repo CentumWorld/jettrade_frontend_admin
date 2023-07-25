@@ -144,7 +144,7 @@ const RefferalPayout = () => {
 
   return (
     <div className='reffer-container'>
-      <p> Trader Refferal payout</p>
+      <p> Trader Referral payout</p>
       <Tabs activeKey={activeTab} onChange={handleTabChange}>
         <TabPane tab="Request Payout" key="1">
           <div>

@@ -73,7 +73,7 @@ const DisplayCard = () => {
                         <h6>UserID :</h6> &nbsp;&nbsp; <span style={{color:'yellow'}}>{adminDetails.adminid}</span>
                     </div>
                     <div className='d-flex'>
-                        <h6>Refferal ID :</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={goToRegister}>admin@123</span>
+                        <h6>Referral ID :</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={goToRegister}>admin@123</span>
                     </div>
                 </div>
                 <div className='card1'>
@@ -84,7 +84,7 @@ const DisplayCard = () => {
                         <h6>Trader:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={joinChatTrader} >join</span>
                     </div>
                     <div className='d-flex'>
-                        <h6>Refferal:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={joinChatRefferal} >join</span>
+                        <h6>Referral:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={joinChatRefferal} >join</span>
                     </div>
                 </div>
                 <div className='card1'>
@@ -105,7 +105,7 @@ const DisplayCard = () => {
                 </div>
                 <div className='card1'>
                 <div className='refferal-details'>
-                        <h6>Refferal Details</h6>
+                        <h6>Referral Details</h6>
                     </div>
                     <div className='refferal-details-view'>
                         <span style={{color:'yellow',cursor:'pointer'}} onClick={viewRefferalrDetails} >View</span>
@@ -137,13 +137,13 @@ const DisplayCard = () => {
                 </div>
                 <div className='card1'>
                     <div className='refferal-payout'>
-                        <h6>Refferal Payout</h6>
+                        <h6>Referral Payout</h6>
                     </div>
                     <div className='d-flex'>
                         <h6>Trader:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={refferalPayoutTrader} >View</span>
                     </div>
                     <div className='d-flex'>
-                        <h6>Refferal:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={refferalPayoutRefferal} >View</span>
+                        <h6>Referral:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={refferalPayoutRefferal} >View</span>
                     </div>
                 </div>
             </div>
