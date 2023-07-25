@@ -1,13 +1,13 @@
 .manage-subscription-page{
     width:100%;
-    /* height: 95%; */
+    height: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Calibri;
 }
 .manage-subscription-card{
-    width: 60%;
+    width: 80%;
     height: max-content;
     background: #fff;
     align-items: center;
@@ -15,16 +15,8 @@
     padding: 15px;
     border-radius: 15px; 
     overflow: hidden;
-    border: 1px solid black;
 }
 .manage-subscription-heading p{
     font-size: 20px;
     font-weight: 600;
-}
-
-@media  only screen and (max-width:768px) {
-    .manage-subscription-card{
-        height: max-content ;
-        width: 100%;
-    }
 }
