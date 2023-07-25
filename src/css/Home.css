@@ -167,10 +167,10 @@
 
 @media only screen and (max-width: 365px) {
     .home_container:before {
-        height: calc(100vh - 10vh);
+        height: 100vh;
     }
 
     .home_container {
-        height: calc(100vh - 10vh);
+        height: 100vh;
     }
 }
