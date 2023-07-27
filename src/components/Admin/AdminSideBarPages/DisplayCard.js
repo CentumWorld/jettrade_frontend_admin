@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { FaRupeeSign } from 'react-icons/fa'
 import '../css/DisplayCard.css';
 
 const DisplayCard = () => {
@@ -7,6 +8,7 @@ const DisplayCard = () => {
     const [adminDetails, setAdminDetails] = useState({
         adminid: '',
     });
+    const [totalAmount, setTotalAmount] = useState(10500)
     
     useEffect(() => {
         setAdminDetails({ adminid: localStorage.getItem('adminId')})
@@ -85,6 +87,14 @@ const DisplayCard = () => {
                     </div>
                     <div className='d-flex'>
                         <h6>Referral:</h6>&nbsp;&nbsp; <span style={{color:'yellow',cursor:'pointer'}} onClick={joinChatRefferal} >join</span>
+                    </div>
+                </div>
+                 <div className='card1'>
+                    <div className='trading-chart'>
+                        <h6>Total Amount</h6>
+                    </div>
+                    <div className='trading-chart-view'>
+                        <span style={{color:'yellow',cursor:'pointer'}} ><FaRupeeSign/>{totalAmount}</span>
                     </div>
                 </div>
                 <div className='card1'>

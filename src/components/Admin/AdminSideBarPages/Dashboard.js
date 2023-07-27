@@ -231,11 +231,14 @@ function Dashboard() {
             fetchUserDetailsForEdit(myID)
             console.log(myID)
         }
-        // if (e.key === 'delete') {
-        //     confirmDelete(myID);
-        // }
         if (e.key === 'block') {
             blockUnblock(myID);
+        }
+        if(e.key === 'account'){
+            navigate('/admindashboard/trader-accounts')
+        }
+        if(e.key === 'withdrawal'){
+            navigate('/admindashboard/trader-withdrawal')
         }
     };
 
@@ -247,6 +250,8 @@ function Dashboard() {
             <Menu.Item key="block">
                 {isBlocked ? 'Unblock' : 'Block'}
             </Menu.Item>
+            <Menu.Item key="account">Account</Menu.Item>
+            <Menu.Item key="withdrawal">Withdrawal</Menu.Item>
         </Menu>
     );
 

@@ -46,6 +46,8 @@ import DisplayCard from './components/Admin/AdminSideBarPages/DisplayCard';
 import Withdrawal from '../src/components/Admin/AdminSideBarPages/withdrawal';
 
 import Uservideo from './components/uservideo/Uservideo';
+import TraderAccount from './components/Admin/AdminSideBarPages/TraderAccount';
+import TraderWithdrawal from './components/Admin/AdminSideBarPages/TraderWithdrawal';
 
 
 
@@ -120,6 +122,7 @@ function App() {
               <Route path='dashboard' element={<DisplayCard/>}/>
               <Route path='chart' element={<FirstChartPage/>} />
               <Route path='user' element={<Dashboard/>} />
+              
               <Route path='refferal' element={<Refferal/>} /> 
               <Route path='createuser' element={<CreateUserInAdmin/>} />
               <Route path='withdrawal' element={<Withdrawal/>} />
@@ -132,6 +135,9 @@ function App() {
               <Route path='manage/member-refferal-payout' element={<MemberRefferalPayout/>} />
               <Route path='trader-chat' element={<LiveChat/>} />
               <Route path='refferal-chat' element={<RefferalLiveChat/>}/>
+
+              <Route path='trader-accounts' element={<TraderAccount/>} />
+              <Route path='trader-withdrawal' element={<TraderWithdrawal/>} />
             </Route>
             {/* <Route path='/user-registration' element={<UserRegistration/>}></Route> */}
             {/* <Route path='/invite' element={<UserRegistration/>}/> */}
