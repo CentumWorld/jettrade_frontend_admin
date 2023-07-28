@@ -6,10 +6,12 @@ import { format, getYear, getMonth, startOfWeek, addWeeks, subWeeks } from 'date
 import { utcToZonedTime } from 'date-fns-tz';
 import enIN from 'date-fns/locale/en-IN';
 import { useParams } from "react-router-dom";
+import { FaRupeeSign } from "react-icons/fa"
 const { Option } = Select;
 const TraderAccount = () => {
   const { id } = useParams();
   const [selectedDate, onDateChange] = useState(null);
+  const [totalAmount, setToalAmount] = useState(50000);
   const handleMenuVisibleChange = (visible) => {
     if (!visible) {
       document.getElementById("date-picker-dropdown").click();
@@ -20,7 +22,7 @@ const TraderAccount = () => {
       ? format(utcToZonedTime(date, 'Asia/Kolkata'), 'dd MMMM yyyy', { locale: enIN })
       : "Select Date";
   };
-  const handleDatePickerClick = (e)=>{
+  const handleDatePickerClick = (e) => {
     e.stopPropagation();
   };
   const handleYearClick = (year) => {
@@ -107,20 +109,26 @@ const TraderAccount = () => {
   );
   return (
     <>
-      <div className="header-trading-account">
-        <div className="header-trading-content">
-          <p>Trader Accounts Details</p>
-          <div className="trading-drop-down">
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <Button id="date-picker-dropdown">
-                {selectedDate ? formatDate(selectedDate) : "FILTER"}
-                <DownOutlined />
-              </Button>
-            </Dropdown>
+      <div className="trading-container">
+        <div className="header-trading-account">
+          <div className="header-trading-content">
+            <p>Trader Accounts Details</p>
+            <div className="trading-drop-down">
+              <div className="total-wallet">
+                <FaRupeeSign/>{totalAmount}
+              </div>
+              <Dropdown overlay={menu} trigger={["click"]}>
+                <Button id="date-picker-dropdown">
+                  {selectedDate ? formatDate(selectedDate) : "FILTER"}
+                  <DownOutlined />
+                </Button>
+              </Dropdown>
+            </div>
           </div>
         </div>
         {id}
       </div>
+
     </>
   );
 };

@@ -1,4 +1,13 @@
+.trading-container{
+    width: 100%;
+    height: calc(100vh - 100px );
+    border-left: 1px solid #01015d;
+    border-bottom: 1px solid #01015d;
+    border-right: 1px solid #01015d;
+    border-radius: 5px;
+    position: sticky;
 
+}
 .header-trading-account{
     width:100%;
     height: 60px;
@@ -18,6 +27,16 @@
     color: wheat;
     font-size: 1.2rem;
     font-family: Calibri;
-
-
+}
+.trading-drop-down{
+    display: flex;
+    gap: 5px;
+}
+.total-wallet{
+    width: 80px;
+    height: 32px;
+    color: #11100c96; /* For text color */
+    background-color: #FFD700; /* For background color */
+    border-color: #FFD700;    border-radius: 5px;
+    text-align: center;
 }
