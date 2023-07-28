@@ -137,8 +137,8 @@ function App() {
               <Route path='trader-chat' element={<LiveChat/>} />
               <Route path='refferal-chat' element={<RefferalLiveChat/>}/>
 
-              <Route path='trader-accounts' element={<TraderAccount/>} />
-              <Route path='trader-withdrawal' element={<TraderWithdrawal/>} />
+              <Route path='trader-accounts/:id' element={<TraderAccount/>} />
+              <Route path='trader-withdrawal/:id' element={<TraderWithdrawal/>} />
             </Route>
             {/* <Route path='/user-registration' element={<UserRegistration/>}></Route> */}
             {/* <Route path='/invite' element={<UserRegistration/>}/> */}

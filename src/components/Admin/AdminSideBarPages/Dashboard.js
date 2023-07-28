@@ -54,6 +54,7 @@ function Dashboard() {
     const [filteredDataSource, setFilteredDataSource] = useState([]);
     const [userStatus, setUserStatus] = useState(false);
     const [userType, setUserType] = useState('');
+    const [userId, setUserID] = useState('');
 
     //isBlock
     const [isBlocked, setIsBlock] = useState(true);
@@ -201,7 +202,7 @@ function Dashboard() {
                         View
                     </Button >  */}
                     <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-                        <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.status, record.isBlocked)} style={{ cursor: 'pointer' }} />
+                        <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.userid, record.status, record.isBlocked)} style={{ cursor: 'pointer' }} />
                     </Dropdown>
 
                 </>
@@ -211,10 +212,11 @@ function Dashboard() {
     ];
 
     // handle action
-    const trigerAction = (id, status, block) => {
+    const trigerAction = (id, userid, status, block) => {
         setMyID(id, block);
         setUserStatus(status);
         setIsBlock(block);
+        setUserID(userid)
     }
     const handleMenuClick = (e) => {
         console.log(e.key);
@@ -235,10 +237,10 @@ function Dashboard() {
             blockUnblock(myID);
         }
         if(e.key === 'account'){
-            navigate('/admindashboard/trader-accounts')
+            navigate(`/admindashboard/trader-accounts/${userId}`)
         }
         if(e.key === 'withdrawal'){
-            navigate('/admindashboard/trader-withdrawal')
+            navigate(`/admindashboard/trader-withdrawal/${userId}`)
         }
     };
 
