@@ -167,7 +167,7 @@ const TraderAccount = () => {
 
   const callApiToAllUserTradingAcountDetails = () => {
     let data = {
-      userid: "badal1",
+      userid: id,
     };
     axios
       .post("/admin/filter-Transactions-With-Year-Month-Week", data)
@@ -181,7 +181,7 @@ const TraderAccount = () => {
 
   const filterYear = (year) =>{
     let data = {
-      userid:"badal1",
+      userid:id,
       year:year
     }
     axios
@@ -197,7 +197,7 @@ const TraderAccount = () => {
   const filterMonth = (year, month) =>{
     console.log(year, month)
     let data = {
-      userid:"badal1",
+      userid:id,
       year:year,
       month:month
     }
@@ -213,7 +213,7 @@ const TraderAccount = () => {
 
   const callApiToFetchUserWallet = () =>{
     let data = {
-      userid:'badal1'
+      userid:id
     }
     axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data)
     .then((res)=>{
