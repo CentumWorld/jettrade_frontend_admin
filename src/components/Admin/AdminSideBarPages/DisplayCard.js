@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FaRupeeSign } from 'react-icons/fa'
 import '../css/DisplayCard.css';
+import axios from 'axios';
 
 const DisplayCard = () => {
     const navigate = useNavigate();
     const [adminDetails, setAdminDetails] = useState({
         adminid: '',
     });
-    const [totalAmount, setTotalAmount] = useState(10500)
+    const [totalAmount, setTotalAmount] = useState(0)
     
     useEffect(() => {
         setAdminDetails({ adminid: localStorage.getItem('adminId')})
+        callApiToSubscriptionCharge();
        
     }, [])
 
@@ -67,6 +69,18 @@ const DisplayCard = () => {
         navigate("/admindashboard/createuser")
     }
 
+    const callApiToSubscriptionCharge = ()=>{
+        axios.get('/admin/admin-sum-of-all-new-renewal-user-amount')
+        .then((res)=>{
+            console.log(res.data.totalSubscriptionAmount)
+            setTotalAmount(res.data.totalSubscriptionAmount)
+
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
     return (
         <>
             <div className='card1-container'>
@@ -91,7 +105,7 @@ const DisplayCard = () => {
                 </div>
                  <div className='card1'>
                     <div className='trading-chart'>
-                        <h6>Total Amount</h6>
+                        <h6>Total Subscription Amount</h6>
                     </div>
                     <div className='trading-chart-view'>
                         <span style={{color:'yellow',cursor:'pointer'}} ><FaRupeeSign/>{totalAmount}</span>

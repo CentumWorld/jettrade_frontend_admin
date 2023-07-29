@@ -218,6 +218,7 @@ const TraderAccount = () => {
     axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data)
     .then((res)=>{
       setToalAmount(res.data.result.tradingWallet);
+      console.log(res.data.result.tradingWallet)
     })
     .catch(err=>{
       console.log(err)

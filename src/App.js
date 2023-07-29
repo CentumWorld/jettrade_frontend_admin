@@ -49,6 +49,7 @@ import Withdrawal from '../src/components/Admin/AdminSideBarPages/withdrawal';
 import Uservideo from './components/uservideo/Uservideo';
 import TraderAccount from './components/Admin/AdminSideBarPages/TraderAccount';
 import TraderWithdrawal from './components/Admin/AdminSideBarPages/TraderWithdrawal';
+import NewRenewal from './components/Admin/AdminSideBarPages/NewRenewal';
 
 
 
@@ -139,6 +140,7 @@ function App() {
 
               <Route path='trader-accounts/:id' element={<TraderAccount/>} />
               <Route path='trader-withdrawal/:id' element={<TraderWithdrawal/>} />
+              <Route path='new-renewal' element={<NewRenewal/>}/>
             </Route>
             {/* <Route path='/user-registration' element={<UserRegistration/>}></Route> */}
             {/* <Route path='/invite' element={<UserRegistration/>}/> */}
