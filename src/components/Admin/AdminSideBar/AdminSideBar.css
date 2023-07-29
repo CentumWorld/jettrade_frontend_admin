@@ -26,11 +26,16 @@
 }
 
 .admin-top-section {
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     padding: 15px 10px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    z-index: 9;
+    position: sticky;
+    top: 0;
 }
 
 .admin_logo {
