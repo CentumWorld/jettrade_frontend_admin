@@ -174,7 +174,7 @@ const TraderWithdrawal = () => {
       userid: id,
     };
     axios
-      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data)
       .then((res) => {
         setUserData(res.data.allData);
       })

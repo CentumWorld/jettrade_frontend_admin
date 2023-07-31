@@ -3,6 +3,9 @@ import "../css/NewRenewal.css";
 import { Menu, Table } from "antd";
 import axios from "axios";
 import moment from 'moment';
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const NewRenewal = () => {
   const [newsUser, setNewuser] = useState([]);
@@ -65,7 +68,7 @@ const NewRenewal = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post("/admin/fetch-all-new-paid-user",config)
+      .post(`${apiurl}`+"/admin/fetch-all-new-paid-user",config)
       .then((res) => {
         console.log(res.data.data);
         setNewuser(res.data.data);
@@ -81,7 +84,7 @@ const NewRenewal = () => {
       headers: { 'Authorization': `Bearer ${token}` }
     }
     axios
-      .post("/admin/admin-fetch-all-renewal-user",config)
+      .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user",config)
       .then((res) => {
         console.log(res);
         setRenewalUser(res.data.data)
