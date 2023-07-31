@@ -60,8 +60,12 @@ const NewRenewal = () => {
   ];
 
   const callApiToNewAccounts = () => {
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post("/admin/fetch-all-new-paid-user")
+      .post("/admin/fetch-all-new-paid-user",config)
       .then((res) => {
         console.log(res.data.data);
         setNewuser(res.data.data);

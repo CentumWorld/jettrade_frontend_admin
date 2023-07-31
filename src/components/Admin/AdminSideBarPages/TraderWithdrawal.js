@@ -16,6 +16,10 @@ import enIN from "date-fns/locale/en-IN";
 import { useParams } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import axios from "axios";
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl
+
 const { Option } = Select;
 const TraderWithdrawal = () => {
   const { id } = useParams();
@@ -184,8 +188,12 @@ const TraderWithdrawal = () => {
       userid:id,
       year:year
     }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -201,8 +209,13 @@ const TraderWithdrawal = () => {
       year:year,
       month:month
     }
+
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -215,7 +228,11 @@ const TraderWithdrawal = () => {
     let data = {
       userid:id
     }
-    axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data)
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
       setToalAmount(res.data.result.tradingWallet);
     })

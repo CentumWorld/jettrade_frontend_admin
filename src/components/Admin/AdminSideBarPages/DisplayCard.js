@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaRupeeSign } from 'react-icons/fa'
 import '../css/DisplayCard.css';
 import axios from 'axios';
+import baseUrl from '../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 const DisplayCard = () => {
     const navigate = useNavigate();
@@ -70,7 +73,11 @@ const DisplayCard = () => {
     }
 
     const callApiToSubscriptionCharge = ()=>{
-        axios.get('/admin/admin-sum-of-all-new-renewal-user-amount')
+        const token = localStorage.getItem('adminToken');
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+          };
+        axios.get(`${apiurl}`+'/admin/admin-sum-of-all-new-renewal-user-amount',config)
         .then((res)=>{
             console.log(res.data.totalSubscriptionAmount)
             setTotalAmount(res.data.totalSubscriptionAmount)
@@ -135,14 +142,14 @@ const DisplayCard = () => {
                         <span style={{color:'yellow',cursor:'pointer'}} onClick={viewRefferalrDetails} >View</span>
                     </div>
                 </div>
-                <div className='card1'>
+                {/* <div className='card1'>
                     <div className='withdrawal-card'>
                         <h6>Withdrawal</h6>
                     </div>
                     <div className='withdrawal-card-view'>
                         <span style={{color:'yellow',cursor:'pointer'}} onClick={viewWithdrawal}>View</span>
                     </div>
-                </div>
+                </div> */}
                 <div className='card1'>
                     <div className='push-notification-card'>
                         <h6>Push Notification</h6>
