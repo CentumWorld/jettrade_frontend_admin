@@ -173,8 +173,12 @@ const TraderWithdrawal = () => {
     let data = {
       userid: id,
     };
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data, config)
       .then((res) => {
         setUserData(res.data.allData);
       })

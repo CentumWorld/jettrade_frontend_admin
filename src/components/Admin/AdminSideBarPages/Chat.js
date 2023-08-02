@@ -74,7 +74,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
             room:room
         }
         const config = {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
           };
         axios.post(`${apiurl}`+'/admin/fetch-chat-message-admin',data,config)
         .then((result)=>{
@@ -97,7 +97,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
         }
         let token = localStorage.getItem('adminToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         };
         axios.post(`${apiurl}`+'/admin/user-online-or-not',data1,config)
         .then((res)=>{

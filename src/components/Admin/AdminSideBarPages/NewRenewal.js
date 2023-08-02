@@ -81,7 +81,7 @@ const NewRenewal = () => {
   const callApiToRenewalUser = () => {
     const token = localStorage.getItem('adminToken')
     let config = {
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` }
     }
     axios
       .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user",config)
