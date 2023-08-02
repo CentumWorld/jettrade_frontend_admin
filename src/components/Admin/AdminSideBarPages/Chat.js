@@ -99,7 +99,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post(`${apiurl}`+'/admin/user-online-or-not',data1,config)
+        axios.post('/admin/user-online-or-not',data1,config)
         .then((res)=>{
             setUserOnline(res.data.isOnline)
         })

@@ -88,7 +88,11 @@ function Dashboard() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details");
+            const token = localStorage.getItem('adminToken');
+            const config = {
+              headers: { "Authorization": `Bearer ${token}` }
+            };
+            const response = await axios.get("/admin/fetch-user-details",config);
 
             setData(response.data.result);
             //console.log(typeof(response.data.result[0].phone));

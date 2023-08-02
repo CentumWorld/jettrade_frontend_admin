@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { Menu, Table } from "antd";
@@ -11,6 +12,7 @@ const NewRenewal = () => {
   const [newsUser, setNewuser] = useState([]);
   const [renewalUser, setRenewalUser] = useState([]);
   const [divChange, setDivChange] = useState(true);
+  
   const handleMenuSelect = (item) => {
     console.log("Selected menu item:", item.key);
     if (item.key === "newaccount") {
@@ -32,17 +34,27 @@ const NewRenewal = () => {
       key: "userid",
     },
     {
-        title: 'Amount',
-        dataIndex: 'activationAmount',
-        key: 'activationAmount',
-        render: (activationAmount) => {
-          // Format the amount with two decimal places
-          const formattedAmount = parseFloat(activationAmount).toFixed(2);
-          return <span>₹{formattedAmount}</span>;
-        },
+      title: 'Amount',
+      dataIndex: 'activationAmount',
+      key: 'activationAmount',
+      render: (activationAmount) => {
+        // Format the amount with two decimal places
+        const formattedAmount = parseFloat(activationAmount).toFixed(2);
+        return <span>₹{formattedAmount}</span>;
+      },
     },
-   
+    {
+      title: 'Deposit Date',
+      dataIndex: 'activationDate',
+      key: 'activationDate',
+      render: (activationDate) => {
+        // Format the date using moment.js
+        const formattedDate = moment(activationDate).format('YYYY-MM-DD HH:mm');
+        return <span>{formattedDate}</span>;
+      },
+    },
   ];
+
   const columnsRenewal = [
     {
       title: "User ID",
@@ -50,44 +62,58 @@ const NewRenewal = () => {
       key: "userid",
     },
     {
-        title: 'Amount',
-        dataIndex: 'renewalAmount',
-        key: 'renewalAmount',
-        render: (renewalAmount) => {
-          // Format the amount with two decimal places
-          const formattedAmount = parseFloat(renewalAmount).toFixed(2);
-          return <span>₹{formattedAmount}</span>;
-        },
+      title: 'Amount',
+      dataIndex: 'renewalAmount',
+      key: 'renewalAmount',
+      render: (renewalAmount) => {
+        // Format the amount with two decimal places
+        const formattedAmount = parseFloat(renewalAmount).toFixed(2);
+        return <span>₹{formattedAmount}</span>;
+      },
     },
-  
+    {
+      title: 'Deposit Date',
+      dataIndex: 'renewalDate',
+      key: 'renewalDate',
+      render: (renewalDate) => {
+        // Format the date using moment.js
+        const formattedDate = moment(renewalDate).format('YYYY-MM-DD HH:mm');
+        return <span>{formattedDate}</span>;
+      },
+    },
   ];
 
   const callApiToNewAccounts = () => {
     const token = localStorage.getItem('adminToken');
     const config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { "Authorization": `Bearer ${token}` }
     };
     axios
-      .post(`${apiurl}`+"/admin/fetch-all-new-paid-user",config)
-      .then((res) => {
-        console.log(res.data.data);
-        setNewuser(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .post(`${apiurl}`+
+      "/admin/fetch-all-new-paid-user",
+      {},
+    config
+    )
+    .then((res) => {
+      console.log(res.data.data);
+      setNewuser(res.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  
   };
 
   const callApiToRenewalUser = () => {
-    const token = localStorage.getItem('adminToken')
-    let config = {
-      headers: { Authorization: `Bearer ${token}` }
-    }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { "Authorization": `Bearer ${token}` }
+    };
     axios
-      .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user",config)
+      .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user",{},  config)
       .then((res) => {
         console.log(res);
-        setRenewalUser(res.data.data)
+        setRenewalUser(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -113,39 +139,12 @@ const NewRenewal = () => {
           </div>
           {divChange ? (
             <div>
-              <Table dataSource={newsUser} columns={[
-              ...columns,
-              {
-                title: 'Deposit Date',
-                dataIndex: 'activationDate',
-                key: 'activationDate',
-                render: (activationDate) => {
-                  // Format the date using moment.js
-                  const formattedDate = moment(activationDate).format('YYYY-MM-DD HH:mm');
-    
-                  return <span>{formattedDate}</span>;
-                },
-              },
-            ]} />
+              <Table dataSource={newsUser} columns={columns} />
             </div>
           ) : (
-            <Table dataSource={renewalUser} 
-            //columns={columnsRenewal} 
-            columns={[
-                ...columnsRenewal,
-                {
-                  title: 'Deposit Date',
-                  dataIndex: 'renewalDate',
-                  key: 'renewalDate',
-                  render: (renewalDate) => {
-                    // Format the date using moment.js
-                    const formattedDate = moment(renewalDate).format('YYYY-MM-DD HH:mm');
-      
-                    return <span>{formattedDate}</span>;
-                  },
-                },
-              ]} 
-            />
+            <div>
+              <Table dataSource={renewalUser} columns={columnsRenewal} />
+            </div>
           )}
         </div>
       </div>
@@ -154,3 +153,4 @@ const NewRenewal = () => {
 };
 
 export default NewRenewal;
+
