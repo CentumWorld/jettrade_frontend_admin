@@ -24,7 +24,7 @@ const MemberRefferalPayout = () => {
   const fetchRefferalsDetails = () => {
     const token = localStorage.getItem('adminToken')
     let config = {
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` }
     }
 
     axios.get(`${apiurl}`+"/admin/admin-fetch-member-refferal-payout-request", config)

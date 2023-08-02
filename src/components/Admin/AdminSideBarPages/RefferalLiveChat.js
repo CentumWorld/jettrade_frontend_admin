@@ -51,7 +51,7 @@ const LiveChat = () => {
     const fetchAllUserChat = () => {
         let token = localStorage.getItem('adminToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         };
 
         axios.get(`${apiurl}`+'/admin/fetch-refferal-chat-count', config)

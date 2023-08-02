@@ -16,6 +16,9 @@ import enIN from "date-fns/locale/en-IN";
 import { useParams } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import axios from "axios";
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 const TraderAccount = () => {
   const { id } = useParams();
@@ -167,10 +170,14 @@ const TraderAccount = () => {
 
   const callApiToAllUserTradingAcountDetails = () => {
     let data = {
-      userid: "badal1",
+      userid: id,
+    };
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post("/admin/filter-Transactions-With-Year-Month-Week", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.allData);
       })
@@ -181,11 +188,15 @@ const TraderAccount = () => {
 
   const filterYear = (year) =>{
     let data = {
-      userid:"badal1",
+      userid:id,
       year:year
     }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post("/admin/filter-Transactions-With-Year-Month-Week", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -197,12 +208,16 @@ const TraderAccount = () => {
   const filterMonth = (year, month) =>{
     console.log(year, month)
     let data = {
-      userid:"badal1",
+      userid:id,
       year:year,
       month:month
     }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .post("/admin/filter-Transactions-With-Year-Month-Week", data)
+      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -213,9 +228,13 @@ const TraderAccount = () => {
 
   const callApiToFetchUserWallet = () =>{
     let data = {
-      userid:'badal1'
+      userid:id
     }
-    axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data)
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
       setToalAmount(res.data.result.tradingWallet);
       console.log(res.data.result.tradingWallet)
