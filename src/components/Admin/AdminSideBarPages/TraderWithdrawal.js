@@ -18,9 +18,7 @@ import { FaRupeeSign } from "react-icons/fa";
 import axios from "axios";
 import baseUrl from "../../../baseUrl";
 
-const apiurl = baseUrl
-
-console.log(apiurl)
+const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 const TraderWithdrawal = () => {
@@ -173,6 +171,7 @@ const TraderWithdrawal = () => {
   ];
 
   const callApiToAllUserTradingAcountDetails = () => {
+    console.log(id);
     let data = {
       userid: id,
     };
@@ -242,7 +241,7 @@ const TraderWithdrawal = () => {
     };
     axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
-      //setToalAmount(res.data.result.tradingWallet);
+      setToalAmount(res.data.result.tradingWallet);
     })
     .catch(err=>{
       console.log(err)
