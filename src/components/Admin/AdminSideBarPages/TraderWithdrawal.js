@@ -20,6 +20,8 @@ import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl
 
+console.log(apiurl)
+
 const { Option } = Select;
 const TraderWithdrawal = () => {
   const { id } = useParams();
@@ -35,6 +37,7 @@ const TraderWithdrawal = () => {
   useEffect(() => {
     callApiToAllUserTradingAcountDetails();
     callApiToFetchUserWallet();
+    callApiToFetchUserTotalWallet();
   }, []);
   const formatDate = (date) => {
     return date
@@ -173,6 +176,7 @@ const TraderWithdrawal = () => {
     let data = {
       userid: id,
     };
+    console.log(data, "176")
     const token = localStorage.getItem('adminToken');
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -238,9 +242,25 @@ const TraderWithdrawal = () => {
     };
     axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
-      setToalAmount(res.data.result.tradingWallet);
+      //setToalAmount(res.data.result.tradingWallet);
     })
     .catch(err=>{
+      console.log(err)
+    })
+  };
+  const callApiToFetchUserTotalWallet = ()=>{
+    let data = {
+      userid:id
+    }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios.post(`${apiurl}`+"/admin/total-withdrawal-money", data, config)
+    .then((res)=>{
+      setToalAmount(res.data.totalWithdrawnAmount)
+    })
+    .catch((err)=>{
       console.log(err)
     })
   };
@@ -282,7 +302,7 @@ const TraderWithdrawal = () => {
                 },
               },
             ]}
-          />;
+          />
         </div>
       </div>
     </>
