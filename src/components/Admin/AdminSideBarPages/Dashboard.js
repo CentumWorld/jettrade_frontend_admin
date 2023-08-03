@@ -581,9 +581,9 @@ function Dashboard() {
 
     return (
         <>
-            <div>
-                <Button type='primary' onClick={home}>Home</Button>
-            </div>
+            {/* <div>
+                <Button className='home_btm' type='primary' onClick={home}>Home</Button>
+            </div> */}
             <Modal className='document_verification'
                 title="Documents Verification"
                 open={visible}
