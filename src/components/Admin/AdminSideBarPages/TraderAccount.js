@@ -19,6 +19,7 @@ import axios from "axios";
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl
+
 const { Option } = Select;
 const TraderAccount = () => {
   const { id } = useParams();
@@ -236,7 +237,7 @@ const TraderAccount = () => {
     };
     axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
-      setToalAmount(res.data.result.tradingWallet);
+      setToalAmount(res.data.result.tradingWallet + res.data.result.wallet);
       console.log(res.data.result.tradingWallet)
     })
     .catch(err=>{
@@ -281,7 +282,7 @@ const TraderAccount = () => {
                 },
               },
             ]}
-          />;
+          />
         </div>
       </div>
     </>
