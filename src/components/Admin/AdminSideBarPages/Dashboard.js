@@ -632,8 +632,8 @@ function Dashboard() {
             <div className='admin-dashboard'>
                 <div className='admin-dashboard-card'>
                     <div className='profile-verification-heading'>
+                        <div className='txt-btn'>
                         <h5 style={{ fontFamily: 'Calibri' }}>User Profile Details</h5>
-
                         <NavLink
                             className='create-user'
                             to="/admindashboard/createuser"
@@ -644,14 +644,15 @@ function Dashboard() {
                         >
                             + Create User
                         </NavLink>
-                    </div>
+                        </div>
                     <Search
                         placeholder="Enter search text"
                         allowClear
                         enterButton="Search"
                         size="large"
                         onSearch={searchUser}
-                    />
+                        />
+                        </div>
                     <div className='user-table' style={{ marginTop: "64px", height: "calc(100vh - 64px)", overflow: "auto" }}>
                         <Table
                             dataSource={filteredDataSource}
