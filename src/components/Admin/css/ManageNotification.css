@@ -33,16 +33,37 @@
 .notification-text-area::placeholder {
     color: #808080;
 }
-.notification-text-area,.push-notification-button{
+.notification-text-area{
+    resize: vertical;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 100px;
     width: 300px;
 }
+
+.push-notification-button{
+width: 100px;
+}
+
 /* media query */
 @media screen and (max-width: 576px) { 
     .manage-notification-card{
         width: 100%;
     }
 
-    .notification-text-area,.push-notification-button{
+    .notification-text-area{
+        resize: vertical;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-height: 100px;
         width: 200px;
+        
+    }
+    .push-notification-button{
+        width: 70px;
     }
 }
