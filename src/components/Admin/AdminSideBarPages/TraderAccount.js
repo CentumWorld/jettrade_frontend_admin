@@ -263,7 +263,7 @@ const TraderAccount = () => {
             </div>
           </div>
         </div>
-        <div style={{ height: "500px", overflow: "auto" }}>
+        <div style={{ height: "500px", overflow: "auto", marginTop:"1rem" }}>
           <Table dataSource={userData}
 
           
