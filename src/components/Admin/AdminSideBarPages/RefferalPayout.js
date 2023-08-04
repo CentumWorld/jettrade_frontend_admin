@@ -148,7 +148,9 @@ const RefferalPayout = () => {
       <Tabs activeKey={activeTab} onChange={handleTabChange}>
         <TabPane tab="Request Payout" key="1">
           <div>
-            <Table columns={columns} dataSource={refferralsDetails} scroll={{ y: 400, x: true }} />
+            <Table columns={columns} dataSource={refferralsDetails} scroll={{ y: 400, x: true, y:320, textOverflow: 'ellipsis',
+            // overflow: "hidden",
+            whiteSpace: 'nowrap' }} />
           </div>
         </TabPane>
         {/* <TabPane tab="Approved Payout" key="2">

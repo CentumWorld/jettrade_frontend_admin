@@ -87,10 +87,16 @@ const ManageSubscription = () => {
     },
     //  { title: 'Subscription', dataIndex: 'paymentStatus', key: 'paymentStatus' },
     {
-      title: 'Subscription', dataIndex: 'paymentStatus', render: (paymentStatus) => {
-        const cellStyle = paymentStatus ? { color: 'green' } : { color: 'red' };
-        return <span style={cellStyle}>{paymentStatus ? 'Running' : 'Expired'} </span>
-      }
+      title: "Subscription",
+      dataIndex: "paymentStatus",
+      render: (paymentStatus) => {
+        const cellStyle = paymentStatus ? { color: "green" } : { color: "red" };
+        return (
+          <span style={cellStyle}>
+            {paymentStatus ? "Running" : "Expired"}{" "}
+          </span>
+        );
+      },
     },
     // { title: 'Reffered ID', dataIndex: 'reffered_id', key: 'reffered_id' },
     {
@@ -218,7 +224,13 @@ const ManageSubscription = () => {
                 // dataSource={filteredDataSource}
                 dataSource={data}
                 columns={columns}
-                scroll={{ x: true }}
+                scroll={{
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  // overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
                 pagination={{ pageSize: 7 }}
               />
             </div>
