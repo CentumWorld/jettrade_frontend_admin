@@ -240,7 +240,7 @@ body {
   width: 100%;
   background: #fff;
   border: 1px solid rgb(109, 107, 107);
-  border-radius: 5px;
+  /* border-radius: 5px; */
   cursor: pointer;
   text-align: left;
   font-weight: 600;
