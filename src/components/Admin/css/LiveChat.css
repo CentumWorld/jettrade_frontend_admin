@@ -22,6 +22,11 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  height: 300px;
+  width: 400px;
+  align-items: center;
+  box-shadow: 0 0 5px 2px #b1a0a0;
+  border-radius: 10px
 }
 
 .joinChatContainer h3 {
