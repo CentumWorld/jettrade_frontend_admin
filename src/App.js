@@ -39,7 +39,6 @@ import ManageNotification from './components/Admin/AdminSideBarPages/ManageNotif
 import ManageSubscription from './components/Admin/AdminSideBarPages/ManageSubscription';
 import ManageInvestment from './components/Admin/AdminSideBarPages/ManageInvestment';
 import RefferalPayout from './components/Admin/AdminSideBarPages/RefferalPayout';
-import MemberRefferalPayout from './components/Admin/AdminSideBarPages/MemberRefferalPayout';
 import LiveChat from './components/Admin/AdminSideBarPages/LiveChat';
 import RefferalLiveChat from './components/Admin/AdminSideBarPages/RefferalLiveChat';
 import FirstChartPage from './components/Admin/AdminSideBarPages/FirstChartPage';
@@ -134,7 +133,6 @@ function App() {
               <Route path='manage/subscription' element={<ManageSubscription/>} />
               <Route path='manage/investment' element={<ManageInvestment/>} />
               <Route path='manage/investor-refferal-payout' element={<RefferalPayout/>} />
-              <Route path='manage/member-refferal-payout' element={<MemberRefferalPayout/>} />
               <Route path='trader-chat' element={<LiveChat/>} />
               <Route path='refferal-chat' element={<RefferalLiveChat/>}/>
 

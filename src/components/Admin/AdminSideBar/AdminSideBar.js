@@ -141,12 +141,8 @@ const routes = [
             // },
             {
                 path:"manage/investor-refferal-payout",
-                name:" Investor Referral Payout"
+                name:"Referral Payout"
             },
-            {
-                path:"manage/member-refferal-payout",
-                name:"Member Referral Payout"
-            }
         ]
     },
     {

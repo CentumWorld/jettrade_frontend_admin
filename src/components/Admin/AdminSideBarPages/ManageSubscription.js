@@ -22,9 +22,13 @@ const ManageSubscription = () => {
   }, []);
 
   const fetchData = async () => {
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     try {
       const response = await axios.get(
-        `${apiurl}` + "/admin/fetch-user-details"
+        `${apiurl}` + "/admin/fetch-user-details",config
       );
       setData(response.data.result);
       console.log(response.data.result);
