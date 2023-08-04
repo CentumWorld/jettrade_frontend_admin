@@ -720,6 +720,7 @@ function Dashboard() {
             <Table
               dataSource={filteredDataSource}
               // dataSource={data}
+              style={{width: "fit-content"}}
               columns={columns}
               scroll={{ x: true, y: 320 }}
               pagination={{ pageSize: 7 }}

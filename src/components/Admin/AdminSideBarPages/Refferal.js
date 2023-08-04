@@ -594,9 +594,10 @@ const Refferal = () => {
                     /></div>
                     <div className='user-table'>
                         <Table
+                        style={{width: "fit-content",marginTop:"10px"}}
                             dataSource={refferalData}
                             columns={columns}
-                            scroll={{ x: true }}
+                            scroll={{ x: true , y:320}}
                             pagination={{ pageSize: 7 }}
                         />
                     </div>

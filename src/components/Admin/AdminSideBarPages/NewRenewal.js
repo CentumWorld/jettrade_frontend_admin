@@ -139,11 +139,11 @@ const NewRenewal = () => {
           </div>
           {divChange ? (
             <div>
-              <Table dataSource={newsUser} columns={columns} />
+              <Table style={{width: "fit-content"}} dataSource={newsUser} columns={columns} scroll={{x:true, y:320}}/>
             </div>
           ) : (
             <div>
-              <Table dataSource={renewalUser} columns={columnsRenewal} />
+              <Table style={{width: "fit-content"}} dataSource={renewalUser} columns={columnsRenewal} scroll={{x:true, y:320}} />
             </div>
           )}
         </div>

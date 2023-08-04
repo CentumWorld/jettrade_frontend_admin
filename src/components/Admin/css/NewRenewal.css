@@ -1,9 +1,6 @@
 .new-renewal-container{
     width: 100%;
-    height: calc(100vh - 100px );
-    border-left: 1px solid #01015d;
-    border-bottom: 1px solid #01015d;
-    border-right: 1px solid #01015d;
+    height: calc(100vh - 20vh );
     border-radius: 5px;
     position: sticky;
 }
@@ -26,3 +23,8 @@
     font-size: 1.2rem;
     font-family: Calibri;
 }
+
+
+.ant-table-thead .ant-table-cell {
+    background-color:  #f8f9fa !important;
+    }
