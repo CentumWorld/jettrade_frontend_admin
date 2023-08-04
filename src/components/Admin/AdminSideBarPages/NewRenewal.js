@@ -1,18 +1,20 @@
 
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
-import { Menu, Table } from "antd";
+import { Menu,Tabs, Table } from "antd";
 import axios from "axios";
 import moment from 'moment';
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl
+const { TabPane } = Tabs;
 
 const NewRenewal = () => {
   const [newsUser, setNewuser] = useState([]);
   const [renewalUser, setRenewalUser] = useState([]);
   const [divChange, setDivChange] = useState(true);
-  
+  const [activeTab, setActiveTab] = useState('1');
+
   const handleMenuSelect = (item) => {
     console.log("Selected menu item:", item.key);
     if (item.key === "newaccount") {
@@ -20,6 +22,9 @@ const NewRenewal = () => {
     } else {
       setDivChange(false);
     }
+  };
+  const handleTabChange = (key) => {
+    setActiveTab(key);
   };
 
   useEffect(() => {
@@ -89,19 +94,19 @@ const NewRenewal = () => {
       headers: { "Authorization": `Bearer ${token}` }
     };
     axios
-    .post(`${apiurl}`+
-      "/admin/fetch-all-new-paid-user",
-      {},
-    config
-    )
-    .then((res) => {
-      console.log(res.data.data);
-      setNewuser(res.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  
+      .post(`${apiurl}` +
+        "/admin/fetch-all-new-paid-user",
+        {},
+        config
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setNewuser(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   };
 
   const callApiToRenewalUser = () => {
@@ -110,7 +115,7 @@ const NewRenewal = () => {
       headers: { "Authorization": `Bearer ${token}` }
     };
     axios
-      .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user",{},  config)
+      .post(`${apiurl}` + "/admin/admin-fetch-all-renewal-user", {}, config)
       .then((res) => {
         console.log(res);
         setRenewalUser(res.data.data);
@@ -127,7 +132,7 @@ const NewRenewal = () => {
           <div className="new-renewal-content">
             <p>New/Renewal Users</p>
           </div>
-          <div>
+          {/* <div>
             <Menu
               mode="horizontal"
               defaultSelectedKeys={["home"]}
@@ -149,7 +154,20 @@ const NewRenewal = () => {
               // overflow: "hidden",
               whiteSpace: 'nowrap'}} dataSource={renewalUser} columns={columnsRenewal} scroll={{x:true, y:320}} />
             </div>
-          )}
+          )} */}
+
+          <Tabs activeKey={activeTab} onChange={handleTabChange}>
+            <TabPane tab="New Account" key="1">
+              <div>
+              <Table dataSource={newsUser} columns={columns} scroll={{ y: 400, x: true }} pagination={{ pageSize: 5 }} style={{padding:'5px'}} />
+              </div>
+            </TabPane>
+            <TabPane tab="Renewal" key="2">
+              <div>
+              <Table dataSource={renewalUser} columns={columnsRenewal} scroll={{ y: 400, x: true }} pagination={{ pageSize: 5 }}  />
+              </div>
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     </>
