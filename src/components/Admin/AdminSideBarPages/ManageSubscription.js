@@ -226,9 +226,8 @@ const ManageSubscription = () => {
                 columns={columns}
                 scroll={{
                   x: true,
-                  y: 320,
+                  // y: 320,
                   textOverflow: "ellipsis",
-                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
                 pagination={{ pageSize: 7 }}
