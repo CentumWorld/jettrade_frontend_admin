@@ -199,8 +199,8 @@ function Dashboard() {
       },
     },
     {
-      title: "Block/Not Block",
-      dataIndex: "isBlocked",
+      title:"Block/Notblock",
+      dataIndex:"isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
         return (
@@ -211,7 +211,7 @@ function Dashboard() {
       },
     },
     {
-      title: "Action",
+      title:"Action",
       dataIndex: "action",
       render: (_, record) => (
         <>
@@ -720,7 +720,9 @@ function Dashboard() {
             <Table
               dataSource={filteredDataSource}
               // dataSource={data}
-              style={{width: "fit-content"}}
+              style={{width: "fit-content", textOverflow: 'ellipsis',
+              // overflow: "hidden",
+              whiteSpace: 'nowrap'}}
               columns={columns}
               scroll={{ x: true, y: 320 }}
               pagination={{ pageSize: 7 }}

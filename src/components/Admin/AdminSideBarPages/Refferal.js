@@ -594,7 +594,9 @@ const Refferal = () => {
                     /></div>
                     <div className='user-table'>
                         <Table
-                        style={{width: "fit-content",marginTop:"10px"}}
+                        style={{width: "fit-content",marginTop:"10px", textOverflow: 'ellipsis',
+                        // overflow: "hidden",
+                        whiteSpace: 'nowrap'}}
                             dataSource={refferalData}
                             columns={columns}
                             scroll={{ x: true , y:320}}

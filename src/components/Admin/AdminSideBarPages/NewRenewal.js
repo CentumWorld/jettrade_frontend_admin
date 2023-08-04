@@ -137,9 +137,11 @@ const NewRenewal = () => {
               <Menu.Item key="renewal">Renewal</Menu.Item>
             </Menu>
           </div>
-          {divChange ? (
+         {divChange ? (
             <div>
-              <Table style={{width: "fit-content"}} dataSource={newsUser} columns={columns} scroll={{x:true, y:320}}/>
+              <Table style={{width: "fit-content", textOverflow: 'ellipsis',
+              // overflow: "hidden",
+              whiteSpace: 'nowrap'}} dataSource={newsUser} columns={columns} scroll={{x:true, y:320}}/>
             </div>
           ) : (
             <div>
