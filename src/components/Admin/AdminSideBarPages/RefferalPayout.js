@@ -187,6 +187,10 @@ const RefferalPayout = () => {
   const searchByUserId = (e) => {
     e.preventDefault();
     setSearchByUserID(e.target.value);
+    if(e.target.value === ''){
+      fetchTraderRefferalPayout("User");
+      fetchMemberRefferalPayout("Member");
+    }
   }
   const search = ()=>{
     console.log(searchByUserID);

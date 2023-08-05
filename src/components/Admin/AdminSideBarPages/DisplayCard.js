@@ -80,7 +80,8 @@ const DisplayCard = () => {
         axios.get(`${apiurl}`+'/admin/admin-sum-of-all-new-renewal-user-amount',config)
         .then((res)=>{
             console.log(res.data.totalSubscriptionAmount)
-            setTotalAmount(res.data.totalSubscriptionAmount)
+            const formattedRupees = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(res.data.totalSubscriptionAmount);
+            setTotalAmount(formattedRupees)
 
         })
         .catch(err=>{
@@ -115,7 +116,7 @@ const DisplayCard = () => {
                         <h6>Total Subscription Amount</h6>
                     </div>
                     <div className='trading-chart-view'>
-                        <span style={{color:'yellow',cursor:'pointer'}} ><FaRupeeSign/>{totalAmount}</span>
+                        <span style={{color:'yellow',cursor:'pointer'}} >{totalAmount}</span>
                     </div>
                 </div>
                 <div className='card1'>
