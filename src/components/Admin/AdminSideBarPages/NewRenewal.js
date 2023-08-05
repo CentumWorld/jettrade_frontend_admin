@@ -132,29 +132,6 @@ const NewRenewal = () => {
           <div className="new-renewal-content">
             <p>New/Renewal Users</p>
           </div>
-          {/* <div>
-            <Menu
-              mode="horizontal"
-              defaultSelectedKeys={["home"]}
-              onSelect={handleMenuSelect}
-            >
-              <Menu.Item key="newaccount">New Account</Menu.Item>
-              <Menu.Item key="renewal">Renewal</Menu.Item>
-            </Menu>
-          </div>
-         {divChange ? (
-            <div>
-              <Table style={{width: "fit-content", textOverflow: 'ellipsis',
-              // overflow: "hidden",
-              whiteSpace: 'nowrap'}} dataSource={newsUser} columns={columns} scroll={{x:true, y:320}}/>
-            </div>
-          ) : (
-            <div>
-              <Table style={{width: "fit-content", textOverflow: 'ellipsis',
-              // overflow: "hidden",
-              whiteSpace: 'nowrap'}} dataSource={renewalUser} columns={columnsRenewal} scroll={{x:true, y:320}} />
-            </div>
-          )} */}
 
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="New Account" key="1">

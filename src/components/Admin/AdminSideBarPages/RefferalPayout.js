@@ -14,8 +14,19 @@ const RefferalPayout = () => {
   const [activeTab, setActiveTab] = useState('1');
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState([]);
   const [searchByUserID, setSearchByUserID] = useState('');
+  const [role, setRole] = useState('User');
   const handleTabChange = (key) => {
     setActiveTab(key);
+    console.log(key);
+    if(key === '1'){
+      setRole('User')
+      setSearchByUserID('');
+      fetchTraderRefferalPayout("User");
+    }else{
+      setRole('Member')
+      setSearchByUserID('')
+      fetchMemberRefferalPayout("Member");
+    }
   };
 
   useEffect(() => {
@@ -164,7 +175,24 @@ const RefferalPayout = () => {
     setSearchByUserID(e.target.value);
   }
   const search = ()=>{
-    console.log(searchByUserID);
+    console.log(searchByUserID, role);
+    const data = {
+      role:role,
+      refferUserID:searchByUserID
+    }
+    let token = localStorage.getItem('adminToken')
+    const config = {
+      headers: { 'Authorization': `Bearer ${token}` }
+    };
+    axios.post(`${apiurl}` + '/admin/search-refferal-payout-by-reffer-userid',data,config)
+    .then((res)=>{
+      setReferralsDetails(res.data.filterData)
+      setUserRefferalApprovdDetails(res.data.filterData)
+    })
+    .catch((err)=>{
+      message.warning(err.response.data.message)
+    })
+    
   }
 
   return (
@@ -177,6 +205,7 @@ const RefferalPayout = () => {
               placeholder='Serch by user Id'
               onChange={searchByUserId}
               style={{ width: '120px' }}
+              value={searchByUserID}
             />
             <Button onClick={search} disabled={!searchByUserID} style={{background:'white'}}>Search</Button>
           </div>
