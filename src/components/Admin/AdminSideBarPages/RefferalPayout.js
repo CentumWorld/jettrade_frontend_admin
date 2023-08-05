@@ -13,6 +13,7 @@ const RefferalPayout = () => {
   const [activeTab, setActiveTab] = useState('1');
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState([]);
   const [searchByUserID, setSearchByUserID] = useState('');
+  const [role,setRole] = useState('User');
   const handleTabChange = (key) => {
     setActiveTab(key);
     console.log(key);
@@ -116,7 +117,7 @@ const RefferalPayout = () => {
       .post("/admin/approve-user-refferal-payout", data, config)
       .then((res) => {
         message.success("Approved");
-        fetchTraderRefferalPayout();
+        //fetchTraderRefferalPayout();
         fetchMemberRefferalPayout("Member");
       })
       .catch((err) => {
@@ -193,7 +194,23 @@ const RefferalPayout = () => {
     }
   }
   const search = ()=>{
-    console.log(searchByUserID);
+
+    const data = {
+      role:role,
+      refferUserID:searchByUserID
+    }
+    let token = localStorage.getItem('adminToken')
+    const config = {
+      headers: { 'Authorization': `Bearer ${token}` }
+    };
+    axios.post(`${apiurl}` + '/admin/search-refferal-payout-by-reffer-userid',data,config)
+    .then((res)=>{
+      setReferralsDetails(res.data.filterData)
+      setUserRefferalApprovdDetails(res.data.filterData)
+    })
+    .catch((err)=>{
+      message.warning(err.response.data.message)
+    })
   }
 
   return (
