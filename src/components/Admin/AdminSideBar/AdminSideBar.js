@@ -1,18 +1,20 @@
 import React,{useState} from "react"
 import { motion } from "framer-motion"
 import '../AdminSideBar/AdminSideBar.css'
-import { MdDashboard, MdSend, MdCloudUpload,MdAutorenew } from 'react-icons/md';
+import { MdDashboard, MdSend, MdCloudUpload,MdAutorenew, MdUnsubscribe } from 'react-icons/md';
 import { BsFillChatTextFill } from 'react-icons/bs'
-import { FaMoneyBillWaveAlt, FaBars, FaCarrot, FaUserPlus, FaBullseye,FaSlideshare,FaUserTie,FaThemeco } from 'react-icons/fa'
+import { FaMoneyBillWaveAlt, FaBars, FaCarrot, FaUserPlus, FaBullseye,FaSlideshare,FaUserTie,FaThemeco, FaAmazonPay } from 'react-icons/fa'
 import {SiManageiq} from 'react-icons/si'
 import{FcNeutralTrading} from 'react-icons/fc'
 import {MdBarChart} from "react-icons/md"
 import { RxCountdownTimer } from 'react-icons/rx'
 import { TfiMenuAlt, TfiGift } from 'react-icons/tfi'
-import { IoTrophy } from 'react-icons/io5'
+import { IoNotificationsSharp, IoTrophy } from 'react-icons/io5'
 import { BiStar } from 'react-icons/bi'
 import { NavLink } from "react-router-dom"
 import AdminSideBarMenu from "./AdminSideBarMenu";
+import {GiTrade} from "react-icons/gi"
+import {RiUserShared2Fill} from "react-icons/ri"
 
 
 
@@ -129,11 +131,13 @@ const routes = [
         subRoutes:[
             {
                 path:"manage/push-notification",
-                name:' Manage Push Notification'
+                name:' Manage Push Notification',
+                // icon: <IoNotificationsSharp />,
             },
             {
                 path:"manage/subscription",
-                name:"Manage Subscription"
+                name:"Manage Subscription",
+                // icon: <MdUnsubscribe />
             },
             // {
             //     path:"manage/investment",
@@ -141,7 +145,8 @@ const routes = [
             // },
             {
                 path:"manage/investor-refferal-payout",
-                name:"Referral Payout"
+                name:"Referral Payout",
+                // icon: <FaAmazonPay />
             },
         ]
     },
@@ -152,11 +157,13 @@ const routes = [
         subRoutes:[
             {
                 path:"trader-chat",
-                name:'Traders'
+                name:'Traders',
+                // icon: <GiTrade />
             },
             {
                 path:"refferal-chat",
-                name:'Referral'
+                name:'Referral',
+                // icon: <RiUserShared2Fill />
             }
         ]
     },

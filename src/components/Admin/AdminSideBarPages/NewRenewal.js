@@ -196,10 +196,11 @@ const NewRenewal = () => {
               />
               {
                 buttonDisable ? <Button type="primary" onClick={filterData} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>
-
-                  : <Button type="primary" onClick={filterDataRenewal} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>}
+                
+                : <Button type="primary" onClick={filterDataRenewal} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>}
             </div>
           </div>
+                </div>
 
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="New Account" key="1">
@@ -213,7 +214,6 @@ const NewRenewal = () => {
               </div>
             </TabPane>
           </Tabs>
-        </div>
       </div>
     </>
   );

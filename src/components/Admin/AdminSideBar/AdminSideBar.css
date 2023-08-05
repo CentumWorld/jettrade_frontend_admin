@@ -10,7 +10,7 @@
 }
 
 .admin-sidebar {
-    width: 400px;
+    width: max-content;
     background: #fff;
     color: rgb(37, 35, 35);
     height: 90vh;
