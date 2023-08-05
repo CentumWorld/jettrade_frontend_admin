@@ -114,7 +114,7 @@ const RefferalPayout = () => {
     };
 
     axios
-      .post("/admin/approve-user-refferal-payout", data, config)
+      .post(`${apiurl}`+"/admin/approve-user-refferal-payout", data, config)
       .then((res) => {
         message.success("Approved");
         //fetchTraderRefferalPayout();
