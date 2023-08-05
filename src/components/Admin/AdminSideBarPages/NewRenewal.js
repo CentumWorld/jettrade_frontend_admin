@@ -205,13 +205,13 @@ const NewRenewal = () => {
           <Tabs activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="New Account" key="1">
               <div>
-                <Table dataSource={newsUser} columns={columns} scroll={{ y: 320, x: true }} pagination={{ pageSize: 5 }} style={{ padding: '5px',textOverflow: 'ellipsis',
+                <Table dataSource={newsUser} columns={columns} scroll={{ y: 320, x: true }} pagination={{ pageSize: 7 }} style={{ padding: '5px',textOverflow: 'ellipsis',
             whiteSpace: 'nowrap' }} />
               </div>
             </TabPane>
             <TabPane tab="Renewal" key="2">
-              <div>
-                <Table dataSource={renewalUser} columns={columnsRenewal} scroll={{ y: 320, x: true }} pagination={{ pageSize: 5 }} style={{ padding: '5px',textOverflow: 'ellipsis',
+              <div> 
+                <Table dataSource={renewalUser} columns={columnsRenewal} scroll={{ y: 320, x: true }} pagination={{ pageSize: 7 }} style={{ padding: '5px',textOverflow: 'ellipsis',
             whiteSpace: 'nowrap' }} />
               </div>
             </TabPane>
