@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../css/ManageSubscription.css";
 import axios from "axios";
-import { Table, Modal, Row, Col, Menu, Dropdown, message } from "antd";
+import { Table, Modal, Row, Col, Select, Input, Menu, Dropdown, message, Button } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from "../../../baseUrl";
+
+const { Option } = Select;
 
 const apiurl = baseUrl.apiUrl;
 
@@ -12,6 +14,8 @@ const ManageSubscription = () => {
   const [data, setData] = useState([]);
   const [myID, setMyID] = useState("");
   const [userStatus, setUserStatus] = useState(false);
+  const [dropDownValue, setDropDownValue] = useState('All');
+  const [searchButtonVisible, setSearchButtonVisible] = useState(false);
 
   //isBlock
   const [isBlocked, setIsBlock] = useState(true);
@@ -28,7 +32,7 @@ const ManageSubscription = () => {
     };
     try {
       const response = await axios.get(
-        `${apiurl}` + "/admin/fetch-user-details",config
+        `${apiurl}` + "/admin/fetch-user-details", config
       );
       setData(response.data.result);
       console.log(response.data.result);
@@ -93,12 +97,24 @@ const ManageSubscription = () => {
     {
       title: "Subscription",
       dataIndex: "paymentStatus",
-      render: (paymentStatus) => {
-        const cellStyle = paymentStatus ? { color: "green" } : { color: "red" };
+      render: (paymentStatus, record) => {
+        const { paymentCount } = record;
+        let cellStyle = 'red';
+        if(paymentStatus && paymentCount > 0 ){
+         cellStyle = { color: "green" };
+        }else if(!paymentStatus && paymentCount ){
+           cellStyle = { color: "red" };
+        }else{
+           cellStyle = { color: "#F6BE00" };
+        }
+        // const cellStyle = paymentStatus ? { color: "green" } : { color: "red" };
         return (
           <span style={cellStyle}>
-            {paymentStatus ? "Running" : "Expired"}{" "}
+            {paymentStatus && paymentCount > 0 ? "Running" : ""}
+            {!paymentStatus && paymentCount > 0 ? "Expired":""}
+            {!paymentStatus && paymentCount === 0 ? "Trial":""}
           </span>
+          
         );
       },
     },
@@ -217,29 +233,60 @@ const ManageSubscription = () => {
     });
   };
 
+  const handleDropDown = (value) => {
+    setDropDownValue(value)
+    if (value === '') {
+      setSearchButtonVisible(true)
+    }
+  }
+
   return (
     <>
-      <div className="manage-subscription-page">
-        <div className="manage-subscription-card">
-          <div className="manage-subscription-heading">
-            <p> Manage Subscription</p>
-            <div className="user-subscription-table">
-              <Table
-                // dataSource={filteredDataSource}
-                dataSource={data}
-                columns={columns}
-                scroll={{
-                  x: true,
-                  // y: 320,
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                pagination={{ pageSize: 7 }}
-              />
-            </div>
+      {/* <div className="manage-subscription-page"> */}
+      {/* <div className="manage-subscription-card"> */}
+      <div className="manage-subscription-heading">
+        <div className="manage-subscription-navbar">
+          <p> Manage Subscription</p>
+          <div>
+            <Input
+              placeholder="Search by userid"
+              style={{ width: '150px', background:'white' }}
+              value={dropDownValue}
+              disabled={!searchButtonVisible}
+              
+            />
+
+            {searchButtonVisible ? <Button>Search</Button> :
+              <Select defaultValue="Select Stage" style={{ width: 150 }} onChange={handleDropDown}>
+                <Option value="All">All</Option>
+                <Option value="Runnig Stage">Running Stage</Option>
+                <Option value="Trial Stage">Trial Stage</Option>
+                <Option value="Expired Stage">Expired Stage</Option>
+                <Option value="">Search by user ID</Option>
+              </Select>
+            }
           </div>
+
+
+        </div>
+
+        <div className="user-subscription-table">
+          <Table
+            // dataSource={filteredDataSource}
+            dataSource={data}
+            columns={columns}
+            scroll={{
+              x: true,
+              y: 360,
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            pagination={{ pageSize: 7 }}
+          />
         </div>
       </div>
+      {/* </div> */}
+      {/* </div> */}
       <ToastContainer />
     </>
   );

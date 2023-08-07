@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { FaRupeeSign } from 'react-icons/fa'
 import '../css/DisplayCard.css';
 import axios from 'axios';
 import baseUrl from '../../../baseUrl';
+import RunningProgressiveBar from './RunningProgressiveBar';
+import TrialProgressiveBar from './TrialProgressiveBar';
+import ExpireProgressiveBar from './ExpireProgressiveBar';
 
 const apiurl = baseUrl.apiUrl
 
@@ -88,10 +90,22 @@ const DisplayCard = () => {
             console.log(err)
         })
     }
+    const percent = 75;
+    const percent1 = 25;
+    const percent2 = 25;
 
     return (
         <>
             <div className='card1-container'>
+                <div className='card1'>
+                    <RunningProgressiveBar percent={percent}/>
+                </div>
+                <div className='card1'>
+                    <TrialProgressiveBar percent={percent1}/>
+                </div>
+                <div className='card1'>
+                    <ExpireProgressiveBar percent={percent2}/>
+                </div>
                 <div className='card1'>
                     <div className='d-flex'>
                         <h6>UserID :</h6> &nbsp;&nbsp; <span style={{color:'yellow'}}>{adminDetails.adminid}</span>
@@ -143,14 +157,6 @@ const DisplayCard = () => {
                         <span style={{color:'yellow',cursor:'pointer'}} onClick={viewRefferalrDetails} >View</span>
                     </div>
                 </div>
-                {/* <div className='card1'>
-                    <div className='withdrawal-card'>
-                        <h6>Withdrawal</h6>
-                    </div>
-                    <div className='withdrawal-card-view'>
-                        <span style={{color:'yellow',cursor:'pointer'}} onClick={viewWithdrawal}>View</span>
-                    </div>
-                </div> */}
                 <div className='card1'>
                     <div className='push-notification-card'>
                         <h6>Push Notification</h6>
