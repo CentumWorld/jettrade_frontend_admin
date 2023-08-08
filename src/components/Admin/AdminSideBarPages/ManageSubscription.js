@@ -302,7 +302,7 @@ const ManageSubscription = () => {
       <div className="manage-subscription-heading">
         <div className="manage-subscription-navbar">
           <p> Manage Subscription</p>
-          <div>
+          <div className="searcing-Box">
             <Input
               placeholder="Search by userid"
               style={{ width: '150px', background:'white' }}
