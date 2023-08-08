@@ -16,6 +16,7 @@ const ManageSubscription = () => {
   const [userStatus, setUserStatus] = useState(false);
   const [dropDownValue, setDropDownValue] = useState('All');
   const [searchButtonVisible, setSearchButtonVisible] = useState(false);
+  const [userIDForFilter,setUserIDForFilter] = useState('');
 
   //isBlock
   const [isBlocked, setIsBlock] = useState(true);
@@ -235,9 +236,63 @@ const ManageSubscription = () => {
 
   const handleDropDown = (value) => {
     setDropDownValue(value)
+      callApiToFilterDataByRunningStage(value);
+    if(value === 'All' ){
+      fetchData();
+    }  
     if (value === '') {
       setSearchButtonVisible(true)
     }
+  }
+
+  const callApiToFilterDataByRunningStage = (data)=>{
+    const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+    axios.get(`${apiurl}` + "/admin/find_Users_On_The_Basis_Of_Payment_Status",config)
+    .then((res)=>{
+      console.log(res.data);
+      if(data === 'Runnig Stage'){
+        setData(res.data.runningUsers)
+      }else if(data === 'Trial Stage'){
+        setData(res.data.inactiveUsers)
+      }else if(data === 'Expired Stage'){
+        setData(res.data.expiredUsers)
+      }
+      
+    })
+    .catch((err=>{
+      console.log(err.response.data.message)
+    }))
+  }
+
+
+  const handleUserIDInputFunction = (e)=>{
+    setUserIDForFilter(e.target.value);
+    setDropDownValue(e.target.value)
+  }
+  const callApiTOSigleSubscriptionUser = () =>{
+    let data = {
+      userid:dropDownValue
+    }
+    console.log(data);
+    const token = localStorage.getItem("adminToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios.post(`${apiurl}` + "/admin/fetch_particular_user_payment_Status",data,config)
+    .then((res)=>{
+      console.log(res.data.user)
+      setData([res.data.user])
+    })
+    .catch((err=>{
+        message.warning(err.response.data.message)
+    }))
   }
 
   return (
@@ -253,10 +308,10 @@ const ManageSubscription = () => {
               style={{ width: '150px', background:'white' }}
               value={dropDownValue}
               disabled={!searchButtonVisible}
-              
+              onChange={handleUserIDInputFunction}
             />
 
-            {searchButtonVisible ? <Button>Search</Button> :
+            {searchButtonVisible ? <Button onClick={callApiTOSigleSubscriptionUser}>Search</Button> :
               <Select defaultValue="Select Stage" style={{ width: 150 }} onChange={handleDropDown}>
                 <Option value="All">All</Option>
                 <Option value="Runnig Stage">Running Stage</Option>
@@ -273,6 +328,7 @@ const ManageSubscription = () => {
         <div className="user-subscription-table">
           <Table
             // dataSource={filteredDataSource}
+            style={{textOverflow:'ellipsis', whiteSpace:'nowrap'}}
             dataSource={data}
             columns={columns}
             scroll={{

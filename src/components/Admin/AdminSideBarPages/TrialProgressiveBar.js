@@ -8,10 +8,10 @@ const TrialProgressiveBar = ({percent}) => {
             <div className='progress-container'>
                 <div style={{ textAlign: 'center', fontWeight: '500' }}>
                     <p>Trial stage</p>
-                    <p>25/100 Traders</p>
+                    <p>{percent.trialCount}/{percent.totalCount} Traders</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <Progress  type="circle" strokeColor={progressColor} percent={percent} width={80} format={() => <span style={{ color:'#fff' }}>{`${percent}%`}</span>} />
+                    <Progress  type="circle" strokeColor={progressColor} percent={percent.trialPercentage} width={80} format={() => <span style={{ color:'#fff' }}>{`${percent.trialPercentage}%`}</span>} />
                 </div>
             </div>
         </>

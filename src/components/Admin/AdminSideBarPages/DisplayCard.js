@@ -14,11 +14,21 @@ const DisplayCard = () => {
     const [adminDetails, setAdminDetails] = useState({
         adminid: '',
     });
-    const [totalAmount, setTotalAmount] = useState(0)
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [progressiveBar, setProgressigeBar] = useState({
+        totalCount:0,
+        runningCount:0,
+        trialCount:0,
+        expireCount:0,
+        runningPercentage:0,
+        trialPercentage:0,
+        expirePercentage:0
+    });
     
     useEffect(() => {
         setAdminDetails({ adminid: localStorage.getItem('adminId')})
         callApiToSubscriptionCharge();
+        callApiToTotalUserRunningTrialExpire();
        
     }, [])
 
@@ -93,18 +103,41 @@ const DisplayCard = () => {
     const percent = 75;
     const percent1 = 25;
     const percent2 = 25;
+    const callApiToTotalUserRunningTrialExpire = ()=>{
+        const token = localStorage.getItem('adminToken');
+        const config = {
+            headers: { Authorization: `Bearer ${token}` },
+          };
+        axios.get(`${apiurl}`+"/admin/total_Count_Of_Payment_Status_Of_User",config)
+        .then((res)=>{
+            setProgressigeBar({
+                totalCount:res.data.totalCount,
+                runningCount:res.data.runningCount,
+                runnigPercentage:res.data.runningPercentage ,
+                trialCount:res.data.inactiveCount,
+                trialPercentage:res.data.inactivePercentage,
+                expireCount:res.data.expiredCount,
+                expirePercentage:res.data.expiredPercentage
+
+
+            })
+        })
+        .catch((err=>{
+            console.log(err.response.data)
+        }))
+    }
 
     return (
         <>
             <div className='card1-container'>
                 <div className='card1'>
-                    <RunningProgressiveBar percent={percent}/>
+                    <RunningProgressiveBar percent={progressiveBar}/>
                 </div>
                 <div className='card1'>
-                    <TrialProgressiveBar percent={percent1}/>
+                    <TrialProgressiveBar percent={progressiveBar}/>
                 </div>
                 <div className='card1'>
-                    <ExpireProgressiveBar percent={percent2}/>
+                    <ExpireProgressiveBar percent={progressiveBar}/>
                 </div>
                 <div className='card1'>
                     <div className='d-flex'>

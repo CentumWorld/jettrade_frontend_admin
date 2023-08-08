@@ -9,10 +9,10 @@ const RunningProgressiveBar = ({ percent }) => {
             <div className='progress-container'>
                 <div style={{ textAlign: 'center', fontWeight: '500' }}>
                     <p>Runing stage</p>
-                    <p>75/100 Traders</p>
+                    <p>{percent.runningCount}/{percent.totalCount} Traders</p>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <Progress  type="circle" strokeColor={progressColor} percent={percent} width={80} format={() => <span style={{ color:'#fff' }}>{`${percent}%`}</span>} />
+                    <Progress  type="circle" strokeColor={progressColor} percent={percent.runnigPercentage} width={80} format={() => <span style={{ color:'#fff' }}>{`${percent.runnigPercentage}%`}</span>} />
                 </div>
             </div>
         </>
