@@ -15,6 +15,7 @@ import { NavLink } from "react-router-dom"
 import AdminSideBarMenu from "./AdminSideBarMenu";
 import {GiTrade} from "react-icons/gi"
 import {RiUserShared2Fill} from "react-icons/ri"
+import { AiFillVideoCamera } from "react-icons/ai";
 
 
 
@@ -181,7 +182,12 @@ const routes = [
         path:'/admindashboard/video',
         name:"upload videos",
         icon:<MdCloudUpload />
-    }
+    },
+    {
+        path: '/admindashboard/allvideo',
+        name: "Video",
+        icon: <AiFillVideoCamera />,
+      },
 
 ]
 
