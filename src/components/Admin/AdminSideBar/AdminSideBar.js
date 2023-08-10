@@ -194,11 +194,14 @@ function AdminSideBar() {
     // console.log(showModal);
 
     const toggle = () => setIsOpen(!isOpen);
+    const isSubAdmin = localStorage.getItem('isSubAdmin');
+    const userid = localStorage.getItem('userid');
     return (
         <div className='admin-sidebar-main-container'>
             <motion.div animate={{ width: isOpen ? '350px' : '50px' }} className='admin-sidebar'>
                 <div className="admin-top-section">
-                    {isOpen && <h1 className='admin_logo'>Admin</h1>}
+                    {isOpen && <h1 className='admin_logo'>{isSubAdmin?"Sub Admin":"Admin"}</h1>}
+                    {isOpen && <div>{isSubAdmin?<small>{userid}</small>:""}</div>}
 
                     {/* <h1 className="">Badal</h1> */}
                     <div className="admin-bars">

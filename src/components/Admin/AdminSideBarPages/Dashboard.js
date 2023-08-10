@@ -70,9 +70,9 @@ function Dashboard() {
 
   //isBlock
   const [isBlocked, setIsBlock] = useState(true);
-
+  const [isSubAdmin, setIsSubAdmin] = useState(false);
   // search bar -------------
-
+  const notAllow = localStorage.getItem('isSubAdmin'); 
   const handleSearch = (value) => {
     setSearchText(value);
     // Perform search or other operations based on the search text
@@ -103,7 +103,7 @@ function Dashboard() {
         headers: { Authorization: `Bearer ${token}` },
       };
       const response = await axios.get(
-        `${apiurl}` + "/admin/fetch-user-details",
+        "/admin/fetch-user-details",
         config
       );
 
@@ -128,7 +128,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}` + "/admin/verify-user", data, config)
+      .post("/admin/verify-user", data, config)
       .then((res) => {
         toast.success("User Verify Successfully", {
           autoClose: 2000,
@@ -153,7 +153,7 @@ function Dashboard() {
     };
 
     axios
-      .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
+      .post("/admin/fetch-particular-user-details", data, config)
       .then((res) => {
         console.log(res.data);
         setAadhar(res.data.result.aadhar);
@@ -199,8 +199,8 @@ function Dashboard() {
       },
     },
     {
-      title:"Block/Notblock",
-      dataIndex:"isBlocked",
+      title: "Block/Notblock",
+      dataIndex: "isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
         return (
@@ -211,7 +211,7 @@ function Dashboard() {
       },
     },
     {
-      title:"Action",
+      title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <>
@@ -233,7 +233,8 @@ function Dashboard() {
                   record._id,
                   record.userid,
                   record.status,
-                  record.isBlocked
+                  record.isBlocked,
+                  record.isSubAdmin
                 )
               }
               style={{ cursor: "pointer" }}
@@ -245,11 +246,12 @@ function Dashboard() {
   ];
 
   // handle action
-  const trigerAction = (id, userid, status, block) => {
+  const trigerAction = (id, userid, status, block, subadmin) => {
     setMyID(id, block);
     setUserStatus(status);
     setIsBlock(block);
     setUserID(userid);
+    setIsSubAdmin(subadmin)
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -273,6 +275,9 @@ function Dashboard() {
     if (e.key === "withdrawal") {
       navigate(`/admindashboard/trader-withdrawal/${userId}`);
     }
+    if (e.key === "admin") {
+      makeSubAdmin(myID);
+    }
   };
 
   const menu = (
@@ -285,6 +290,7 @@ function Dashboard() {
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
       <Menu.Item key="account">Account</Menu.Item>
       <Menu.Item key="withdrawal">Withdrawal</Menu.Item>
+      <Menu.Item disabled={notAllow} key="admin">{isSubAdmin ? "Remove Sub Admin":"Make Sub Admin"}</Menu.Item>
     </Menu>
   );
 
@@ -302,7 +308,7 @@ function Dashboard() {
     };
 
     axios
-      .post(`${apiurl}` + "/admin/fetch-user-document-adminside", data, config)
+      .post( "/admin/fetch-user-document-adminside", data, config)
       .then((res) => {
         //console.log(res.data.result)
         if (res.data.result.length > 0) {
@@ -363,7 +369,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
+      .post(  "/admin/fetch-particular-user-details", data, config)
       .then((result) => {
         console.log(result.data.result, "327");
         setUserType(result.data.result.userType);
@@ -453,7 +459,7 @@ function Dashboard() {
         },
       };
       axios
-        .post(`${apiurl}` + "/admin/user-details-edit-admin", data, config)
+        .post( "/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -483,7 +489,7 @@ function Dashboard() {
         },
       };
       axios
-        .post(`${apiurl}` + "/admin/user-details-edit-admin", data, config)
+        .post( "/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -520,7 +526,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}` + "/admin/delete-user-admin", data, config)
+      .post( "/admin/delete-user-admin", data, config)
       .then((res) => {
         fetchData();
         message.success("Deleted Successfully");
@@ -549,7 +555,7 @@ function Dashboard() {
           block: !isBlocked,
         };
         axios
-          .post(`${apiurl}` + "/admin/block-user", data, config)
+          .post( "/admin/block-user", data, config)
           .then((res) => {
             message.success(res.data.message);
             fetchData();
@@ -599,6 +605,45 @@ function Dashboard() {
   const home = () => {
     navigate("/admindashboard/dashboard");
   };
+
+  // make sub admin
+
+  const makeSubAdmin = (myID) =>{
+    const actionText = isSubAdmin ? "Remove" : "Make";
+    Modal.confirm({
+      
+      title: `${actionText} Sub-Admin`,
+      content: `Do you want to ${actionText.toLowerCase()} this user Sub-Admin?`,
+      okText: 'Sure',
+      cancelText: 'Cancel',
+      onOk() {
+        let data = {
+          userId: myID,
+          isSubAdmin:!isSubAdmin
+        }
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        axios.post("/admin/manage-subadmin",data,config)
+        .then((res)=>{
+          console.log(res.data)
+          message.success(res.data.message);
+          fetchData();
+        })
+        .catch((err=>{
+          console.log(err.response.data.message)
+        }))
+      },
+      onCancel() {
+        
+      },
+    });
+    console.log(myID)
+  }
+ 
 
   return (
     <>
@@ -720,13 +765,15 @@ function Dashboard() {
             <Table
               dataSource={filteredDataSource}
               // dataSource={data}
-              style={{width: "fit-content", textOverflow: 'ellipsis',
-              // overflow: "hidden",
-              whiteSpace: 'nowrap'}}
+              style={{
+                width: "fit-content", textOverflow: 'ellipsis',
+                // overflow: "hidden",
+                whiteSpace: 'nowrap'
+              }}
               columns={columns}
               scroll={{ x: true, y: 320 }}
               pagination={{ pageSize: 7 }}
-          
+
             />
           </div>
         </div>
@@ -748,7 +795,7 @@ function Dashboard() {
               Submit
             </Button>,
           ]}
-          //footer={null}
+        //footer={null}
         >
           <div className="edit-container">
             <div>
@@ -886,6 +933,7 @@ function Dashboard() {
             </div>
           </div>
         </Modal>
+
       </div>
     </>
   );

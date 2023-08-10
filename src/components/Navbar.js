@@ -8,6 +8,8 @@ import UserLogin from "./UserLogin";
 import Button from "react-bootstrap/Button";
 import logo from "./../img/logo1.png";
 import { RiLogoutBoxLine, RiLogoutCircleFill } from "react-icons/ri";
+import { Dropdown, Menu } from "antd";
+import SubAdmin from "./SubAdmin";
 
 function Navbar() {
   const { state, dispatch } = useContext(UserContext);
@@ -15,14 +17,34 @@ function Navbar() {
 
   const [userShow, setUserShow] = useState(false);
   const [adminShow, setAdminShow] = useState(false);
+  const [subAdminShow, setSubAdminShow] = useState(false);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
 
-  const openAdminLoginFuction = () => setAdminShow(true);
   const pull_addmin = (data) => setAdminShow(data);
 
+  const pullsubadmin = (data) => setSubAdminShow(data);
+
   const RenderMenu = () => {
+
+
+    const adminSubAdminModal = (e) =>{
+      if(e.key === 'admin'){
+        setAdminShow(true)
+      }
+      if(e.key=== "subadmin"){
+        setSubAdminShow(true);
+      }
+    }
+    const menu = (
+      <Menu onClick={adminSubAdminModal}>
+        <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="subadmin">Sub Admin</Menu.Item>
+      </Menu>
+    );
+
+    
     if (login) {
       return (
         <>
@@ -31,10 +53,10 @@ function Navbar() {
               className="btn rounded btn-outline-primary rounded-pill"
               to="/logout"
               aria-current="page"
-              style={{ marginRight: "1rem", display:'flex', alignItems:'center', gap:'.5rem', width:"max-content"}}
+              style={{ marginRight: "1rem", display: 'flex', alignItems: 'center', gap: '.5rem', width: "max-content" }}
             >
               Logout
-              <RiLogoutBoxLine style={{height:'1rem', width:'1rem'}}/>
+              <RiLogoutBoxLine style={{ height: '1rem', width: '1rem' }} />
             </NavLink>
           </li>
         </>
@@ -44,21 +66,17 @@ function Navbar() {
         <>
           <li className="nav-item">
             {/* <button className=" btn rounded btn-outline-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#adminLogin" aria-current="page">Admin</button> */}
-            <Button
-              variant=" btn rounded btn-outline-primary rounded-pill"
-              onClick={openAdminLoginFuction}
-            >
-              Admin
-            </Button>
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <Button
+                variant=" btn rounded btn-outline-primary rounded-pill"
+                //onClick={openAdminLoginFuction}
+              >
+                Login
+              </Button>
+            </Dropdown>
+
           </li>
           &nbsp;&nbsp;
-          {/* <li className="nav-item">
-                       
-                        <Button variant=" btn rounded btn-outline-primary rounded-pill" onClick={openUserLoginFuction}>
-                            User
-                        </Button>
-                       
-                    </li> */}
         </>
       );
     }
@@ -85,7 +103,7 @@ function Navbar() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className="navbar-toggler-icon"/>
+              <span className="navbar-toggler-icon" />
             </button>
           </div>
         </div>
@@ -94,14 +112,10 @@ function Navbar() {
             <RenderMenu />
           </ul>
         </div>
-        {/* </div> */}
-        {/* {userShow?
-                    <UserLogin func={pull_data}/>:''
-
-                } */}
 
         {/* Admin Login */}
         {adminShow ? <AdminLogin adminFunc={pull_addmin} /> : ""}
+        {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin}/> : ""}
       </nav>
     </>
   );

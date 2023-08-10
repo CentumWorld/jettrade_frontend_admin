@@ -22,6 +22,8 @@ function Logout() {
             localStorage.removeItem('login');
             localStorage.removeItem('adminToken');
             localStorage.removeItem('adminId');
+            localStorage.removeItem('isSubAdmin');
+            localStorage.removeItem('userid');
             navigate('/');
         }).catch((error) => {
             navigate('/');
