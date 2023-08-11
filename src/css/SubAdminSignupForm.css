@@ -1,0 +1,133 @@
+.registration-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90vh;
+    /* background-color:rgb(240,239,240); */
+    background-color:  rgb(243,245,254);
+}
+.registration-body{
+    width: 50%;
+    height: 90%;
+    border-radius: 20px;
+    padding: 15px;
+    background: #fff;
+    overflow: scroll;
+
+}
+.registration-body::-webkit-scrollbar{
+    display: none;
+}
+.registration-body p{
+    text-align: center;
+    font-family: Calibri;
+    font-weight: 600; 
+}
+.input_label p{
+    text-align: start;
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-family: Calibri;
+}
+
+.gender-dob{
+        display: flex;
+        justify-content: space-between;    
+}
+.gender-dob-section p{
+    text-align: start;
+    margin-bottom: 0px;
+}
+.custom-datepicker .ant-picker-input input::placeholder {
+    color:#808080;
+  }
+.aadhar-front{
+    line-height: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.aadhar-front p{
+    text-align: start;
+}
+.aadhar_upload {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.aadhar-back{
+    line-height: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.aadhar-back p{
+    text-align: start;
+}
+.Pan_card{
+    line-height: 0px;
+}
+.pan_card p{
+    text-align: start;
+    margin-bottom: 0px;
+}
+.password-input p{
+    text-align: start;
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-family: Calibri;
+}
+.custom-placeholder-input::placeholder{
+    color:#808080;
+}
+.submit-footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+
+}
+.submit-footer p{
+    font-weight: 500;
+    font-family: Calibri;
+}
+.submit-footer button{
+    margin-left: 10px;
+}
+.form-content form{
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    padding: 10px;
+    /* background: linear-gradient(red,blue); */
+}
+@media only screen and (min-width: 768px) and (max-width:1024px){
+    .registration-body{
+        width: 70%
+    }    
+}
+@media only screen and (max-width: 768px){
+    .registration-body{
+        width: 70%
+    }    
+}
+@media only screen and (max-width: 576px){
+    .registration-body{
+        width: fit-content;
+        
+    }
+    /* .aadhar_upload{
+        display: block;
+        width: auto;
+         
+    } */
+     /* .aadhar_front_mobile {
+        margin-bottom: 10px;
+    }  */
+    .submit-footer {
+        display: block;
+    }
+    .submit-footer button{
+        width: 100%;
+        margin-bottom: 10px;
+        margin-left: 0px;
+    }
+    
+}
