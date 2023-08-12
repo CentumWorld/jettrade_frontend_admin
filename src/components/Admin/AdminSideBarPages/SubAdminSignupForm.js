@@ -197,7 +197,7 @@ const SubAdminSignUpForm = () => {
 
         localStorage.setItem("subadminfname", res.data.fname);
 
-        navigate("/admindashboard/dashboard");
+        navigate("/admindashboard/subadmin");
 
         setSpin(false);
       } catch (error) {
@@ -507,7 +507,7 @@ const SubAdminSignUpForm = () => {
 
               <div className="submit-footer">
                 <Button type="primary" onClick={subadminFormSubmit}>
-                  Create
+                  {spin?<Spin/>:'Create'}
                 </Button>
               </div>
             </form>

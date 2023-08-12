@@ -9,6 +9,7 @@ import {
   MdUnsubscribe,
 } from "react-icons/md";
 import { BsFillChatTextFill } from "react-icons/bs";
+import { SiPivotaltracker } from "react-icons/si"
 import {
   FaMoneyBillWaveAlt,
   FaBars,
@@ -64,6 +65,25 @@ const routes = [
     path: "/admindashboard/subadmin",
     name: "Sub-Admin",
     icon: <IoMdCreate />
+  },
+  {
+    path: "/admindashboard/tracker",
+    name: "Tracker",
+    icon: <SiPivotaltracker />,
+    subRoutes:[
+      {
+        path:'tracker/state-tracer',
+        name : 'State Traker'
+      },
+      {
+        path:'tracker/frenchie',
+        name :'Frenchies'
+      },
+      {
+        path:'tracker/businness-developer',
+        name:'Business Developer'
+      }
+    ]
   },
   {
     path: "/admindashboard/manage",

@@ -62,7 +62,10 @@ import TraderWithdrawal from "./components/Admin/AdminSideBarPages/TraderWithdra
 import NewRenewal from "./components/Admin/AdminSideBarPages/NewRenewal";
 import Video from "../src/components/Admin/AdminSideBarPages/Video";
 import SubAdminSignUpForm from "../src/components/Admin/AdminSideBarPages/SubAdminSignupForm";
-import subAdminDetails from "../src/components/Admin/AdminSideBarPages/subAdminDetails";
+import SubAdminDetails from "./components/Admin/AdminSideBarPages/SubAdminDetails";
+import State from "./components/Admin/Tracker/State";
+import Frenchie from "./components/Admin/Tracker/Frenchie";
+import BusinessDeveloper from "./components/Admin/Tracker/BusinessDeveloper";
 
 export const UserContext = createContext();
 
@@ -139,10 +142,12 @@ function App() {
             <Route path="withdrawal" element={<Withdrawal />} />
             <Route path="video" element={<Uservideo />} />
             <Route path="allvideo" element={<Video />} />
-            <Route path="subadmin" element={<subAdminDetails/>} />
+            <Route path="subadmin" element={<SubAdminDetails/>} />
             <Route path="signup-sub-admin" element={<SubAdminSignUpForm />} />
             
-
+            <Route path="tracker/state-tracer" element={<State/>}/>
+            <Route path="tracker/frenchie" element={<Frenchie/>}/>
+            <Route path="tracker/businness-developer" element={<BusinessDeveloper/>}/>
             <Route
               path="manage/push-notification"
               element={<ManageNotification />}
