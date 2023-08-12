@@ -61,7 +61,8 @@ import TraderAccount from "./components/Admin/AdminSideBarPages/TraderAccount";
 import TraderWithdrawal from "./components/Admin/AdminSideBarPages/TraderWithdrawal";
 import NewRenewal from "./components/Admin/AdminSideBarPages/NewRenewal";
 import Video from "../src/components/Admin/AdminSideBarPages/Video";
-import SubAdminSignUpForm from "../src/components/SubAdminSignupForm";
+import SubAdminSignUpForm from "../src/components/Admin/AdminSideBarPages/SubAdminSignupForm";
+import subAdminDetails from "../src/components/Admin/AdminSideBarPages/subAdminDetails";
 
 export const UserContext = createContext();
 
@@ -138,6 +139,7 @@ function App() {
             <Route path="withdrawal" element={<Withdrawal />} />
             <Route path="video" element={<Uservideo />} />
             <Route path="allvideo" element={<Video />} />
+            <Route path="subadmin" element={<subAdminDetails/>} />
             <Route path="signup-sub-admin" element={<SubAdminSignUpForm />} />
             
 

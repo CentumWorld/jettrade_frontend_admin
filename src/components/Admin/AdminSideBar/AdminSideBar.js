@@ -60,84 +60,11 @@ const routes = [
     name: "New/Renewal Users",
     icon: <MdAutorenew />,
   },
-  // {
-  //     path: '/admindashboard/withdrawal',
-  //     name: "Withdrawal",
-  //     icon: <FaMoneyBillWaveAlt />,
-  // },
-  // {
-  //     path: '/admindashboard/transfer',
-  //     name: "Internal transfer",
-  //     icon: <MdSend />,
-  // },
-  // {
-  //     path: '/admindashboard/promotion',
-  //     name: "Promotions",
-  //     icon: <FaCarrot />,
-  // },
-  // {
-  //     path: '/admindashboard',
-  //     name: "Operation history",
-  //     icon: <RxCountdownTimer />,
-  //     subRoutes: [
-  //         {
-  //             path: "/admindashboard/deposite",
-  //             name: 'Deposite history',
-  //         },
-  //         {
-  //             path: "/admindashboard/withdrawlhistory",
-  //             name: 'Withdrawal history',
-  //         },
-  //         {
-  //             path: "/admindashboard/transferhistory",
-  //             name: 'Transfer history',
-  //         },
-
-  //     ],
-  // },
-  // {
-  //     path: '/admindashboard',
-  //     name: "Trading accounts",
-  //     icon: <TfiMenuAlt />,
-  //     subRoutes: [
-  //         {
-  //             path: "/admindashboard/accountlist",
-  //             name: 'Account list',
-  //         },
-  //         {
-  //             path: "/admindashboard/managebonuses",
-  //             name: 'Manage Bonuses',
-  //         },
-  //         {
-  //             path: "/admindashboard/monitoring",
-  //             name: 'Monitoring',
-  //         },
-  //         {
-  //             path: "/admindashboard/real-account",
-  //             name: 'Open real account',
-  //         },
-  //         {
-  //             path: "/admindashboard/demo-account",
-  //             name: 'Open demo account',
-  //         },
-
-  //     ],
-  // },
-  // {
-  //     path: '/admindashboard/contest',
-  //     name: "Contests",
-  //     icon: <IoTrophy />,
-  //     subRoutes: [
-  //         {
-  //             path: "/contests/champion-demo",
-  //             name: 'Champion Demo Contest',
-  //         },
-  //         {
-  //             path: "/contests/opne-champion-demo/account",
-  //             name: ' Opne Champion Demo Contest account',
-  //         },
-  //     ],
-  // },
+  {
+    path: "/admindashboard/subadmin",
+    name: "Sub-Admin",
+    icon: <IoMdCreate />
+  },
   {
     path: "/admindashboard/manage",
     name: "Manage",
@@ -201,11 +128,7 @@ const routes = [
     name: "Video",
     icon: <AiFillVideoCamera />,
   },
-  {
-    path: "/admindashboard/signup-sub-admin",
-    name: "Create Sub-admin",
-    icon: <IoMdCreate />
-  }
+  
 ];
 
 function AdminSideBar() {

@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import logo from "./../img/logo1.png";
 import { RiLogoutBoxLine, RiLogoutCircleFill } from "react-icons/ri";
 import { Dropdown, Menu } from "antd";
-import SubAdmin from "./SubAdmin";
+import SubAdmin from "./SubLoginAdmin";
 
 function Navbar() {
   const { state, dispatch } = useContext(UserContext);

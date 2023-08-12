@@ -22,8 +22,8 @@ import {
 } from "@ant-design/icons";
 import PhoneInput from "react-phone-input-2";
 import "../css/SubAdminSignupForm.css";
-import baseUrl from "../baseUrl";
-import { UserContext } from "../App";
+import baseUrl from "../../../baseUrl";
+import { UserContext } from "../../../App";
 
 const apiurl = baseUrl.apiUrl;
 
@@ -40,20 +40,17 @@ const SubAdminSignUpForm = () => {
   // --------------------------------------
   const customDobSuffixIcon = <CalendarOutlined style={{ color: "#5e72e4" }} />;
   const [phone, setPhone] = useState("");
-  const [userData, setUserData] = useState({
+  const [subadminData, setSubadminData] = useState({
     fname: "",
     lname: "",
     email: "",
     phone: "",
-    address: "",
     gender: "",
     dob: "",
     aadhar_no: "",
     pan_no: "",
-    invite_code: "",
-    userid: "",
+    subAdminId: "",
     password: "",
-    foregien_id: "",
   });
   const [strength, setStrength] = useState(0);
 
@@ -69,17 +66,14 @@ const SubAdminSignUpForm = () => {
   const [panImage, setPanImage] = useState({
     file: null,
   });
-  const [foregienCard, setForegienCard] = useState({
-    file1: null,
-  });
   const [spin, setSpin] = useState(false);
   const navigate = useNavigate();
   const [checked, setChecked] = useState(true);
 
-  //console.log(userData)
+  //console.log(subadminData)
   const userInputs = (e) => {
     e.preventDefault();
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setSubadminData({ ...subadminData, [e.target.name]: e.target.value });
   };
 
   //handle front aadhar image function
@@ -122,25 +116,12 @@ const SubAdminSignUpForm = () => {
     }
   };
 
-  // foregien card
-  const handleClickForeignCard = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setForegienCard({ file1: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      foregienCard.file1 = null;
-    }
-  };
 
   const pan = (e) => {
     e.preventDefault();
-    setUserData({ ...userData, pan_no: e.target.value });
+    setSubadminData({ ...subadminData, pan_no: e.target.value });
     let panLength = e.target.value;
-    console.log(userData.pan_no);
+    console.log(subadminData.pan_no);
     if (panLength.length === 10) {
       setPanError(false);
     } else {
@@ -148,7 +129,7 @@ const SubAdminSignUpForm = () => {
     }
   };
   const aadhar = (e) => {
-    setUserData({ ...userData, aadhar_no: e.target.value });
+    setSubadminData({ ...subadminData, aadhar_no: e.target.value });
     let aadharLength = e.target.value;
     if (aadharLength.length === 12) {
       setAadharError(false);
@@ -159,49 +140,47 @@ const SubAdminSignUpForm = () => {
   const handleToggle = (checked) => {
     setChecked(checked);
     if (checked === false) {
-      setUserData({ ...userData, userid: "", password: "" });
-      //setUserData({...userData, password:''})
+      setSubadminData({ ...subadminData, subAdminId: "", password: "" });
+      //setSubadminData({...userData, password:''})
     }
   };
-  const submit = async (e) => {
-    setSpin(true);
+  const subadminFormSubmit = async (e) => {
+     setSpin(true);
     e.preventDefault();
-    console.log(userData, foregienCard);
+     console.log(subadminData);
     const formData = new FormData();
-    formData.append("fname", userData.fname);
-    formData.append("lname", userData.lname);
-    formData.append("email", userData.email);
-    formData.append("phone", userData.phone);
-    formData.append("address", userData.address);
-    formData.append("gender", userData.gender);
-    formData.append("dob", userData.dob);
+    formData.append("fname", subadminData.fname);
+    formData.append("lname", subadminData.lname);
+    formData.append("email", subadminData.email);
+    formData.append("phone", subadminData.phone);
+    formData.append("gender", subadminData.gender);
+    formData.append("dob", subadminData.dob);
 
-    formData.append("reffered_id", userData.invite_code);
     console.log(formData, "44");
-    if (userData.userid === undefined && userData.password === undefined) {
+    if (subadminData.subAdminId === undefined && subadminData.password === undefined) {
       formData.append("password", "");
-      formData.append("userid", "");
+      formData.append("subAdminId", "");
     } else {
-      formData.append("password", userData.password);
-      formData.append("userid", userData.userid);
+      formData.append("password", subadminData.password);
+      formData.append("subAdminId", subadminData.subAdminId);
     }
     if (countryCode === "91") {
-      formData.append("aadhar", userData.aadhar_no);
+      formData.append("aadhar", subadminData.aadhar_no);
       formData.append("aadhar_front_side", aadharImage.file);
       formData.append("aadhar_back_side", aadharBackImage.file);
       formData.append("pan_card", panImage.file);
-      formData.append("pan", userData.pan_no);
-    } else {
-      formData.append("Id_No", userData.foregien_id);
-      formData.append("ID_Card", foregienCard.file1);
-    }
+      formData.append("pan", subadminData.pan_no);
+    } 
 
     if (countryCode === "91") {
       try {
-        const res = await axios.post(
-          `${apiurl}` + "/user/registration",
-          formData
-        );
+        const token = localStorage.getItem('adminToken');
+        const config = {
+          headers: {
+              Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+          }
+      }
+        const res = await axios.post("/admin/create-sub-admin-inside-admin",formData,config );
         message.success("Registration successful");
         console.log(res.data, "224");
         localStorage.setItem("token", res.data.token);
@@ -209,60 +188,28 @@ const SubAdminSignUpForm = () => {
         dispatch({ type: "USER", payload: true });
 
         // localStorage.setItem("login", true);
-        userData.userid = "";
-        userData.password = "";
+        subadminData.subAdminId = "";
+        subadminData.password = "";
 
-        localStorage.setItem("user", res.data._id);
-        localStorage.setItem("userid", res.data.userid);
+        localStorage.setItem("subadmin", res.data._id);
+        localStorage.setItem("subAdminId", res.data.subAdminId);
         localStorage.setItem("password", res.data.password);
 
-        localStorage.setItem("refferal", res.data.refferal_id);
-        localStorage.setItem("userfname", res.data.fname);
-        localStorage.setItem("userType", res.data.userType);
+        localStorage.setItem("subadminfname", res.data.fname);
 
-        navigate("/userid-and-password-save");
+        navigate("/admindashboard/dashboard");
 
         setSpin(false);
       } catch (error) {
         message.warning(error.response.data.message);
         setSpin(false);
       }
-    } else {
-      try {
-        const res = await axios.post(
-          `${apiurl}` + "/user/users/other-country-user-registration",
-          formData
-        );
-        message.success("Registration successful");
-        console.log(res.data, "224");
-        localStorage.setItem("password", res.data.password);
-        localStorage.setItem("token", res.data.token);
-
-        dispatch({ type: "USER", payload: true });
-
-        // localStorage.setItem("login", true);
-        userData.userid = "";
-        userData.password = "";
-
-        localStorage.setItem("user", res.data._id);
-        localStorage.setItem("userid", res.data.userid);
-        localStorage.setItem("refferal", res.data.refferal_id);
-        localStorage.setItem("userfname", res.data.fname);
-        localStorage.setItem("userType", res.data.userType);
-
-        navigate("/userid-and-password-save");
-        console.log(res.data);
-        setSpin(false);
-      } catch (error) {
-        message.warning(error.response.data.message);
-        setSpin(false);
-      }
-    }
+    } 
   };
 
   //date of birth
   const handleDateOfBirthChange = (date, dateString) => {
-    setUserData((userData) => ({
+    setSubadminData((userData) => ({
       ...userData,
       dob: dateString,
     }));
@@ -270,28 +217,28 @@ const SubAdminSignUpForm = () => {
 
   // -----------------
 
-  const [selectedOption, setSelectedOption] = useState("referral");
-  const [referralId, setReferralId] = useState("");
-  const officialId = "admin@123"; // Replace with your official ID
+  // const [selectedOption, setSelectedOption] = useState("referral");
+  // const [referralId, setReferralId] = useState("");
+  // const officialId = "admin@123"; // Replace with your official ID
   const [countryCode, setCountryCode] = useState("");
 
-  const handleDropdownChange = (value) => {
-    setSelectedOption(value);
-    setReferralId("");
-    setUserData({ ...userData, invite_code: officialId }); // Reset referral ID when changing options
-  };
+  // const handleDropdownChange = (value) => {
+  //   setSelectedOption(value);
+  //   setReferralId("");
+  //   setSubadminData({ ...subadminData, invite_code: officialId }); // Reset referral ID when changing options
+  // };
 
-  const hadleRefferalId = (value) => {
-    setReferralId(value);
-    setUserData({ ...userData, invite_code: value });
-  };
+  // const hadleRefferalId = (value) => {
+  //   setReferralId(value);
+  //   setSubadminData({ ...subadminData, invite_code: value });
+  // };
 
   useEffect(() => {
-    const reffer = id.inviteCode;
-    if (reffer) {
-      setUserData({ ...userData, invite_code: id.inviteCode });
-      setReferralId(reffer);
-    }
+    // const reffer = id.inviteCode;
+    // if (reffer) {
+    //   setSubadminData({ ...subadminData, invite_code: id.inviteCode });
+    //   setReferralId(reffer);
+    // }
   }, []);
 
   const handlePhoneChange = (value) => {
@@ -299,7 +246,7 @@ const SubAdminSignUpForm = () => {
     const firstTwoLetters = str.substring(0, 2);
     setCountryCode(firstTwoLetters);
     setPhone(value);
-    setUserData({ ...userData, phone: value });
+    setSubadminData({ ...subadminData, phone: value });
   };
 
   // valid email
@@ -337,7 +284,7 @@ const SubAdminSignUpForm = () => {
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     //setPassword(newPassword);
-    setUserData({ ...userData, password: newPassword });
+    setSubadminData({ ...subadminData, password: newPassword });
 
     const strength = calculatePasswordStrength(newPassword);
     setStrength(strength);
@@ -391,7 +338,7 @@ const SubAdminSignUpForm = () => {
                   //prefix={<UserOutlined />}
                   placeholder=" Enter first name"
                   name="fname"
-                  value={userData.fname}
+                  value={subadminData.fname}
                   onChange={userInputs}
                   style={{ marginBottom: "10px" }}
                 />
@@ -403,7 +350,7 @@ const SubAdminSignUpForm = () => {
                   //prefix={<UserOutlined />}
                   placeholder="Enter last name"
                   name="lname"
-                  value={userData.lname}
+                  value={subadminData.lname}
                   onChange={userInputs}
                   style={{ marginBottom: "10px" }}
                 />
@@ -418,7 +365,7 @@ const SubAdminSignUpForm = () => {
                   placeholder="Enter email"
                   name="email"
                   type="email"
-                  value={userData.email}
+                  value={subadminData.email}
                   onChange={userInputs}
                   style={{ marginBottom: "10px" }}
                 />
@@ -433,7 +380,7 @@ const SubAdminSignUpForm = () => {
                   name="phone"
                   countrySelectProps={{ suffixIcon: <FlagOutlined /> }}
                   inputComponent={Input}
-                  value={userData.phone}
+                  value={subadminData.phone}
                   onChange={handlePhoneChange}
                   style={{ marginBottom: "10px" }}
                 />
@@ -444,7 +391,7 @@ const SubAdminSignUpForm = () => {
                   <p>Gender</p>
                   <Radio.Group
                     name="gender"
-                    value={userData.gender}
+                    value={subadminData.gender}
                     onChange={userInputs}
                     style={{ marginBottom: "10px" }}
                   >
@@ -476,12 +423,6 @@ const SubAdminSignUpForm = () => {
                 />
               </div>
 
-              {/* <Upload beforeUpload={handleClickAadharFrontImage}
-                                    className='aadhar_front_mobile'
-                                    
-                                    >
-                                    <Button icon={<UploadOutlined />}>Upload Aadhar Front</Button>
-                                </Upload> */}
               <div className="aadhar-front">
                 <p>Aadhar Front</p>
                 <div>
@@ -533,12 +474,12 @@ const SubAdminSignUpForm = () => {
               </div>
               {checked ? (
                 <div className="password-input">
-                  <p>User ID</p>
+                  <p>Sub-Admin ID</p>
                   <Input
                     className="custom-placeholder-input"
                     placeholder="Enter your user ID"
-                    value={userData.userid}
-                    name="userid"
+                    value={subadminData.subAdminId}
+                    name="subAdminId"
                     onChange={userInputs}
                     style={{ marginBottom: "10px" }}
                   />
@@ -554,7 +495,7 @@ const SubAdminSignUpForm = () => {
                     className="custom-placeholder-input"
                     placeholder="Enter your password"
                     //type="password"
-                    value={userData.password}
+                    value={subadminData.password}
                     name="password"
                     onChange={userInputs}
                     style={{ marginBottom: "10px" }}
@@ -565,7 +506,7 @@ const SubAdminSignUpForm = () => {
               )}
 
               <div className="submit-footer">
-                <Button type="submit" onClick={submit}>
+                <Button type="primary" onClick={subadminFormSubmit}>
                   Create
                 </Button>
               </div>
