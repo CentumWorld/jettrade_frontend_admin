@@ -13,6 +13,7 @@ import {
   message,
   Switch,
   Spin,
+  Checkbox,
 } from "antd";
 
 import {
@@ -51,6 +52,7 @@ const SubAdminSignUpForm = () => {
     pan_no: "",
     subAdminId: "",
     password: "",
+    isVideoCreator: false,
   });
   const [strength, setStrength] = useState(0);
 
@@ -116,7 +118,6 @@ const SubAdminSignUpForm = () => {
     }
   };
 
-
   const pan = (e) => {
     e.preventDefault();
     setSubadminData({ ...subadminData, pan_no: e.target.value });
@@ -145,9 +146,9 @@ const SubAdminSignUpForm = () => {
     }
   };
   const subadminFormSubmit = async (e) => {
-     setSpin(true);
+    setSpin(true);
     e.preventDefault();
-     console.log(subadminData);
+    console.log(subadminData);
     const formData = new FormData();
     formData.append("fname", subadminData.fname);
     formData.append("lname", subadminData.lname);
@@ -155,9 +156,15 @@ const SubAdminSignUpForm = () => {
     formData.append("phone", subadminData.phone);
     formData.append("gender", subadminData.gender);
     formData.append("dob", subadminData.dob);
+    // ...
+    formData.append("isVideoCreator", subadminData.isVideoCreator);
+    //
 
     console.log(formData, "44");
-    if (subadminData.subAdminId === undefined && subadminData.password === undefined) {
+    if (
+      subadminData.subAdminId === undefined &&
+      subadminData.password === undefined
+    ) {
       formData.append("password", "");
       formData.append("subAdminId", "");
     } else {
@@ -170,17 +177,21 @@ const SubAdminSignUpForm = () => {
       formData.append("aadhar_back_side", aadharBackImage.file);
       formData.append("pan_card", panImage.file);
       formData.append("pan", subadminData.pan_no);
-    } 
+    }
 
     if (countryCode === "91") {
       try {
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem("adminToken");
         const config = {
           headers: {
-              Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
-          }
-      }
-        const res = await axios.post("/admin/create-sub-admin-inside-admin",formData,config );
+            Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+          },
+        };
+        const res = await axios.post(
+          "/admin/create-sub-admin-inside-admin",
+          formData,
+          config
+        );
         message.success("Registration successful");
         console.log(res.data, "224");
         localStorage.setItem("token", res.data.token);
@@ -204,7 +215,7 @@ const SubAdminSignUpForm = () => {
         message.warning(error.response.data.message);
         setSpin(false);
       }
-    } 
+    }
   };
 
   //date of birth
@@ -343,6 +354,7 @@ const SubAdminSignUpForm = () => {
                   style={{ marginBottom: "10px" }}
                 />
               </div>
+
               <div className="input_label">
                 <p>Last Name</p>
                 <Input
@@ -472,6 +484,22 @@ const SubAdminSignUpForm = () => {
                   />
                 </div>
               </div>
+
+              <div className="input_label">
+                <Checkbox
+                  name="isVideoCreator"
+                  checked={subadminData.isVideoCreator}
+                  onChange={(e) =>
+                    setSubadminData({
+                      ...subadminData,
+                      isVideoCreator: e.target.checked,
+                    })
+                  }
+                >
+                  Is VideoCreator
+                </Checkbox>
+                <br />
+              </div>
               {checked ? (
                 <div className="password-input">
                   <p>Sub-Admin ID</p>
@@ -507,7 +535,7 @@ const SubAdminSignUpForm = () => {
 
               <div className="submit-footer">
                 <Button type="primary" onClick={subadminFormSubmit}>
-                  {spin?<Spin/>:'Create'}
+                  {spin ? <Spin /> : "Create"}
                 </Button>
               </div>
             </form>
