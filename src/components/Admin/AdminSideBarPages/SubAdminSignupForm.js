@@ -145,9 +145,9 @@ const SubAdminSignUpForm = () => {
     }
   };
   const subadminFormSubmit = async (e) => {
-     setSpin(true);
+    setSpin(true);
     e.preventDefault();
-     console.log(subadminData);
+    console.log(subadminData);
     const formData = new FormData();
     formData.append("fname", subadminData.fname);
     formData.append("lname", subadminData.lname);
@@ -170,17 +170,17 @@ const SubAdminSignUpForm = () => {
       formData.append("aadhar_back_side", aadharBackImage.file);
       formData.append("pan_card", panImage.file);
       formData.append("pan", subadminData.pan_no);
-    } 
+    }
 
     if (countryCode === "91") {
       try {
         const token = localStorage.getItem('adminToken');
         const config = {
           headers: {
-              Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+            Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
           }
-      }
-        const res = await axios.post("/admin/create-sub-admin-inside-admin",formData,config );
+        }
+        const res = await axios.post("/admin/create-sub-admin-inside-admin", formData, config);
         message.success("Registration successful");
         console.log(res.data, "224");
         localStorage.setItem("token", res.data.token);
@@ -204,7 +204,7 @@ const SubAdminSignUpForm = () => {
         message.warning(error.response.data.message);
         setSpin(false);
       }
-    } 
+    }
   };
 
   //date of birth
@@ -456,7 +456,7 @@ const SubAdminSignUpForm = () => {
                   name="pan_no"
                   onChange={userInputs}
                   style={{ marginBottom: "10px" }}
-                  //style={{ width: '500px', height: '40px' , marginBottom: '10px' }}
+                //style={{ width: '500px', height: '40px' , marginBottom: '10px' }}
                 />
               </div>
 
@@ -507,7 +507,7 @@ const SubAdminSignUpForm = () => {
 
               <div className="submit-footer">
                 <Button type="primary" onClick={subadminFormSubmit}>
-                  {spin?<Spin/>:'Create'}
+                  {spin ? <Spin /> : 'Create'}
                 </Button>
               </div>
             </form>

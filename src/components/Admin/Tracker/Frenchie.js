@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../css/NewRenewal.css';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { Button } from 'antd';
-import StateRegister from './Register/StateRegister';
+import FrenchieRegister from './Register/FrenchieRegister';
 
 const Frenchie = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,7 +16,7 @@ const Frenchie = () => {
     };
     return (
         <>
-            <StateRegister  isModalVisible={isModalVisible} closeModal={closeModal} />
+            <FrenchieRegister  isModalVisible={isModalVisible} closeModal={closeModal} />
             <div className="new-renewal-container">
                 <div className="new-renewal-header">
                     <div className="new-renewal-content">
