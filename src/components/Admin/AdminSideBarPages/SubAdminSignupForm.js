@@ -468,7 +468,7 @@ const SubAdminSignUpForm = () => {
                   name="pan_no"
                   onChange={userInputs}
                   style={{ marginBottom: "10px" }}
-                  //style={{ width: '500px', height: '40px' , marginBottom: '10px' }}
+                //style={{ width: '500px', height: '40px' , marginBottom: '10px' }}
                 />
               </div>
 
