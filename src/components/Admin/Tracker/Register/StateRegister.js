@@ -35,10 +35,6 @@ const StateRegister = (props) => {
         }
     };
 
-    
-    
-    
-
     const stateRegiInputs = (e) => {
         e.preventDefault();
         setStateRegisterData({ ...stateRegisterData, [e.target.name]: e.target.value });

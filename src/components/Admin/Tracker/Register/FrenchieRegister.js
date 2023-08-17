@@ -322,7 +322,7 @@ const FrenchieRegister = (props) => {
                                     trigger={['click']}
 
                                 >
-                                    <Button>Select state</Button>
+                                    <Button>Select City</Button>
                                 </Dropdown>
                                 <div>
                                     <strong>Selected City:</strong>
