@@ -1,0 +1,26 @@
+.thumbnail img{
+    display: flex;
+}
+
+.thumnail-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.thumbnail-title{
+    margin: 0;
+    padding: 0;
+    width: max-content;
+}
+
+@media only screen and (max-width: 365px){
+    .thumbnail img{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .thumnail-box{
+        display: flex;
+        flex-direction: column;
+    }
+}

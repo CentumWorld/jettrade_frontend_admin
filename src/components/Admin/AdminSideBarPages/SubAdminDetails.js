@@ -5,6 +5,7 @@ import axios from "axios";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 
+
 const { TabPane } = Tabs;
 const SubAdminDetails = () => {
 

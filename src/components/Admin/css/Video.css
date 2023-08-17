@@ -1,6 +1,18 @@
 .video-framing {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
+    overflow: scroll;
+  }
+
+  .cancel-btn{
+    margin-left: 0.7rem;
+  }
+
+  .thumbnail-list{
+    border: 1px solid black;
+    height: max-content;
+    overflow: none;
   }
   
   .video-player-container {
@@ -26,6 +38,9 @@
       width: 100%;
       height: max-content;
     }
+    .thumbnail-list{
+      overflow: hidden;
+    }
   }
   
   .thumbnail {
@@ -40,13 +55,6 @@
   
     .video-player-container {
       max-width: 100%;
-    }
-    .thumbnail-list{
-        overflow-y: scroll;
-        height: 60vh;
-    }
-    .thumbnail-list::-webkit-scrollbar{
-        display: tr;
     }
   }
   

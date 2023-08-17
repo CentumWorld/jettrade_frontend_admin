@@ -71,7 +71,7 @@ const Video = () => {
           )}
           <div className="thumbnail-list">
             {videos.map((video) => (
-              <>
+              <div className="single-thumbnail">
                 <Thumbnail
                   key={video.id}
                   imageUrl={video.thumbnail}
@@ -88,11 +88,11 @@ const Video = () => {
                   okText="Yes"
                   cancelText="No"
                 >
-                  <Button onClick={() => setConfirmVisible(true)}>
+                  <Button onClick={() => setConfirmVisible(true)} className="cancel-btn">
                     Delete
                   </Button>
                 </Popconfirm>
-              </>
+              </div>
             ))}
           </div>
         </div>
