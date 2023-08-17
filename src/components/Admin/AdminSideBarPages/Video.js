@@ -3,10 +3,12 @@ import axios from "axios";
 import "../../Admin/css/Video.css";
 import Thumbnail from "./Thumbnail";
 import VideoPlayer from "./VideoPlayer";
-import { Button, Spin } from "antd";
+import { Button, Popconfirm, Spin } from "antd";
 import noVideoFound from "../../../img/no-video.jpg";
 import baseUrl from "../../../baseUrl";
+
 const apiurl = baseUrl.apiUrl;
+
 const Video = () => {
   const [title, setTitle] = useState("");
   const [videos, setVideos] = useState([]);
@@ -14,6 +16,8 @@ const Video = () => {
   const [spin, setSpin] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null); // State to track selected video URL
   //   const [selectedVideo, setSelectedVideo] = useState(videos[0].videoUrl);
+  const [confirmVisible, setConfirmVisible] = useState(false);
+
   useEffect(() => {
     getApiVideos();
   }, []);
@@ -47,10 +51,11 @@ const Video = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-    await  axios.delete(`/admin/delete-video/${videoId}`, config);
-    getApiVideos();
+      await axios.delete(`/admin/delete-video/${videoId}`, config);
+      setConfirmVisible(false); // Close the confirmation dialog
+      getApiVideos(); // Assuming you have a function to refresh video data
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   };
   return (
@@ -75,10 +80,18 @@ const Video = () => {
                     handleThumbnailClick(video.videoOne, video.title)
                   }
                 />
-
-                <Button  onClick={() => handleDeleteVideo(video._id)}>
-                  delete
-                </Button>
+                <Popconfirm
+                  title="Are you sure you want to delete this video?"
+                  visible={confirmVisible}
+                  onConfirm={() => handleDeleteVideo(video._id)}
+                  onCancel={() => setConfirmVisible(false)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button onClick={() => setConfirmVisible(true)}>
+                    Delete
+                  </Button>
+                </Popconfirm>
               </>
             ))}
           </div>
