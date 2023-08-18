@@ -17,7 +17,7 @@ const VideoPlayer = ({
   videoUrl,
   title,
   liked,
-  perticularvideoId,
+  particularVideoId,
   dislike,
 }) => {
   console.log(liked);
@@ -35,19 +35,19 @@ const VideoPlayer = ({
   const [activeReplyIndex, setActiveReplyIndex] = useState(null);
   const [views, setViews] = useState(0);
 
-  console.log(perticularvideoId);
+  console.log("particularVideoId",particularVideoId);
   useEffect(() => {
     setLikeCount(liked);
     setDisLikeCount(dislike);
-    callApiToLikeOrNot(perticularvideoId);
-    callApiToDislikeOrNot(perticularvideoId);
-    fetchData(perticularvideoId);
+    callApiToLikeOrNot(particularVideoId);
+    callApiToDislikeOrNot(particularVideoId);
+    fetchData(particularVideoId);
     handleReplySubmit(activeReplyIndex);
   }, [liked, dislike]);
 
   useEffect(() => {
-    fetchViewsData(perticularvideoId);
-  }, [perticularvideoId]);
+    fetchViewsData(particularVideoId);
+  }, [particularVideoId]);
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -75,15 +75,15 @@ const VideoPlayer = ({
     setDislikeBackGroundColor((prev) => !prev);
     if (dislikeBackGroundColor) {
       let data = {
-        videoId: perticularvideoId,
+        videoId: particularVideoId,
         action: "dislike",
       };
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("adminToken");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .post("/admin/interact_with_video", data, config)
+        .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
           const updatedLikeCount = res.data.video.dislikes;
           setDisLikeCount(updatedLikeCount);
@@ -94,20 +94,20 @@ const VideoPlayer = ({
         });
     } else {
       let data = {
-        videoId: perticularvideoId,
+        videoId: particularVideoId,
         action: "dislike",
       };
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("adminToken");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .post("/admin/interact_with_video", data, config)
+        .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
           const updatedLikeCount = res.data.video.dislikes;
           setDisLikeCount(updatedLikeCount);
           setIsDisliked(!dislike);
-          callApiToDislikeOrNot(perticularvideoId);
+          callApiToDislikeOrNot(particularVideoId);
         })
         .catch((err) => {
           console.log(err.response.data.message);
@@ -142,7 +142,7 @@ const VideoPlayer = ({
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post("/admin/interact_with_video", data, config)
+      .post("/admin/admin-interact-with-video", data, config)
       .then((res) => {
         setViews(res.data.video.views);
       })
@@ -151,19 +151,19 @@ const VideoPlayer = ({
 
   const handleClickLike = () => {
     setIsLiked((prev) => !prev);
-    console.log("liked and videoIo -> ", isLiked, perticularvideoId);
+    console.log("liked and videoIo -> ", isLiked, particularVideoId);
     setLikeBackGroundColor((prev) => !prev);
     if (likeBackGroundColor) {
       let data = {
-        videoId: perticularvideoId,
+        videoId: particularVideoId,
         action: "like",
       };
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("adminToken");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .post("/user/users/interact_with_video", data, config)
+        .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
           const updatedLikeCount = res.data.video.likes;
           setLikeCount(updatedLikeCount);
@@ -174,21 +174,21 @@ const VideoPlayer = ({
         });
     } else {
       let data = {
-        videoId: perticularvideoId,
+        videoId: particularVideoId,
         action: "like",
       };
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("adminToken");
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .post("/user/users/interact_with_video", data, config)
+        .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
           console.log(res.data);
           const updatedLikeCount = res.data.video.likes;
           setLikeCount(updatedLikeCount);
           setIsLiked(!isLiked);
-          callApiToLikeOrNot(perticularvideoId);
+          callApiToLikeOrNot(particularVideoId);
         })
         .catch((err) => {
           console.log(err.response.data.message);
@@ -240,19 +240,19 @@ const VideoPlayer = ({
 
     if (newComment.trim() === "") return;
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
 
     const commentData = {
-      videoId: perticularvideoId,
+      videoId: particularVideoId,
       action: "comment",
       comments: newComment,
     };
 
     axios
-      .post("/user/users/interact_with_video", commentData, config)
+      .post("/admin/admin-interact-with-video", commentData, config)
       .then((response) => {
         // const result = response.data.video.comments;
         // const finalResult = result.map((item) => item.text);
@@ -271,20 +271,20 @@ const VideoPlayer = ({
 
     if (replyText.trim() === "") return;
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
 
     const replyData = {
-      videoId: perticularvideoId,
+      videoId: particularVideoId,
       action: "comment",
       replyTo: parentComment._id, // Use the comment's _id (commentId)
       comments: replyText,
     };
 
     axios
-      .post("/user/users/interact_with_video", replyData, config)
+      .post("/admin/admin-interact-with-video", replyData, config)
       .then((response) => {
         const updatedComments = [...comments];
         updatedComments[parentIndex].replies.push({

@@ -14,10 +14,13 @@ const Video = () => {
   const [videos, setVideos] = useState([]);
   const [videoLength, setVideosLength] = useState(0);
   const [spin, setSpin] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState(null); // State to track selected video URL
-  //   const [selectedVideo, setSelectedVideo] = useState(videos[0].videoUrl);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [like,setLike] =useState(null);
+  const [particularVideoId,setParticularId] = useState("");
+  const [dislike,setDislike]=useState("")
   const [confirmVisible, setConfirmVisible] = useState(false);
-
+  
+console.log("partic",particularVideoId);
   useEffect(() => {
     getApiVideos();
   }, []);
@@ -38,9 +41,12 @@ const Video = () => {
       })
       .catch((error) => console.error("Error fetching data:", error));
   };
-  const handleThumbnailClick = (videoUrl, title) => {
+  const handleThumbnailClick = (videoUrl, title,like,id,dislike) => {
     setSelectedVideo(videoUrl);
     setTitle(title);
+    setLike(like);
+    setDislike(dislike);
+    setParticularId(id)
   };
 
   const handleDeleteVideo = async (videoId) => {
@@ -64,7 +70,7 @@ const Video = () => {
         <div className="video-framing">
           {videoLength > 0 ? (
             <div className="video-player-container">
-              <VideoPlayer videoUrl={selectedVideo} title={title} />
+              <VideoPlayer videoUrl={selectedVideo} title={title} liked={like} particularVideoId={particularVideoId} dislike={dislike}/>
             </div>
           ) : (
             <img src={noVideoFound} className="noVideoImg" />
@@ -77,7 +83,11 @@ const Video = () => {
                   imageUrl={video.thumbnail}
                   title={video.title}
                   onClick={() =>
-                    handleThumbnailClick(video.videoOne, video.title)
+                    handleThumbnailClick(video.videoOne,
+                      video.title,
+                      video.likes,
+                      video._id,
+                      video.dislikes,)
                   }
                 />
                 <Popconfirm
