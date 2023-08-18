@@ -10,6 +10,7 @@ import logo from "./../img/logo1.png";
 import { RiLogoutBoxLine, RiLogoutCircleFill } from "react-icons/ri";
 import { Dropdown, Menu } from "antd";
 import SubAdmin from "./SubLoginAdmin";
+import StateAdminLogin from "./StateAdminLogin";
 
 function Navbar() {
   const { state, dispatch } = useContext(UserContext);
@@ -18,13 +19,14 @@ function Navbar() {
   const [userShow, setUserShow] = useState(false);
   const [adminShow, setAdminShow] = useState(false);
   const [subAdminShow, setSubAdminShow] = useState(false);
+  const [stateOfficerShow, setStateOfficerShow] = useState(false);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
 
   const pull_addmin = (data) => setAdminShow(data);
-
   const pullsubadmin = (data) => setSubAdminShow(data);
+  const pullSho = (data) => setStateOfficerShow(data);
 
   const RenderMenu = () => {
 
@@ -36,11 +38,18 @@ function Navbar() {
       if(e.key=== "subadmin"){
         setSubAdminShow(true);
       }
+      if(e.key=== "sho"){
+        setStateOfficerShow(true);
+      }
     }
     const menu = (
       <Menu onClick={adminSubAdminModal}>
         <Menu.Item key="admin">Admin</Menu.Item>
         <Menu.Item key="subadmin">Sub Admin</Menu.Item>
+        <Menu.Item key="sho">State Head Officer</Menu.Item>
+        <Menu.Item key="frenchiese">Franchise</Menu.Item>
+        <Menu.Item key="trader">Trader</Menu.Item>
+        <Menu.Item key="refferal">Refferal</Menu.Item>
       </Menu>
     );
 
@@ -116,6 +125,7 @@ function Navbar() {
         {/* Admin Login */}
         {adminShow ? <AdminLogin adminFunc={pull_addmin} /> : ""}
         {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin}/> : ""}
+        {stateOfficerShow ? <StateAdminLogin stateLoginFunc={pullSho}/> : ""}
       </nav>
     </>
   );

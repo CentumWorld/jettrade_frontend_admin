@@ -25,8 +25,8 @@ const SubAdminDetails = () => {
         };
         axios.get('/admin/fetch-all-sub-admin-details', config)
             .then((res) => {
-              
-                setSubAdminData(res.data.subAdmins);
+                console.log("subadmin response -> ", res.data);
+                setSubAdminData(res.data.data);
             })
             .catch(err => {
                 console.log("error", err);

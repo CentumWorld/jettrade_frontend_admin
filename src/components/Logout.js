@@ -10,7 +10,7 @@ function Logout() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`${apiurl}`+"/admin/logout", {
+        fetch("/admin/logout", {
             method: "GET",
             headers: {
                 Accept: "application/json",

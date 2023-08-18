@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from 'antd';
+import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu, Table } from 'antd';
 import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message,Spin } from 'antd';
@@ -8,6 +8,7 @@ const { Option } = Select;
 
 const StateRegister = (props) => {
     // const navigate = useNavigate();
+    
     const [selectedStates, setSelectedStates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [stateRegisterData, setStateRegisterData] = useState({
@@ -134,12 +135,15 @@ const StateRegister = (props) => {
         </Menu>
     );
 
+    
+
 
 
     return (
 
 
         <>
+                
             <div>
                 <Modal
                     title="State Register"
@@ -262,6 +266,7 @@ const StateRegister = (props) => {
                         </div>
                     </div>
                 </Modal>
+
             </div>
         </>
     );
