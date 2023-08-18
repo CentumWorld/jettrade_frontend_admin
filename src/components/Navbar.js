@@ -54,8 +54,7 @@ function Navbar() {
         <Menu.Item key="subadmin">Sub Admin</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-        <Menu.Item key="trader">Trader</Menu.Item>
-        <Menu.Item key="refferal">Refferal</Menu.Item>
+        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
       </Menu>
     );
 

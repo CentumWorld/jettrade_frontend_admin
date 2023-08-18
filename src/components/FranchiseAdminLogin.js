@@ -32,12 +32,11 @@ const FranchiseAdminLogin = (props) => {
         password: franchiseAdmin.franchiseAdmin_password,
     })
       .then((response) => {
-        console.log("franchise response -> ", response.data);
         dispatch({ type: "USER", payload: true });
-        // localStorage.setItem("login", true);
-        // localStorage.setItem("franchiseToken", response.data);
-        // setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
-        // navigate("/admindashboard/dashboard");
+        localStorage.setItem("login", true);
+        localStorage.setItem("franchiseToken", response.data.frenchiseToken);
+        setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); 
+        navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
         console.log("Not login");
@@ -50,7 +49,7 @@ const FranchiseAdminLogin = (props) => {
             },
             1000
           );
-          setFranchiseAdmin({ franchiseAdmin_id: "", franchiseAdmin_password: "" }); // Use setAdmin to reset the state
+          setFranchiseAdmin({ franchiseAdmin_id: "", franchiseAdmin_password: "" }); 
         }
         if (error.response.status === 404) {
           toast.warning("Invalid Credential!", {
@@ -64,6 +63,7 @@ const FranchiseAdminLogin = (props) => {
 
   return (
     <>
+    <ToastContainer />
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Franchise Admin Login</Modal.Title>
