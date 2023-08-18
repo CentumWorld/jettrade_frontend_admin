@@ -12,6 +12,7 @@ import { Dropdown, Menu } from "antd";
 import SubAdmin from "./SubLoginAdmin";
 import StateAdminLogin from "./StateAdminLogin";
 import FranchiseAdminLogin from "./FranchiseAdminLogin";
+import BussinessAdminLogin from "./BussinessAdminLogin";
 
 function Navbar() {
   const { state, dispatch } = useContext(UserContext);
@@ -22,6 +23,7 @@ function Navbar() {
   const [subAdminShow, setSubAdminShow] = useState(false);
   const [stateOfficerShow, setStateOfficerShow] = useState(false);
   const [franchiseShow, setFranchiseShow] = useState(false);
+  const [bussinessDevShow, setBussinessDevShow] = useState(false);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -30,6 +32,7 @@ function Navbar() {
   const pullsubadmin = (data) => setSubAdminShow(data);
   const pullSho = (data) => setStateOfficerShow(data);
   const pullFranchise = (data) => setFranchiseShow(data);
+  const pullBussiness = (data) => setBussinessDevShow(data);
 
   const RenderMenu = () => {
 
@@ -46,6 +49,9 @@ function Navbar() {
       }
       if(e.key === "franchise"){
         setFranchiseShow(true);
+      }
+      if(e.key === "bussinessDev"){
+        setBussinessDevShow(true)
       }
     }
     const menu = (
@@ -132,6 +138,7 @@ function Navbar() {
         {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin}/> : ""}
         {stateOfficerShow ? <StateAdminLogin stateLoginFunc={pullSho}/> : ""}
         {franchiseShow ? <FranchiseAdminLogin franchiseLoginFunc={pullFranchise}/> : ""}
+        {bussinessDevShow ? <BussinessAdminLogin bussinessLoginFunc={pullBussiness}/> : ""}
       </nav>
     </>
   );
