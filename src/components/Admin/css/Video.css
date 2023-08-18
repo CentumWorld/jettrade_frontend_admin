@@ -10,7 +10,6 @@
   }
 
   .thumbnail-list{
-    border: 1px solid black;
     height: max-content;
     overflow: none;
   }
