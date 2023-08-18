@@ -11,6 +11,7 @@ import { RiLogoutBoxLine, RiLogoutCircleFill } from "react-icons/ri";
 import { Dropdown, Menu } from "antd";
 import SubAdmin from "./SubLoginAdmin";
 import StateAdminLogin from "./StateAdminLogin";
+import FranchiseAdminLogin from "./FranchiseAdminLogin";
 
 function Navbar() {
   const { state, dispatch } = useContext(UserContext);
@@ -20,6 +21,7 @@ function Navbar() {
   const [adminShow, setAdminShow] = useState(false);
   const [subAdminShow, setSubAdminShow] = useState(false);
   const [stateOfficerShow, setStateOfficerShow] = useState(false);
+  const [franchiseShow, setFranchiseShow] = useState(false);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -27,6 +29,7 @@ function Navbar() {
   const pull_addmin = (data) => setAdminShow(data);
   const pullsubadmin = (data) => setSubAdminShow(data);
   const pullSho = (data) => setStateOfficerShow(data);
+  const pullFranchise = (data) => setFranchiseShow(data);
 
   const RenderMenu = () => {
 
@@ -41,13 +44,16 @@ function Navbar() {
       if(e.key=== "sho"){
         setStateOfficerShow(true);
       }
+      if(e.key === "franchise"){
+        setFranchiseShow(true);
+      }
     }
     const menu = (
       <Menu onClick={adminSubAdminModal}>
         <Menu.Item key="admin">Admin</Menu.Item>
         <Menu.Item key="subadmin">Sub Admin</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
-        <Menu.Item key="frenchiese">Franchise</Menu.Item>
+        <Menu.Item key="franchise">Franchise</Menu.Item>
         <Menu.Item key="trader">Trader</Menu.Item>
         <Menu.Item key="refferal">Refferal</Menu.Item>
       </Menu>
@@ -126,6 +132,7 @@ function Navbar() {
         {adminShow ? <AdminLogin adminFunc={pull_addmin} /> : ""}
         {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin}/> : ""}
         {stateOfficerShow ? <StateAdminLogin stateLoginFunc={pullSho}/> : ""}
+        {franchiseShow ? <FranchiseAdminLogin franchiseLoginFunc={pullFranchise}/> : ""}
       </nav>
     </>
   );

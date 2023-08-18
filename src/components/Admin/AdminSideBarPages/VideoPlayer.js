@@ -120,7 +120,7 @@ const VideoPlayer = ({
       videoId: id,
     };
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -137,7 +137,7 @@ const VideoPlayer = ({
       videoId: id,
       action: "view",
     };
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -201,7 +201,7 @@ const VideoPlayer = ({
       videoId: id,
       likeType: true,
     };
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -220,7 +220,7 @@ const VideoPlayer = ({
       videoId: id,
       disLikeType: true,
     };
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
