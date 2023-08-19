@@ -12,8 +12,68 @@ const RefferalPayout = () => {
   const [refferralsDetails, setReferralsDetails] = useState([]);
   const [activeTab, setActiveTab] = useState('1');
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState([]);
+  const [bussinessDeveloperDetails, setBussinessDeveloperDetails] = useState([]);
+  const [stateHandlerDetails, setStateHandlerDetails] = useState([]);
+  const [franchiseDetails, setFranchiseDetails] = useState([]);
   const [searchByUserID, setSearchByUserID] = useState('');
   const [role,setRole] = useState('User');
+
+  console.log("bussinessDeveloperDetails -> ", bussinessDeveloperDetails);
+
+  const fetchBussinessDeveloperDetails = () => {
+    const token = localStorage.getItem("adminToken");
+    let config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(
+        "/admin/fetch-business-developer-credit-wallet-transaction-details-membe", config
+      )
+      .then((res) => {
+        console.log("bussiness developer details -> ", res);
+        setBussinessDeveloperDetails(res.data.fetchedData)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchStateDeveloperDetails  = () => {
+    const token = localStorage.getItem("adminToken");
+    let config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(
+        "/admin/fetch-state-handler-wallet-transaction-details",config
+      )
+      .then((res) => {
+        console.log("state handler developer details -> ", res);
+        setStateHandlerDetails(res.data.fetchedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const fetchFranchiseDeveloperHandler = () => {
+    const token = localStorage.getItem("adminToken");
+    let config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(
+        "/admin/fetch-franchise-credit-wallet-transaction-details", config
+      )
+      .then((res) => {
+        console.log("franchise developer details -> ", res);
+        setFranchiseDetails(res.data.fetchedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const handleTabChange = (key) => {
     setActiveTab(key);
     console.log(key);
@@ -21,19 +81,30 @@ const RefferalPayout = () => {
       setRole('User')
       setSearchByUserID('');
       fetchTraderRefferalPayout("User");
-    }else{
+    }if(key === "5"){
+      fetchBussinessDeveloperDetails()
+    }if(key === "3") {
+      fetchStateDeveloperDetails();
+    }if(key === "4"){
+      fetchFranchiseDeveloperHandler();
+    }
+    else{
       setRole('Member')
       setSearchByUserID('')
       fetchMemberRefferalPayout("Member");
     }
   };
 
+
   useEffect(() => {
+    fetchBussinessDeveloperDetails()
     fetchTraderRefferalPayout("User");
     fetchMemberRefferalPayout("Member");
   }, []);
 
+
   const fetchTraderRefferalPayout = (id) => {
+    console.log("id ->", id);
     let data = {
       role: id,
     };
@@ -44,7 +115,7 @@ const RefferalPayout = () => {
 
     axios
       .post(
-        `${apiurl}` + "/admin/fetch-refferal-payout-on-role-basis",
+        "/admin/fetch-refferal-payout-on-role-basis",
         data,
         config
       )
@@ -114,7 +185,7 @@ const RefferalPayout = () => {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/approve-user-refferal-payout", data, config)
+      .post("/admin/approve-user-refferal-payout", data, config)
       .then((res) => {
         message.success("Approved");
         //fetchTraderRefferalPayout();
@@ -127,6 +198,7 @@ const RefferalPayout = () => {
 
   //approved list
   const fetchMemberRefferalPayout = (id) => {
+    console.log("id ", id)
     const data = {
       role: id,
     };
@@ -136,7 +208,7 @@ const RefferalPayout = () => {
     };
     axios
       .post(
-        `${apiurl}` + "/admin/fetch-refferal-payout-on-role-basis",
+        "/admin/fetch-refferal-payout-on-role-basis",
         data,
         config
       )
@@ -185,6 +257,114 @@ const RefferalPayout = () => {
     },
   ];
 
+  const columnsState = [
+    {
+      title: "State Developer ID",
+      dataIndex: "stateHandlerId",
+      key: "stateHandlerId",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Credit Amount",
+      dataIndex: "creditAmount",
+      key: "creditAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "Date",
+      key: "Date",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "Type",
+      key: "Type",
+    },
+    {
+      title: "Reffer UserID",
+      dataIndex: "refferUserId",
+      key: "refferUserId",
+    },
+  ];
+
+  const columnsFranch = [
+    {
+      title: "Franchise Developer ID",
+      dataIndex: "frenchiseId",
+      key: "frenchiseId",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Credit Amount",
+      dataIndex: "creditAmount",
+      key: "creditAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "Date",
+      key: "Date",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "Type",
+      key: "Type",
+    },
+    {
+      title: "Reffer User Id",
+      dataIndex: "refferUserId",
+      key: "refferUserId",
+    },
+  ];
+
+  const columnsBussinessDeveloper = [
+    {
+      title: "Bussiness Developer ID",
+      dataIndex: "businessDeveloperId",
+      key: "businessDeveloperId",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Credit Amount",
+      dataIndex: "creditAmount",
+      key: "creditAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "Date",
+      key: "Date",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "Type",
+      key: "Type",
+    },
+    {
+      title: "Referral User Id",
+      dataIndex: "refferUserId",
+      key: "refferUserId",
+    },
+  ];
+
   const searchByUserId = (e) => {
     e.preventDefault();
     setSearchByUserID(e.target.value);
@@ -203,7 +383,7 @@ const RefferalPayout = () => {
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
     };
-    axios.post(`${apiurl}` + '/admin/search-refferal-payout-by-reffer-userid',data,config)
+    axios.post('/admin/search-refferal-payout-by-reffer-userid',data,config)
     .then((res)=>{
       setReferralsDetails(res.data.filterData)
       setUserRefferalApprovdDetails(res.data.filterData)
@@ -248,7 +428,6 @@ const RefferalPayout = () => {
                 x: true,
                 y: 320,
                 textOverflow: "ellipsis",
-                // overflow: "hidden",
                 whiteSpace: "nowrap",
               }}
             />
@@ -259,6 +438,36 @@ const RefferalPayout = () => {
             <Table
               columns={columnsUser}
               dataSource={userRefferalApproedDetails}
+              scroll={{ y: 400, x: true }}
+            />
+          </div>
+        </TabPane>
+
+        <TabPane tab="State Payout" key="3">
+          <div>
+            <Table
+              columns={columnsState}
+              dataSource={stateHandlerDetails}
+              scroll={{ y: 400, x: true }}
+            />
+          </div>
+        </TabPane>
+
+        <TabPane tab="Franchise Payout" key="4">
+          <div>
+            <Table
+              columns={columnsFranch}
+              dataSource={franchiseDetails}
+              scroll={{ y: 400, x: true }}
+            />
+          </div>
+        </TabPane>
+
+        <TabPane tab="Bussiness Developer Payout" key="5">
+          <div>
+            <Table
+              columns={columnsBussinessDeveloper}
+              dataSource={bussinessDeveloperDetails}
               scroll={{ y: 400, x: true }}
             />
           </div>

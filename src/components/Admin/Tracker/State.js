@@ -72,6 +72,11 @@ const State = () => {
             dataIndex: 'referralId',
             key: 'referralId',
         },
+        {
+            title: 'Wallet',
+            dataIndex: 'stateHandlerWallet',
+            key: 'stateHandlerWallet',
+        },
     ];
     return (
         <>
