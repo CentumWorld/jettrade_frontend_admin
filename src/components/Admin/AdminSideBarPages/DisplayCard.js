@@ -89,7 +89,7 @@ const DisplayCard = () => {
   };
 
   const callApiToSubscriptionCharge = () => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken"); 
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
