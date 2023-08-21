@@ -24,8 +24,7 @@ function SubAdmin(props) {
       .then((res) => {
         console.log(res.data, "\\\\\\\\\\\\\\\\\\");
         localStorage.setItem("login", true);
-        localStorage.setItem("adminToken", res.data.subAdmintoken);
-        localStorage.setItem("subAdminId", res.data.subadmin.subAdminId);
+        localStorage.setItem("subAdminToken", res.data.subAdmintoken);
 
         navigate("/admindashboard/dashboard");
       })

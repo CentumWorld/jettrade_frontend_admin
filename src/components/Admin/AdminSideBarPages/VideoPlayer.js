@@ -34,6 +34,12 @@ const VideoPlayer = ({
   const [replyText, setReplyText] = useState("");
   const [activeReplyIndex, setActiveReplyIndex] = useState(null);
   const [views, setViews] = useState(0);
+  
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken")
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
   console.log("particularVideoId",particularVideoId);
   useEffect(() => {
@@ -78,10 +84,6 @@ const VideoPlayer = ({
         videoId: particularVideoId,
         action: "dislike",
       };
-      const token = localStorage.getItem("adminToken");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
       axios
         .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
@@ -96,10 +98,6 @@ const VideoPlayer = ({
       let data = {
         videoId: particularVideoId,
         action: "dislike",
-      };
-      const token = localStorage.getItem("adminToken");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
       };
       axios
         .post("/admin/admin-interact-with-video", data, config)
@@ -119,11 +117,6 @@ const VideoPlayer = ({
     const data = {
       videoId: id,
     };
-
-    const token = localStorage.getItem("adminToken");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
     axios
       .post("/user/fetch_one_video", data, config)
       .then((res) => {
@@ -136,10 +129,6 @@ const VideoPlayer = ({
     let data = {
       videoId: id,
       action: "view",
-    };
-    const token = localStorage.getItem("adminToken");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
     };
     axios
       .post("/admin/admin-interact-with-video", data, config)
@@ -158,10 +147,7 @@ const VideoPlayer = ({
         videoId: particularVideoId,
         action: "like",
       };
-      const token = localStorage.getItem("adminToken");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+
       axios
         .post("/admin/admin-interact-with-video", data, config)
         .then((res) => {
@@ -176,10 +162,6 @@ const VideoPlayer = ({
       let data = {
         videoId: particularVideoId,
         action: "like",
-      };
-      const token = localStorage.getItem("adminToken");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
       };
       axios
         .post("/admin/admin-interact-with-video", data, config)
@@ -201,7 +183,6 @@ const VideoPlayer = ({
       videoId: id,
       likeType: true,
     };
-    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -220,7 +201,6 @@ const VideoPlayer = ({
       videoId: id,
       disLikeType: true,
     };
-    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -239,8 +219,6 @@ const VideoPlayer = ({
     event.preventDefault();
 
     if (newComment.trim() === "") return;
-
-    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -270,8 +248,6 @@ const VideoPlayer = ({
     const parentComment = comments[parentIndex];
 
     if (replyText.trim() === "") return;
-
-    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };

@@ -19,6 +19,13 @@ const Video = () => {
   const [particularVideoId,setParticularId] = useState("");
   const [dislike,setDislike]=useState("")
   const [confirmVisible, setConfirmVisible] = useState(false);
+
+  const token = localStorage.getItem("stateHandlerToken") || localStorage.getItem("adminToken")
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const isAdmin = localStorage.getItem("adminToken");
   
 console.log("partic",particularVideoId);
   useEffect(() => {
@@ -26,11 +33,6 @@ console.log("partic",particularVideoId);
   }, []);
   const getApiVideos = () => {
     setSpin(true);
-    const token = localStorage.getItem("adminToken");
-    console.log("token", token);
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
     axios
       .get("/admin/fetch-all-videos", config)
       .then((response) => {
@@ -98,9 +100,13 @@ console.log("partic",particularVideoId);
                   okText="Yes"
                   cancelText="No"
                 >
+                  {
+                    isAdmin && (
                   <Button onClick={() => setConfirmVisible(true)} className="cancel-btn">
                     Delete
                   </Button>
+                    )
+                  }
                 </Popconfirm>
               </div>
             ))}

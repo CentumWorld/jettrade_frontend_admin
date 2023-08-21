@@ -22,15 +22,17 @@ function Logout() {
             localStorage.removeItem('login');
             localStorage.removeItem('adminToken');
             localStorage.removeItem('adminId');
-            localStorage.removeItem('isSubAdmin');
+            localStorage.removeItem('subAdminId');
             localStorage.removeItem('userid');
+            localStorage.removeItem('stateHandlerToken');
+            localStorage.removeItem('subAdminToken');
             navigate('/');
         }).catch((error) => {
             navigate('/');
         })
     }, [state])
     return (
-        <div>Logout</div>
+        <></>
     )
 }
 
