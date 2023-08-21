@@ -181,7 +181,7 @@ const TraderWithdrawal = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data, config)
+      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data, config)
       .then((res) => {
         setUserData(res.data.allData);
       })
@@ -200,7 +200,7 @@ const TraderWithdrawal = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
+      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -222,7 +222,7 @@ const TraderWithdrawal = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
+      .post("/admin/filter-Transactions-For-Withdrawl-With-Year-Month", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -239,7 +239,7 @@ const TraderWithdrawal = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
+    axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
       setToalAmount(res.data.result.tradingWallet);
     })
@@ -255,7 +255,7 @@ const TraderWithdrawal = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios.post(`${apiurl}`+"/admin/total-withdrawal-money", data, config)
+    axios.post("/admin/total-withdrawal-money", data, config)
     .then((res)=>{
       setToalAmount(res.data.totalWithdrawnAmount)
     })

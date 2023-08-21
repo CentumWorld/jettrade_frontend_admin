@@ -178,7 +178,7 @@ const TraderAccount = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post("/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.allData);
       })
@@ -197,7 +197,7 @@ const TraderAccount = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post("/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -218,7 +218,7 @@ const TraderAccount = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post("/admin/filter-Transactions-With-Year-Month-Week", data,config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -235,7 +235,7 @@ const TraderAccount = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
+    axios.post("/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
     .then((res)=>{
       setToalAmount(res.data.result.tradingWallet + res.data.result.wallet);
       console.log(res.data.result.tradingWallet)

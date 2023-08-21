@@ -89,7 +89,7 @@ const DisplayCard = () => {
         const config = {
             headers: { Authorization: `Bearer ${token}` },
           };
-        axios.get(`${apiurl}`+'/admin/admin-sum-of-all-new-renewal-user-amount',config)
+        axios.get('/admin/admin-sum-of-all-new-renewal-user-amount',config)
         .then((res)=>{
             console.log(res.data.totalSubscriptionAmount)
             const formattedRupees = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(res.data.totalSubscriptionAmount);
@@ -108,7 +108,7 @@ const DisplayCard = () => {
         const config = {
             headers: { Authorization: `Bearer ${token}` },
           };
-        axios.get(`${apiurl}`+"/admin/total_Count_Of_Payment_Status_Of_User",config)
+        axios.get("/admin/total_Count_Of_Payment_Status_Of_User",config)
         .then((res)=>{
             setProgressigeBar({
                 totalCount:res.data.totalCount,

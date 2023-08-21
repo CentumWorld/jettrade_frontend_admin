@@ -56,7 +56,7 @@ const LiveChat = () => {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.get(`${apiurl}`+"/admin/fetch-user-chat-count", config)
+        axios.get("/admin/fetch-user-chat-count", config)
             .then((result) => {
 
                 setChatUser(result.data.result);
