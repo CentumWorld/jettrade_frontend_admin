@@ -110,6 +110,8 @@ const Frenchie = () => {
               overflow: "auto",
               maxWidth: "100%",
               marginTop: "1rem",
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
             }}
           />
         </div>

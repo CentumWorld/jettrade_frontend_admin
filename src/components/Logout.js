@@ -29,6 +29,7 @@ function Logout() {
             localStorage.removeItem("franchiseToken");
             localStorage.removeItem("frenchiseId");
 
+            localStorage.removeItem('stateHandlerRefferalID');
             navigate('/');
         }).catch((error) => {
             navigate('/');
