@@ -9,6 +9,8 @@ const State = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [stateData, setStateData] = useState([]);
 
+
+
     useEffect(() => {
         fetchStateDataApi();
     }, []);
@@ -77,6 +79,12 @@ const State = () => {
             dataIndex: 'stateHandlerWallet',
             key: 'stateHandlerWallet',
         },
+        {
+            title: 'State',
+            dataIndex: 'selectedState',
+            key: 'selectedState',
+        },
+         
     ];
     return (
         <>
@@ -103,6 +111,8 @@ const State = () => {
               overflow: "auto",
               maxWidth: "100%",
               marginTop: "1rem",
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
             }}
           />
         </div>
