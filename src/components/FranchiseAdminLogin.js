@@ -35,6 +35,8 @@ const FranchiseAdminLogin = (props) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("franchiseToken", response.data.frenchiseToken);
+        console.log(response.data);
+        localStorage.setItem("frenchiseId", response.data.frenchiseDetails.frenchiseId);
         setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); 
         navigate("/admindashboard/dashboard");
       })
