@@ -9,6 +9,7 @@ const Frenchie = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
 
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -64,23 +65,47 @@ const Frenchie = () => {
     },
   ];
 
+  const token = localStorage.getItem("adminToken");
+
+  const stateToken = localStorage.getItem("stateHandlerToken");
+  const stateHandlerRefferalID = localStorage.getItem(
+    "stateHandlerRefferalID"
+  );
+  console.log("===============>",stateToken,stateHandlerRefferalID);
+
   const fetchFrenchieseDataApi = () => {
-    const token = localStorage.getItem("adminToken");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    axios
-      .get("/admin/fetch-all-frenchise", config)
-      .then((res) => {
-        console.log("Frenchese Data -> ", res.data);
-        setFrenchieData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    if (token) {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .get("/admin/fetch-all-frenchise", config)
+        .then((res) => {
+          console.log("Frenchese Data -> ", res.data);
+          setFrenchieData(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } else if (stateToken && stateHandlerRefferalID) {
+      const requestData = {
+        stateReferralId: stateHandlerRefferalID,
+      };
+      const config = {
+        headers: { Authorization: `Bearer ${stateToken}` },
+      };
+      axios
+        .post("/state/fetch-all-franchise-in-state", requestData, config)
+        .then((res) => {
+          console.log("Franchise in state response -----> ", res.data);
+          setFrenchieData(res.data.data)
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    }
   };
 
-  // /admin/fetch-all-frenchise //! api for frenchiese data
   return (
     <>
       <FrenchieRegister
@@ -97,23 +122,34 @@ const Frenchie = () => {
           </div>
         </div>
 
-        <div
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <Table
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {token ? (
+            <Table
+              dataSource={frenchieData}
+              columns={columns}
+              pagination={{ pageSize: 7 }}
+              scroll={{ x: true, y: true }}
+              style={{
+                flex: 1,
+                overflow: "auto",
+                maxWidth: "100%",
+                marginTop: "1rem",
+              }}
+            />
+          ) : (
+            <Table
             dataSource={frenchieData}
             columns={columns}
             pagination={{ pageSize: 7 }}
-            scroll={{x: true, y:true}}
+            scroll={{ x: true, y: true }}
             style={{
               flex: 1,
               overflow: "auto",
               maxWidth: "100%",
               marginTop: "1rem",
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
             }}
           />
+          )}
         </div>
       </div>
     </>
