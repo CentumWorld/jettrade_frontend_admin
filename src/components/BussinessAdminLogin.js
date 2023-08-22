@@ -34,7 +34,7 @@ const BussinessAdminLogin = (props) => {
       .then((response) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
-        localStorage.setItem("adminToken", response.data.bussinessDeveloperToken);
+        localStorage.setItem("bussinessAdminToken", response.data.businessDeveloperToken);
         setBussinessAdmin({ bussinessAdmin_id: "", bussinessAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })

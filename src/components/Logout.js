@@ -30,6 +30,7 @@ function Logout() {
             localStorage.removeItem("frenchiseId");
 
             localStorage.removeItem('stateHandlerRefferalID');
+            localStorage.removeItem('bussinessAdminToken');
             navigate('/');
         }).catch((error) => {
             navigate('/');

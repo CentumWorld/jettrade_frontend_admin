@@ -45,7 +45,7 @@ const stateAdminRoutes = [
     },
     {
       path: "trader-chat",
-      name: "Admin",
+      name: "Admin Chat",
       icon: <BsFillChatTextFill />
     }
   ]

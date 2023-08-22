@@ -20,7 +20,7 @@ const Video = () => {
   const [dislike,setDislike]=useState("")
   const [confirmVisible, setConfirmVisible] = useState(false);
 
-  const token = localStorage.getItem("stateHandlerToken") || localStorage.getItem("adminToken")
+  const token = localStorage.getItem("stateHandlerToken") || localStorage.getItem("adminToken") || localStorage.getItem("bussinessAdminToken")
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

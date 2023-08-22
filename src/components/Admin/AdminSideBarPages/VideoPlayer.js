@@ -35,7 +35,7 @@ const VideoPlayer = ({
   const [activeReplyIndex, setActiveReplyIndex] = useState(null);
   const [views, setViews] = useState(0);
   
-  const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken")
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") || localStorage.getItem("bussinessAdminToken")
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -335,12 +335,6 @@ const VideoPlayer = ({
                   <span>{disLikeCount}</span>
                 </button>
               )}
-            </div>
-            <div>
-              <button className="like-button" onClick={openModal}>
-                <FaShare />
-                Share
-              </button>
             </div>
           </div>
         </div>
