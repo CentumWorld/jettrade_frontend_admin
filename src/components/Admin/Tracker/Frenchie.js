@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, Table } from "antd";
+import { Button, Table, Dropdown, Menu,Modal ,message} from "antd";
 import FrenchieRegister from "./Register/FrenchieRegister";
 import axios from "axios";
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const Frenchie = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
-
+  const [isBlocked, setIsBlock] = useState(true);
+  const [myID, setMyID] = useState('');
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -20,7 +22,6 @@ const Frenchie = () => {
 
   useEffect(() => {
     fetchFrenchieseDataApi(localStorage.getItem("franchiseToken"));
-    callApiToFetchOnlyReferralBD(localStorage.getItem("franchiseRefferal"));
   }, []);
 
   const columns = [
@@ -69,6 +70,21 @@ const Frenchie = () => {
       dataIndex: "franchiseCity",
       key: "franchiseCity",
     },
+    {
+      title: 'Status', dataIndex: 'isBlocked', render: (isBlocked) => {
+        const cellStyle = isBlocked ? { color: 'red' } : { color: 'green' };
+        return <span style={cellStyle}>{isBlocked ? 'Blocked' : 'Not Blocked '}</span>;
+      },
+    },
+    {
+      title: 'Action', dataIndex: 'action',
+      render: (_, record) => (
+        <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked)} style={{ cursor: 'pointer' }} />
+        </Dropdown>
+      ),
+
+    }
   ];
 
   const token = localStorage.getItem("adminToken");
@@ -112,14 +128,60 @@ const Frenchie = () => {
     }
   };
 
-<<<<<<< Updated upstream
-=======
-  const callApiToFetchOnlyReferralBD = (id) => {
-    console.log(id);
+   // handle action
+   const trigerAction = (id, block) => {
+    setMyID(id);
+    setIsBlock(block);
   }
+  const handleMenuClick = (e) => {
+    console.log(e.key);
+   
+    if (e.key === 'block') {
+      blockUnblock(myID);
+    }
+  };
 
-  // /admin/fetch-all-frenchise //! api for frenchiese data
->>>>>>> Stashed changes
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="view">View</Menu.Item>
+      <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">
+        {isBlocked ? 'Unblock' : 'Block'}
+      </Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
+    </Menu>
+  );
+  const blockUnblock = (id) =>{
+    const actionText = isBlocked ? 'Unblock' : 'Block'
+        Modal.confirm({
+            title: `${actionText} Franchise`,
+            content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+            onOk() {
+                const token = localStorage.getItem('adminToken')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const data = {
+                    id: id,
+                    block: !isBlocked
+                }
+                axios.post("/admin/block-franchise-by-admin", data, config)
+                    .then((res) => {
+                        message.success(res.data.message)
+                        fetchFrenchieseDataApi();
+                    })
+                    .catch((err) => {
+                        message.warning('Something went wrong!')
+                    })
+            },
+            onCancel() {
+                console.log('Deletion cancelled');
+            },
+        });
+  }
   return (
     <>
       <FrenchieRegister

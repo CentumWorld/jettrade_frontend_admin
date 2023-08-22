@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, Table } from "antd";
+import { Button, Table, Menu, Dropdown, Modal,message } from "antd";
 import BusinessDeveloperRegister from "./Register/BusinessDeveloperRegister";
 import axios from "axios";
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const BusinessDeveloper = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bussinessData, setbussinessData] = useState([]);
+  const [isBlocked, setIsBlock] = useState(true);
+  const [myID, setMyID] = useState('');
 
   useEffect(() => {
     fetchBussinesDeveloperDataApi();
@@ -58,10 +61,25 @@ const BusinessDeveloper = () => {
       key: "referredId",
     },
     {
-        title: "Refferal Id",
-        dataIndex: "referralId",
-        key: "referralId",
+      title: "Refferal Id",
+      dataIndex: "referralId",
+      key: "referralId",
+    },
+    {
+      title: 'Status', dataIndex: 'isBlocked', render: (isBlocked) => {
+        const cellStyle = isBlocked ? { color: 'red' } : { color: 'green' };
+        return <span style={cellStyle}>{isBlocked ? 'Blocked' : 'Not Blocked '}</span>;
       },
+    },
+    {
+      title: 'Action', dataIndex: 'action',
+      render: (_, record) => (
+        <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked)} style={{ cursor: 'pointer' }} />
+        </Dropdown>
+      ),
+
+    }
   ];
 
   const fetchBussinesDeveloperDataApi = () => {
@@ -80,6 +98,63 @@ const BusinessDeveloper = () => {
       });
   };
 
+
+  // handle action
+  const trigerAction = (id, block) => {
+    setMyID(id);
+    setIsBlock(block);
+  }
+  const handleMenuClick = (e) => {
+    console.log(e.key);
+   
+    if (e.key === 'block') {
+      blockUnblock(myID);
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="view">View</Menu.Item>
+      <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">
+        {isBlocked ? 'Unblock' : 'Block'}
+      </Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
+    </Menu>
+  );
+
+  const blockUnblock = (id) =>{
+    const actionText = isBlocked ? 'Unblock' : 'Block'
+        Modal.confirm({
+            title: `${actionText} Business Developer`,
+            content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+            onOk() {
+                const token = localStorage.getItem('adminToken')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const data = {
+                    id: id,
+                    block: !isBlocked
+                }
+                axios.post("/admin/block-business-developer-by-admin", data, config)
+                    .then((res) => {
+                        message.success(res.data.message)
+                        fetchBussinesDeveloperDataApi();
+                    })
+                    .catch((err) => {
+                        message.warning('Something went wrong!')
+                    })
+            },
+            onCancel() {
+                console.log('Deletion cancelled');
+            },
+        });
+  }
+
   return (
     <>
       <BusinessDeveloperRegister
@@ -97,13 +172,13 @@ const BusinessDeveloper = () => {
         </div>
 
         <div
-          style={{display: "flex", flexDirection: "column" }}
+          style={{ display: "flex", flexDirection: "column" }}
         >
           <Table
             dataSource={bussinessData}
             columns={columns}
             pagination={{ pageSize: 7 }}
-            scroll={{x: true, y:true}}
+            scroll={{ x: true, y: true }}
             style={{
               flex: 1,
               overflow: "auto",

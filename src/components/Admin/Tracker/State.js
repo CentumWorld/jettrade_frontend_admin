@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, Table } from "antd";
+import { Button, Table, message } from "antd";
 import StateRegister from "./Register/StateRegister";
 import axios from "axios";
+import { Menu, Dropdown, Modal } from 'antd'
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const State = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stateData, setStateData] = useState([]);
+  const [isBlocked, setIsBlock] = useState(true);
+  const [myID, setMyID] = useState('');
 
   useEffect(() => {
     fetchStateDataApi();
@@ -23,7 +27,7 @@ const State = () => {
 
   const fetchStateDataApi = () => {
     const token = localStorage.getItem("adminToken");
- 
+
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -84,7 +88,78 @@ const State = () => {
       dataIndex: "selectedState",
       key: "selectedState",
     },
+    {
+      title: 'Status', dataIndex: 'isBlocked', render: (isBlocked) => {
+        const cellStyle = isBlocked ? { color: 'red' } : { color: 'green' };
+        return <span style={cellStyle}>{isBlocked ? 'Blocked' : 'Not Blocked '}</span>;
+      },
+    },
+    {
+      title: 'Action', dataIndex: 'action',
+      render: (_, record) => (
+        <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked)} style={{ cursor: 'pointer' }} />
+        </Dropdown>
+      ),
+
+    }
   ];
+
+  // handle action
+  const trigerAction = (id, block) => {
+    setMyID(id);
+    setIsBlock(block);
+  }
+  const handleMenuClick = (e) => {
+    console.log(e.key);
+   
+    if (e.key === 'block') {
+      blockUnblock(myID);
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="view">View</Menu.Item>
+      <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">
+        {isBlocked ? 'Unblock' : 'Block'}
+      </Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
+    </Menu>
+  );
+
+  const blockUnblock = (id) =>{
+    const actionText = isBlocked ? 'Unblock' : 'Block'
+        Modal.confirm({
+            title: `${actionText} State handler`,
+            content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+            onOk() {
+                const token = localStorage.getItem('adminToken')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const data = {
+                    id: id,
+                    block: !isBlocked
+                }
+                axios.post("/admin/block-state-by-admin", data, config)
+                    .then((res) => {
+                        message.success(res.data.message)
+                        fetchStateDataApi();
+                    })
+                    .catch((err) => {
+                        message.warning('Something went wrong!')
+                    })
+            },
+            onCancel() {
+                console.log('Deletion cancelled');
+            },
+        });
+  }
   return (
     <>
       <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} />
