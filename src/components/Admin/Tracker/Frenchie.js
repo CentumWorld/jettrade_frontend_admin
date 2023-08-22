@@ -85,6 +85,7 @@ const Frenchie = () => {
       ),
 
     }
+    
   ];
 
   const token = localStorage.getItem("adminToken");
@@ -127,6 +128,62 @@ const Frenchie = () => {
         });
     }
   }; 
+
+
+   // handle action
+   const trigerAction = (id, block) => {
+    setMyID(id);
+    setIsBlock(block);
+  }
+  const handleMenuClick = (e) => {
+    console.log(e.key);
+   
+    if (e.key === 'block') {
+      blockUnblock(myID);
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="view">View</Menu.Item>
+      <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">
+        {isBlocked ? 'Unblock' : 'Block'}
+      </Menu.Item>
+      <Menu.Item key="delete">Delete</Menu.Item>
+    </Menu>
+  );
+  const blockUnblock = (id) =>{
+    const actionText = isBlocked ? 'Unblock' : 'Block'
+        Modal.confirm({
+            title: `${actionText} Franchise`,
+            content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+            onOk() {
+                const token = localStorage.getItem('adminToken')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const data = {
+                    id: id,
+                    block: !isBlocked
+                }
+                axios.post("/admin/block-franchise-by-admin", data, config)
+                    .then((res) => {
+                        message.success(res.data.message)
+                        fetchFrenchieseDataApi();
+                    })
+                    .catch((err) => {
+                        message.warning('Something went wrong!')
+                    })
+            },
+            onCancel() {
+                console.log('Deletion cancelled');
+            },
+        });
+  }
 
   return (
     <>
