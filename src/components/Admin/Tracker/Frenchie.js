@@ -19,7 +19,8 @@ const Frenchie = () => {
   };
 
   useEffect(() => {
-    fetchFrenchieseDataApi();
+    fetchFrenchieseDataApi(localStorage.getItem("franchiseToken"));
+    callApiToFetchOnlyReferralBD(localStorage.getItem("franchiseRefferal"));
   }, []);
 
   const columns = [
@@ -52,6 +53,11 @@ const Frenchie = () => {
       title: "Gender",
       dataIndex: "gender",
       key: "gender",
+    },
+    {
+      title: "Referal Id",
+      dataIndex: "referralId",
+      key: "referralId",
     },
     {
       title: "Reffered Id",
@@ -106,6 +112,14 @@ const Frenchie = () => {
     }
   };
 
+<<<<<<< Updated upstream
+=======
+  const callApiToFetchOnlyReferralBD = (id) => {
+    console.log(id);
+  }
+
+  // /admin/fetch-all-frenchise //! api for frenchiese data
+>>>>>>> Stashed changes
   return (
     <>
       <FrenchieRegister
