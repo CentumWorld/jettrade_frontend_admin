@@ -6,6 +6,7 @@ import AdminSideBarMenu from "./AdminSideBarMenu";
 import Adminroutes from "../../../utils/AdminRoutes";
 import stateAdminRoutes from "../../../utils/StateAdminRoutes";
 import subAdminRoutes from "../../../utils/SubAdminRoutes";
+import franchiseAdminRoutes from "../../../utils/FranchiseRoutes";
 import {FaBars} from "react-icons/fa";
 
 function AdminSideBar() {
@@ -15,6 +16,7 @@ function AdminSideBar() {
   const isSubAdmin = localStorage.getItem("subAdminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isAdmin  = localStorage.getItem("adminToken");
+  const isFranchise = localStorage.getItem("franchiseToken")
 
   const updateUser = () => {
     if(isSubAdmin){
@@ -23,6 +25,8 @@ function AdminSideBar() {
       setUser("State Admin")
     } else if(isAdmin){
       setUser("Admin")
+    } else if(isFranchise){
+      setUser("Franchise Admin")
     }
   }
 
@@ -104,6 +108,31 @@ function AdminSideBar() {
           isSubAdmin && (
             <section className="admin_routes">
               {subAdminRoutes.map((route) => {
+                if (route.subRoutes) {
+                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                }
+                return (
+                  <NavLink
+                    to={route.path}
+                    key={route.name}
+                    className={
+                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                    }
+                  >
+                    <div className="admin-icon">{route.icon}</div>
+                    <motion.div className="admin_link_text">
+                      {route.name}
+                    </motion.div>
+                  </NavLink>
+                );
+              })}
+            </section>
+          )
+        }
+        {
+          isFranchise && (
+            <section className="admin_routes">
+              {franchiseAdminRoutes.map((route) => {
                 if (route.subRoutes) {
                   return <AdminSideBarMenu isOpen={isOpen} route={route} />;
                 }

@@ -26,6 +26,9 @@ function Logout() {
             localStorage.removeItem('userid');
             localStorage.removeItem('stateHandlerToken');
             localStorage.removeItem('subAdminToken');
+            localStorage.removeItem("franchiseToken");
+            localStorage.removeItem("frenchiseId");
+
             navigate('/');
         }).catch((error) => {
             navigate('/');
