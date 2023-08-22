@@ -123,7 +123,7 @@ const Frenchie = () => {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {token ? (
+          {token ||  (stateToken && stateHandlerRefferalID) ?
             <Table
               dataSource={frenchieData}
               columns={columns}
@@ -135,21 +135,8 @@ const Frenchie = () => {
                 maxWidth: "100%",
                 marginTop: "1rem",
               }}
-            />
-          ) : (
-            <Table
-            dataSource={frenchieData}
-            columns={columns}
-            pagination={{ pageSize: 7 }}
-            scroll={{ x: true, y: true }}
-            style={{
-              flex: 1,
-              overflow: "auto",
-              maxWidth: "100%",
-              marginTop: "1rem",
-            }}
-          />
-          )}
+            />:null
+            }
         </div>
       </div>
     </>
