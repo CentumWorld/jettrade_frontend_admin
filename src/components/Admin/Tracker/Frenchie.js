@@ -109,7 +109,8 @@ const Frenchie = () => {
           console.log("error", err);
         });
     }
-  };
+  }; 
+
   return (
     <>
       <FrenchieRegister
@@ -148,3 +149,4 @@ const Frenchie = () => {
 };
 
 export default Frenchie;
+
