@@ -24,19 +24,40 @@ const State = () => {
     };
     
     const fetchStateDataApi = () => {
-        const token = localStorage.getItem('adminToken');
-        const config = {
-            headers: { "Authorization": `Bearer ${token}` }
-        };
-        axios.get('/admin/fetch-all-state', config)
-            .then((res) => {
-                console.log("State respone -> ",res.data);
-                setStateData(res.data.data);
-            })
-            .catch(err => {
-                console.log("error", err);
-            })
+        const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken");
+        const stateHandlerRefferalID = localStorage.getItem('stateHandlerRefferalID');
+    
+        if (token) {
+            const config = {
+                headers: { "Authorization": `Bearer ${token}` }
+            };
+            axios.get('/admin/fetch-all-state', config)
+                .then((res) => {
+                    console.log("State response -> ", res.data);
+                    setStateData(res.data.data);
+                })
+                .catch(err => {
+                    console.log("error", err);
+                });
+        } else if (stateHandlerRefferalID) {
+            const requestData = {
+                stateReferralId: stateHandlerRefferalID
+            }
+            const config = {
+                headers: { "Authorization": `Bearer ${token}` }
+            };
+            axios.post('/state/fetch-all-franchise-in-state', config, requestData)
+                .then((res) => {
+                    console.log("Franchise in state response -> ", res);
+                })
+                .catch(err => {
+                    console.log("error", err);
+                });
+        } else {
+            console.log("Neither adminToken nor stateHandlerRefferalID present.");
+        }
     }
+    
 
     const columns = [
         {

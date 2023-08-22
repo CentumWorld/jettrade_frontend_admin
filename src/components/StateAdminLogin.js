@@ -15,6 +15,8 @@ const StateAdminLogin = (props) => {
     stateAdmin_id: "",
     stateAdmin_password: "",
   });
+  const [stateRefferalId, setStateRefferalId] = useState("");
+  // console.log("state id----->", stateRefferalId);
 
   const [show, setShow] = useState(true);
   const handleClose = () => setShow((prev) => !prev);
@@ -35,6 +37,7 @@ const StateAdminLogin = (props) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
+        localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
         setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })
