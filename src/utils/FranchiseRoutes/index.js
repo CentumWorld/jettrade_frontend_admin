@@ -33,8 +33,12 @@ import {
             name:'Business Developer'
           },
           {
-            path:'/admindashboard/refferal',
-            name :'Member'
+            path:'tracker/members',
+            name :'Referral'
+          },
+          {
+            path:'tracker/traders',
+            name :'Traders'
           },
         ]
       },
