@@ -19,25 +19,14 @@ function Logout() {
 
         }).then((res) => {
             dispatch({ type: "USER", payload: false })
-            localStorage.removeItem('login');
-            localStorage.removeItem('adminToken');
-            localStorage.removeItem('adminId');
-            localStorage.removeItem('subAdminId');
-            localStorage.removeItem('userid');
-            localStorage.removeItem('stateHandlerToken');
-            localStorage.removeItem('subAdminToken');
-            localStorage.removeItem("franchiseToken");
-            localStorage.removeItem("frenchiseId");
-
-            localStorage.removeItem('stateHandlerRefferalID');
-            localStorage.removeItem('bussinessAdminToken');
+            localStorage.clear();
             navigate('/');
         }).catch((error) => {
             navigate('/');
         })
     }, [state])
     return (
-        <></>
+        <>Loading</>
     )
 }
 

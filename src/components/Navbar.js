@@ -1,22 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../css/Navbar.css";
-import { NavLink } from "react-router-dom";
-import { UserContext } from "../App";
-import UserRegistration from "./UserRegistration";
 import AdminLogin from "./AdminLogin";
-import UserLogin from "./UserLogin";
 import Button from "react-bootstrap/Button";
 import logo from "./../img/logo1.png";
-import { RiLogoutBoxLine, RiLogoutCircleFill } from "react-icons/ri";
-import { Dropdown, Menu } from "antd";
+import { Avatar, Dropdown, Menu } from "antd";
 import SubAdmin from "./SubLoginAdmin";
 import StateAdminLogin from "./StateAdminLogin";
 import FranchiseAdminLogin from "./FranchiseAdminLogin";
 import BussinessAdminLogin from "./BussinessAdminLogin";
+import { UserOutlined } from '@ant-design/icons';
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import ProfileModal from "./ProfileModal";
 
 function Navbar() {
-  const { state, dispatch } = useContext(UserContext);
   const login = localStorage.getItem("login");
+  const navigate = useNavigate();
 
   const [userShow, setUserShow] = useState(false);
   const [adminShow, setAdminShow] = useState(false);
@@ -24,6 +23,13 @@ function Navbar() {
   const [stateOfficerShow, setStateOfficerShow] = useState(false);
   const [franchiseShow, setFranchiseShow] = useState(false);
   const [bussinessDevShow, setBussinessDevShow] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -34,29 +40,29 @@ function Navbar() {
   const pullFranchise = (data) => setFranchiseShow(data);
   const pullBussiness = (data) => setBussinessDevShow(data);
 
+
   const RenderMenu = () => {
-
-
-    const adminSubAdminModal = (e) =>{
-      if(e.key === 'admin'){
-        setAdminShow(true)
+    const adminSubAdminModal = (e) => {
+      if (e.key === "admin") {
+        setAdminShow(true);
       }
-      if(e.key=== "subadmin"){
+      if (e.key === "subadmin") {
         setSubAdminShow(true);
       }
-      if(e.key=== "sho"){
+      if (e.key === "sho") {
         setStateOfficerShow(true);
       }
-      if(e.key === "franchise"){
+      if (e.key === "franchise") {
         setFranchiseShow(true);
       }
-      if(e.key === "bussinessDev"){
-        setBussinessDevShow(true)
+      if (e.key === "bussinessDev") {
+        setBussinessDevShow(true);
       }
-    }
+    };
+
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="admin" >Admin</Menu.Item>
         <Menu.Item key="subadmin">Sub Admin</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
@@ -64,21 +70,52 @@ function Navbar() {
       </Menu>
     );
 
-    
+    const handleLogout = () => {
+    fetch("/admin/logout", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log('Logout successful');
+          localStorage.clear();
+          navigate('/');
+        } else {
+          throw new Error('Logout failed');
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleMenuClick = ({ key }) => {
+    if (key === 'profile') {
+      setModalVisible(true);
+    }
+  };
+
+    const userMenu = (
+      <Menu style={{ width: 200 }}>
+        <Menu.Item key="profile" onClick={handleMenuClick}>Profile</Menu.Item>
+        <Menu.Item key="account">Add Account Details</Menu.Item>
+        <Menu.Item key="wallet">Wallet</Menu.Item>
+        <Menu.Divider />
+        <Menu.Item key="logout" onClick={handleLogout}>Logout</Menu.Item>
+      </Menu>
+    );
+
     if (login) {
       return (
         <>
-          <li className="nav-item">
-            <NavLink
-              className="btn rounded btn-outline-primary rounded-pill"
-              to="/logout"
-              aria-current="page"
-              style={{ marginRight: "1rem", display: 'flex', alignItems: 'center', gap: '.5rem', width: "max-content" }}
-            >
-              Logout
-              <RiLogoutBoxLine style={{ height: '1rem', width: '1rem' }} />
-            </NavLink>
-          </li>
+          <Dropdown overlay={userMenu} trigger={["click"]}>
+            <Avatar icon={<UserOutlined />} size="large" />
+          </Dropdown>
+          <ProfileModal visible={modalVisible} onCancel={handleCloseModal} />
         </>
       );
     } else {
@@ -94,7 +131,6 @@ function Navbar() {
                 Login
               </Button>
             </Dropdown>
-
           </li>
           &nbsp;&nbsp;
         </>
@@ -135,10 +171,18 @@ function Navbar() {
 
         {/* Admin Login */}
         {adminShow ? <AdminLogin adminFunc={pull_addmin} /> : ""}
-        {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin}/> : ""}
-        {stateOfficerShow ? <StateAdminLogin stateLoginFunc={pullSho}/> : ""}
-        {franchiseShow ? <FranchiseAdminLogin franchiseLoginFunc={pullFranchise}/> : ""}
-        {bussinessDevShow ? <BussinessAdminLogin bussinessLoginFunc={pullBussiness}/> : ""}
+        {subAdminShow ? <SubAdmin subadminfunc={pullsubadmin} /> : ""}
+        {stateOfficerShow ? <StateAdminLogin stateLoginFunc={pullSho} /> : ""}
+        {franchiseShow ? (
+          <FranchiseAdminLogin franchiseLoginFunc={pullFranchise} />
+        ) : (
+          ""
+        )}
+        {bussinessDevShow ? (
+          <BussinessAdminLogin bussinessLoginFunc={pullBussiness} />
+        ) : (
+          ""
+        )}
       </nav>
     </>
   );
