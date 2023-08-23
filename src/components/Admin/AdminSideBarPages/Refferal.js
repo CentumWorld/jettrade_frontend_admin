@@ -299,7 +299,6 @@ if(token){
         setRefferalData(response.data.data);
         console.log(response);
         //setLength(response.data.result.length);
-
     } catch (error) {
         console.error('Error fetching data:', error);
     }
