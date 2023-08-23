@@ -496,7 +496,7 @@ if(token){
             title: `${actionText} Member`,
             content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
             onOk() {
-                const token = localStorage.getItem('adminToken')
+                const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
                 const config = {
                     headers: {
                         Authorization: `Bearer ${token}`

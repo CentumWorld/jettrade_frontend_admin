@@ -149,6 +149,7 @@ function App() {
             <Route path="tracker/frenchie" element={<Frenchie/>}/>
             <Route path="tracker/businness-developer" element={<BusinessDeveloper/>}/>
             <Route path="tracker/members" element={<Refferal/>}/>
+            <Route path="tracker/traders" element={<Dashboard />}/>
 
             <Route
               path="manage/push-notification"
