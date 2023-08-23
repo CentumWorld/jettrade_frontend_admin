@@ -242,21 +242,37 @@ function Dashboard() {
         );
       },
     },
-    {
+    // {
+    //   title: "Action",
+    //   dataIndex: "action",
+    //   render: (_, record) => (
+    //     <>
+    //       <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+    //         <BsThreeDotsVertical
+    //           size={24}
+    //           onClick={() =>
+    //             trigerAction(
+    //               record._id,
+    //               record.userid,
+    //               record.status,
+    //               record.isBlocked,
+    //               record.isSubAdmin
+    //             )
+    //           }
+    //           style={{ cursor: "pointer" }}
+    //         />
+    //       </Dropdown>
+    //     </>
+    //   ),
+    // },
+  ];
+
+  if(token){
+    columns.push({
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <>
-          {/* <Button onClick={() => handleVerifyClick(record._id)} disabled={record.status}
-                        style={buttonStyle}
-                    >
-                        Verify
-                    </Button >*/}
-          {/* <Button type="primary" onClick={() => handleViewClick(record._id)}
-                        style={buttonStyle}
-                    >
-                        View
-                    </Button >  */}
           <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
             <BsThreeDotsVertical
               size={24}
@@ -274,8 +290,8 @@ function Dashboard() {
           </Dropdown>
         </>
       ),
-    },
-  ];
+    })
+  }
 
   // handle action
   const trigerAction = (id, userid, status, block, subadmin) => {
