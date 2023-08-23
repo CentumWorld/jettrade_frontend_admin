@@ -8,10 +8,11 @@ import SubAdmin from "./SubLoginAdmin";
 import StateAdminLogin from "./StateAdminLogin";
 import FranchiseAdminLogin from "./FranchiseAdminLogin";
 import BussinessAdminLogin from "./BussinessAdminLogin";
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
+import pdf from "../utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf"
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -24,12 +25,11 @@ function Navbar() {
   const [franchiseShow, setFranchiseShow] = useState(false);
   const [bussinessDevShow, setBussinessDevShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
 
   const handleCloseModal = () => {
     setModalVisible(false);
   };
-
-  
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -39,7 +39,6 @@ function Navbar() {
   const pullSho = (data) => setStateOfficerShow(data);
   const pullFranchise = (data) => setFranchiseShow(data);
   const pullBussiness = (data) => setBussinessDevShow(data);
-
 
   const RenderMenu = () => {
     const adminSubAdminModal = (e) => {
@@ -62,7 +61,7 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        <Menu.Item key="admin" >Admin</Menu.Item>
+        <Menu.Item key="admin">Admin</Menu.Item>
         <Menu.Item key="subadmin">Sub Admin</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
@@ -71,41 +70,61 @@ function Navbar() {
     );
 
     const handleLogout = () => {
-    fetch("/admin/logout", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then((res) => {
-        if (res.ok) {
-          console.log('Logout successful');
-          localStorage.clear();
-          navigate('/');
-        } else {
-          throw new Error('Logout failed');
-          navigate('/');
-        }
+      fetch("/admin/logout", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+        .then((res) => {
+          if (res.ok) {
+            console.log("Logout successful");
+            localStorage.clear();
+            navigate("/");
+          } else {
+            throw new Error("Logout failed");
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
 
-  const handleMenuClick = ({ key }) => {
-    if (key === 'profile') {
-      setModalVisible(true);
-    }
-  };
+    const handleMenuClick = ({ key }) => {
+      if (key === "profile") {
+        setModalVisible(true);
+      }
+      if (key === 'brochure') {
+        const brochureUrl = {pdf};
+        const link = document.createElement('a');
+        link.href = brochureUrl;
+        link.download = 'CENTUMWORLD FRANCHISE MODULE.pdf';
+        link.click();
+      }
+    };
+
+    const CENTUMWORLDFRANCHISEMODULE = "CENTUMWORLDFRANCHISEMODULE.pdf";
 
     const userMenu = (
       <Menu style={{ width: 200 }}>
-        <Menu.Item key="profile" onClick={handleMenuClick}>Profile</Menu.Item>
+        <Menu.Item key="profile" onClick={handleMenuClick}>
+          Profile
+        </Menu.Item>
         <Menu.Item key="account">Add Account Details</Menu.Item>
         <Menu.Item key="wallet">Wallet</Menu.Item>
+        {isStateHandlerToken && (
+          <Menu.Item key="brochure" onClick={handleMenuClick}>
+            <a href={pdf} download={CENTUMWORLDFRANCHISEMODULE}>
+        Download Brochure
+      </a>
+          </Menu.Item>
+        )}
         <Menu.Divider />
-        <Menu.Item key="logout" onClick={handleLogout}>Logout</Menu.Item>
+        <Menu.Item key="logout" onClick={handleLogout}>
+          Logout
+        </Menu.Item>
       </Menu>
     );
 

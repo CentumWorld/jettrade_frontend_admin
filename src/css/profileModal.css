@@ -1,0 +1,22 @@
+.modal-userName{
+    text-transform: capitalize;
+}
+
+.userName, .modal-phoneNumber, .modalEmailId{
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userName span{
+    font-weight: normal;
+}
+
+.userPhnNumber span{
+    font-weight: normal;
+}
+
+.userEmail span{
+    font-weight: normal;
+}
