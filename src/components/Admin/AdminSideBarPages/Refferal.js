@@ -517,7 +517,8 @@ const Refferal = () => {
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
-          localStorage.getItem("stateHandlerToken");
+          localStorage.getItem("stateHandlerToken")||
+          localStorage.getItem("franchiseToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,

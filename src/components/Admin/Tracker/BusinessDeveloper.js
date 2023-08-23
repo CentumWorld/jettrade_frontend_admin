@@ -184,7 +184,9 @@ const BusinessDeveloper = () => {
       title: `${actionText} Business Developer`,
       content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
       onOk() {
-        const token = localStorage.getItem("adminToken");
+        const token = localStorage.getItem("adminToken")|| 
+        localStorage.getItem("stateHandlerToken") || 
+        localStorage.getItem("franchiseToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,

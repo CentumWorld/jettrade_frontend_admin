@@ -25,6 +25,21 @@ const BussinessDeveloperRoutes = [
     icon: <FaSlideshare />,
   },
   {
+    path: "/admindashboard/tracker",
+    name: "Manage",
+    icon: <SiPivotaltracker />,
+    subRoutes:[
+      {
+        path:'tracker/members',
+        name:'Members'
+      },
+      {
+        path:'tracker/traders',
+        name:'Traders'
+      }
+    ]
+  },
+  {
     path: "trader-chat",
     name: "Admin Chat",
     icon: <BsFillChatTextFill />
