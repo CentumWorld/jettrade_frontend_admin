@@ -279,6 +279,8 @@ const Refferal = () => {
   const token = localStorage.getItem("adminToken");
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
+  const frenchiseToken = localStorage.getItem("franchiseToken");
+  const franchiseRefferal = localStorage.getItem("franchiseRefferal");
   const callApiRefferalDetails = async () => {
     if (token) {
       const config = {
@@ -317,6 +319,24 @@ const Refferal = () => {
         console.error("Error fetching data:", error);
       }
     }
+    else if (frenchiseToken && franchiseRefferal){
+        const config = {
+          headers: { Authorization: `Bearer ${frenchiseToken}` },
+        };
+  
+        const requestData = {
+          franchiseReferralId: franchiseRefferal,
+        };
+        axios
+        .post("/franchise/get-all-members-in-franchise",requestData, config)
+        .then((res) => {
+          console.log("Bussiness responebhejo -> ", res.data);
+          setRefferalData(res.data.data);
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+      }
   };
 
   //    image download-----
@@ -657,7 +677,7 @@ const Refferal = () => {
             />
           </div>
           <div className="user-table">
-            {token || (stateToken && stateHandlerRefferalID) ? (
+            {token || (stateToken && stateHandlerRefferalID) || (frenchiseToken && franchiseRefferal) ? (
               <Table
                 style={{
                   width: "fit-content",

@@ -101,6 +101,8 @@ function Dashboard() {
   const stateHandlerRefferalID = localStorage.getItem(
     "stateHandlerRefferalID"
   );
+  const frenchiseToken = localStorage.getItem("franchiseToken");
+  const franchiseRefferal = localStorage.getItem("franchiseRefferal");
   const fetchData = async () => {
  
     if(token){
@@ -144,6 +146,23 @@ function Dashboard() {
         console.error("Error fetching data:", error);
       }
 
+    }   else if (frenchiseToken && franchiseRefferal){
+      const config = {
+        headers: { Authorization: `Bearer ${frenchiseToken}` },
+      };
+
+      const requestData = {
+        franchiseReferralId: franchiseRefferal,
+      };
+      axios
+      .post("/franchise/get-all-users-in-franchise",requestData, config)
+      .then((res) => {
+        console.log("Bussiness responebhejo -> ", res.data);
+        setFilteredDataSource(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
     }
 
   };
