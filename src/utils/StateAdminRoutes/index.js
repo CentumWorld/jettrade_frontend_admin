@@ -35,6 +35,10 @@ const stateAdminRoutes = [
         {
           path:'tracker/businness-developer',
           name:'Business Developer'
+        },
+        {
+          path:'tracker/members',
+          name:'Members'
         }
       ]
     },

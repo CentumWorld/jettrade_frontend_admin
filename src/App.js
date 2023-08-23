@@ -148,6 +148,8 @@ function App() {
             <Route path="tracker/state-tracer" element={<State/>}/>
             <Route path="tracker/frenchie" element={<Frenchie/>}/>
             <Route path="tracker/businness-developer" element={<BusinessDeveloper/>}/>
+            <Route path="tracker/members" element={<Refferal/>}/>
+
             <Route
               path="manage/push-notification"
               element={<ManageNotification />}

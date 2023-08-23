@@ -262,23 +262,50 @@ const Refferal = () => {
             })
     }
 
-
+    const token = localStorage.getItem('adminToken')
+    const stateToken = localStorage.getItem("stateHandlerToken");
+    const stateHandlerRefferalID = localStorage.getItem(
+      "stateHandlerRefferalID"
+    );
     const callApiRefferalDetails = async () => {
-        const token = localStorage.getItem('adminToken');
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
-            },
-        };
-        try {
-            const response = await axios.get("/admin/fetch-member-details", config);
-            setRefferalData(response.data.result);
-            console.log(response);
-            //setLength(response.data.result.length);
+if(token){
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        },
+    };
+    try {
+        const response = await axios.get("/admin/fetch-member-details", config);
+        setRefferalData(response.data.result);
+        console.log(response);
+        //setLength(response.data.result.length);
 
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+}else if (stateToken && stateHandlerRefferalID){
+    const config = {
+        headers: {
+            Authorization: `Bearer ${stateToken}`, // Set the 'Authorization' header with the token
+        },
+    };
+    const requestData = {
+        stateReferralId: stateHandlerRefferalID,
+      };
+
+    try {
+        const response = await axios.post("/state/fetch-all-members-in-state",requestData, config);
+        setRefferalData(response.data.data);
+        console.log(response);
+        //setLength(response.data.result.length);
+
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+
     }
 
     //    image download-----
@@ -593,15 +620,21 @@ const Refferal = () => {
                       
                     /></div>
                     <div className='user-table'>
-                        <Table
-                        style={{width: "fit-content",marginTop:"10px", textOverflow: 'ellipsis',
-                        // overflow: "hidden",
-                        whiteSpace: 'nowrap'}}
-                            dataSource={refferalData}
-                            columns={columns}
-                            scroll={{ x: true , y:320}}
-                            pagination={{ pageSize: 7 }}
-                        />
+
+                        
+                             {token ||  (stateToken && stateHandlerRefferalID) ?
+
+                                <Table
+                                style={{width: "fit-content",marginTop:"10px", textOverflow: 'ellipsis',
+                                // overflow: "hidden",
+                                whiteSpace: 'nowrap'}}
+                                    dataSource={refferalData}
+                                    columns={columns}
+                                    scroll={{ x: true , y:320}}
+                                    pagination={{ pageSize: 7 }}
+                                />:null
+                        }
+                       
                     </div>
                 </div>
             </div>
