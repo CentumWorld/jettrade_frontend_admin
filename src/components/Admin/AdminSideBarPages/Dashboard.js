@@ -96,24 +96,56 @@ function Dashboard() {
     //fetchUserDetailsForEdit();
   }, []);
 
+  const token = localStorage.getItem("adminToken");
+  const stateToken = localStorage.getItem("stateHandlerToken");
+  const stateHandlerRefferalID = localStorage.getItem(
+    "stateHandlerRefferalID"
+  );
   const fetchData = async () => {
-    try {
-      const token = localStorage.getItem("adminToken");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const response = await axios.get(
-        "/admin/fetch-user-details",
-        config
-      );
+ 
+    if(token){
+      try {
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+        };
+        const response = await axios.get(
+          "/admin/fetch-user-details",
+          config
+        );
+  
+        setData(response.data.result);
+        //console.log(typeof(response.data.result[0].phone));
+        setFilteredDataSource(response.data.result);
+        setLength(response.data.result.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }else if (stateToken && stateHandlerRefferalID ){
+        
+      try {
+        const config = {
+          headers: { Authorization: `Bearer ${stateToken}` },
+        };
 
-      setData(response.data.result);
-      //console.log(typeof(response.data.result[0].phone));
-      setFilteredDataSource(response.data.result);
-      setLength(response.data.result.length);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+        const requestData = {
+          stateReferralId: stateHandlerRefferalID,
+        };
+  
+        const response = await axios.post(
+          "/state/fetch-all-users-in-state",requestData,
+          config
+        );
+  
+        setData(response.data.result);
+        //console.log(typeof(response.data.result[0].phone));
+        setFilteredDataSource(response.data.data);
+        setLength(response.data.result.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+
     }
+
   };
   // console.log(data);
   const handleVerifyClick = (id) => {
