@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { AiOutlineSend } from 'react-icons/ai'
-import { message } from 'antd'
-import axios from 'axios'
-import baseUrl from '../../baseUrl'
+import { BiArrowBack } from 'react-icons/bi'
+import axios from 'axios';
+import baseUrl from '../../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-
-const BusinessDChat = ({ socket, businessname, room }) => {
+const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => {
 
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
-    const [isBusinessOnline, setIsBusinessOnline] = useState(false);
-    const [join, setJoin] = useState('')
+    const [businessOnline, setBusinessOnline] = useState(false);
+
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const messageData = {
@@ -22,65 +21,61 @@ const BusinessDChat = ({ socket, businessname, room }) => {
                 time:
                     new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
             };
-            await socket.emit("businessMessage", messageData);
+            await socket.emit("adminMessgaeBusiness", messageData);
             setMessageList((list) => [...list, messageData]);
             setCurrentMessage("");
         }
 
     };
+    const handleClick = () => {
+        const data = false;
+        sendDataToParent(data);
+        localStorage.removeItem('noti')
+    };
 
     useEffect(() => {
-        joinResponse();
         fetchChatMessage();
-        businessOffline();
+
+        //user online or not
+        businessOnlineOrNOt(room)
+        socket.on('businessOnline', (userId) => {
+            businessOnlineOrNOt(userId)
+        })
 
 
-
-        //received message from admin
-        socket.on("business_receive_message", (data) => {
-            //console.log(data)
-            //setMessageList((list) => [...list, data])
+        //admin received message from user
+        socket.on("admin_receive_message", (data) => {
             fetchChatMessage();
+            //setMessageList((list) => [...list, data])
+            console.log(data, '48')
+            localStorage.setItem('noti', data.room)
 
         });
 
-        // admin online
-        // Listen for admin online
-        socket.on('businessOnline', (data)=>{
-            businessOffline();
+
+
+        //Listen for user offline event
+        socket.on('businessOffline', (userId) => {
+            businessOnlineOrNOt(userId)
         })
 
-        // Listen for admin offline
-        socket.on('falnaOffline', (data)=>{
-            businessOffline();
-        })
-        //Clean up on component unmount
-        return () => {
-            socket.emit('businessLogout', room);
-            //socket.disconnect();
-        }
+
+
 
 
     }, [socket]);
 
-    const joinResponse = () => {
 
-        socket.on("businessResponse", (data) => {
-            message.success(data);
-        })
-    }
-
-    // message chat
     const fetchChatMessage = () => {
-        console.log('77 ')
-        let token = localStorage.getItem('bussinessAdminToken')
+        let token = localStorage.getItem('adminToken')
+        console.log(room, '71');
         let data = {
             room: room
         }
         const config = {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/businessDeveloper/businessDeveloper/fetch-chat-message-business', data, config)
+        axios.post('/admin/fetch-business-chat-message-admin', data, config)
             .then((result) => {
                 console.log(result.data.businessChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -93,36 +88,39 @@ const BusinessDChat = ({ socket, businessname, room }) => {
 
     }
 
-    const businessOffline = () => {
-        let token = localStorage.getItem('bussinessAdminToken')
-
+    // user online or not
+    const businessOnlineOrNOt = (data) => {
+        console.log(data);
+        const data1 = {
+            frenchiseId: data
+        }
+        let token = localStorage.getItem('adminToken');
         const config = {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         };
+        axios.post('/admin/admin-business-online-or-not', data1, config)
+            .then((res) => {
+                setBusinessOnline(res.data.isOnline)
+            })
+            .catch((err) => {
+                console.log(err.response)
+            })
 
-        axios.get('/businessDeveloper/businessDeveloper/admin-online-or-not-business',config)
-        .then((res)=>{
-            setIsBusinessOnline(res.data.isOnline)
-        })
-        .catch((err)=>{
-            console.log(err.response)
-        })
 
     }
+    const statusClass = businessOnline ? 'online' : 'offline';
 
-    const statusClass = isBusinessOnline ? 'online' : 'offline';
     return (
         <div className='chat-window'>
-            <div className='chat-header'>
-
-                <p>Live Chat &nbsp;<span className={statusClass}>{isBusinessOnline ? 'Online' : 'Offline'}</span></p> 
-                
+            <div className="chat-header1">
+                <div className="left-item" onClick={handleClick}><BiArrowBack /></div>
+                <div className="centered-item">Live Chat &nbsp; <span className={statusClass}>{businessOnline ? 'Online' : 'Offline'}</span></div>
             </div>
             <div className='chat-body'>
                 <ScrollToBottom className='message-container'>
                     {messageList.map((messageContent, index) => {
                         return <div key={index} className='message' id={businessname === messageContent.author ? "you" : "other"}>
-                            <div>
+                            <div >
                                 <div className='message-content'>
                                     <p>{messageContent.message}</p>
                                 </div>
@@ -156,4 +154,4 @@ const BusinessDChat = ({ socket, businessname, room }) => {
     )
 }
 
-export default BusinessDChat
+export default BusinessChatAdmin

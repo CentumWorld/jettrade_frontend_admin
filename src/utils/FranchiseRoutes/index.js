@@ -48,8 +48,8 @@ import {
         icon: <AiFillVideoCamera />,
       },
       {
-        path: "trader-chat",
-        name: "Admin",
+        path: "frenchisee-handler-chat",
+        name: "Chat",
         icon: <BsFillChatTextFill />
       }
     ]

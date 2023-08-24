@@ -52,8 +52,8 @@ const stateAdminRoutes = [
       icon: <AiFillVideoCamera />,
     },
     {
-      path: "trader-chat",
-      name: "Admin Chat",
+      path: "state-handler-chat",
+      name: "Chat",
       icon: <BsFillChatTextFill />
     }
   ]
