@@ -13,6 +13,7 @@ import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
 import pdf from "../utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
+import AccountModal from "./AccountModal";
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -28,6 +29,15 @@ function Navbar() {
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
   const [walletamount, setWalletAmount] = useState("");
   const isFrachiseToken = localStorage.getItem("franchiseToken");
+  const [isAccountModalVisible, setAccountModalVisible] = useState(false)
+
+  const handleAccountModalOpen = () => {
+    setAccountModalVisible(true);
+  };
+
+  const handleAccountModalClose = () => {
+    setAccountModalVisible(false);
+  };
 
   const handleCloseModal = () => {
     setModalVisible(false);
@@ -151,7 +161,7 @@ function Navbar() {
         <Menu.Item key="profile" onClick={handleMenuClick}>
           Profile
         </Menu.Item>
-        <Menu.Item key="account">Add Account Details</Menu.Item>
+        <Menu.Item key="account" onClick={handleAccountModalOpen}>Add Account Details</Menu.Item>
         <Menu.Item key="wallet">
           Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
         </Menu.Item>
@@ -176,6 +186,7 @@ function Navbar() {
             <Avatar icon={<UserOutlined />} size="large" />
           </Dropdown>
           <ProfileModal visible={modalVisible} onCancel={handleCloseModal} />
+          <AccountModal isVisible={isAccountModalVisible} onClose={handleAccountModalClose} />
         </>
       );
     } else {
