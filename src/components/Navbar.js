@@ -12,7 +12,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
-import pdf from "../utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf"
+import pdf from "../utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -26,10 +26,50 @@ function Navbar() {
   const [bussinessDevShow, setBussinessDevShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
+  const [walletamount, setWalletAmount] = useState("");
+  const isFrachiseToken = localStorage.getItem("franchiseToken");
 
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
+  useEffect(() => {
+    if (isStateHandlerToken) {
+      async function fetchStateDetails() {
+        try {
+          const response = await fetch("/state/get-own-state-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isStateHandlerToken}`,
+            },
+          });
+          const data = await response.json();
+          setWalletAmount(data.data.stateHandlerWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchStateDetails();
+    }else if(isFrachiseToken){
+      async function fetchFracnhiseDetails() {
+        try {
+          const response = await fetch("/franchise/get-own-franchise-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isFrachiseToken}`,
+            },
+          });
+          const data = await response.json();
+          setWalletAmount(data.data.frenchiseWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchFracnhiseDetails()
+    }
+  }, []);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -84,7 +124,6 @@ function Navbar() {
             navigate("/");
           } else {
             throw new Error("Logout failed");
-            navigate("/");
           }
         })
         .catch((error) => {
@@ -96,11 +135,11 @@ function Navbar() {
       if (key === "profile") {
         setModalVisible(true);
       }
-      if (key === 'brochure') {
-        const brochureUrl = {pdf};
-        const link = document.createElement('a');
+      if (key === "brochure") {
+        const brochureUrl = { pdf };
+        const link = document.createElement("a");
         link.href = brochureUrl;
-        link.download = 'CENTUMWORLD FRANCHISE MODULE.pdf';
+        link.download = "CENTUMWORLD FRANCHISE MODULE.pdf";
         link.click();
       }
     };
@@ -113,12 +152,14 @@ function Navbar() {
           Profile
         </Menu.Item>
         <Menu.Item key="account">Add Account Details</Menu.Item>
-        <Menu.Item key="wallet">Wallet</Menu.Item>
-        {isStateHandlerToken && (
+        <Menu.Item key="wallet">
+          Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
+        </Menu.Item>
+        {(isStateHandlerToken || isFrachiseToken) && (
           <Menu.Item key="brochure" onClick={handleMenuClick}>
             <a href={pdf} download={CENTUMWORLDFRANCHISEMODULE}>
-        Download Brochure
-      </a>
+              Download Brochure
+            </a>
           </Menu.Item>
         )}
         <Menu.Divider />
