@@ -369,10 +369,6 @@ const Frenchie = () => {
         console.log(err.response.data.messsage)
       }))
   }
-
-  // const selectStateFromDeopDown = (value) => {
-  //   setFranchiseData({ ...editFranchiseData, state: value })
-  // }
   const selectStateFromDeopDown = (selectedState) => {
     const selectedStateData = allState.states.find(state => state.state === selectedState);
     if (selectedStateData) {
@@ -385,13 +381,62 @@ const Frenchie = () => {
   };
 
   const handleCitySelectChange = (selectedCities) => {
-    console.log("huuu")
     setFranchiseData({
       ...editFranchiseData,
       city: selectedCities,
     });
 
   };
+
+  const submitEditForm = () => {
+
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    let data = {
+      id: myID,
+      fname: editFranchiseData.fname,
+      lname: editFranchiseData.lname,
+      phone: editFranchiseData.phone,
+      email: editFranchiseData.email,
+      franchiseState: editFranchiseData.state,
+      franchiseCity: editFranchiseData.city,
+      gender: editFranchiseData.gender,
+    }
+    axios.put("/admin/update-franchise", data, config)
+      .then((res) => {
+        message.success(res.data.message)
+        fetchFrenchieseDataApi();
+        setEditModalVisible(false)
+        setFranchiseData({ fname: "", lname: "", email: "", phone: "", state: "", city: [], gender: "" })
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+    console.log(editFranchiseData)
+  }
+
+  const inputChangeValue = (event) => {
+    const { name, value } = event.target;
+    setFranchiseData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
+  const genderChange = (name, value) =>{
+    setFranchiseData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+  const genderChangeValue = (value) =>{
+    genderChange('gender', value)
+  }
 
   return (
     <>
@@ -472,25 +517,26 @@ const Frenchie = () => {
           <Modal
             title="Edit Details"
             open={editModalVisible}
-            onOk={closeEditModal}
+            onOk={submitEditForm}
             onCancel={closeEditModal}
           >
             <Form.Item label="Fname:">
-              <Input placeholder="First name.." type="text" value={editFranchiseData.fname} />
+              <Input placeholder="First name.." name="fname" onChange={inputChangeValue} type="text" value={editFranchiseData.fname} />
             </Form.Item>
             <Form.Item label="Lname:">
-              <Input placeholder="Last name" type="text" value={editFranchiseData.lname} />
+              <Input placeholder="Last name" name="lname" onChange={inputChangeValue} type="text" value={editFranchiseData.lname} />
             </Form.Item>
             <Form.Item label="Email:">
-              <Input placeholder="Email" type="email" value={editFranchiseData.email} />
+              <Input placeholder="Email" name="email" onChange={inputChangeValue} type="email" value={editFranchiseData.email} />
             </Form.Item>
             <Form.Item label="Phone:">
-              <Input placeholder="Phone" type="text" value={editFranchiseData.phone} />
+              <Input placeholder="Phone" name="phone" onChange={inputChangeValue} type="text" value={editFranchiseData.phone} />
             </Form.Item>
             <Form.Item label="Gender">
               <Select
                 value={editFranchiseData.gender}
                 style={{ width: 120 }}
+                onChange={genderChangeValue}
               >
                 <Option value="male">Male</Option>
                 <Option value="female">Female</Option>
@@ -512,20 +558,21 @@ const Frenchie = () => {
             </Form.Item>
             <Form.Item label="City">
               {editFranchiseData.state && (
-                 <Select
-                 mode="multiple"
-                 style={{ width: 200 }}
-                 value={editFranchiseData.city}
-                 onChange={handleCitySelectChange}
-               >
-                 {allState.states
-                   .find(state => state.state === editFranchiseData.state)
-                   ?.districts.map(city => (
-                     <Option key={city} value={city}>
-                       {city}
-                     </Option>
-                   ))}
-               </Select>
+                <Select
+                 placeholder="Select city"
+                  mode="multiple"
+                  style={{ width: 200 }}
+                  value={editFranchiseData.city}
+                  onChange={handleCitySelectChange}
+                >
+                  {allState.states
+                    .find(state => state.state === editFranchiseData.state)
+                    ?.districts.map(city => (
+                      <Option key={city} value={city}>
+                        {city}
+                      </Option>
+                    ))}
+                </Select>
               )}
             </Form.Item>
           </Modal>
