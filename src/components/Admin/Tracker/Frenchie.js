@@ -579,7 +579,6 @@ const Frenchie = () => {
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item label="City">
             {selectedState && (
               <Select
