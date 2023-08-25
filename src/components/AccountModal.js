@@ -1,8 +1,9 @@
-import banks from "../utils/banknames/banks";
 import React, { useState } from "react";
-import { Col, Form, Input, Modal, Row, Select } from "antd";
-import "../css/accountmodal.css";
+import { Col, Form, Input, Modal, Row, Select, Button } from "antd";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import banks from "../utils/banknames/banks";
+import "../css/accountmodal.css";
+
 const { Option } = Select;
 
 const AccountModal = ({ isVisible, onClose }) => {
@@ -10,6 +11,7 @@ const AccountModal = ({ isVisible, onClose }) => {
   const [selectedBank, setSelectedBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [ifscCode, setIFSCCode] = useState("");
+  const [savedData, setSavedData] = useState(null);
 
   const handleBankSelect = (value) => {
     setSelectedBank(value);
@@ -18,6 +20,16 @@ const AccountModal = ({ isVisible, onClose }) => {
   const handleIFSCCodeChange = (e) => {
     setIFSCCode(e.target.value);
   };
+
+  const handleAccountNumberChange = (e) => {
+    setAccountNumber(e.target.value);
+  };
+
+  const handleSave = () => {
+    const formData = form.getFieldsValue();
+    setSavedData(formData);
+  };
+
   return (
     <Modal
       title="Account Details"
@@ -57,6 +69,7 @@ const AccountModal = ({ isVisible, onClose }) => {
               <Input
                 placeholder="Account number"
                 value={accountNumber}
+                onChange={handleAccountNumberChange}
                 style={{ width: "100%" }}
               />
             </Form.Item>
@@ -72,7 +85,20 @@ const AccountModal = ({ isVisible, onClose }) => {
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item>
+          <Button type="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </Form.Item>
       </Form>
+      {savedData && (
+        <div className="account-details">
+          <p>Account Holder Name: {savedData["accountHolderName"]}</p>
+          <p>Bank: {savedData["bank"]}</p>
+          <p>Account Number: {savedData["accountNumber"]}</p>
+          <p>IFSC Code: {savedData["ifscCode"]}</p>
+        </div>
+      )}
     </Modal>
   );
 };

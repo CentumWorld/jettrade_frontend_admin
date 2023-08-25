@@ -38,15 +38,6 @@ const StateAdminLogin = (props) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
-        localStorage.setItem("statefname",response.data.stateHandlerDetails.fname);
-        localStorage.setItem('stateuserid',response.data.stateHandlerDetails.stateHandlerId);
-        localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
-        localStorage.setItem("stateHandlerFirstName", response.data.stateHandlerDetails.fname);
-        localStorage.setItem("stateHandlerLastName", response.data.stateHandlerDetails.lname);
-        localStorage.setItem("stateHandlerPhoneNumber", response.data.stateHandlerDetails.phone);
-        localStorage.setItem("stateHandlerWalllet", response.data.stateHandlerDetails.stateHandlerWallet);
-        localStorage.setItem("stateHandlerId", response.data.stateHandlerDetails.stateHandlerId);
-        localStorage.setItem("stateHandlerEmailId", response.data.stateHandlerDetails.email)
         setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })

@@ -29,9 +29,10 @@ function Navbar() {
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
   const [walletamount, setWalletAmount] = useState("");
   const isFrachiseToken = localStorage.getItem("franchiseToken");
-  const [isAccountModalVisible, setAccountModalVisible] = useState(false)
+  const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
   const isSubAdminToken = localStorage.getItem("subAdminToken");
+  const isAdminToken = localStorage.getItem("adminToken");
 
   const handleAccountModalOpen = () => {
     setAccountModalVisible(true);
@@ -63,7 +64,7 @@ function Navbar() {
         }
       }
       fetchStateDetails();
-    }else if(isFrachiseToken){
+    } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
           const response = await fetch("/franchise/get-own-franchise-details", {
@@ -79,26 +80,50 @@ function Navbar() {
           console.error("Error fetching state details", error);
         }
       }
-      fetchFracnhiseDetails()
-    }else if (isBussinessDeveloperToken){
+      fetchFracnhiseDetails();
+    } else if (isBussinessDeveloperToken) {
       async function fetchBussinessDetails() {
         try {
-          const response = await fetch("/businessDeveloper/get-own-business-developer-details", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isBussinessDeveloperToken}`,
-            },
-          });
+          const response = await fetch(
+            "/businessDeveloper/get-own-business-developer-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isBussinessDeveloperToken}`,
+              },
+            }
+          );
           const data = await response.json();
           setWalletAmount(data.data.businessDeveloperWallet);
         } catch (error) {
           console.error("Error fetching state details", error);
         }
       }
-      fetchBussinessDetails()
+      fetchBussinessDetails();
+    }else if (isAdminToken){
+      async function fetchAdminDetails() {
+        try {
+          const response = await fetch(
+            "/admin/fetch-admin",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isAdminToken}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setWalletAmount(data.data.adminWallet);
+          fetchAdminDetails()
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchAdminDetails()
     }
-  }, []);
+  }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken, isAdminToken]);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -165,25 +190,34 @@ function Navbar() {
         setModalVisible(true);
       }
       if (key === "brochure") {
-        const pdfUrl = centumPDF
-        const link = document.createElement('a');
-        link.href = pdfUrl
-        link.download = "CENTUM WORLD FRANCHISE MODULE.pdf"
-        link.click()
+        const pdfUrl = centumPDF;
+        const link = document.createElement("a");
+        link.href = pdfUrl;
+        link.download = "CENTUM WORLD FRANCHISE MODULE.pdf";
+        link.click();
       }
     };
 
     const userMenu = (
       <Menu style={{ width: 200 }}>
-        <Menu.Item key="profile" onClick={handleMenuClick}>
-          Profile
-        </Menu.Item>
-        <Menu.Item key="account" onClick={handleAccountModalOpen}>Add Account Details</Menu.Item>
-        <Menu.Item key="wallet">
-          Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
-        </Menu.Item>
+        {!isAdminToken && (
+          <Menu.Item key="profile" onClick={handleMenuClick}>
+            Profile
+          </Menu.Item>
+        )}
+        {(!isAdminToken && !isSubAdminToken) && (
+          <Menu.Item key="account" onClick={handleAccountModalOpen}>
+            Add Account Details
+          </Menu.Item>
+        )}
+        {(!isSubAdminToken) && (
+          <Menu.Item key="wallet">
+            Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
+          </Menu.Item>
+        )}
         {(isStateHandlerToken || isFrachiseToken) && (
-          <Menu.Item key="brochure" onClick={handleMenuClick}>Download brochure
+          <Menu.Item key="brochure" onClick={handleMenuClick}>
+            Download brochure
           </Menu.Item>
         )}
         <Menu.Divider />
@@ -197,10 +231,17 @@ function Navbar() {
       return (
         <>
           <Dropdown overlay={userMenu} trigger={["click"]}>
-            <Avatar icon={<UserOutlined />} size="large" style={{marginRight: "1rem"}}/>
+            <Avatar
+              icon={<UserOutlined />}
+              size="large"
+              style={{ marginRight: "1rem" }}
+            />
           </Dropdown>
           <ProfileModal visible={modalVisible} onCancel={handleCloseModal} />
-          <AccountModal isVisible={isAccountModalVisible} onClose={handleAccountModalClose} />
+          <AccountModal
+            isVisible={isAccountModalVisible}
+            onClose={handleAccountModalClose}
+          />
         </>
       );
     } else {
@@ -208,9 +249,7 @@ function Navbar() {
         <>
           <li className="nav-item">
             <Dropdown overlay={menu} trigger={["click"]}>
-              <Button
-                variant=" btn rounded btn-outline-primary rounded-pill"
-              >
+              <Button variant=" btn rounded btn-outline-primary rounded-pill">
                 Login
               </Button>
             </Dropdown>
