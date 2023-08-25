@@ -18,7 +18,7 @@ function AdminSideBar() {
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isAdmin  = localStorage.getItem("adminToken");
   const isBussinessDeveloper = localStorage.getItem("bussinessAdminToken");
-  const isFranchise = localStorage.getItem("franchiseToken")
+  const isFranchise = localStorage.getItem("franchiseToken");
 
   const updateUser = () => {
     if(isSubAdmin){
@@ -49,7 +49,7 @@ function AdminSideBar() {
       >
         <div className="admin-top-section">
           {isOpen && (
-            <h1 className="admin_logo">{user}</h1>
+            <h5 className="admin_logo">{user}</h5>
           )}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}
 

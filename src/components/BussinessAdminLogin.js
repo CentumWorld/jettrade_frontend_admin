@@ -32,9 +32,12 @@ const BussinessAdminLogin = (props) => {
         password: bussinessAdmin.bussinessAdmin_password,
     })
       .then((response) => {
+        console.log(response.data);
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("bussinessAdminToken", response.data.businessDeveloperToken);
+        localStorage.setItem("businessId",response.data.businessDeveloperDetails.businessDeveloperId);
+        localStorage.setItem("businessFname",response.data.businessDeveloperDetails.fname);
         setBussinessAdmin({ bussinessAdmin_id: "", bussinessAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })

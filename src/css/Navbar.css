@@ -3,6 +3,9 @@
     border: 1px solid black;
 } */
 
+.wallet-ammount{
+    font-weight: 800;
+}
 
 .user-Aavtar{
     padding-right: 1rem;

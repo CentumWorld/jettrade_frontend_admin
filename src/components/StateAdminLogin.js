@@ -34,9 +34,12 @@ const StateAdminLogin = (props) => {
         password: stateAdmin.stateAdmin_password,
     })
       .then((response) => {
+        console.log(response.data);
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
+        localStorage.setItem("statefname",response.data.stateHandlerDetails.fname);
+        localStorage.setItem('stateuserid',response.data.stateHandlerDetails.stateHandlerId);
         localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
         localStorage.setItem("stateHandlerFirstName", response.data.stateHandlerDetails.fname);
         localStorage.setItem("stateHandlerLastName", response.data.stateHandlerDetails.lname);

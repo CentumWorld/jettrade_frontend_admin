@@ -15,35 +15,35 @@ const BusinessDLiveChat = () => {
     const businessFname = localStorage.getItem('businessFname');
     const businessId = localStorage.getItem('businessId');
 
-    const [frenchname, setFrenchname] = useState(businessFname);
+    const [businessname, setBusinessname] = useState(businessFname);
     const [room, setRoom] = useState(businessId );
     const [showChat, setShowChat] = useState(false);
     const [type, setType] = useState('BUSINESS');
 
     const joinRoom = () => {
-        if (frenchname !== "" && room !== "") {
+        if (businessname !== "" && room !== "") {
             socket.emit("join_room", room, type);
             setShowChat(true);
         }
     }
 
     useEffect(() => {
-        exitChatFrench();
+        exitChatBusiness();
     }, [])
 
-    const exitChatFrench = () => {
+    const exitChatBusiness = () => {
         let token = localStorage.getItem('bussinessAdminToken')
         let data = {
-            frenchiseId: localStorage.getItem('businessId')
+            businessDeveloperId :localStorage.getItem('businessId')
         }
 
         let config = {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/franchise/frenchise/fetch-chat-details-frenchisee', data, config)
+        axios.post('/businessDeveloper/businessDeveloper/fetch-chat-details-business', data, config)
             .then((result) => {
-                const length = result.data.frenchiseeChatDetails.length;
+                const length = result.data.businessChatDetails.length;
                 console.log(length);
                 if (length > 0) {
                     joinRoom()
@@ -65,9 +65,9 @@ const BusinessDLiveChat = () => {
                 <h3 >Join a Chat</h3>
                 <Input
                     type="text"
-                    value={frenchname}
+                    value={businessname}
                     placeholder='Join......'
-                    onChange={(event) => { setFrenchname(event.target.value) }
+                    onChange={(event) => { setBusinessname(event.target.value) }
                     }
                     disabled={true}
                      />
@@ -84,7 +84,7 @@ const BusinessDLiveChat = () => {
 
             )
             : (
-            <BusinessDChat socket={socket} frenchname={frenchname} room={room} />
+            <BusinessDChat socket={socket} businessname={businessname} room={room} />
                 )}
         </div >
 
