@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, Button, Select } from "antd";
+import { Modal, Form, Input, Button, Select, DatePicker, Space } from "antd";
 import {
   UserOutlined,
   MobileOutlined,
@@ -7,6 +7,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -16,6 +17,7 @@ const ProfileModal = ({ visible, onCancel }) => {
   const stateAdmintoken = localStorage.getItem("stateHandlerToken");
   const franchiseToken = localStorage.getItem("franchiseToken");
   const bussinessToken = localStorage.getItem("bussinessAdminToken");
+  const isSubAdminToken = localStorage.getItem("subAdminToken");
   const [fieldValue, setFieldValue] = useState({
     fname: "",
     lname: "",
@@ -61,11 +63,30 @@ const ProfileModal = ({ visible, onCancel }) => {
     // bussiness details API
     async function fetchBussinessDetails() {
       try {
-        const response = await fetch("/businessDeveloper/get-own-business-developer-details", {
+        const response = await fetch(
+          "/businessDeveloper/get-own-business-developer-details",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${bussinessToken}`,
+            },
+          }
+        );
+        const data = await response.json();
+        setFieldValue(data.data);
+      } catch (error) {
+        console.error("Error fetching state details", error);
+      }
+    }
+
+    async function fetchSubAdminDetails() {
+      try {
+        const response = await fetch("/subAdmin/get-own-sub-admin-details", {
           method: "GET",
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${bussinessToken}`,
+            Authorization: `Bearer ${isSubAdminToken}`,
           },
         });
         const data = await response.json();
@@ -75,13 +96,14 @@ const ProfileModal = ({ visible, onCancel }) => {
       }
     }
 
-
     if (stateAdmintoken) {
       fetchStateDetails();
     } else if (franchiseToken) {
       fetchFranchiseDetails();
-    }else if (bussinessToken){
+    } else if (bussinessToken) {
       fetchBussinessDetails();
+    } else if (isSubAdminToken) {
+      fetchSubAdminDetails();
     }
   }, []);
 
@@ -149,7 +171,7 @@ const ProfileModal = ({ visible, onCancel }) => {
       } catch (err) {
         console.error("Error", err.message);
       }
-    } else if (bussinessToken){
+    } else if (bussinessToken) {
       try {
         console.log("Sending Payload:", {
           [editingField]: fieldValue[editingField],
@@ -161,6 +183,32 @@ const ProfileModal = ({ visible, onCancel }) => {
             headers: {
               Accept: "application/json",
               Authorization: `Bearer ${bussinessToken}`,
+            },
+          }
+        );
+        console.log("API Response:", response.data);
+
+        setFieldValue((prevValues) => ({
+          ...prevValues,
+          [editingField]: response.data[editingField],
+        }));
+
+        setEditingField(null);
+      } catch (err) {
+        console.error("Error", err.message);
+      }
+    }else if (isSubAdminToken){
+      try {
+        console.log("Sending Payload:", {
+          [editingField]: fieldValue[editingField],
+        });
+        const response = await axios.put(
+          "/subAdmin/update-own-sub-admin-details",
+          fieldValue,
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isSubAdminToken}`,
             },
           }
         );
