@@ -369,9 +369,27 @@ const Frenchie = () => {
       }))
   }
 
-  const selectStateFromDeopDown = (value) =>{
-    setFranchiseData({...editFranchiseData, state:value})
-  }
+  // const selectStateFromDeopDown = (value) => {
+  //   setFranchiseData({ ...editFranchiseData, state: value })
+  // }
+  const selectStateFromDeopDown = (selectedState) => {
+    // Assuming you have a data structure that holds cities for each state
+    const selectedStateData = allState.states.find(state => state.state === selectedState);
+    if (selectedStateData) {
+      setFranchiseData({
+        ...editFranchiseData,
+        state: selectedState,
+        city: selectedStateData.cities, // Set the cities for the selected state
+      });
+    }
+  };
+
+  const handleCityCheckboxChange = (selectedCities) => {
+    setFranchiseData({
+      ...editFranchiseData,
+      city: selectedCities,
+    });
+  };
 
   return (
     <>
@@ -491,13 +509,21 @@ const Frenchie = () => {
               </Select>
             </Form.Item>
             <Form.Item label="City">
-              <Select
-                value={editFranchiseData.state}
-                style={{ width: 120 }}
-              >
-              </Select>
+              {editFranchiseData.state && (
+                <Checkbox.Group
+                  style={{ width: '100%' }}
+                  value={editFranchiseData.cities}
+                  onChange={handleCityCheckboxChange}
+                >
+                  {editFranchiseData.city.map(city => (
+                    <Checkbox key={city} value={city}>
+                      {city}
+                    </Checkbox>
+                  ))}
+                </Checkbox.Group>
+              )}
             </Form.Item>
-          </Modal>
+          </Modal >
           : ""
       }
     </>
