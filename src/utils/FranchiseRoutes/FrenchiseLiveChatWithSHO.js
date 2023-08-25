@@ -4,21 +4,21 @@ import '../../../src/components/Admin/css/LiveChat.css'
 import { Input } from 'antd';
 import axios from 'axios';
 import baseUrl from '../../baseUrl';
-import Chat from './Chat';
+import FrenchiseChatWithSHO from './FrenchiseChatWithSHO';
 
 
 const apiurl = baseUrl.apiUrl
 
 const socket = io.connect('http://localhost:4000');
 
-const FrenchiseeLiveChat = () => {
+const FrenchiseLiveChatWithSHO = () => {
     const frenchFname = localStorage.getItem('frenchFname');
     const frenchId = localStorage.getItem('frenchiseId');
 
     const [frenchname, setFrenchname] = useState(frenchFname);
     const [room, setRoom] = useState(frenchId );
     const [showChat, setShowChat] = useState(false);
-    const [type, setType] = useState('FRENCH');
+    const [type, setType] = useState('FRENCHWITHSHO');
 
     const joinRoom = () => {
         if (frenchname !== "" && room !== "") {
@@ -41,9 +41,9 @@ const FrenchiseeLiveChat = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/franchise/frenchise/fetch-chat-details-frenchisee', data, config)
+        axios.post('/frenchise/frenchise/fetch-chat-details-frechise-with-sho', data, config)
             .then((result) => {
-                const length = result.data.frenchChatDetails.length;
+                const length = result.data.frenchChatDetailsWithSHO.length;
                 console.log(length);
                 if (length > 0) {
                     joinRoom()
@@ -84,7 +84,7 @@ const FrenchiseeLiveChat = () => {
 
             )
             : (
-            <Chat socket={socket} frenchname={frenchname} room={room} />
+            <FrenchiseChatWithSHO socket={socket} frenchname={frenchname} room={room} />
                 )}
         </div >
 
@@ -92,4 +92,4 @@ const FrenchiseeLiveChat = () => {
     )
 }
 
-export default FrenchiseeLiveChat
+export default FrenchiseLiveChatWithSHO

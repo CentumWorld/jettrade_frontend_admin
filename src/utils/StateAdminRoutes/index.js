@@ -52,10 +52,25 @@ const stateAdminRoutes = [
       icon: <AiFillVideoCamera />,
     },
     {
-      path: "state-handler-chat",
+      path: "/admindashboard/chat",
       name: "Chat",
-      icon: <BsFillChatTextFill />
-    }
+      icon: <BsFillChatTextFill />,
+      subRoutes:[
+        {
+          path:'chat/state-handler-chat',
+          name:'Chat with Admin'
+        },
+        {
+          path:'chat/state-chat-with-french',
+          name :'Chat with Frenchise'
+        },
+      ]
+    },
+    // {
+    //   path: "state-handler-chat",
+    //   name: "Chat",
+    //   icon: <BsFillChatTextFill />
+    // }
   ]
 
   export default stateAdminRoutes;

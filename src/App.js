@@ -72,6 +72,8 @@ import FrenchiseeLiveChatAdmin from "./components/Admin/AdminSideBarPages/French
 import FrenchiseeLiveChat from "./utils/FranchiseRoutes/FrenchiseeLiveChat";
 import BusinessDLiveChat from "./utils/BussinessDeveloperRoutes/BusinessDLiveChat";
 import BusinessLiveChatAdmin from "./components/Admin/AdminSideBarPages/BusinessLiveChatAdmin";
+import FrenchiseLiveChatWithSHO from "./utils/FranchiseRoutes/FrenchiseLiveChatWithSHO";
+import StateLiveChatWithFrench from "./utils/StateAdminRoutes/StateLiveChatWithFrench";
 
 export const UserContext = createContext();
 //App
@@ -174,11 +176,13 @@ function App() {
             <Route path="trader-chat" element={<LiveChat />} />
             <Route path="refferal-chat" element={<RefferalLiveChat />} />
             <Route path="state-chat" element={<StateLiveChatAdmin/>} />
-            <Route path="state-handler-chat" element={<StateLiveChat/>} />
+            <Route path="chat/state-handler-chat" element={<StateLiveChat/>} />
             <Route path="franchisee-chat" element={<FrenchiseeLiveChatAdmin/>} />
-            <Route path="frenchisee-handler-chat" element={<FrenchiseeLiveChat/>} />
+            <Route path="chat/frenchisee-handler-chat" element={<FrenchiseeLiveChat/>} />
+            <Route path="chat/frenchise-chat-with-SHO" element={<FrenchiseLiveChatWithSHO/>} /> 
             <Route path="businessD-chat" element={<BusinessDLiveChat/>} />
             <Route path="business-developer-chat" element={<BusinessLiveChatAdmin/>} /> 
+            <Route path="chat/state-chat-with-french" element={<StateLiveChatWithFrench/>} />
 
             <Route path="trader-accounts/:id" element={<TraderAccount />} />
             <Route

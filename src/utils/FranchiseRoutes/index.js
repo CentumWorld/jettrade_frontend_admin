@@ -48,10 +48,25 @@ import {
         icon: <AiFillVideoCamera />,
       },
       {
-        path: "frenchisee-handler-chat",
+        path: "/admindashboard/chat",
         name: "Chat",
-        icon: <BsFillChatTextFill />
-      }
+        icon: <BsFillChatTextFill />,
+        subRoutes:[
+          {
+            path:'chat/frenchisee-handler-chat',
+            name:'Chat with Admin'
+          },
+          {
+            path:'chat/frenchise-chat-with-SHO',
+            name :'Chat with SHO'
+          },
+        ]
+      },
+      // {
+      //   path: "frenchisee-handler-chat",
+      //   name: "Chat",
+      //   icon: <BsFillChatTextFill />
+      // }
     ]
   
     export default franchiseAdminRoutes;
