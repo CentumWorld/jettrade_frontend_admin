@@ -12,8 +12,8 @@ import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
-import pdf from "../utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 import AccountModal from "./AccountModal";
+import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -30,6 +30,8 @@ function Navbar() {
   const [walletamount, setWalletAmount] = useState("");
   const isFrachiseToken = localStorage.getItem("franchiseToken");
   const [isAccountModalVisible, setAccountModalVisible] = useState(false)
+  const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
+  const isSubAdminToken = localStorage.getItem("subAdminToken");
 
   const handleAccountModalOpen = () => {
     setAccountModalVisible(true);
@@ -78,6 +80,23 @@ function Navbar() {
         }
       }
       fetchFracnhiseDetails()
+    }else if (isBussinessDeveloperToken){
+      async function fetchBussinessDetails() {
+        try {
+          const response = await fetch("/businessDeveloper/get-own-business-developer-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isBussinessDeveloperToken}`,
+            },
+          });
+          const data = await response.json();
+          setWalletAmount(data.data.businessDeveloperWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchBussinessDetails()
     }
   }, []);
 
@@ -146,15 +165,13 @@ function Navbar() {
         setModalVisible(true);
       }
       if (key === "brochure") {
-        const brochureUrl = { pdf };
-        const link = document.createElement("a");
-        link.href = brochureUrl;
-        link.download = "CENTUMWORLD FRANCHISE MODULE.pdf";
-        link.click();
+        const pdfUrl = centumPDF
+        const link = document.createElement('a');
+        link.href = pdfUrl
+        link.download = "CENTUM WORLD FRANCHISE MODULE.pdf"
+        link.click()
       }
     };
-
-    const CENTUMWORLDFRANCHISEMODULE = "CENTUMWORLDFRANCHISEMODULE.pdf";
 
     const userMenu = (
       <Menu style={{ width: 200 }}>
@@ -166,10 +183,7 @@ function Navbar() {
           Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
         </Menu.Item>
         {(isStateHandlerToken || isFrachiseToken) && (
-          <Menu.Item key="brochure" onClick={handleMenuClick}>
-            <a href={pdf} download={CENTUMWORLDFRANCHISEMODULE}>
-              Download Brochure
-            </a>
+          <Menu.Item key="brochure" onClick={handleMenuClick}>Download brochure
           </Menu.Item>
         )}
         <Menu.Divider />
@@ -183,7 +197,7 @@ function Navbar() {
       return (
         <>
           <Dropdown overlay={userMenu} trigger={["click"]}>
-            <Avatar icon={<UserOutlined />} size="large" />
+            <Avatar icon={<UserOutlined />} size="large" style={{marginRight: "1rem"}}/>
           </Dropdown>
           <ProfileModal visible={modalVisible} onCancel={handleCloseModal} />
           <AccountModal isVisible={isAccountModalVisible} onClose={handleAccountModalClose} />
@@ -193,11 +207,9 @@ function Navbar() {
       return (
         <>
           <li className="nav-item">
-            {/* <button className=" btn rounded btn-outline-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#adminLogin" aria-current="page">Admin</button> */}
             <Dropdown overlay={menu} trigger={["click"]}>
               <Button
                 variant=" btn rounded btn-outline-primary rounded-pill"
-                //onClick={openAdminLoginFuction}
               >
                 Login
               </Button>
@@ -212,7 +224,6 @@ function Navbar() {
   return (
     <>
       <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
-        {/* <div className="container-fluid"> */}
         <div className="navbar-brand">
           <div>
             <h3>JETTRADE FX </h3>

@@ -15,6 +15,7 @@ const ProfileModal = ({ visible, onCancel }) => {
   const [editingField, setEditingField] = useState(null);
   const stateAdmintoken = localStorage.getItem("stateHandlerToken");
   const franchiseToken = localStorage.getItem("franchiseToken");
+  const bussinessToken = localStorage.getItem("bussinessAdminToken");
   const [fieldValue, setFieldValue] = useState({
     fname: "",
     lname: "",
@@ -56,10 +57,31 @@ const ProfileModal = ({ visible, onCancel }) => {
         console.error("Error fetching state details", error);
       }
     }
+
+    // bussiness details API
+    async function fetchBussinessDetails() {
+      try {
+        const response = await fetch("/businessDeveloper/get-own-business-developer-details", {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${bussinessToken}`,
+          },
+        });
+        const data = await response.json();
+        setFieldValue(data.data);
+      } catch (error) {
+        console.error("Error fetching state details", error);
+      }
+    }
+
+
     if (stateAdmintoken) {
       fetchStateDetails();
     } else if (franchiseToken) {
       fetchFranchiseDetails();
+    }else if (bussinessToken){
+      fetchBussinessDetails();
     }
   }, []);
 
@@ -113,6 +135,32 @@ const ProfileModal = ({ visible, onCancel }) => {
             headers: {
               Accept: "application/json",
               Authorization: `Bearer ${franchiseToken}`,
+            },
+          }
+        );
+        console.log("API Response:", response.data);
+
+        setFieldValue((prevValues) => ({
+          ...prevValues,
+          [editingField]: response.data[editingField],
+        }));
+
+        setEditingField(null);
+      } catch (err) {
+        console.error("Error", err.message);
+      }
+    } else if (bussinessToken){
+      try {
+        console.log("Sending Payload:", {
+          [editingField]: fieldValue[editingField],
+        });
+        const response = await axios.put(
+          "/businessDeveloper/update-own-business-developer-details",
+          fieldValue,
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${bussinessToken}`,
             },
           }
         );
