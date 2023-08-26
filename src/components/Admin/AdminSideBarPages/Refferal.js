@@ -287,6 +287,8 @@ const Refferal = () => {
   const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
   const frenchiseToken = localStorage.getItem("franchiseToken");
   const franchiseRefferal = localStorage.getItem("franchiseRefferal");
+  const bussinessToken = localStorage.getItem("bussinessAdminToken");
+  const bussinessRefferalId = localStorage.getItem("bussinessRefferalId");
   const callApiRefferalDetails = async () => {
     if (token) {
       const config = {
@@ -365,6 +367,24 @@ const Refferal = () => {
         console.error("Error fetching data:", error);
       }
     }
+      else if (bussinessToken && bussinessRefferalId){
+        const config = {
+          headers: { Authorization: `Bearer ${bussinessToken}` },
+        };
+  
+        const requestData = {
+          businessDevRefferalId: bussinessRefferalId,
+        };
+        axios
+        .post("/businessDeveloper/get-all-members-in-business-developer",requestData, config)
+        .then((res) => {
+          console.log("Bussiness responebhejo -> ", res.data);
+          setRefferalData(res.data.members);
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+      }
   };
 
   //    image download-----
@@ -722,7 +742,6 @@ const Refferal = () => {
             />
           </div>
           <div className="user-table">
-           
               <Table
                 style={{
                   width: "fit-content",
@@ -736,7 +755,6 @@ const Refferal = () => {
                 scroll={{ x: true, y: 320 }}
                 pagination={{ pageSize: 7 }}
               />
-         
           </div>
         </div>
       </div>
