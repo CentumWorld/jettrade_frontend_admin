@@ -14,6 +14,17 @@ const BusinessDeveloper = () => {
   const [myID, setMyID] = useState("");
   const [closeEditModalPopup, setCloseEditModalPopup] = useState(false);
   const [franchiseCity, setFranchiseCity] = useState([])
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const [uploadButton, setUploadButton] = useState(true);
+  const [uploadButtonPan, setUploadButtonPan] = useState(true);
+  const [aadharCard, setAadharCard] = useState({
+    placeholder:"",
+    file:null
+  })
+  const [panCard, setPanCard] = useState({
+    placeholder:"",
+    file:null
+  })
   const [editBusinessDeveloperData, setEditBusinessDeveloperData] = useState({
     fname: "",
     lname: "",
@@ -39,6 +50,10 @@ const BusinessDeveloper = () => {
   const closeModal = () => {
     setIsModalVisible(false);
   };
+
+  const closeViewModal = ()=>{
+    setOpenViewModal(false)
+  }
 
   const columns = [
     {
@@ -191,6 +206,9 @@ const BusinessDeveloper = () => {
       setCloseEditModalPopup(true)
       callApiToFranchiseCity()
       callApiToGetIndividualBusinessDeveloperData();
+    }else if(e.key === "view"){
+      setOpenViewModal(true);
+      callApiToFetchDocument();
     }
   };
 
@@ -240,7 +258,7 @@ const BusinessDeveloper = () => {
 
   const callApiToFranchiseCity = () => {
     const token = localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")
+      localStorage.getItem("stateHandlerToken") || localStorage.getItem("franchiseToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -262,7 +280,7 @@ const BusinessDeveloper = () => {
 
   const callApiToGetIndividualBusinessDeveloperData = () => {
     const token = localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")
+      localStorage.getItem("stateHandlerToken") || localStorage.getItem("franchiseToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -336,6 +354,118 @@ const BusinessDeveloper = () => {
       message.error(err.response.data.message)
     })
 
+  }
+
+  const callApiToFetchDocument = () =>{
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let data={
+      id:myID
+    }
+    axios.post("/admin/get-one-business-developer-details", data, config)
+    .then((res)=>{
+      console.log(res.data)
+      setAadharCard({placeholder:res.data.data.adharCard})
+      setPanCard({placeholder:res.data.data.panCard})
+    })
+    .catch((err)=>{
+      message.error(err.response.data.message)
+    })
+
+  };
+  const handleImageChange = (e) => {
+    e.preventDefault();
+    document.getElementById('adhar-image').click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (selectedFile.type === 'image/png' || selectedFile.type === 'image/jpeg') {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setAadharCard({
+            placeholder: reader.result,
+            file: selectedFile
+          });
+          setUploadButton(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  };
+  const handleImageChangePan = (e) => {
+    e.preventDefault();
+    document.getElementById('pan-image').click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (selectedFile.type === 'image/png' || selectedFile.type === 'image/jpeg') {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setPanCard({
+            placeholder: reader.result,
+            file: selectedFile
+          });
+          setUploadButtonPan(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  }
+  const uploadAadhar = () => {
+    console.log(aadharCard.file)
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    ||  localStorage.getItem("franchiseToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    const data = new FormData();
+    data.append('id', myID);
+    data.append('adharCard', aadharCard.file);
+    axios.put("/admin/update-adhar-card-business-developer", data, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButton(true);
+
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+  
+  const uploadPan = () => {
+    console.log(panCard.file)
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    const data = new FormData();
+    data.append('id', myID);
+    data.append('panCard', panCard.file);
+    axios.put("/admin/update-pan-card-business-developer", data, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButtonPan(true);
+
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
   }
 
   return (
@@ -414,6 +544,42 @@ const BusinessDeveloper = () => {
             ))}
           </Select>
         </Form.Item>
+      </Modal>
+      {/* view modal */}
+      <Modal
+        title="View Documents"
+        open={openViewModal}
+        onOk={closeViewModal}
+        onCancel={closeViewModal}
+      >
+         <input
+              id="adhar-image"
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleImageChange}
+            />
+            <div className="d-flex">
+              <label htmlFor="adhar-image">
+                <img src={aadharCard.placeholder} height={200} width={300} alt="Selected Image"
+                  style={{ cursor: 'pointer' }} />
+              </label>
+              <Button disabled={uploadButton} onClick={uploadAadhar}>Upload</Button>
+            </div>
+        <hr/>
+        
+        <input
+              id="pan-image"
+              type="file"
+              style={{ display: 'none' }}
+              onChange={handleImageChangePan}
+            />
+            <div className="d-flex">
+              <label htmlFor="pan-image">
+                <img src={panCard.placeholder} height={200} width={300} alt="Selected Image"
+                  style={{ cursor: 'pointer' }} />
+              </label>
+              <Button disabled={uploadButtonPan} onClick={uploadPan}>Upload</Button>
+            </div>
       </Modal>
     </>
   );
