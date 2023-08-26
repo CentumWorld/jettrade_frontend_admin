@@ -455,7 +455,6 @@ const Frenchie = () => {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {token || (stateToken && stateHandlerRefferalID) ?
             <Table
               dataSource={frenchieData}
               columns={columns}
@@ -467,8 +466,7 @@ const Frenchie = () => {
                 maxWidth: "100%",
                 marginTop: "1rem",
               }}
-            /> : null
-          }
+            /> 
         </div>
       </div>
 

@@ -96,15 +96,15 @@ const ProfileModal = ({ visible, onCancel }) => {
       }
     }
 
-    if (stateAdmintoken) {
-      fetchStateDetails();
-    } else if (franchiseToken) {
-      fetchFranchiseDetails();
-    } else if (bussinessToken) {
-      fetchBussinessDetails();
-    } else if (isSubAdminToken) {
-      fetchSubAdminDetails();
-    }
+    // if (stateAdmintoken) {
+    //   fetchStateDetails();
+    // } else if (franchiseToken) {
+    //   fetchFranchiseDetails();
+    // } else if (bussinessToken) {
+    //   fetchBussinessDetails();
+    // } else if (isSubAdminToken) {
+    //   fetchSubAdminDetails();
+    // }
   }, []);
 
   const handleEditClick = (field) => {

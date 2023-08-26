@@ -355,7 +355,6 @@ const BusinessDeveloper = () => {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {token || (stateToken && stateHandlerRefferalID) || (frenchiseToken && franchiseRefferal) ?
             <Table
               dataSource={bussinessData}
               columns={columns}
@@ -369,8 +368,7 @@ const BusinessDeveloper = () => {
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
               }}
-            /> : null
-          }
+            />
         </div>
       </div>
       {/* edit business developer data */}
