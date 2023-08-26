@@ -40,21 +40,6 @@ const BussinessDeveloperRoutes = [
     ]
   },
   {
-    path: "/admindashboard/tracker",
-    name: "Manage",
-    icon: <SiPivotaltracker />,
-    subRoutes:[
-      {
-        path:'tracker/members',
-        name:'Members'
-      },
-      {
-        path:'tracker/traders',
-        name:'Traders'
-      }
-    ]
-  },
-  {
     path: "businessD-chat",
     name: "Chat",
     icon: <BsFillChatTextFill />

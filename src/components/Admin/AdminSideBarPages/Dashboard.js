@@ -167,7 +167,7 @@ function Dashboard() {
       .catch((err) => {
         console.log("error", err);
       });
-    }else if(bussinessDeveloperToken && bussinessDeveloperReferralId){
+    }else if(bussinessDeveloperToken || bussinessDeveloperReferralId){
       const config = {
         headers: { Authorization: `Bearer ${bussinessDeveloperToken}` },
       };
@@ -179,7 +179,7 @@ function Dashboard() {
       .post("/businessDeveloper/get-all-users-in-business-developer",requestData, config)
       .then((res) => {
         console.log("Bussiness responebhejo-> ", res.data);
-        setFilteredDataSource(res.data.data);
+        setFilteredDataSource(res.data.users);
       })
       .catch((err) => {
         console.log("error", err);
