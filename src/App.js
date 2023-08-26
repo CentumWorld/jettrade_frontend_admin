@@ -74,6 +74,8 @@ import BusinessDLiveChat from "./utils/BussinessDeveloperRoutes/BusinessDLiveCha
 import BusinessLiveChatAdmin from "./components/Admin/AdminSideBarPages/BusinessLiveChatAdmin";
 import FrenchiseLiveChatWithSHO from "./utils/FranchiseRoutes/FrenchiseLiveChatWithSHO";
 import StateLiveChatWithFrench from "./utils/StateAdminRoutes/StateLiveChatWithFrench";
+import FrenchiseLiveChatWithBD from "./utils/FranchiseRoutes/FrenchiseLiveChatWithBD";
+import BusinessDLiveChatWithFrenchise from "./utils/BussinessDeveloperRoutes/BusinessDLiveChatWithFrenchise";
 
 export const UserContext = createContext();
 //App
@@ -180,9 +182,11 @@ function App() {
             <Route path="franchisee-chat" element={<FrenchiseeLiveChatAdmin/>} />
             <Route path="chat/frenchisee-handler-chat" element={<FrenchiseeLiveChat/>} />
             <Route path="chat/frenchise-chat-with-SHO" element={<FrenchiseLiveChatWithSHO/>} /> 
-            <Route path="businessD-chat" element={<BusinessDLiveChat/>} />
+            <Route path="chat/businessD-chat" element={<BusinessDLiveChat/>} />
             <Route path="business-developer-chat" element={<BusinessLiveChatAdmin/>} /> 
             <Route path="chat/state-chat-with-french" element={<StateLiveChatWithFrench/>} />
+            <Route path="chat/frenchise-chat-with-BD" element={<FrenchiseLiveChatWithBD/>} />
+            <Route path="chat/BD-chat-with-frenchise" element={<BusinessDLiveChatWithFrenchise/>} />
 
             <Route path="trader-accounts/:id" element={<TraderAccount />} />
             <Route

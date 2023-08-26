@@ -59,7 +59,10 @@ import {
           {
             path:'chat/frenchise-chat-with-SHO',
             name :'Chat with SHO'
-          },
+          },{
+            path:'chat/frenchise-chat-with-BD',
+            name:'Chat with BD'
+          }
         ]
       },
       // {

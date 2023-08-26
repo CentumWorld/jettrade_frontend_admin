@@ -64,6 +64,10 @@ const stateAdminRoutes = [
           path:'chat/state-chat-with-french',
           name :'Chat with Frenchise'
         },
+        // {
+        //   path:'chat/state-chat-with-BD',
+        //   name:'Chat with BD'
+        // }
       ]
     },
     // {

@@ -4,7 +4,7 @@ import '../../../src/components/Admin/css/LiveChat.css'
 import { Input } from 'antd';
 import axios from 'axios';
 import baseUrl from '../../baseUrl';
-import FrenchiseChatWithSHO from './FrenchiseChatWithSHO';
+import FrenchiseChatWithBD from './FrenchiseChatWithBD';
 
 
 const apiurl = baseUrl.apiUrl
@@ -84,7 +84,7 @@ const FrenchiseLiveChatWithSHO = () => {
 
             )
             : (
-            <FrenchiseChatWithSHO socket={socket} frenchname={frenchname} room={room} />
+            <FrenchiseChatWithBD socket={socket} frenchname={frenchname} room={room} />
                 )}
         </div >
 
