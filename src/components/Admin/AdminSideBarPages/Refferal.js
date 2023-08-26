@@ -35,6 +35,11 @@ const Refferal = () => {
   const [aadhar, setAadhar] = useState("");
   const [pan, setPan] = useState("");
   const [myID, setMyID] = useState("");
+  const [memberType, setMemberType] = useState("")
+  const [idCard, setIdCard] = useState({
+    placeholder: aadharBackImage,
+    file: null
+  })
   const [aadharFrontImage, setAadharFrontImage] = useState({
     placeholder: aadharImage,
     file: null,
@@ -209,8 +214,10 @@ const Refferal = () => {
 
   //hadle view click
   const handleViewClick = (id) => {
-    const token = localStorage.getItem("adminToken");
-    console.log(id);
+    const token = localStorage.getItem("adminToken") ||
+    localStorage.getItem("stateHandlerToken") ||
+          localStorage.getItem("franchiseToken")|| localStorage.getItem("bussinessAdminToken");
+    console.log("hii");
     let data = {
       _id: id,
     };
@@ -223,10 +230,9 @@ const Refferal = () => {
     axios
       .post("/admin/fetch-particular-member-details", data, config)
       .then((res) => {
-        console.log(res.data.result._id);
-
-        setAadhar(res.data.result.aadhar);
-        setPan(res.data.result.pan);
+        console.log(res.data.result, "hii");
+        //setAadhar(res.data.result.aadhar);
+        //setPan(res.data.result.pan);
         fetchMemberDocuments(res.data.result._id);
       })
       .catch((error) => {
@@ -245,7 +251,8 @@ const Refferal = () => {
 
   const fetchMemberDocuments = (id) => {
     console.log(id, "131");
-    let token = localStorage.getItem("adminToken");
+    let token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||
+    localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
     let data = {
       _id: id,
     };
@@ -258,18 +265,17 @@ const Refferal = () => {
     axios
       .post("/admin/fetch-particular-member-details", data, config)
       .then((res) => {
-        console.log(res.data.result.length);
-        // if (res.data.result.length > 0) {
-        setLoading(true);
-        setAadharFrontImage({ placeholder: res.data.result.aadhar_front_side });
-        setAadharBackImage({ placeholder: res.data.result.aadhar_back_side });
-        setPanImage({ placeholder: res.data.result.pan_card });
-        // } else {
-        //     setAadharFrontImage({ placeholder: aadharImage });
-        //     setAadharBackImage({ placeholder: aadharBackImage });
-        //     setPanImage({ placeholder: panImage });
-        //     setLoading(false)
-        // }
+        console.log(res.data.result.ID_Card, "hiii");
+        setMemberType(res.data.result.userType)
+        if (res.data.result.userType === "other") {
+          setIdCard({placeholder:res.data.result.ID_Card})
+        } else {
+          setLoading(true);
+          setAadharFrontImage({ placeholder: res.data.result.aadhar_front_side });
+          setAadharBackImage({ placeholder: res.data.result.aadhar_back_side });
+          setPanImage({ placeholder: res.data.result.pan_card });
+        }
+
       })
       .catch((err) => {
         console.log(err);
@@ -319,16 +325,16 @@ const Refferal = () => {
         console.error("Error fetching data:", error);
       }
     }
-    else if (frenchiseToken && franchiseRefferal){
-        const config = {
-          headers: { Authorization: `Bearer ${frenchiseToken}` },
-        };
-  
-        const requestData = {
-          franchiseReferralId: franchiseRefferal,
-        };
-        axios
-        .post("/franchise/get-all-members-in-franchise",requestData, config)
+    else if (frenchiseToken && franchiseRefferal) {
+      const config = {
+        headers: { Authorization: `Bearer ${frenchiseToken}` },
+      };
+
+      const requestData = {
+        franchiseReferralId: franchiseRefferal,
+      };
+      axios
+        .post("/franchise/get-all-members-in-franchise", requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
@@ -336,7 +342,29 @@ const Refferal = () => {
         .catch((err) => {
           console.log("error", err);
         });
+    } else if (stateToken && stateHandlerRefferalID) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${stateToken}`, // Set the 'Authorization' header with the token
+        },
+      };
+      const requestData = {
+        stateReferralId: stateHandlerRefferalID,
+      };
+
+      try {
+        const response = await axios.post(
+          "/state/fetch-all-members-in-state",
+          requestData,
+          config
+        );
+        setRefferalData(response.data.data);
+        console.log(response);
+        //setLength(response.data.result.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
+    }
   };
 
   //    image download-----
@@ -366,7 +394,8 @@ const Refferal = () => {
   //--------- user details Edit section
 
   const fetchUserDetailsForEdit = (id) => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
+    localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
     let data = {
       _id: id,
     };
@@ -402,7 +431,7 @@ const Refferal = () => {
             gender: result.data.result.gender,
           });
         }
-        if (result.data.result.userType === "otherCountry") {
+        if (result.data.result.userType === "other") {
           setEditUserData({
             fname: result.data.result.fname,
             lname: result.data.result.lname,
@@ -433,14 +462,6 @@ const Refferal = () => {
       gender: value,
     }));
   };
-
-  const handleDobChange = (e) => {
-    // setEditUserData((prevFormData) => ({
-    //     ...prevFormData,
-    //     dob: date,
-    // }));
-    setEditUserData({ ...editUserData, dob: e.target.value });
-  };
   // save edit value
   const editModalSubmit = (e) => {
     console.log(myID);
@@ -458,7 +479,8 @@ const Refferal = () => {
         pan: editUserData.pan,
         gender: editUserData.gender,
       };
-      const token = localStorage.getItem("adminToken");
+      const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
@@ -475,7 +497,7 @@ const Refferal = () => {
           message.warning("Something went wrong!");
         });
     }
-    if (userType === "otherCountry") {
+    if (userType === "other") {
       const data = {
         userWhat: "otherCountry",
         id: myID,
@@ -487,7 +509,8 @@ const Refferal = () => {
         Id_No: editUserData.Id_No,
         gender: editUserData.gender,
       };
-      const token = localStorage.getItem("adminToken");
+      const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
@@ -517,8 +540,9 @@ const Refferal = () => {
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
-          localStorage.getItem("stateHandlerToken")||
-          localStorage.getItem("franchiseToken");
+          localStorage.getItem("stateHandlerToken") ||
+          localStorage.getItem("franchiseToken")||
+          localStorage.getItem("bussinessAdminToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -584,81 +608,101 @@ const Refferal = () => {
         footer={null}
       >
         <>
-          <div>
-            <h6>Aadhar Front Side</h6>
-            <p>
-              Aadhar Number:{" "}
-              <span style={{ fontWeight: "bold" }}>{aadhar}</span>
-            </p>
-            {!imageError ? (
+          {memberType === "indian" ? <div>
+            <div>
+              <h6>Aadhar Front Side</h6>
+              <p>
+                Aadhar Number:{" "}
+                <span style={{ fontWeight: "bold" }}>{aadhar}</span>
+              </p>
+              {!imageError ? (
+                <img
+                  src={aadharFrontImage.placeholder}
+                  width={200}
+                  height={100}
+                  alt=""
+                  onError={handleImageError}
+                />
+              ) : (
+                <p>Error loading image.</p>
+              )}
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharFrontImage(aadharFrontImage.placeholder)
+                }
+              >
+                Download
+              </Button>
+            </div>
+            <hr />
+            <div>
+              <h6>Aadhar Back Side</h6>
+              {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
+              {!imageError ? (
+                <img
+                  src={aadharBackImageSide.placeholder}
+                  width={200}
+                  height={100}
+                  alt=""
+                  onError={handleImageError}
+                />
+              ) : (
+                <p>Error loading image.</p>
+              )}
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharBackImage(aadharBackImageSide.placeholder)
+                }
+              >
+                Download
+              </Button>
+            </div>
+            <hr />
+            <div>
+              <h6>PAN</h6>
+              <p>
+                PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
+              </p>
               <img
-                src={aadharFrontImage.placeholder}
+                src={panImageSide.placeholder}
                 width={200}
                 height={100}
                 alt=""
-                onError={handleImageError}
               />
-            ) : (
-              <p>Error loading image.</p>
-            )}
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() =>
-                downloadAadharFrontImage(aadharFrontImage.placeholder)
-              }
-            >
-              Download
-            </Button>
-          </div>
-          <hr />
-          <div>
-            <h6>Aadhar Back Side</h6>
-            {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
-            {!imageError ? (
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() => downloadPanImage(panImageSide.placeholder)}
+              >
+                Download
+              </Button>
+            </div>
+          </div> :
+            <div>
+              <h6>Id Card</h6>
               <img
-                src={aadharBackImageSide.placeholder}
+                src={idCard.placeholder}
                 width={200}
                 height={100}
                 alt=""
-                onError={handleImageError}
               />
-            ) : (
-              <p>Error loading image.</p>
-            )}
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() =>
-                downloadAadharBackImage(aadharBackImageSide.placeholder)
-              }
-            >
-              Download
-            </Button>
-          </div>
-          <hr />
-          <div>
-            <h6>PAN</h6>
-            <p>
-              PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
-            </p>
-            <img
-              src={panImageSide.placeholder}
-              width={200}
-              height={100}
-              alt=""
-            />
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() => downloadPanImage(panImageSide.placeholder)}
-            >
-              Download
-            </Button>
-          </div>
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() => downloadPanImage(idCard.placeholder)}
+              >
+                Download
+              </Button>
+            </div>
+          }
         </>
       </Modal>
 
@@ -678,7 +722,7 @@ const Refferal = () => {
             />
           </div>
           <div className="user-table">
-            {token || (stateToken && stateHandlerRefferalID) || (frenchiseToken && franchiseRefferal) ? (
+           
               <Table
                 style={{
                   width: "fit-content",
@@ -692,7 +736,7 @@ const Refferal = () => {
                 scroll={{ x: true, y: 320 }}
                 pagination={{ pageSize: 7 }}
               />
-            ) : null}
+         
           </div>
         </div>
       </div>
@@ -712,7 +756,7 @@ const Refferal = () => {
               Submit
             </Button>,
           ]}
-          //footer={null}
+        //footer={null}
         >
           <div className="edit-container">
             <div>
@@ -825,25 +869,6 @@ const Refferal = () => {
                     <Option value="female">Female</Option>
                     <Option value="other">Other</Option>
                   </Select>
-                </Col>
-              </Row>
-            </div>
-            <div>
-              <Row style={{ marginBottom: "5px" }}>
-                <Col span={12}>Date of Birth :</Col>
-                <Col span={12}>
-                  {/* <DatePicker
-                                        name="dob"
-                                        value={editUserData.dob ? moment(editUserData.dob) : null}
-                                        onChange={handleDobChange}
-
-                                    /> */}
-                  <input
-                    type="date"
-                    name="dob"
-                    value={editUserData.dob}
-                    onChange={handleDobChange}
-                  />
                 </Col>
               </Row>
             </div>
