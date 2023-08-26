@@ -116,7 +116,6 @@ function Navbar() {
           );
           const data = await response.json();
           setWalletAmount(data.data.adminWallet);
-          fetchAdminDetails()
         } catch (error) {
           console.error("Error fetching state details", error);
         }
