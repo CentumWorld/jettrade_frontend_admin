@@ -38,6 +38,7 @@ const BussinessAdminLogin = (props) => {
         localStorage.setItem("bussinessAdminToken", response.data.businessDeveloperToken);
         localStorage.setItem("businessId",response.data.businessDeveloperDetails.businessDeveloperId);
         localStorage.setItem("businessFname",response.data.businessDeveloperDetails.fname);
+        localStorage.setItem("bussinessRefferalId", response.data.businessDeveloperDetails.referralId)
         setBussinessAdmin({ bussinessAdmin_id: "", bussinessAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })
