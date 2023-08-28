@@ -337,16 +337,6 @@ const Refferal = () => {
       };
       axios
         .post("/franchise/get-all-members-in-franchise", requestData, config)
-    else if (frenchiseToken && franchiseRefferal){
-        const config = {
-          headers: { Authorization: `Bearer ${frenchiseToken}` },
-        };
-  
-        const requestData = {
-          franchiseReferralId: franchiseRefferal,
-        };
-        axios
-        .post(`${apiurl}`+"/franchise/get-all-members-in-franchise",requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
