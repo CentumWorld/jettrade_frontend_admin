@@ -336,7 +336,7 @@ const Refferal = () => {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-        .post("/franchise/get-all-members-in-franchise", requestData, config)
+        .post(`${apiurl}`+"/franchise/get-all-members-in-franchise", requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
@@ -356,7 +356,7 @@ const Refferal = () => {
 
       try {
         const response = await axios.post(
-          "/state/fetch-all-members-in-state",
+          `${apiurl}`+"/state/fetch-all-members-in-state",
           requestData,
           config
         );
