@@ -3,6 +3,9 @@ import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu, Table } from 'a
 import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message,Spin } from 'antd';
+import baseUrl from '../../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 
@@ -91,7 +94,7 @@ const StateRegister = (props) => {
                     Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
                 }
             }
-            axios.post("/admin/create_State_Handler",formData,config)
+            axios.post(`${apiurl}`+"/admin/create_State_Handler",formData,config)
             .then((res)=>{
                 message.success(res.data.message)
                 setStateRegisterData({

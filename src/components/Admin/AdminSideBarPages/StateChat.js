@@ -75,7 +75,7 @@ const StateChat = ({ socket, statename, room, sendDataToParent }) => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/fetch-state-chat-message-admin', data, config)
+        axios.post(`${apiurl}`+'/admin/fetch-state-chat-message-admin', data, config)
             .then((result) => {
                 console.log(result.data.adminChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -98,7 +98,7 @@ const StateChat = ({ socket, statename, room, sendDataToParent }) => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/admin-state-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/admin/admin-state-online-or-not', data1, config)
             .then((res) => {
                 setStateOnline(res.data.isOnline)
             })

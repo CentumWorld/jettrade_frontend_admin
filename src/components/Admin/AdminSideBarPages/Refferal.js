@@ -197,7 +197,7 @@ const Refferal = () => {
       },
     };
     axios
-      .post("/admin/verify-member", data, config)
+      .post(`${apiurl}`+"/admin/verify-member", data, config)
       .then((res) => {
         message.success("Verify Successfully");
         callApiRefferalDetails();
@@ -221,7 +221,7 @@ const Refferal = () => {
     };
 
     axios
-      .post("/admin/fetch-particular-member-details", data, config)
+      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
       .then((res) => {
         console.log(res.data.result._id);
 
@@ -256,7 +256,7 @@ const Refferal = () => {
     };
 
     axios
-      .post("/admin/fetch-particular-member-details", data, config)
+      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
       .then((res) => {
         console.log(res.data.result.length);
         // if (res.data.result.length > 0) {
@@ -289,7 +289,7 @@ const Refferal = () => {
         },
       };
       try {
-        const response = await axios.get("/admin/fetch-member-details", config);
+        const response = await axios.get(`${apiurl}`+"/admin/fetch-member-details", config);
         setRefferalData(response.data.result);
         console.log(response);
         //setLength(response.data.result.length);
@@ -308,7 +308,7 @@ const Refferal = () => {
 
       try {
         const response = await axios.post(
-          "/state/fetch-all-members-in-state",
+          `${apiurl}`+"/state/fetch-all-members-in-state",
           requestData,
           config
         );
@@ -328,7 +328,7 @@ const Refferal = () => {
           franchiseReferralId: franchiseRefferal,
         };
         axios
-        .post("/franchise/get-all-members-in-franchise",requestData, config)
+        .post(`${apiurl}`+"/franchise/get-all-members-in-franchise",requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
@@ -376,7 +376,7 @@ const Refferal = () => {
       },
     };
     axios
-      .post("/admin/fetch-particular-member-details", data, config)
+      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
       .then((result) => {
         setUserType(result.data.result.userType);
         console.log(result.data.result);
@@ -465,7 +465,7 @@ const Refferal = () => {
         },
       };
       axios
-        .post("/admin/member-details-edit-admin", data, config)
+        .post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -494,7 +494,7 @@ const Refferal = () => {
         },
       };
       axios
-        .post("/admin/member-details-edit-admin", data, config)
+        .post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -529,7 +529,7 @@ const Refferal = () => {
           block: !isBlocked,
         };
         axios
-          .post("/admin/block-member", data, config)
+          .post(`${apiurl}`+"/admin/block-member", data, config)
           .then((res) => {
             message.success(res.data.message);
             callApiRefferalDetails();

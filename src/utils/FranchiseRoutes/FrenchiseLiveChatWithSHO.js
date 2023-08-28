@@ -9,7 +9,7 @@ import FrenchiseChatWithBD from './FrenchiseChatWithBD';
 
 const apiurl = baseUrl.apiUrl
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const FrenchiseLiveChatWithSHO = () => {
     const frenchFname = localStorage.getItem('frenchFname');
@@ -41,7 +41,7 @@ const FrenchiseLiveChatWithSHO = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/frenchise/frenchise/fetch-chat-details-frechise-with-sho', data, config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/fetch-chat-details-frechise-with-sho', data, config)
             .then((result) => {
                 const length = result.data.frenchChatDetailsWithSHO.length;
                 console.log(length);

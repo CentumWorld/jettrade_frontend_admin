@@ -3,6 +3,9 @@ import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from 'antd';
 import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message, Spin } from 'antd';
+import baseUrl from '../../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 
@@ -119,7 +122,7 @@ const BusinessDeveloperRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post("/admin/create-business-developer", formData, config)
+        axios.post(`${apiurl}`+"/admin/create-business-developer", formData, config)
             .then((res) => {
                 message.success(res.data.message)
                 setStateRegisterData({
@@ -175,7 +178,7 @@ const BusinessDeveloperRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post('/admin/verify-buisness-developer-before-registration', data)
+        axios.post(`${apiurl}`+'/admin/verify-buisness-developer-before-registration', data,config)
             .then((res) => {
                 message.success("Verify successfully");
                 console.log(res.data)

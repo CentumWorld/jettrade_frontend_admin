@@ -52,16 +52,10 @@ const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => 
 
         });
 
-
-
         //Listen for user offline event
         socket.on('businessOffline', (userId) => {
             businessOnlineOrNOt(userId)
         })
-
-
-
-
 
     }, [socket]);
 
@@ -75,9 +69,9 @@ const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => 
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/fetch-business-chat-message-admin', data, config)
+        axios.post(`${apiurl}`+'/admin/fetch-business-chat-message-admin', data, config)
             .then((result) => {
-                console.log(result.data.businessChatMessage)
+                // console.log(result.data.businessChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
                 setMessageList(result.data.businessChatMessage)
             })
@@ -98,7 +92,7 @@ const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => 
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/admin-business-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/admin/admin-business-online-or-not', data1, config)
             .then((res) => {
                 setBusinessOnline(res.data.isOnline)
             })

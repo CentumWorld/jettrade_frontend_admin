@@ -7,9 +7,9 @@ import baseUrl from '../../baseUrl';
 import BusinessDChatWithFrenchise from './BusinessDChatWithFrenchise';
 
 
-const apiurl = baseUrl.apiUrl
+const apiurl = baseUrl.apiUrl;
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const BusinessDLiveChatWithFrenchise = () => {
     const businessFname = localStorage.getItem('businessFname');
@@ -41,7 +41,7 @@ const BusinessDLiveChatWithFrenchise = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/businessDeveloper/businessDeveloper/businessD-fetch-chat-details-with-french', data, config)
+        axios.post(`${apiurl}`+'/businessDeveloper/businessDeveloper/businessD-fetch-chat-details-with-french', data, config)
             .then((result) => {
                 const length = result.data.businessChatDetails.length;
                 console.log(length);

@@ -27,7 +27,7 @@ const RefferalPayout = () => {
     };
     axios
       .get(
-        "/admin/fetch-business-developer-credit-wallet-transaction-details-membe", config
+        `${apiurl}`+"/admin/fetch-business-developer-credit-wallet-transaction-details-membe", config
       )
       .then((res) => {
         console.log("bussiness developer details -> ", res);
@@ -45,7 +45,7 @@ const RefferalPayout = () => {
     };
     axios
       .get(
-        "/admin/fetch-state-handler-wallet-transaction-details",config
+        `${apiurl}`+"/admin/fetch-state-handler-wallet-transaction-details",config
       )
       .then((res) => {
         console.log("state handler developer details -> ", res);
@@ -63,7 +63,7 @@ const RefferalPayout = () => {
     };
     axios
       .get(
-        "/admin/fetch-franchise-credit-wallet-transaction-details", config
+        `${apiurl}`+"/admin/fetch-franchise-credit-wallet-transaction-details", config
       )
       .then((res) => {
         console.log("franchise developer details -> ", res);
@@ -115,7 +115,7 @@ const RefferalPayout = () => {
 
     axios
       .post(
-        "/admin/fetch-refferal-payout-on-role-basis",
+        `${apiurl}`+"/admin/fetch-refferal-payout-on-role-basis",
         data,
         config
       )
@@ -185,7 +185,7 @@ const RefferalPayout = () => {
     };
 
     axios
-      .post("/admin/approve-user-refferal-payout", data, config)
+      .post(`${apiurl}`+"/admin/approve-user-refferal-payout", data, config)
       .then((res) => {
         message.success("Approved");
         //fetchTraderRefferalPayout();
@@ -208,7 +208,7 @@ const RefferalPayout = () => {
     };
     axios
       .post(
-        "/admin/fetch-refferal-payout-on-role-basis",
+        `${apiurl}`+"/admin/fetch-refferal-payout-on-role-basis",
         data,
         config
       )
@@ -383,7 +383,7 @@ const RefferalPayout = () => {
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
     };
-    axios.post('/admin/search-refferal-payout-by-reffer-userid',data,config)
+    axios.post(`${apiurl}`+'/admin/search-refferal-payout-by-reffer-userid',data,config)
     .then((res)=>{
       setReferralsDetails(res.data.filterData)
       setUserRefferalApprovdDetails(res.data.filterData)

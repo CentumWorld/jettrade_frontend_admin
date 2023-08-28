@@ -9,11 +9,12 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const StateLiveChatWithFrench = () => {
 
-    const [frenchiseename, setFrenchiseename] = useState("admin");
+    const frenchName = localStorage.getItem('stateHandlerName')
+    const [frenchiseename, setFrenchiseename] = useState(frenchName);
     const [room1, setRoom] = useState("");
     const [showChat, setShowChat] = useState(false);
     const [type, setType] = useState('FRENCHWITHSHO')
@@ -55,7 +56,7 @@ const StateLiveChatWithFrench = () => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.get('/state/get-own-state-details', config)
+        axios.get(`${apiurl}`+'/state/get-own-state-details', config)
             .then((result) => {
                 //  console.log(result.data.data.referralId)
                  setSHOownDetails(result.data.data.referralId);
@@ -77,7 +78,7 @@ const StateLiveChatWithFrench = () => {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.post('/state/state/fetch-frenchise-chat-count-with-state', data,config)
+        axios.post(`${apiurl}`+'/state/state/fetch-frenchise-chat-count-with-state', data,config)
             .then((result) => {
                 // console.log(result.data.frenchChatCount,'82')
                  setChatFrenchisee(result.data.frenchChatCount);

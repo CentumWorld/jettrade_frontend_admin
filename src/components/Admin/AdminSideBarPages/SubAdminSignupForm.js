@@ -188,7 +188,7 @@ const SubAdminSignUpForm = () => {
           },
         };
         const res = await axios.post(
-          "/admin/create-sub-admin-inside-admin",
+          `${apiurl}`+"/admin/create-sub-admin-inside-admin",
           formData,
           config
         );

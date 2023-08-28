@@ -9,7 +9,7 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const BusinessLiveChatAdmin = () => {
 
@@ -54,7 +54,7 @@ const BusinessLiveChatAdmin = () => {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.get('/admin//fetch-business-chat-count', config)
+        axios.get(`${apiurl}`+'/admin//fetch-business-chat-count', config)
             .then((result) => {
 
                 setChatBusiness(result.data.result);

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
+import io from 'socket.io-client';
 import { AiOutlineSend } from 'react-icons/ai'
 import { message } from 'antd'
 import axios from 'axios'
 import baseUrl from '../../baseUrl'
 
 const apiurl = baseUrl.apiUrl
-
+const socket = io.connect('http://103.149.68.19:8081');
 const BusinessDChatWithFrenchise = ({ socket, businessname, room }) => {
 
     const [currentMessage, setCurrentMessage] = useState("");
@@ -80,7 +81,7 @@ const BusinessDChatWithFrenchise = ({ socket, businessname, room }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/businessDeveloper/businessDeveloper/businessD-fetch-chat-message-with-french', data, config)
+        axios.post(`${apiurl}`+'/businessDeveloper/businessDeveloper/businessD-fetch-chat-message-with-french', data, config)
             .then((result) => {
                 console.log(result.data.businessChatMessageWithFrench)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -100,7 +101,7 @@ const BusinessDChatWithFrenchise = ({ socket, businessname, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',config)
+        axios.get(`${apiurl}`+'/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',config)
         .then((res)=>{
             setIsBusinessOnline(res.data.isOnline)
         })

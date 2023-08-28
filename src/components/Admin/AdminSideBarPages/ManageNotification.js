@@ -42,7 +42,7 @@ const ManageNotification = () => {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.post("/admin/notification-for-all", data, config)
+    axios.post(`${apiurl}`+"/admin/notification-for-all", data, config)
       .then((result) => {
         setAllNotification("");
         message.success('Notification sent to all');
@@ -67,7 +67,7 @@ const ManageNotification = () => {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.post("/admin/notification-for-all-traders", data, config)
+    axios.post(`${apiurl}`+"/admin/notification-for-all-traders", data, config)
       .then((result) => {
         setAllTraderNotification("");
         message.success('Notification sent to all traders');
@@ -94,7 +94,7 @@ const ManageNotification = () => {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.post("/admin/notification-for-all-refferal", data, config)
+    axios.post(`${apiurl}`+"/admin/notification-for-all-refferal", data, config)
       .then((result) => {
         setAllRefferalNotification("");
         message.success('Notification sent to all refferals');
@@ -121,7 +121,7 @@ const ManageNotification = () => {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.post("/admin/notification-for-particular-trader", data, config)
+    axios.post(`${apiurl}`+"/admin/notification-for-particular-trader", data, config)
       .then((result) => {
         setParticularTraderNotification({
           userid: '',
@@ -151,7 +151,7 @@ const ManageNotification = () => {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.post("/admin/notification-for-particular-refferal", data, config)
+    axios.post(`${apiurl}`+"/admin/notification-for-particular-refferal", data, config)
       .then((result) => {
         message.success(result.data.message);
         setParticularRefferalNotification("");

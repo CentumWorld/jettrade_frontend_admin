@@ -41,7 +41,7 @@ const BusinessDLiveChat = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/businessDeveloper/businessDeveloper/fetch-chat-details-business', data, config)
+        axios.post(`${apiurl}`+'/businessDeveloper/businessDeveloper/fetch-chat-details-business', data, config)
             .then((result) => {
                 const length = result.data.businessChatDetails.length;
                 console.log(length);

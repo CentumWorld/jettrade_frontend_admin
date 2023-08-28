@@ -5,6 +5,10 @@ import { Button, Table, Menu, Dropdown, Modal, message, Select, Form, Input } fr
 import BusinessDeveloperRegister from "./Register/BusinessDeveloperRegister";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
+
 const { Option } = Select;
 
 const BusinessDeveloper = () => {
@@ -145,7 +149,7 @@ const BusinessDeveloper = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .get("/admin/fetch-all-businessDeveloper", config)
+        .get(`${apiurl}`+"/admin/fetch-all-businessDeveloper", config)
         .then((res) => {
           console.log("Bussiness respone -> ", res.data);
           setbussinessData(res.data.data);
@@ -162,7 +166,7 @@ const BusinessDeveloper = () => {
         stateReferralId: stateHandlerRefferalID,
       };
       axios
-        .post("/state/fetch-all-business-developers-in-state", requestData, config)
+        .post(`${apiurl}`+"/state/fetch-all-business-developers-in-state", requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setbussinessData(res.data.data);
@@ -180,7 +184,7 @@ const BusinessDeveloper = () => {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-        .post("/franchise/get-all-business-developer-in-franchise", requestData, config)
+        .post(`${apiurl}`+"/franchise/get-all-business-developer-in-franchise", requestData, config)
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setbussinessData(res.data.data);
@@ -241,7 +245,7 @@ const BusinessDeveloper = () => {
           block: !isBlocked,
         };
         axios
-          .post("/admin/block-business-developer-by-admin", data, config)
+          .post(`${apiurl}`+"/admin/block-business-developer-by-admin", data, config)
           .then((res) => {
             message.success(res.data.message);
             fetchBussinesDeveloperDataApi();
@@ -268,7 +272,7 @@ const BusinessDeveloper = () => {
       franchiseReferralId: reffralid
     }
 
-    axios.post("/admin/fetch-city-by-referralid-in-franchise", data, config)
+    axios.post(`${apiurl}`+"/admin/fetch-city-by-referralid-in-franchise", data, config)
       .then((res) => {
         console.log(res.data)
         setFranchiseCity(res.data.CityList)
@@ -290,7 +294,7 @@ const BusinessDeveloper = () => {
       id: myID
     }
 
-    axios.post('/admin/get-one-business-developer-details', data, config)
+    axios.post(`${apiurl}`+'/admin/get-one-business-developer-details', data, config)
       .then((res) => {
         setEditBusinessDeveloperData({
           fname: res.data.data.fname,
@@ -344,7 +348,7 @@ const BusinessDeveloper = () => {
       gender:editBusinessDeveloperData.gender,
       buisnessCity:editBusinessDeveloperData.city
     }
-    axios.put("/admin/update-business-developer", data, config)
+    axios.put(`${apiurl}`+"/admin/update-business-developer", data, config)
     .then((res)=>{
       message.success(res.data.message)
       fetchBussinesDeveloperDataApi();
@@ -366,7 +370,7 @@ const BusinessDeveloper = () => {
     let data={
       id:myID
     }
-    axios.post("/admin/get-one-business-developer-details", data, config)
+    axios.post(`${apiurl}`+"/admin/get-one-business-developer-details", data, config)
     .then((res)=>{
       console.log(res.data)
       setAadharCard({placeholder:res.data.data.adharCard})
@@ -435,7 +439,7 @@ const BusinessDeveloper = () => {
     const data = new FormData();
     data.append('id', myID);
     data.append('adharCard', aadharCard.file);
-    axios.put("/admin/update-adhar-card-business-developer", data, config)
+    axios.put(`${apiurl}`+"/admin/update-adhar-card-business-developer", data, config)
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
@@ -457,7 +461,7 @@ const BusinessDeveloper = () => {
     const data = new FormData();
     data.append('id', myID);
     data.append('panCard', panCard.file);
-    axios.put("/admin/update-pan-card-business-developer", data, config)
+    axios.put(`${apiurl}`+"/admin/update-pan-card-business-developer", data, config)
       .then((res) => {
         message.success(res.data.message);
         setUploadButtonPan(true);

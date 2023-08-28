@@ -99,7 +99,7 @@ const FrenchiseChatWithBD = ({ socket, businessname, room, sendDataToParent }) =
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/frenchise/frenchise/frenchise-fetch-business-chat-message', data, config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/frenchise-fetch-business-chat-message', data, config)
             .then((result) => {
                 console.log(result.data.frenchChatMessageWithBusiness)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -122,7 +122,7 @@ const FrenchiseChatWithBD = ({ socket, businessname, room, sendDataToParent }) =
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/frenchise/frenchise/frenchise-business-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/frenchise-business-online-or-not', data1, config)
             .then((res) => {
                 console.log(res.data.isOnline,'123')
                 setBusinessOnline(res.data.isOnline)

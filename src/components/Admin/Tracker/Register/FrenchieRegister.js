@@ -3,7 +3,10 @@ import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from 'antd';
 import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message, Spin } from 'antd';
+import baseUrl from '../../../../baseUrl';
 
+
+const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 
 const FrenchieRegister = (props) => {
@@ -120,7 +123,7 @@ const FrenchieRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post("/admin/create-frenchise", formData, config)
+        axios.post(`${apiurl}`+"/admin/create-frenchise", formData, config)
             .then((res) => {
                 message.success(res.data.message)
                 setStateRegisterData({
@@ -177,7 +180,7 @@ const FrenchieRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post('/admin/verify-franchie-before-registration', data)
+        axios.post(`${apiurl}`+'/admin/verify-franchie-before-registration', data)
             .then((res) => {
                 message.success("Verify successfully");
                 console.log(res.data)
