@@ -43,6 +43,7 @@ const StateAdminLogin = (props) => {
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
         localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
         localStorage.setItem("stateHandlerName",response.data.stateHandlerDetails.fname)
+        localStorage.setItem("stateHandlerId",response.data.stateHandlerDetails.stateHandlerId)
         setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })

@@ -6,6 +6,7 @@ import { AiFillVideoCamera } from "react-icons/ai";
 import { SiPivotaltracker } from "react-icons/si"
 import { MdBarChart } from "react-icons/md";
 import { BsFillChatTextFill } from "react-icons/bs";
+import { FaAmazonPay } from "react-icons/fa";
 
 const stateAdminRoutes = [
     {
@@ -64,17 +65,13 @@ const stateAdminRoutes = [
           path:'chat/state-chat-with-french',
           name :'Chat with Frenchise'
         },
-        // {
-        //   path:'chat/state-chat-with-BD',
-        //   name:'Chat with BD'
-        // }
       ]
     },
-    // {
-    //   path: "state-handler-chat",
-    //   name: "Chat",
-    //   icon: <BsFillChatTextFill />
-    // }
+    {
+      path: "manage/investor-refferal-payout",
+      name: "Referral Payout",
+      icon: <FaAmazonPay />
+    },
   ]
 
   export default stateAdminRoutes;
