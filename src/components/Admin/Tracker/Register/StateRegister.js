@@ -23,6 +23,8 @@ const StateRegister = (props) => {
         state: '',
         stateRegisterId: "",
         password: "",
+        referredId: "admin@123", // Add the new field here
+
     });
     const [aadharImage, setAadharImage] = useState({
         file: null,
@@ -38,11 +40,18 @@ const StateRegister = (props) => {
             setSelectedStates([...selectedStates, state]);
         }
     };
-
     const stateRegiInputs = (e) => {
         e.preventDefault();
-        setStateRegisterData({ ...stateRegisterData, [e.target.name]: e.target.value });
-    };
+        const { name, value } = e.target;
+
+        // Handle all fields except referredId
+        if (name !== 'referredId') {
+            setStateRegisterData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    }
     
 
     //handle front aadhar image function
@@ -85,6 +94,8 @@ const StateRegister = (props) => {
         formData.append("adharCard", aadharImage.file);
         formData.append("panCard", panImage.file);
         formData.append("selectedState",selectedStates);
+        formData.append("referredId", stateRegisterData.referredId);
+
 
         console.log(formData, "44");
 
@@ -157,6 +168,22 @@ const StateRegister = (props) => {
                 >
                     <div className='form-container'>
                         <div className='state-field'>
+                            <label>Referred ID</label>
+                            <Input
+                                placeholder='Referred ID'
+                                name="referredId"
+                                value={stateRegisterData.referredId}
+                                onChange={stateRegiInputs}
+                                disabled
+                                style={{
+                                    backgroundColor: 'white',
+                                    color: 'black',
+                                    border: '1px solid #ccc',
+                                }}                        
+                                    />
+                        </div>
+                        <div className='state-field'>
+
                             <label>First Name</label>
                             <Input
                                 placeholder='First Name'
@@ -192,6 +219,9 @@ const StateRegister = (props) => {
                                 onChange={stateRegiInputs}
                             />
                         </div>
+                      
+
+
                         <div className='d-flex justify-content-between'>
                             <div className='state-field'>
                                 <label>Gender</label><br />

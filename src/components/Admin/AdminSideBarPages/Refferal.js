@@ -289,6 +289,8 @@ const Refferal = () => {
   const franchiseRefferal = localStorage.getItem("franchiseRefferal");
   const bussinessToken = localStorage.getItem("bussinessAdminToken");
   const bussinessRefferalId = localStorage.getItem("bussinessRefferalId");
+
+  console.log("==============>",bussinessRefferalId,bussinessToken);
   const callApiRefferalDetails = async () => {
     if (token) {
       const config = {
@@ -372,13 +374,14 @@ const Refferal = () => {
           headers: { Authorization: `Bearer ${bussinessToken}` },
         };
   
-        const requestData = {
-          businessDevRefferalId: bussinessRefferalId,
+        let requestData = {
+          businessDevRefferalId : bussinessRefferalId,
         };
+
         axios
-        .post(`${apiurl}`+"/franchise/get-all-members-in-franchise",requestData, config)
+        .post(`${apiurl}`+"/businessDeveloper/get-all-members-in-business-developer",requestData, config)
         .then((res) => {
-          console.log("Bussiness responebhejo -> ", res.data);
+          console.log("Bussiness response-----------> ", res.data);
           setRefferalData(res.data.members);
         })
         .catch((err) => {
