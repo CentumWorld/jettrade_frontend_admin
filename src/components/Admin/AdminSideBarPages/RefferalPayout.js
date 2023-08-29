@@ -17,13 +17,16 @@ const RefferalPayout = () => {
   const [bussinessDeveloperDetails, setBussinessDeveloperDetails] = useState(
     []
   );
+  const [adminDetails, setAdminDetails] = useState([]);
   const [stateHandlerDetails, setStateHandlerDetails] = useState([]);
   const [franchiseDetails, setFranchiseDetails] = useState([]);
   const [searchByUserID, setSearchByUserID] = useState("");
   const [role, setRole] = useState("User");
   const stateHandlerToken = localStorage.getItem("stateHandlerToken");
   const adminToken = localStorage.getItem("adminToken");
+  const franchiseToken = localStorage.getItem("franchiseToken");
   const stateHandlerId = localStorage.getItem("stateHandlerId");
+  const franchiseId = localStorage.getItem("frenchiseId");
 
   const fetchStateCreditWalletTransaction = () => {
     let config = {
@@ -68,7 +71,96 @@ const RefferalPayout = () => {
       });
   };
 
-  // http://localhost:4000/state/get-own-members-inside-state-credit-wallet-transaction-details
+  const fetchTraderDetailsinFranchise = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${franchiseToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/franchise/get-own-traders-inside-franchise-credit-wallet-transaction-details",
+        {
+          franchiseId: franchiseId,
+        },
+        config
+      )
+      .then((res) => {
+        setReferralsDetails(res.data.traderCreditWalletTransactions);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const fetchMemberDetailsInFranchise = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${franchiseToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/franchise/get-own-members-inside-franchise-credit-wallet-transaction-details",
+        {
+          franchiseId: franchiseId,
+        },
+        config
+      )
+      .then((res) => {
+        setReferralsDetails(res.data.traderCreditWalletTransactions);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const fetchFranchiseDetailsInFranchise = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${franchiseToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/franchise/get-own-franchise-credit-wallet-transaction-details",
+        {
+          franchiseId: franchiseId,
+        },
+        config
+      )
+      .then((res) => {
+        setFranchiseDetails(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const fetchBussinessDeveloperDataInFranchise = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${franchiseToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/franchise/get-own-business-developer-inside-franchise-credit-wallet-transaction-details",
+        {
+          franchiseId: franchiseId,
+        },
+        config
+      )
+      .then((res) => {
+        setBussinessDeveloperDetails(
+          res.data.businessDeveloperCreditWalletTransactions
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   const fetchBussinessDeveloperTransactionInState = () => {
     let config = {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
@@ -237,6 +329,25 @@ const RefferalPayout = () => {
       });
   };
 
+  const fetchAdminDetails = () => {
+    const token = localStorage.getItem("adminToken");
+    let config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    axios
+      .get(
+        `${apiurl}` + "/admin/fetch-admin-credit-wallet-transaction-details",
+        config
+      )
+      .then((res) => {
+        setAdminDetails(res.data.fetchedData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleTabChange = (key) => {
     setActiveTab(key);
     console.log(key);
@@ -246,8 +357,10 @@ const RefferalPayout = () => {
       fetchTraderRefferalPayout("User");
       fetchTraderPayoutInState();
       fetchTraderPayoutInBusiness();
+      fetchTraderDetailsinFranchise();
     }
     if (key === "5") {
+      fetchBussinessDeveloperDataInFranchise();
       fetchBussinessDeveloperDetails();
       fetchBussinessDeveloperTransactionInState();
       fetchBusinessPayoutInBusiness()
@@ -259,12 +372,17 @@ const RefferalPayout = () => {
     if (key === "4") {
       fetchFranchiseDeveloperHandler();
       fetchFranchiesCreditWaletTransaction();
+      fetchFranchiseDetailsInFranchise();
+    }
+    if (key === "6") {
+      fetchAdminDetails();
     } else {
       setRole("Member");
       setSearchByUserID("");
       fetchMemberRefferalPayout("Member");
       fetchMemberTransactionInState();
       fetchMemberPayoutInBusiness();
+      fetchMemberDetailsInFranchise();
     }
   };
 
@@ -719,6 +837,95 @@ const RefferalPayout = () => {
         console.log(err.message);
       });
   };
+  const memberColumnInFranchise = [
+    {
+      title: "User ID",
+      dataIndex: "userid",
+      key: "userid",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Wallet Amount",
+      dataIndex: "referralAmount",
+      key: "referralAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "joininigDate",
+      key: "joininigDate",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "userType",
+      key: "userType",
+    },
+    {
+      title: "Referral User Id",
+      dataIndex: "refferal_id",
+      key: "refferal_id",
+    },
+    {
+      title: "Reffer User Id",
+      dataIndex: "refferUserID",
+      key: "refferUserID",
+    },
+  ];
+
+  const traderColumnInFranchise = [
+    {
+      title: "User ID",
+      dataIndex: "userid",
+      key: "userid",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Wallet Amount",
+      dataIndex: "referralAmount",
+      key: "referralAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "joininigDate",
+      key: "joininigDate",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "userType",
+      key: "userType",
+    },
+    {
+      title: "Reffer User Id",
+      dataIndex: "refferUserID",
+      key: "refferUserID",
+    },
+    {
+      title: "Refferal User Id",
+      dataIndex: "refferal_id",
+      key: "refferal_id",
+    },
+  ];
+
+  const adminColumnDetails = [
+    { title: "Admin Id", dataIndex: "admin_id", key: "admin_id" },
+    { title: "Credit Amount", dataIndex: "creditAmount", key: "creditAmount" },
+    { title: "Type", dataIndex: "Type", key: "Type" },
+    { title: "Reffer User Id", dataIndex: "refferUserId", key: "refferUserId" },
+    { title: "Date", dataIndex: "Date", key: "Date" },
+  ];
 
   return (
     <div className="reffer-container">
@@ -781,11 +988,41 @@ const RefferalPayout = () => {
           </TabPane>
         ): null }
 
-        {!stateHandlerId && (
-          <TabPane tab="Member Payout" key="2">
+        {franchiseToken && (
+          <TabPane tab="Trader Payout" key="1">
+            <div>
+              <Table
+                columns={traderColumnInFranchise}
+                dataSource={refferralsDetails}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              />
+            </div>
+          </TabPane>
+        )}
+
+        {adminToken && (
+          <TabPane tab="Members Payout" key="2">
             <div>
               <Table
                 columns={columnsUser}
+                dataSource={userRefferalApproedDetails}
+                scroll={{ y: 400, x: true }}
+              />
+            </div>
+          </TabPane>
+        )}
+
+        {franchiseToken && (
+          <TabPane tab="Members Payout" key="2">
+            <div>
+              <Table
+                columns={memberColumnInFranchise}
                 dataSource={userRefferalApproedDetails}
                 scroll={{ y: 400, x: true }}
               />
@@ -805,7 +1042,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {!businessId && (
+        {(!businessId || !franchiseToken) && (
           <TabPane tab="State Payout" key="3">
             <div>
               <Table
@@ -828,6 +1065,15 @@ const RefferalPayout = () => {
             </div>
           </TabPane>
         )}
+        <TabPane tab="Franchise Payout" key="4">
+          <div>
+            <Table
+              columns={columnsFranch}
+              dataSource={franchiseDetails}
+              scroll={{ y: 400, x: true }}
+            />
+          </div>
+        </TabPane>
 
         {!stateHandlerToken && (
           <TabPane tab="Bussiness Developer Payout" key="5">
@@ -847,6 +1093,18 @@ const RefferalPayout = () => {
               <Table
                 columns={bussinessColumnInStateRefferal}
                 dataSource={bussinessDeveloperDetails}
+                scroll={{ y: 400, x: true }}
+              />
+            </div>
+          </TabPane>
+        )}
+
+        {adminToken && (
+          <TabPane tab="Admin Payout" key="6">
+            <div>
+              <Table
+                columns={adminColumnDetails}
+                dataSource={adminDetails}
                 scroll={{ y: 400, x: true }}
               />
             </div>
