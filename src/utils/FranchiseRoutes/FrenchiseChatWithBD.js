@@ -13,6 +13,7 @@ const FrenchiseChatWithBD = ({ socket, businessname, room, sendDataToParent }) =
     const [businessOnline, setBusinessOnline] = useState(false);
     const [stateOwnDetails,setStateOwnDetails] = useState("");
 
+    console.log(socket, businessname, room)
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const messageData = {

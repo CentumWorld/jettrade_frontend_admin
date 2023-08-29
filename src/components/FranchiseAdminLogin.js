@@ -30,7 +30,7 @@ const FranchiseAdminLogin = (props) => {
 
   const adminLogin = (e) => {
     e.preventDefault();
-    axios.post(`${apiurl}` + "/admin/frenchise-login", {
+    axios.post( "/admin/frenchise-login", {
       frenchiseId: franchiseAdmin.franchiseAdmin_id,
       password: franchiseAdmin.franchiseAdmin_password,
     })
