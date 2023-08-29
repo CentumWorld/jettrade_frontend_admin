@@ -1,4 +1,4 @@
-import { FaSlideshare, FaUserTie } from "react-icons/fa";
+import { FaSlideshare, FaUserTie,FaAmazonPay } from "react-icons/fa";
 import { MdDashboard, MdCloudUpload, MdAutorenew } from "react-icons/md";
 import { AiFillVideoCamera } from "react-icons/ai";
 import { IoMdCreate } from "react-icons/io";
@@ -58,6 +58,11 @@ const BussinessDeveloperRoutes = [
     path: "/admindashboard/allvideo",
     name: "Video",
     icon: <AiFillVideoCamera />,
+  },
+  {
+    path: "manage/investor-refferal-payout",
+    name: "Referral Payout",
+    icon: <FaAmazonPay />
   },
 ];
 

@@ -245,10 +245,12 @@ const RefferalPayout = () => {
       setSearchByUserID("");
       fetchTraderRefferalPayout("User");
       fetchTraderPayoutInState();
+      fetchTraderPayoutInBusiness();
     }
     if (key === "5") {
       fetchBussinessDeveloperDetails();
       fetchBussinessDeveloperTransactionInState();
+      fetchBusinessPayoutInBusiness()
     }
     if (key === "3" || stateHandlerId) {
       fetchStateDeveloperDetails();
@@ -262,6 +264,7 @@ const RefferalPayout = () => {
       setSearchByUserID("");
       fetchMemberRefferalPayout("Member");
       fetchMemberTransactionInState();
+      fetchMemberPayoutInBusiness();
     }
   };
 
@@ -647,6 +650,76 @@ const RefferalPayout = () => {
       });
   };
 
+  const bussinessToken = localStorage.getItem("bussinessAdminToken");
+  const businessId = localStorage.getItem("businessId");
+
+  const fetchTraderPayoutInBusiness = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${bussinessToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/businessDeveloper/get-own-traders-inside-business-developer-wallet-transaction-details",
+        {
+          businessDeveloperId: businessId,
+        },
+        config
+      )
+      .then((res) => {
+        setReferralsDetails(res.data.traderTransactions);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+
+  const fetchMemberPayoutInBusiness = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${bussinessToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
+        {
+          businessDeveloperId: businessId,
+        },
+        config
+      )
+      .then((res) => {
+        setUserRefferalApprovdDetails(res.data.memberTransactions);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const fetchBusinessPayoutInBusiness = () => {
+    let config = {
+      headers: { Authorization: `Bearer ${bussinessToken}` },
+    };
+
+    axios
+      .post(
+        `${apiurl}` +
+          "/businessDeveloper/get-own-business-developer-wallet-transaction-details",
+        {
+          businessDeveloperId: businessId,
+        },
+        config
+      )
+      .then((res) => {
+        setBussinessDeveloperDetails(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   return (
     <div className="reffer-container">
       <div className="refferal-container-header">
@@ -690,7 +763,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {stateHandlerId && (
+        {stateHandlerId || businessId  ? (
           <TabPane tab="Trader Payout" key="1">
             <div>
               <Table
@@ -706,7 +779,7 @@ const RefferalPayout = () => {
               />
             </div>
           </TabPane>
-        )}
+        ): null }
 
         {!stateHandlerId && (
           <TabPane tab="Member Payout" key="2">
@@ -732,25 +805,29 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        <TabPane tab="State Payout" key="3">
-          <div>
-            <Table
-              columns={columnsState}
-              dataSource={stateHandlerDetails}
-              scroll={{ y: 400, x: true }}
-            />
-          </div>
-        </TabPane>
+        {!businessId && (
+          <TabPane tab="State Payout" key="3">
+            <div>
+              <Table
+                columns={columnsState}
+                dataSource={stateHandlerDetails}
+                scroll={{ y: 400, x: true }}
+              />
+            </div>
+          </TabPane>
+        )}
 
-        <TabPane tab="Franchise Payout" key="4">
-          <div>
-            <Table
-              columns={columnsFranch}
-              dataSource={franchiseDetails}
-              scroll={{ y: 400, x: true }}
-            />
-          </div>
-        </TabPane>
+        {!businessId && (
+          <TabPane tab="Franchise Payout" key="4">
+            <div>
+              <Table
+                columns={columnsFranch}
+                dataSource={franchiseDetails}
+                scroll={{ y: 400, x: true }}
+              />
+            </div>
+          </TabPane>
+        )}
 
         {!stateHandlerToken && (
           <TabPane tab="Bussiness Developer Payout" key="5">
