@@ -1006,7 +1006,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {adminToken || businessId && (
+        {(adminToken || businessId) && (
           <TabPane tab="Members Payout" key="2">
             <div>
               <Table
