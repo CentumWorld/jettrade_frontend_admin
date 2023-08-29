@@ -9,7 +9,8 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://103.149.68.19:8081');
+// const socket = io.connect('http://103.149.68.19:8081');
+const socket = io.connect('http://localhost:4000');
 
 const FrenchiseeLiveChatAdmin = () => {
 
@@ -97,7 +98,7 @@ const FrenchiseeLiveChatAdmin = () => {
                     </div>
                 )
                     : (
-                        <FrenchiseeChatAdmin socket={socket} statename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
+                        <FrenchiseeChatAdmin socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
                     )}
             </div>
 

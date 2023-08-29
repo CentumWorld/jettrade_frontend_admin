@@ -11,7 +11,6 @@ const FrenchiseeChatAdmin = ({ socket, frenchiseename, room, sendDataToParent })
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
     const [frenchOnline, setFrenchOnline] = useState(false);
-
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const messageData = {

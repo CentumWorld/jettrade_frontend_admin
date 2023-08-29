@@ -37,6 +37,7 @@ const StateChat = ({ socket, statename, room, sendDataToParent }) => {
         fetchChatMessage();
 
         //user online or not
+        console.log(room);
         stateOnlineOrNOt(room)
         socket.on('stateOnline', (userId) => {
             stateOnlineOrNOt(userId)
@@ -92,7 +93,7 @@ const StateChat = ({ socket, statename, room, sendDataToParent }) => {
     const stateOnlineOrNOt = (data) => {
         console.log(data);
         const data1 = {
-            stateAdmin_id: data
+            stateHandlerId: data
         }
         let token = localStorage.getItem('adminToken');
         const config = {
@@ -100,6 +101,7 @@ const StateChat = ({ socket, statename, room, sendDataToParent }) => {
         };
         axios.post(`${apiurl}`+'/admin/admin-state-online-or-not', data1, config)
             .then((res) => {
+                console.log(res.data)
                 setStateOnline(res.data.isOnline)
             })
             .catch((err) => {

@@ -37,6 +37,7 @@ const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => 
         fetchChatMessage();
 
         //user online or not
+        console.log(room)
         businessOnlineOrNOt(room)
         socket.on('businessOnline', (userId) => {
             businessOnlineOrNOt(userId)
@@ -86,7 +87,7 @@ const BusinessChatAdmin = ({ socket, businessname, room, sendDataToParent }) => 
     const businessOnlineOrNOt = (data) => {
         console.log(data);
         const data1 = {
-            frenchiseId: data
+            businessDeveloperId: data
         }
         let token = localStorage.getItem('adminToken');
         const config = {

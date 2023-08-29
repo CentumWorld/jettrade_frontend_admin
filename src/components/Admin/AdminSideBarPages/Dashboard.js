@@ -50,6 +50,11 @@ function Dashboard() {
     placeholder: panImage,
     file: null,
   });
+  const [idCard, setIdCard] = useState({
+    placeholder: "",
+    file: null,
+    no:""
+  })
   // edit user details -----------
   const [isModalVisible, setIsEditModalVisible] = useState(false);
   const [editUserData, setEditUserData] = useState({
@@ -67,12 +72,13 @@ function Dashboard() {
   const [userStatus, setUserStatus] = useState(false);
   const [userType, setUserType] = useState("");
   const [userId, setUserID] = useState("");
+  const [userTypeView, setUserTypeView] = useState("");
 
   //isBlock
   const [isBlocked, setIsBlock] = useState(true);
   const [isSubAdmin, setIsSubAdmin] = useState(false);
   // search bar -------------
-  const notAllow = localStorage.getItem('isSubAdmin'); 
+  const notAllow = localStorage.getItem('isSubAdmin');
   const handleSearch = (value) => {
     setSearchText(value);
     // Perform search or other operations based on the search text
@@ -106,15 +112,15 @@ function Dashboard() {
   const bussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
   const bussinessDeveloperReferralId = localStorage.getItem("bussinessRefferalId");
 
-  console.log("=========>",bussinessDeveloperReferralId,bussinessDeveloperToken);
+  console.log("=========>", bussinessDeveloperReferralId, bussinessDeveloperToken);
   const fetchData = async () => {
- 
-    if(token){
+
+    if (token) {
       try {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details",config);
+        const response = await axios.get(`${apiurl}` + "/admin/fetch-user-details", config);
         setData(response.data.result);
         //console.log(typeof(response.data.result[0].phone));
         setFilteredDataSource(response.data.result);
@@ -122,8 +128,8 @@ function Dashboard() {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }else if (stateToken && stateHandlerRefferalID ){
-        
+    } else if (stateToken && stateHandlerRefferalID) {
+
       try {
         const config = {
           headers: { Authorization: `Bearer ${stateToken}` },
@@ -132,12 +138,12 @@ function Dashboard() {
         const requestData = {
           stateReferralId: stateHandlerRefferalID,
         };
-  
+
         const response = await axios.post(
-          `${apiurl}`+"/state/fetch-all-users-in-state",requestData,
+          `${apiurl}` + "/state/fetch-all-users-in-state", requestData,
           config
         );
-  
+
         setData(response.data.result);
         //console.log(typeof(response.data.result[0].phone));
         setFilteredDataSource(response.data.data);
@@ -146,7 +152,7 @@ function Dashboard() {
         console.error("Error fetching data:", error);
       }
 
-    }   else if (frenchiseToken && franchiseRefferal){
+    } else if (frenchiseToken && franchiseRefferal) {
       const config = {
         headers: { Authorization: `Bearer ${frenchiseToken}` },
       };
@@ -155,15 +161,15 @@ function Dashboard() {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-      .post(`${apiurl}`+"/franchise/get-all-users-in-franchise",requestData, config)
-      .then((res) => {
-        console.log("Bussiness responebhejo -> ", res.data);
-        setFilteredDataSource(res.data.data);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-    }else if(bussinessDeveloperToken || bussinessDeveloperReferralId){
+        .post(`${apiurl}` + "/franchise/get-all-users-in-franchise", requestData, config)
+        .then((res) => {
+          console.log("Bussiness responebhejo -> ", res.data);
+          setFilteredDataSource(res.data.data);
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    } else if (bussinessDeveloperToken || bussinessDeveloperReferralId) {
       const config = {
         headers: { Authorization: `Bearer ${bussinessDeveloperToken}` },
       };
@@ -172,14 +178,14 @@ function Dashboard() {
         businessDevRefferalId: bussinessDeveloperReferralId,
       };
       axios
-      .post(`${apiurl}`+"/businessDeveloper/get-all-users-in-business-developer",requestData, config)
-      .then((res) => {
-        console.log("Bussiness responebhejo-> ", res.data);
-        setFilteredDataSource(res.data.users);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+        .post(`${apiurl}` + "/businessDeveloper/get-all-users-in-business-developer", requestData, config)
+        .then((res) => {
+          console.log("Bussiness responebhejo-> ", res.data);
+          setFilteredDataSource(res.data.users);
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
     }
 
   };
@@ -196,7 +202,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}`+"/admin/verify-user", data, config)
+      .post(`${apiurl}` + "/admin/verify-user", data, config)
       .then((res) => {
         toast.success("User Verify Successfully", {
           autoClose: 2000,
@@ -221,7 +227,7 @@ function Dashboard() {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
+      .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
       .then((res) => {
         console.log(res.data);
         setAadhar(res.data.result.aadhar);
@@ -303,7 +309,7 @@ function Dashboard() {
     // },
   ];
 
-  if(token){
+  if (token) {
     columns.push({
       title: "Action",
       dataIndex: "action",
@@ -374,7 +380,7 @@ function Dashboard() {
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
       <Menu.Item key="account">Account</Menu.Item>
       <Menu.Item key="withdrawal">Withdrawal</Menu.Item>
-      <Menu.Item disabled={notAllow} key="admin">{isSubAdmin ? "Remove Sub Admin":"Make Sub Admin"}</Menu.Item>
+      {/* <Menu.Item disabled={notAllow} key="admin">{isSubAdmin ? "Remove Sub Admin" : "Make Sub Admin"}</Menu.Item> */}
     </Menu>
   );
 
@@ -392,18 +398,28 @@ function Dashboard() {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/fetch-user-document-adminside", data, config)
+      .post(`${apiurl}` + "/admin/fetch-user-document-adminside", data, config)
       .then((res) => {
-        //console.log(res.data.result)
+        console.log(res.data.result[0].userType)
+        setUserTypeView(res.data.result[0].userType);
         if (res.data.result.length > 0) {
-          setLoading(true);
-          setAadharFrontImage({
-            placeholder: res.data.result[0].aadhar_front_side,
-          });
-          setAadharBackImage({
-            placeholder: res.data.result[0].aadhar_back_side,
-          });
-          setPanImage({ placeholder: res.data.result[0].pan_card });
+          if (res.data.result[0].userTpe === 'indian') {
+            setLoading(true);
+            setAadharFrontImage({
+              placeholder: res.data.result[0].aadhar_front_side,
+            });
+            setAadharBackImage({
+              placeholder: res.data.result[0].aadhar_back_side,
+            });
+            setPanImage({ placeholder: res.data.result[0].pan_card });
+          } else {
+            setLoading(true);
+            setIdCard({
+              placeholder: res.data.result[0].ID_Card, no:res.data.result[0].Id_No
+            })
+            
+          }
+
         } else {
           setAadharFrontImage({ placeholder: aadharImage });
           setAadharBackImage({ placeholder: aadharBackImage });
@@ -453,7 +469,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
+      .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
       .then((result) => {
         console.log(result.data.result, "327");
         setUserType(result.data.result.userType);
@@ -543,7 +559,7 @@ function Dashboard() {
         },
       };
       axios
-        .post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
+        .post(`${apiurl}` + "/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -573,7 +589,7 @@ function Dashboard() {
         },
       };
       axios
-        .post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
+        .post(`${apiurl}` + "/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -610,7 +626,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(`${apiurl}`+"/admin/delete-user-admin", data, config)
+      .post(`${apiurl}` + "/admin/delete-user-admin", data, config)
       .then((res) => {
         fetchData();
         message.success("Deleted Successfully");
@@ -639,7 +655,7 @@ function Dashboard() {
           block: !isBlocked,
         };
         axios
-          .post(`${apiurl}`+"/admin/block-user", data, config)
+          .post(`${apiurl}` + "/admin/block-user", data, config)
           .then((res) => {
             message.success(res.data.message);
             fetchData();
@@ -692,10 +708,10 @@ function Dashboard() {
 
   // make sub admin
 
-  const makeSubAdmin = (myID) =>{
+  const makeSubAdmin = (myID) => {
     const actionText = isSubAdmin ? "Remove" : "Make";
     Modal.confirm({
-      
+
       title: `${actionText} Sub-Admin`,
       content: `Do you want to ${actionText.toLowerCase()} this user Sub-Admin?`,
       okText: 'Sure',
@@ -703,7 +719,7 @@ function Dashboard() {
       onOk() {
         let data = {
           userId: myID,
-          isSubAdmin:!isSubAdmin
+          isSubAdmin: !isSubAdmin
         }
         const token = localStorage.getItem("adminToken");
         const config = {
@@ -711,23 +727,23 @@ function Dashboard() {
             Authorization: `Bearer ${token}`,
           },
         };
-        axios.post(`${apiurl}`+"/admin/manage-subadmin",data,config)
-        .then((res)=>{
-          console.log(res.data)
-          message.success(res.data.message);
-          fetchData();
-        })
-        .catch((err=>{
-          console.log(err.response.data.message)
-        }))
+        axios.post(`${apiurl}` + "/admin/manage-subadmin", data, config)
+          .then((res) => {
+            console.log(res.data)
+            message.success(res.data.message);
+            fetchData();
+          })
+          .catch((err => {
+            console.log(err.response.data.message)
+          }))
       },
       onCancel() {
-        
+
       },
     });
     console.log(myID)
   }
- 
+
 
   return (
     <>
@@ -742,7 +758,7 @@ function Dashboard() {
         footer={null}
       >
         <>
-          <div>
+          {userTypeView === 'indian' ? <div>
             <h6>Aadhar Front Side</h6>
             <p>
               Aadhar Number:{" "}
@@ -769,9 +785,9 @@ function Dashboard() {
             >
               Download
             </Button>
-          </div>
-          <hr />
-          <div>
+
+            <hr />
+
             <h6>Aadhar Back Side</h6>
             {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
             {!imageError ? (
@@ -795,9 +811,9 @@ function Dashboard() {
             >
               Download
             </Button>
-          </div>
-          <hr />
-          <div>
+
+            <hr />
+
             <h6>PAN</h6>
             <p>
               PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
@@ -816,7 +832,29 @@ function Dashboard() {
             >
               Download
             </Button>
-          </div>
+          </div> :
+            <>
+              <h6>ID  Card</h6>
+              <p>
+                Card no: <span style={{ fontWeight: "bold" }}>{idCard.no}</span>{" "}
+              </p>
+              <img
+                src={idCard.placeholder}
+                width={200}
+                height={100}
+                alt=""
+              />
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() => downloadPanImage(idCard.placeholder)}
+              >
+                Download
+              </Button>
+            </>
+
+          }
         </>
       </Modal>
       <div className="admin-dashboard">
@@ -997,15 +1035,9 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              {/* <Row style={{ marginBottom: "5px" }}>
                 <Col span={12}>Date of Birth :</Col>
                 <Col span={12}>
-                  {/* <DatePicker
-                                        name="dob"
-                                         value={editUserData.dob ? moment(editUserData.dob) : null}
-
-                                        onChange={handleDobChange}
-                                    /> */}
                   <input
                     type="date"
                     name="dob"
@@ -1013,7 +1045,7 @@ function Dashboard() {
                     onChange={handleDobChange}
                   />
                 </Col>
-              </Row>
+              </Row> */}
             </div>
           </div>
         </Modal>
