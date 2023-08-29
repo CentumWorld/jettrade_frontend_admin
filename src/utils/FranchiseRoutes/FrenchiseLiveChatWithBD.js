@@ -9,7 +9,7 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const FrenchiseLiveChatWithBD = () => {
 
@@ -55,7 +55,7 @@ const FrenchiseLiveChatWithBD = () => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.get('/franchise/get-own-franchise-details', config)
+        axios.get(`${apiurl}`+'/franchise/get-own-franchise-details', config)
             .then((result) => {
                   console.log(result.data.data.referralId)
                 setFrenchiseOwnDetails(result.data.data.referralId);

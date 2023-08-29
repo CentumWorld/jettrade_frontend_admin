@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Form, Input,  message } from "antd";
+import { Form, Input, message } from "antd";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +7,9 @@ import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const FranchiseAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
@@ -27,9 +30,9 @@ const FranchiseAdminLogin = (props) => {
 
   const adminLogin = (e) => {
     e.preventDefault();
-    axios.post("/admin/frenchise-login", {
+    axios.post(`${apiurl}` + "/admin/frenchise-login", {
       frenchiseId: franchiseAdmin.franchiseAdmin_id,
-        password: franchiseAdmin.franchiseAdmin_password,
+      password: franchiseAdmin.franchiseAdmin_password,
     })
       .then((response) => {
         dispatch({ type: "USER", payload: true });
@@ -37,9 +40,9 @@ const FranchiseAdminLogin = (props) => {
         localStorage.setItem("franchiseToken", response.data.frenchiseToken);
         console.log(response.data);
         localStorage.setItem("frenchiseId", response.data.frenchiseDetails.frenchiseId);
-        localStorage.setItem("frenchFname",response.data.frenchiseDetails.fname);
+        localStorage.setItem("frenchFname", response.data.frenchiseDetails.fname);
         localStorage.setItem("franchiseRefferal", response.data.frenchiseDetails.referralId);
-        setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); 
+        setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" });
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
@@ -53,7 +56,7 @@ const FranchiseAdminLogin = (props) => {
             },
             1000
           );
-          setFranchiseAdmin({ franchiseAdmin_id: "", franchiseAdmin_password: "" }); 
+          setFranchiseAdmin({ franchiseAdmin_id: "", franchiseAdmin_password: "" });
         }
         if (error.response.status === 404) {
           toast.warning("Invalid Credential!", {
@@ -67,8 +70,8 @@ const FranchiseAdminLogin = (props) => {
 
   return (
     <>
-    <ToastContainer />
-    <Modal show={show} onHide={handleClose}>
+      <ToastContainer />
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Franchise Admin Login</Modal.Title>
         </Modal.Header>

@@ -114,11 +114,7 @@ function Dashboard() {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
-        const response = await axios.get(
-          "/admin/fetch-user-details",
-          config
-        );
-  
+        const response = await axios.get(`${apiurl}`+"/admin/fetch-user-details",config);
         setData(response.data.result);
         //console.log(typeof(response.data.result[0].phone));
         setFilteredDataSource(response.data.result);
@@ -138,7 +134,7 @@ function Dashboard() {
         };
   
         const response = await axios.post(
-          "/state/fetch-all-users-in-state",requestData,
+          `${apiurl}`+"/state/fetch-all-users-in-state",requestData,
           config
         );
   
@@ -159,7 +155,7 @@ function Dashboard() {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-      .post("/franchise/get-all-users-in-franchise",requestData, config)
+      .post(`${apiurl}`+"/franchise/get-all-users-in-franchise",requestData, config)
       .then((res) => {
         console.log("Bussiness responebhejo -> ", res.data);
         setFilteredDataSource(res.data.data);
@@ -176,7 +172,7 @@ function Dashboard() {
         businessDevRefferalId: bussinessDeveloperReferralId,
       };
       axios
-      .post("/businessDeveloper/get-all-users-in-business-developer",requestData, config)
+      .post(`${apiurl}`+"/businessDeveloper/get-all-users-in-business-developer",requestData, config)
       .then((res) => {
         console.log("Bussiness responebhejo-> ", res.data);
         setFilteredDataSource(res.data.users);
@@ -200,7 +196,7 @@ function Dashboard() {
       },
     };
     axios
-      .post("/admin/verify-user", data, config)
+      .post(`${apiurl}`+"/admin/verify-user", data, config)
       .then((res) => {
         toast.success("User Verify Successfully", {
           autoClose: 2000,
@@ -225,7 +221,7 @@ function Dashboard() {
     };
 
     axios
-      .post("/admin/fetch-particular-user-details", data, config)
+      .post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
       .then((res) => {
         console.log(res.data);
         setAadhar(res.data.result.aadhar);
@@ -396,7 +392,7 @@ function Dashboard() {
     };
 
     axios
-      .post( "/admin/fetch-user-document-adminside", data, config)
+      .post(`${apiurl}`+"/admin/fetch-user-document-adminside", data, config)
       .then((res) => {
         //console.log(res.data.result)
         if (res.data.result.length > 0) {
@@ -457,7 +453,7 @@ function Dashboard() {
       },
     };
     axios
-      .post(  "/admin/fetch-particular-user-details", data, config)
+      .post(`${apiurl}`+"/admin/fetch-particular-user-details", data, config)
       .then((result) => {
         console.log(result.data.result, "327");
         setUserType(result.data.result.userType);
@@ -547,7 +543,7 @@ function Dashboard() {
         },
       };
       axios
-        .post( "/admin/user-details-edit-admin", data, config)
+        .post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -577,7 +573,7 @@ function Dashboard() {
         },
       };
       axios
-        .post( "/admin/user-details-edit-admin", data, config)
+        .post(`${apiurl}`+"/admin/user-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -614,7 +610,7 @@ function Dashboard() {
       },
     };
     axios
-      .post( "/admin/delete-user-admin", data, config)
+      .post(`${apiurl}`+"/admin/delete-user-admin", data, config)
       .then((res) => {
         fetchData();
         message.success("Deleted Successfully");
@@ -643,7 +639,7 @@ function Dashboard() {
           block: !isBlocked,
         };
         axios
-          .post( "/admin/block-user", data, config)
+          .post(`${apiurl}`+"/admin/block-user", data, config)
           .then((res) => {
             message.success(res.data.message);
             fetchData();
@@ -715,7 +711,7 @@ function Dashboard() {
             Authorization: `Bearer ${token}`,
           },
         };
-        axios.post("/admin/manage-subadmin",data,config)
+        axios.post(`${apiurl}`+"/admin/manage-subadmin",data,config)
         .then((res)=>{
           console.log(res.data)
           message.success(res.data.message);

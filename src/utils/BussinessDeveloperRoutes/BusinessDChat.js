@@ -80,7 +80,7 @@ const BusinessDChat = ({ socket, businessname, room }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/businessDeveloper/businessDeveloper/fetch-chat-message-business', data, config)
+        axios.post(`${apiurl}`+'/businessDeveloper/businessDeveloper/fetch-chat-message-business', data, config)
             .then((result) => {
                 console.log(result.data.businessChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -100,7 +100,7 @@ const BusinessDChat = ({ socket, businessname, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/businessDeveloper/businessDeveloper/admin-online-or-not-business',config)
+        axios.get(`${apiurl}`+'/businessDeveloper/businessDeveloper/admin-online-or-not-business',config)
         .then((res)=>{
             setIsBusinessOnline(res.data.isOnline)
         })

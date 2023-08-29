@@ -108,7 +108,7 @@ const NewRenewal = () => {
     };
     axios
       .post(
-        "/admin/fetch-all-new-paid-user",
+        `${apiurl}`+"/admin/fetch-all-new-paid-user",
         {},
         config
       )
@@ -128,7 +128,7 @@ const NewRenewal = () => {
       headers: { "Authorization": `Bearer ${token}` }
     };
     axios
-      .post("/admin/admin-fetch-all-renewal-user", {}, config)
+      .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user", {}, config)
       .then((res) => {
         console.log(res);
         setRenewalUser(res.data.data);
@@ -155,7 +155,7 @@ const NewRenewal = () => {
     const config = {
       headers: { "Authorization": `Bearer ${token}` }
     };
-    axios.post("/admin/search-new-users", data, config)
+    axios.post(`${apiurl}`+"/admin/search-new-users", data, config)
       .then((res) => {
         console.log(res.data.newSearchUser)
         setNewuser(res.data.newSearchUser)
@@ -173,7 +173,7 @@ const NewRenewal = () => {
     const config = {
       headers: { "Authorization": `Bearer ${token}` }
     };
-    axios.post("/admin/search-renewal-users", data, config)
+    axios.post(`${apiurl}`+"/admin/search-renewal-users", data, config)
       .then((res) => {
         setRenewalUser(res.data.renewalSearchUser)
       })

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Modal, Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 function SubAdmin(props) {
   const [modalVisible, setModalVisible] = useState(true);
@@ -20,7 +23,7 @@ function SubAdmin(props) {
     };
 
     axios
-      .post("/admin/sub-admin-login", data)
+      .post(`${apiurl}`+"/admin/sub-admin-login", data)
       .then((res) => {
         console.log(res.data, "\\\\\\\\\\\\\\\\\\");
         localStorage.setItem("login", true);

@@ -143,7 +143,7 @@ const CreateUserInAdmin = () => {
                 Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
             }
         }
-        axios.post("/admin/user-registration-by-admin", formData,config)
+        axios.post(`${apiurl}`+"/admin/user-registration-by-admin", formData,config)
             .then((res) => {
                 setLoading(false);
                 message.success('Registration successful');

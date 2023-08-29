@@ -8,6 +8,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import aadharFront from '../../../img/aadhar.jpg';
 import allState from "./AllStateAndDistrict";
 import { DownOutlined } from "@ant-design/icons";
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
+
 const { Option } = Select;
 
 const Frenchie = () => {
@@ -138,7 +142,7 @@ const Frenchie = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .get("/admin/fetch-all-frenchise", config)
+        .get(`${apiurl}`+"/admin/fetch-all-frenchise", config)
         .then((res) => {
           console.log("Frenchese Data -> ", res.data);
           setFrenchieData(res.data.data);
@@ -154,7 +158,7 @@ const Frenchie = () => {
         headers: { Authorization: `Bearer ${stateToken}` },
       };
       axios
-        .post("/state/fetch-all-franchise-in-state", requestData, config)
+        .post(`${apiurl}`+"/state/fetch-all-franchise-in-state", requestData, config)
         .then((res) => {
           console.log("Franchise in state response -----> ", res.data.data[0].adharCard);
           setFrenchieData(res.data.data)
@@ -213,7 +217,7 @@ const Frenchie = () => {
           id: id,
           block: !isBlocked
         }
-        axios.post("/admin/block-franchise-by-admin", data, config)
+        axios.post(`${apiurl}`+"/admin/block-franchise-by-admin", data, config)
           .then((res) => {
             message.success(res.data.message)
             fetchFrenchieseDataApi();
@@ -238,7 +242,7 @@ const Frenchie = () => {
     let data = {
       id: id
     }
-    axios.post("/admin/get-one-franchise-details", data, config)
+    axios.post(`${apiurl}`+"/admin/get-one-franchise-details", data, config)
       .then((res) => {
 
         setAadharCard({ placeholder: res.data.data.adharCard })
@@ -285,7 +289,7 @@ const Frenchie = () => {
     const data = new FormData();
     data.append('id', myID);
     data.append('adharCard', aadharCard.file);
-    axios.put("/admin/update-adhar-card-franchise", data, config)
+    axios.put(`${apiurl}`+"/admin/update-adhar-card-franchise", data, config)
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
@@ -331,7 +335,7 @@ const Frenchie = () => {
     const data = new FormData();
     data.append('id', myID);
     data.append('panCard', panCard.file);
-    axios.put("/admin/update-pan-card-franchise", data, config)
+    axios.put(`${apiurl}`+"/admin/update-pan-card-franchise", data, config)
       .then((res) => {
         message.success(res.data.message);
         setUploadButtonPan(true);
@@ -352,7 +356,7 @@ const Frenchie = () => {
     let data = {
       id: id
     }
-    axios.post("/admin/get-one-franchise-details", data, config)
+    axios.post(`${apiurl}`+"/admin/get-one-franchise-details", data, config)
       .then((res) => {
         console.log(res.data)
         setFranchiseData({
@@ -406,7 +410,7 @@ const Frenchie = () => {
       franchiseCity: editFranchiseData.city,
       gender: editFranchiseData.gender,
     }
-    axios.put("/admin/update-franchise", data, config)
+    axios.put(`${apiurl}`+"/admin/update-franchise", data, config)
       .then((res) => {
         message.success(res.data.message)
         fetchFrenchieseDataApi();

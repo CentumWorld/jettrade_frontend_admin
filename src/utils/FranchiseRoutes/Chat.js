@@ -82,7 +82,7 @@ const Chat = ({ socket, frenchname, room }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/franchise/frenchise/fetch-chat-message', data, config)
+        axios.post(`${apiurl}`+'/franchise/frenchise/fetch-chat-message', data, config)
             .then((result) => {
                 console.log(result.data.frenchChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -102,7 +102,7 @@ const Chat = ({ socket, frenchname, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/franchise/frenchise/admin-online-or-not-french',config)
+        axios.get(`${apiurl}`+'/franchise/frenchise/admin-online-or-not-french',config)
         .then((res)=>{
             setIsFrenchOnline(res.data.isOnline)
         })

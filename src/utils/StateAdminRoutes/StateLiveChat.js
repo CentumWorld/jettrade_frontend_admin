@@ -9,7 +9,7 @@ import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const StateLiveChat = () => {
     const stateFname = localStorage.getItem('statefname');
@@ -41,7 +41,7 @@ const StateLiveChat = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/state/state/fetch-chat-details-state', data, config)
+        axios.post(`${apiurl}`+'/state/state/fetch-chat-details-state', data, config)
             .then((result) => {
                 const length = result.data.stateChatDetails.length;
                 console.log(length);

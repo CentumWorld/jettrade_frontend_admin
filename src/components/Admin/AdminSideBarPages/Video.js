@@ -34,7 +34,7 @@ console.log("partic",particularVideoId);
   const getApiVideos = () => {
     setSpin(true);
     axios
-      .get("/admin/fetch-all-videos", config)
+      .get(`${apiurl}`+"/admin/fetch-all-videos", config)
       .then((response) => {
         setVideos(response.data.videos);
         console.log(response.data.videos.length);
@@ -59,7 +59,7 @@ console.log("partic",particularVideoId);
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      await axios.delete(`/admin/delete-video/${videoId}`, config);
+      await axios.delete(`${apiurl}`+`/admin/delete-video/${videoId}`, config);
       setConfirmVisible(false); // Close the confirmation dialog
       getApiVideos(); // Assuming you have a function to refresh video data
     } catch (error) {

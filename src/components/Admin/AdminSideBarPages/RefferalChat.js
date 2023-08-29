@@ -75,7 +75,7 @@ const Chat = ({ socket, username, room, sendDataToParent }) => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/fetch-refferal-chat-message-admin', data, config)
+        axios.post(`${apiurl}`+'/admin/fetch-refferal-chat-message-admin', data, config)
             .then((result) => {
                 console.log(result.data.adminChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -98,7 +98,7 @@ const Chat = ({ socket, username, room, sendDataToParent }) => {
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/refferal-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/admin/refferal-online-or-not', data1, config)
             .then((res) => {
                 setRefferalOnline(res.data.isOnline)
             })

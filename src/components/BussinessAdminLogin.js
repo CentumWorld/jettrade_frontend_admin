@@ -7,6 +7,9 @@ import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const BussinessAdminLogin = (props) => {
   const [show, setShow] = useState(true);
@@ -27,7 +30,7 @@ const BussinessAdminLogin = (props) => {
 
   const adminLogin = (e) => {
     e.preventDefault();
-    axios.post("/admin/business-developer-login", {
+    axios.post(`${apiurl}`+"/admin/business-developer-login", {
       businessDeveloperId: bussinessAdmin.bussinessAdmin_id,
         password: bussinessAdmin.bussinessAdmin_password,
     })

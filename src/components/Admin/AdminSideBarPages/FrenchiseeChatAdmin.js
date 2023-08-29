@@ -75,7 +75,7 @@ const FrenchiseeChatAdmin = ({ socket, frenchiseename, room, sendDataToParent })
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/fetch-frenchise-chat-message-admin', data, config)
+        axios.post(`${apiurl}`+'/admin/fetch-frenchise-chat-message-admin', data, config)
             .then((result) => {
                 console.log(result.data.frenchChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -98,7 +98,7 @@ const FrenchiseeChatAdmin = ({ socket, frenchiseename, room, sendDataToParent })
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/admin/admin-frenchise-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/admin/admin-frenchise-online-or-not', data1, config)
             .then((res) => {
                 setFrenchOnline(res.data.isOnline)
             })

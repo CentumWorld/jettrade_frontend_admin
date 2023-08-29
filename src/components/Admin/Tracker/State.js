@@ -6,6 +6,9 @@ import StateRegister from "./Register/StateRegister";
 import axios from "axios";
 import { Menu, Dropdown, Modal } from 'antd'
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import baseUrl from "../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const State = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,7 +35,7 @@ const State = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get("/admin/fetch-all-state", config)
+      .get(`${apiurl}`+"/admin/fetch-all-state", config)
       .then((res) => {
         console.log("State response -> ", res.data);
         setStateData(res.data.data);
@@ -146,7 +149,7 @@ const State = () => {
                     id: id,
                     block: !isBlocked
                 }
-                axios.post("/admin/block-state-by-admin", data, config)
+                axios.post(`${apiurl}`+"/admin/block-state-by-admin", data, config)
                     .then((res) => {
                         message.success(res.data.message)
                         fetchStateDataApi();

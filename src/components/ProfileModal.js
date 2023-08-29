@@ -8,6 +8,9 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 
@@ -125,7 +128,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          "/state/update-state-details",
+          `${apiurl}`+"/state/update-state-details",
           fieldValue,
           {
             headers: {
@@ -151,7 +154,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          "/franchise/update-franchise-own-details",
+          `${apiurl}`+"/franchise/update-franchise-own-details",
           fieldValue,
           {
             headers: {
@@ -177,7 +180,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          "/businessDeveloper/update-own-business-developer-details",
+          `${apiurl}`+"/businessDeveloper/update-own-business-developer-details",
           fieldValue,
           {
             headers: {
@@ -203,7 +206,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          "/subAdmin/update-own-sub-admin-details",
+          `${apiurl}`+"/subAdmin/update-own-sub-admin-details",
           fieldValue,
           {
             headers: {

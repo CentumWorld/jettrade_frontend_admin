@@ -4,26 +4,25 @@ import { Menu, Tabs, Table, Input, Button, message } from "antd";
 import axios from "axios";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
+import baseUrl from '../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 
 
 const { TabPane } = Tabs;
 const SubAdminDetails = () => {
-
     const navigate = useNavigate()
-
     const [subAdminData, setSubAdminData] = useState([]);
-
     useEffect(() => {
         callApiFetchSubAdminData()
     }, [])
-
 
     const callApiFetchSubAdminData = () => {
         const token = localStorage.getItem('adminToken');
         const config = {
             headers: { "Authorization": `Bearer ${token}` }
         };
-        axios.get('/admin/fetch-all-sub-admin-details', config)
+        axios.get(`${apiurl}`+'/admin/fetch-all-sub-admin-details', config)
             .then((res) => {
                 console.log("subadmin response -> ", res.data);
                 setSubAdminData(res.data.data);

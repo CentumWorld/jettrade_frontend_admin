@@ -75,7 +75,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.get('/state/get-own-state-details',config)
+        axios.get(`${apiurl}`+'/state/get-own-state-details',config)
         .then((result) => {
             // console.log(result.data.data.referralId)
             setStateOwnDetails(result.data.data.referralId)
@@ -95,7 +95,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/state/state/state-fetch-french-chat-message', data, config)
+        axios.post(`${apiurl}`+'/state/state/state-fetch-french-chat-message', data, config)
             .then((result) => {
                 console.log(result.data.stateChatMessageWithFrench)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -118,7 +118,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
-        axios.post('/state/state/state-frenchise-online-or-not', data1, config)
+        axios.post(`${apiurl}`+'/state/state/state-frenchise-online-or-not', data1, config)
             .then((res) => {
                 setBusinessOnline(res.data.isOnline)
             })

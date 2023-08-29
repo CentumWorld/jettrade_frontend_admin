@@ -82,7 +82,7 @@ const Chat = ({ socket, statename, room }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/state/state/fetch-chat-message-state', data, config)
+        axios.post(`${apiurl}`+'/state/state/fetch-chat-message-state', data, config)
             .then((result) => {
                 console.log(result.data.stateChatMessage)
                 //setMessageList((list) => [...list, result.data.adminChatMessage])
@@ -102,7 +102,7 @@ const Chat = ({ socket, statename, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/state/state/admin-online-or-not',config)
+        axios.get(`${apiurl}`+'/state/state/admin-online-or-not',config)
         .then((res)=>{
             setIsAdminOnline(res.data.isOnline)
         })

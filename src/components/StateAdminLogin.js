@@ -7,6 +7,9 @@ import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const StateAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
@@ -29,7 +32,7 @@ const StateAdminLogin = (props) => {
 
   const adminLogin = (e) => {
     e.preventDefault();
-    axios.post("/admin/state-handler-login", {
+    axios.post(`${apiurl}`+"/admin/state-handler-login", {
         stateHandlerId: stateAdmin.stateAdmin_id,
         password: stateAdmin.stateAdmin_password,
     })
@@ -39,6 +42,8 @@ const StateAdminLogin = (props) => {
         localStorage.setItem("login", true);
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
         localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
+        localStorage.setItem("stateHandlerName",response.data.stateHandlerDetails.fname)
+        localStorage.setItem("stateHandlerId",response.data.stateHandlerDetails.stateHandlerId)
         setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard/dashboard");
       })

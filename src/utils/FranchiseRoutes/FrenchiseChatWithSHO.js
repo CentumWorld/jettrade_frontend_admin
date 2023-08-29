@@ -82,7 +82,7 @@ const FrenchiseChatWithSHO = ({ socket, frenchname, room }) => {
             const config = {
                 headers: { 'Authorization': `Bearer ${token}` }
             };
-            axios.get('/franchise/get-own-franchise-details',config)
+            axios.get(`${apiurl}`+'/franchise/get-own-franchise-details',config)
             .then((result) => {
                 console.log(result.data.data.referredId)
                 setFrenchOwnDetails(result.data.data.referredId)
@@ -104,7 +104,7 @@ const FrenchiseChatWithSHO = ({ socket, frenchname, room }) => {
         const config = {
             headers: { 'Authorization': `Bearer ${token}` }
         };
-        axios.post('/frenchise/frenchise/fetch-chat-with-SHO-message', data, config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/fetch-chat-with-SHO-message', data, config)
             .then((result) => {
                 const data = {
                     frnchise :frenchOwnDetails.frenchiseId
@@ -132,7 +132,7 @@ const FrenchiseChatWithSHO = ({ socket, frenchname, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.post('/frenchise/frenchise/SHO-online-or-not-french',data,config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/SHO-online-or-not-french',data,config)
         .then((res)=>{
             setIsFrenchOnline(res.data.isSHOonline)
             console.log(res.data.isSHOonline)

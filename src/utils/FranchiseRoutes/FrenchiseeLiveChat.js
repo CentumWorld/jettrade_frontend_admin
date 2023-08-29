@@ -9,7 +9,7 @@ import Chat from './Chat';
 
 const apiurl = baseUrl.apiUrl
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const FrenchiseeLiveChat = () => {
     const frenchFname = localStorage.getItem('frenchFname');
@@ -41,7 +41,7 @@ const FrenchiseeLiveChat = () => {
             headers: { 'Authorization': `Bearer ${token}` }
         }
 
-        axios.post('/franchise/frenchise/fetch-chat-details-frenchisee', data, config)
+        axios.post(`${apiurl}`+'/franchise/frenchise/fetch-chat-details-frenchisee', data, config)
             .then((result) => {
                 const length = result.data.frenchChatDetails.length;
                 console.log(length);
