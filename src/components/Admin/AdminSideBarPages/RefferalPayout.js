@@ -1006,7 +1006,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {adminToken && (
+        {adminToken || businessId && (
           <TabPane tab="Members Payout" key="2">
             <div>
               <Table
@@ -1042,7 +1042,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {(!businessId || !franchiseToken) && (
+        {(!businessId && !franchiseToken) && (
           <TabPane tab="State Payout" key="3">
             <div>
               <Table
@@ -1065,7 +1065,7 @@ const RefferalPayout = () => {
             </div>
           </TabPane>
         )}
-        <TabPane tab="Franchise Payout" key="4">
+        {/* <TabPane tab="Franchise Payout" key="4">
           <div>
             <Table
               columns={columnsFranch}
@@ -1073,7 +1073,7 @@ const RefferalPayout = () => {
               scroll={{ y: 400, x: true }}
             />
           </div>
-        </TabPane>
+        </TabPane> */}
 
         {!stateHandlerToken && (
           <TabPane tab="Bussiness Developer Payout" key="5">
