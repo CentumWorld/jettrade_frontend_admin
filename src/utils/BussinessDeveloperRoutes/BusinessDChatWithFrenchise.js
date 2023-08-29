@@ -100,9 +100,15 @@ const BusinessDChatWithFrenchise = ({ socket, businessname, room }) => {
             headers: { 'Authorization': `Bearer ${token}` }
         };
 
-        axios.get('/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',config)
+        let data = {
+            businessDeveloperId : localStorage.getItem('businessId')
+            
+        }
+
+        axios.post('/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',data,config)
         .then((res)=>{
-            setIsBusinessOnline(res.data.isOnline)
+            console.log(res.data,'hii')
+            setIsBusinessOnline(res.data.isFrenchiseOnline)
         })
         .catch((err)=>{
             console.log(err.response)

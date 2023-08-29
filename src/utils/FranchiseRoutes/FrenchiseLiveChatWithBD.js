@@ -45,7 +45,7 @@ const FrenchiseLiveChatWithBD = () => {
 
         //admin logout
         return () => {
-            socket.emit('frenchLogout', 'french');
+            socket.emit('frenchLogout', room1);
             //socket.disconnect();
         }
     }, [])
@@ -77,7 +77,7 @@ const FrenchiseLiveChatWithBD = () => {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.post('/frenchise/frenchise/fetch-business-chat-count-with-frenchise', data,config)
+        axios.post('/frenchise/frenchise/get-business-chat-count-with-frenchise', data,config)
             .then((result) => {
                  console.log(result.data.frenchChatCount,'82')
                  setChatFrenchisee(result.data.frenchChatCount);
