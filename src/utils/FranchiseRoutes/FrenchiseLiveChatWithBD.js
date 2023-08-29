@@ -77,7 +77,7 @@ const FrenchiseLiveChatWithBD = () => {
             headers: { Authorization: `Bearer ${token}` }
         };
 
-        axios.post('/frenchise/frenchise/get-business-chat-count-with-frenchise', data,config)
+        axios.post(`${apiurl}`+'/frenchise/frenchise/get-business-chat-count-with-frenchise', data,config)
             .then((result) => {
                  console.log(result.data.frenchChatCount,'82')
                  setChatFrenchisee(result.data.frenchChatCount);
