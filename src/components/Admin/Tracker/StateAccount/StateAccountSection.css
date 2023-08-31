@@ -1,0 +1,35 @@
+.state-account-container {
+    width: 100%;
+    border-radius: 5px;
+    position: sticky;
+}
+
+.state-account-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: max-content;
+    z-index: 10;
+    padding: 15px;
+    background: #01015d;
+    border-radius: 5px;
+    box-shadow: 2px 10px 10px #717171;
+    color: wheat;
+
+}
+
+.state-account-wallet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    background:#1677ff;
+    border: 1px solid wheat;
+    border-radius: 5px;
+    text-align: center;
+    font-family: Calibri;
+    color: black;
+    font-weight: 600;
+}

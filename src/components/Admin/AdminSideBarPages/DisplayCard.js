@@ -6,6 +6,9 @@ import baseUrl from "../../../baseUrl";
 import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
+import { BsWallet2 } from 'react-icons/bs'
+import { Modal, Input, message, Button } from 'antd'
+import { FaRupeeSign } from 'react-icons/fa'
 
 const apiurl = baseUrl.apiUrl;
 
@@ -20,6 +23,7 @@ const DisplayCard = () => {
 
 
   const [totalAmount, setTotalAmount] = useState(0);
+  const [stateHandlerTotalWallet,setStateHandlerTotalWallet] = useState(0)
   const [progressiveBar, setProgressigeBar] = useState({
     totalCount: 0,
     runningCount: 0,
@@ -29,6 +33,8 @@ const DisplayCard = () => {
     trialPercentage: 0,
     expirePercentage: 0,
   });
+  const [withdrawalStateAmount, setWithdrawalAmount] = useState(0)
+  const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false)
 
   useEffect(() => {
     setAdminDetails({ adminid: localStorage.getItem("adminId") });
@@ -89,12 +95,12 @@ const DisplayCard = () => {
   };
 
   const callApiToSubscriptionCharge = () => {
-    const token = localStorage.getItem("adminToken"); 
+    const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get(`${apiurl}`+"/admin/admin-sum-of-all-new-renewal-user-amount", config)
+      .get(`${apiurl}` + "/admin/admin-sum-of-all-new-renewal-user-amount", config)
       .then((res) => {
         console.log(res.data.totalSubscriptionAmount);
         const formattedRupees = new Intl.NumberFormat("en-IN", {
@@ -113,7 +119,7 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get(`${apiurl}`+"/admin/total_Count_Of_Payment_Status_Of_User", config)
+      .get(`${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User", config)
       .then((res) => {
         setProgressigeBar({
           totalCount: res.data.totalCount,
@@ -129,6 +135,45 @@ const DisplayCard = () => {
         console.log(err.response.data);
       });
   };
+
+  const openStatehandelerWithrawalModalFunction = () => {
+    setOpenStateHandlerModal(true)
+    const config = {
+      headers: { Authorization: `Bearer ${isStateHandler}` },
+    };
+    axios.get("/state/get-own-state-details", config)
+    .then((res)=>{
+      setStateHandlerTotalWallet(res.data.data.stateHandlerWallet)
+    })
+    .catch((err)=>{
+      console.log(err.response.data.massage)
+    })
+
+  }
+  const withdrawalAmountSubmit = () => {
+    let amount = Number(withdrawalStateAmount);
+
+    const config = {
+      headers: { Authorization: `Bearer ${isStateHandler}` },
+    };
+    let data = {
+      stateHandlerId: localStorage.getItem('stateHandlerId'),
+      amount: amount
+    }
+
+    axios.post("/state/create-state-payment-request", data, config)
+      .then((res) => {
+        console.log(res.data)
+        message.success("Payment request successful, It will be credited within 48 hours.");
+        setOpenStateHandlerModal(false);
+        setWithdrawalAmount(0)
+        
+      })
+      .catch((err) => {
+        message.warning(err.response.data.message)
+      })
+
+  }
 
   return (
     <>
@@ -193,13 +238,33 @@ const DisplayCard = () => {
           )}
           {
             isStateHandler && (
-          <div className="d-flex">
-                <h6>Trader:</h6>&nbsp;&nbsp;{" "}
+              <>
+                <div className="d-flex">
+                  <h6>Trader:</h6>&nbsp;&nbsp;{" "}
+                  <span
+                    style={{ color: "yellow", cursor: "pointer" }}
+                    onClick={joinChatTrader}
+                  >
+                    Admin Chat
+                  </span>
+                </div>
+              </>
+
+            )
+          }
+        </div>
+        <div className="card1">
+          <div className="live-chat">
+            <h6>Withdrawal</h6>
+          </div>
+          {
+            isStateHandler && (
+              <div className="trading-chart-view">
                 <span
                   style={{ color: "yellow", cursor: "pointer" }}
-                  onClick={joinChatTrader}
+                  onClick={openStatehandelerWithrawalModalFunction}
                 >
-                  Admin Chat
+                  withdraw : <BsWallet2 />
                 </span>
               </div>
             )
@@ -304,6 +369,27 @@ const DisplayCard = () => {
           </div>
         </div>
       </div>
+
+      {/* open state handler modal for payment */}
+      <Modal
+        title="Request here"
+        open={openStateHandlerModal}
+        onCancel={() => setOpenStateHandlerModal(false)}
+        onOk={withdrawalAmountSubmit}
+      >
+        <div className="state-available-balance">
+          <p style={{fontWeight:'600'}}>Available Balance :<FaRupeeSign/>{stateHandlerTotalWallet}</p>
+        </div>
+        <div className="payment-container">
+          <div className="payment-div" onClick={() => setWithdrawalAmount(500)}><FaRupeeSign />500</div>
+          <div className="payment-div" onClick={() => setWithdrawalAmount(1000)}><FaRupeeSign />1000</div>
+          <div className="payment-div" onClick={() => setWithdrawalAmount(5000)}><FaRupeeSign />5000</div>
+        </div>
+        <div className="state-enter-amount">
+          <Input type="number" prefix={<FaRupeeSign />} placeholder="Enter Amount" value={withdrawalStateAmount} onChange={(e) => setWithdrawalAmount(e.target.value)} />
+        </div>
+        <small style={{color:'red'}}>Request payment will be credited within 48 hours.</small>
+      </Modal>
     </>
   );
 };

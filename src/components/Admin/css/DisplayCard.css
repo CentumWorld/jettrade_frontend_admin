@@ -25,3 +25,25 @@
     display: flex;
     justify-content: center;
 }
+
+.payment-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.payment-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    background: rgb(4, 172, 4);
+    color: #020005bb;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-family: Calibri;
+    font-weight: 600;
+}
+.state-enter-amount{
+    margin-top: 5px;
+}

@@ -7,16 +7,19 @@ import axios from "axios";
 import { Menu, Dropdown, Modal } from 'antd'
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import baseUrl from "../../../baseUrl";
+import { useNavigate } from "react-router-dom";
 
 const apiurl = baseUrl.apiUrl
 
 const State = () => {
+  const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
   const [isDeleted, setIsDeleted] = useState(true);
   const [myID, setMyID] = useState('');
   const [deleteOpenModal, setDeleteOpenModal] = useState(false)
+  const [ stateHandlerID,setStateHandlerID] = useState('');
 
   useEffect(() => {
     fetchStateDataApi();
@@ -87,6 +90,12 @@ const State = () => {
       title: "Wallet",
       dataIndex: "stateHandlerWallet",
       key: "stateHandlerWallet",
+      render: amount => (
+        <span>
+          ₹ {amount.toFixed(2)} {/* Indian Rupee symbol + amount with 2 decimal places */}
+        </span>
+      ),
+    
     },
     {
       title: "State",
@@ -103,7 +112,7 @@ const State = () => {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted)} style={{ cursor: 'pointer' }} />
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted, record.stateHandlerId)} style={{ cursor: 'pointer' }} />
         </Dropdown>
       ),
 
@@ -111,10 +120,11 @@ const State = () => {
   ];
 
   // handle action
-  const trigerAction = (id, block,stateDelete) => {
+  const trigerAction = (id, block,stateDelete,stateHandlerid) => {
     setMyID(id);
     setIsBlock(block);
     setIsDeleted(stateDelete)
+    setStateHandlerID(stateHandlerid)
   }
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -123,6 +133,8 @@ const State = () => {
       blockUnblock(myID);
     }else if(e.key === 'delete'){
       deleteAndRecoverState(myID)
+    }else if(e.key === 'account'){
+      navigate(`/admindashboard/tracker/state-account/${stateHandlerID}`)
     }
   };
 
@@ -135,6 +147,7 @@ const State = () => {
         {isBlocked ? 'Unblock' : 'Block'}
       </Menu.Item>
       <Menu.Item key="delete">{isDeleted ? 'Recover' : 'Delete'}</Menu.Item>
+      <Menu.Item key="account">Account</Menu.Item>
     </Menu>
   );
 
