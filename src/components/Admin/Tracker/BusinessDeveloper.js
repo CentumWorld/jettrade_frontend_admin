@@ -15,6 +15,7 @@ const BusinessDeveloper = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bussinessData, setbussinessData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
+  const [isDeleted, setIsDeleted] = useState(true);
   const [myID, setMyID] = useState("");
   const [closeEditModalPopup, setCloseEditModalPopup] = useState(false);
   const [franchiseCity, setFranchiseCity] = useState([])
@@ -124,7 +125,7 @@ const BusinessDeveloper = () => {
         <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
           <BsThreeDotsVertical
             size={24}
-            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId)}
+            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted)}
             style={{ cursor: "pointer" }}
           />
         </Dropdown>
@@ -196,10 +197,11 @@ const BusinessDeveloper = () => {
   };
 
   // handle action
-  const trigerAction = (id, block, refferalid) => {
+  const trigerAction = (id, block, refferalid, businessDeveloperDelete) => {
     setMyID(id);
     setIsBlock(block);
     setRefferedID(refferalid)
+    setIsDeleted(businessDeveloperDelete)
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -213,6 +215,9 @@ const BusinessDeveloper = () => {
     }else if(e.key === "view"){
       setOpenViewModal(true);
       callApiToFetchDocument();
+    }else if (e.key === "delete"){
+      deleteAndRecoverBusinessDeveloper(myID)
+ 
     }
   };
 
@@ -222,10 +227,49 @@ const BusinessDeveloper = () => {
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
-      <Menu.Item key="delete">Delete</Menu.Item>
+      <Menu.Item key="delete">{isDeleted?'Recover':'Delete'}</Menu.Item>
     </Menu>
   );
 
+  const deleteAndRecoverBusinessDeveloper = (id) => {
+    const actionText = isDeleted ? "Recover" : "Delete";
+    Modal.confirm({
+      title: `${actionText} Business Developer`,
+      content: `Are you sure you want to ${actionText.toLowerCase()} this Business Developer`,
+      onOk() {
+        const token = localStorage.getItem("adminToken") ||
+          localStorage.getItem("stateHandlerToken") ||
+          localStorage.getItem("franchiseToken");
+        
+        const endpoint = isDeleted ? "recover-business-developer" : "delete-business-developer";
+  
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+  
+        const data = {
+          id: id,
+          delete: !isDeleted,
+        };
+  
+        axios
+          .post(`${apiurl}/admin/delete-business-developer`, data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchBussinesDeveloperDataApi();
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("Action cancelled");
+      },
+    });
+  };
+  
   const blockUnblock = (id) => {
     const actionText = isBlocked ? "Unblock" : "Block";
     Modal.confirm({
@@ -259,6 +303,7 @@ const BusinessDeveloper = () => {
       },
     });
   };
+
 
   const callApiToFranchiseCity = () => {
     const token = localStorage.getItem("adminToken") ||

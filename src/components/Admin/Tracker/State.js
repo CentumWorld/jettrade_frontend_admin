@@ -14,7 +14,9 @@ const State = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
+  const [isDeleted, setIsDeleted] = useState(true);
   const [myID, setMyID] = useState('');
+  const [deleteOpenModal, setDeleteOpenModal] = useState(false)
 
   useEffect(() => {
     fetchStateDataApi();
@@ -101,7 +103,7 @@ const State = () => {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked)} style={{ cursor: 'pointer' }} />
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted)} style={{ cursor: 'pointer' }} />
         </Dropdown>
       ),
 
@@ -109,15 +111,18 @@ const State = () => {
   ];
 
   // handle action
-  const trigerAction = (id, block) => {
+  const trigerAction = (id, block,stateDelete) => {
     setMyID(id);
     setIsBlock(block);
+    setIsDeleted(stateDelete)
   }
   const handleMenuClick = (e) => {
     console.log(e.key);
    
     if (e.key === 'block') {
       blockUnblock(myID);
+    }else if(e.key === 'delete'){
+      deleteAndRecoverState(myID)
     }
   };
 
@@ -129,7 +134,7 @@ const State = () => {
       <Menu.Item key="block">
         {isBlocked ? 'Unblock' : 'Block'}
       </Menu.Item>
-      <Menu.Item key="delete">Delete</Menu.Item>
+      <Menu.Item key="delete">{isDeleted ? 'Recover' : 'Delete'}</Menu.Item>
     </Menu>
   );
 
@@ -163,6 +168,38 @@ const State = () => {
             },
         });
   }
+
+  const deleteAndRecoverState = (id) =>{
+    const actionText = isDeleted ? 'Recover' : 'Delete'
+        Modal.confirm({
+            title: `${actionText} State handler`,
+            content: `Are you sure you want to  ${actionText.toLowerCase()} this state?`,
+            onOk() {
+                const token = localStorage.getItem('adminToken')
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const data = {
+                    id: id,
+                    delete: !isDeleted
+                }
+                axios.post(`${apiurl}`+"/admin/delete-state", data, config)
+                    .then((res) => {
+                        message.success(res.data.message)
+                        fetchStateDataApi();
+                    })
+                    .catch((err) => {
+                        message.warning('Something went wrong!')
+                    })
+            },
+            onCancel() {
+                console.log('Deletion cancelled');
+            },
+        });
+  }
+  
   return (
     <>
       <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} />

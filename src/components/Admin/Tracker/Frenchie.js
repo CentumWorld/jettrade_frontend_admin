@@ -18,6 +18,7 @@ const Frenchie = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
+  const [isDeleted, setIsDeleted] = useState(true);
   const [myID, setMyID] = useState('');
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
@@ -120,7 +121,7 @@ const Frenchie = () => {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked)} style={{ cursor: 'pointer' }} />
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted)} style={{ cursor: 'pointer' }} />
         </Dropdown>
       ),
 
@@ -172,9 +173,10 @@ const Frenchie = () => {
 
 
   // handle action
-  const trigerAction = (id, block) => {
+  const trigerAction = (id, block, franchiseDelete) => {
     setMyID(id);
     setIsBlock(block);
+    setIsDeleted(franchiseDelete)
   }
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -187,6 +189,9 @@ const Frenchie = () => {
     } else if (e.key === 'edit') {
       setEditModalVisible(true);
       editFranchiseDataFunction(myID);
+    }else if(e.key === 'delete'){
+      deleteAndRecoverFranchise(myID)
+
     }
   };
 
@@ -198,7 +203,7 @@ const Frenchie = () => {
       <Menu.Item key="block">
         {isBlocked ? 'Unblock' : 'Block'}
       </Menu.Item>
-      <Menu.Item key="delete">Delete</Menu.Item>
+      <Menu.Item key="delete">{isDeleted?'Recover':'Delete'}</Menu.Item>
     </Menu>
   );
   const blockUnblock = (id) => {
@@ -422,6 +427,43 @@ const Frenchie = () => {
       })
     console.log(editFranchiseData)
   }
+
+  const deleteAndRecoverFranchise = (id) => {
+    const actionText = isDeleted ? 'Recover' : 'Delete';
+    console.log(!isDeleted);
+    Modal.confirm({
+      title: `${actionText} Franchise`,
+      content: `Are you sure you want to ${actionText.toLowerCase()} this franchise?`,
+      onOk() {
+        const token = localStorage.getItem('adminToken') || localStorage.getItem('stateHandlerToken');
+        const config = {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      }
+  
+        let data = {
+          id: id,
+          delete: !isDeleted, 
+        };
+  
+        axios
+          .post(`${apiurl}`+"/admin/delete-franchise",  data, config )
+          .then((res) => {
+            message.success(res.data.message);
+            fetchFrenchieseDataApi(); 
+          })
+          .catch((err) => {
+            message.error(err.response.data.message || 'Something went wrong!');
+          });
+      },
+      onCancel() {
+        console.log('Deletion/recovery cancelled');
+      },
+    });
+  };
+  
+
 
   const inputChangeValue = (event) => {
     const { name, value } = event.target;
