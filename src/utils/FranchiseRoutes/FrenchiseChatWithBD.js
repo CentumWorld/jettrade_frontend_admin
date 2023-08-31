@@ -6,19 +6,19 @@ import axios from 'axios';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const FrenchiseChatWithBD = ({ socket, businessname, room, sendDataToParent }) => {
+const FrenchiseChatWithBD = ({ socket, frenchiseename, room, sendDataToParent }) => {
 
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
     const [businessOnline, setBusinessOnline] = useState(false);
     const [stateOwnDetails,setStateOwnDetails] = useState("");
 
-    console.log(socket, businessname, room)
+    console.log(socket, frenchiseename, room)
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const messageData = {
                 room: room,
-                author: businessname,
+                author: frenchiseename,
                 message: currentMessage,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
                 // referredId:stateOwnDetails
@@ -145,7 +145,7 @@ const FrenchiseChatWithBD = ({ socket, businessname, room, sendDataToParent }) =
             <div className='chat-body'>
                 <ScrollToBottom className='message-container'>
                     {messageList.map((messageContent, index) => {
-                        return <div key={index} className='message' id={businessname === messageContent.author ? "you" : "other"}>
+                        return <div key={index} className='message' id={frenchiseename === messageContent.author ? "you" : "other"}>
                             <div >
                                 <div className='message-content'>
                                     <p>{messageContent.message}</p>

@@ -6,7 +6,7 @@ import axios from 'axios';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) => {
+const StateChatWithFrench = ({ socket, frenchiseename, room, sendDataToParent }) => {
 
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
@@ -17,7 +17,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
         if (currentMessage !== "") {
             const messageData = {
                 room: room,
-                author: businessname,
+                author: frenchiseename,
                 message: currentMessage,
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
                 referredId:stateOwnDetails
@@ -54,16 +54,19 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
 
         });
 
-
-
         //Listen for user offline event
         socket.on('businessOffline', (userId) => {
             businessOnlineOrNOt(userId)
         })
 
-
-
-
+        socket.on('stateOffline', (data)=>{
+            setBusinessOnline();
+        })
+        //Clean up on component unmount
+        return () => {
+            socket.emit('stateLogout', localStorage.getItem('stateHandlerId'));
+            //socket.disconnect();
+        }
 
     }, [socket]);
 
@@ -114,7 +117,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
         const data1 = {
             frenchiseId: data
         }
-        let token = localStorage.getItem('adminToken');
+        let token = localStorage.getItem('stateHandlerToken');
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
@@ -139,7 +142,7 @@ const StateChatWithFrench = ({ socket, businessname, room, sendDataToParent }) =
             <div className='chat-body'>
                 <ScrollToBottom className='message-container'>
                     {messageList.map((messageContent, index) => {
-                        return <div key={index} className='message' id={businessname === messageContent.author ? "you" : "other"}>
+                        return <div key={index} className='message' id={frenchiseename === messageContent.author ? "you" : "other"}>
                             <div >
                                 <div className='message-content'>
                                     <p>{messageContent.message}</p>

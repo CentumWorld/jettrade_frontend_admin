@@ -121,7 +121,7 @@ const FrenchiseLiveChatWithBD = () => {
                     </div>
                 )
                     : (
-                        <FrenchiseChatWithBD socket={socket} statename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
+                        <FrenchiseChatWithBD socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
                     )}
             </div>
 

@@ -4,12 +4,13 @@ import '../../../src/components/Admin/css/LiveChat.css'
 import { Input } from 'antd';
 import axios from 'axios';
 import baseUrl from '../../baseUrl';
-import FrenchiseChatWithBD from './FrenchiseChatWithBD';
+import FrenchiseChatWithSHO from './FrenchiseChatWithSHO';
 
 
 const apiurl = baseUrl.apiUrl
 
-const socket = io.connect('http://103.149.68.19:8081');
+// const socket = io.connect('http://103.149.68.19:8081');
+const socket = io.connect('http://localhost:4000');
 
 const FrenchiseLiveChatWithSHO = () => {
     const frenchFname = localStorage.getItem('frenchFname');
@@ -22,6 +23,7 @@ const FrenchiseLiveChatWithSHO = () => {
 
     const joinRoom = () => {
         if (frenchname !== "" && room !== "") {
+            // console.log(frenchname,room,type)
             socket.emit("join_room", room, type);
             setShowChat(true);
         }
@@ -84,7 +86,7 @@ const FrenchiseLiveChatWithSHO = () => {
 
             )
             : (
-            <FrenchiseChatWithBD socket={socket} frenchname={frenchname} room={room} />
+            <FrenchiseChatWithSHO socket={socket} frenchname={frenchname} room={room} />
                 )}
         </div >
 

@@ -9,15 +9,16 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://103.149.68.19:8081');
+// const socket = io.connect('http://103.149.68.19:8081');
+const socket = io.connect('http://localhost:4000');
 
 const StateLiveChatWithFrench = () => {
 
     const frenchName = localStorage.getItem('stateHandlerName')
     const [frenchiseename, setFrenchiseename] = useState(frenchName);
-    const [room1, setRoom] = useState("");
+    const [room1, setRoom] = useState(localStorage.getItem('stateHandlerId'));
     const [showChat, setShowChat] = useState(false);
-    const [type, setType] = useState('FRENCHWITHSHO')
+    const [type, setType] = useState('STATE')
     const [chatFrenchisee, setChatFrenchisee] = useState([]);
     const [notification, setNotificaton] = useState('');
     const [SHOownDetails, setSHOownDetails] = useState("");
@@ -58,7 +59,7 @@ const StateLiveChatWithFrench = () => {
         };
         axios.get(`${apiurl}`+'/state/get-own-state-details', config)
             .then((result) => {
-                //  console.log(result.data.data.referralId)
+                  console.log(result.data.data.referralId)
                  setSHOownDetails(result.data.data.referralId);
                  fetchAllUserChat(result.data.data.referralId)
             })
@@ -120,7 +121,7 @@ const StateLiveChatWithFrench = () => {
                     </div>
                 )
                     : (
-                        <StateChatWithFrench socket={socket} statename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
+                        <StateChatWithFrench socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
                     )}
             </div>
 

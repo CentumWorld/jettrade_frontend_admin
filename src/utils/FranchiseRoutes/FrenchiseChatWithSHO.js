@@ -52,7 +52,7 @@ const FrenchiseChatWithSHO = ({ socket, frenchname, room }) => {
 
         // Listen for admin offline
         socket.on('falnaOffline', (data)=>{
-            frenchOffline();
+            setIsFrenchOnline();
         })
         //Clean up on component unmount
         return () => {
