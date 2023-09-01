@@ -77,6 +77,7 @@ import StateLiveChatWithFrench from "./utils/StateAdminRoutes/StateLiveChatWithF
 import FrenchiseLiveChatWithBD from "./utils/FranchiseRoutes/FrenchiseLiveChatWithBD";
 import BusinessDLiveChatWithFrenchise from "./utils/BussinessDeveloperRoutes/BusinessDLiveChatWithFrenchise";
 import StateAccountSection from "./components/Admin/Tracker/StateAccount/StateAccountSection";
+import BusinessAccount from "./components/Admin/Tracker/businessAccount/BusinessAccount";
 
 export const UserContext = createContext();
 //App
@@ -162,6 +163,7 @@ function App() {
             <Route path="tracker/members" element={<Refferal/>}/>
             <Route path="tracker/traders" element={<Dashboard />}/>
             <Route path="tracker/state-account/:stateid" element={<StateAccountSection/>}/>
+            <Route path="tracker/business-account/:businessId" element={<BusinessAccount/>}/>
             
 
             <Route

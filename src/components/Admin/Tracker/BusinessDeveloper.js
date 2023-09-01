@@ -6,12 +6,14 @@ import BusinessDeveloperRegister from "./Register/BusinessDeveloperRegister";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from "../../../baseUrl";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 
 const BusinessDeveloper = () => {
+  const navigate = useNavigate()
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [bussinessData, setbussinessData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
@@ -22,6 +24,7 @@ const BusinessDeveloper = () => {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
+  const [businessId, setbussinessId] = useState("")
   const [aadharCard, setAadharCard] = useState({
     placeholder:"",
     file:null
@@ -125,7 +128,7 @@ const BusinessDeveloper = () => {
         <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
           <BsThreeDotsVertical
             size={24}
-            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted)}
+            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted,record.businessDeveloperId)}
             style={{ cursor: "pointer" }}
           />
         </Dropdown>
@@ -197,11 +200,12 @@ const BusinessDeveloper = () => {
   };
 
   // handle action
-  const trigerAction = (id, block, refferalid, businessDeveloperDelete) => {
+  const trigerAction = (id, block, refferalid, businessDeveloperDelete,bussinessId) => {
     setMyID(id);
     setIsBlock(block);
     setRefferedID(refferalid)
     setIsDeleted(businessDeveloperDelete)
+    setbussinessId(bussinessId)
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -218,6 +222,8 @@ const BusinessDeveloper = () => {
     }else if (e.key === "delete"){
       deleteAndRecoverBusinessDeveloper(myID)
  
+    }else if(e.key === 'account'){
+      navigate(`/admindashboard/tracker/business-account/${businessId}`)
     }
   };
 
@@ -228,6 +234,7 @@ const BusinessDeveloper = () => {
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
       <Menu.Item key="delete">{isDeleted?'Recover':'Delete'}</Menu.Item>
+      <Menu.Item key="account">Account</Menu.Item>
     </Menu>
   );
 
