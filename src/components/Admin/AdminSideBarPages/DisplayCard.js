@@ -186,7 +186,7 @@ const DisplayCard = () => {
     else if(isFrenchise){
       setOpenStateHandlerModal(true);
       const config = {
-        headers: { Authorization: `Bearer ${isBusinessHandler}` },
+        headers: { Authorization: `Bearer ${isFrenchise}` },
       };
       axios
         .get("/franchise/get-own-franchise-details", config)
