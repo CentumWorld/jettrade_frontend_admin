@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './StateAccountSection.css'
-import { Tabs, Table, Button, message, Modal } from 'antd';
+import { Tabs, Table, Button, message, Modal, Radio } from 'antd';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -15,12 +15,24 @@ const StateAccountSection = () => {
     const [stateTotalBalance, setStateTotalBalance] = useState(0);
     const [requestDetails, setRequestDetails] = useState([])
     const [approvedStateDetails, setApprovedStateDetails] = useState([])
-  
+    const [selectedValue, setSelectedValue] = useState(1);
+    const [stateBankDetails, setStateBankDetails] = useState([]);
+    const [stateUpiDetails, setUpiDetails] = useState([]);
+
+    const handleRadioChange = (e) => {
+        setSelectedValue(e.target.value);
+        console.log(e.target.value)
+    };
+
+
 
     useEffect(() => {
         callApiToGetStateHandlerToalBalance();
         callApiToGetRequestHistory();
         callApiToGetApprovedHistory();
+        callApiToGetStateBankDetails();
+        callApiToGetStateUpiDetails();
+
     }, [])
 
 
@@ -40,6 +52,11 @@ const StateAccountSection = () => {
                     currency: 'INR',
                     maximumFractionDigits: 2,
                 }).format(amount),
+        },
+        {
+            title: 'Bank/UPI',
+            dataIndex: 'paymentBy',
+            key: 'paymentBy',
         },
         {
             title: 'Requset Date',
@@ -86,7 +103,7 @@ const StateAccountSection = () => {
             key: 'requestapproveDateDate',
             render: (dateTime) => moment(dateTime).format('Do MMMM YYYY, h:mm A'),
         },
-       
+
     ];
     const callApiToGetStateHandlerToalBalance = () => {
         console.log(stateid);
@@ -163,7 +180,7 @@ const StateAccountSection = () => {
         });
     };
 
-    const callApiToGetApprovedHistory = ()=>{
+    const callApiToGetApprovedHistory = () => {
         let data = {
             stateHandlerId: stateid
         }
@@ -174,12 +191,93 @@ const StateAccountSection = () => {
             }
         }
         axios.post("/admin/admin-fetch-state-handler-approve-withdrawal", data, config)
-        .then((res)=>{
-            setApprovedStateDetails(res.data.stateHandlerApproveWithdrawal)
-        })
-        .catch((err)=>{
-            console.log(err.response.data.message)
-        })
+            .then((res) => {
+                setApprovedStateDetails(res.data.stateHandlerApproveWithdrawal)
+            })
+            .catch((err) => {
+                console.log(err.response.data.message)
+            })
+    }
+    // bank details-----------------------------------------
+    const columnForBankDetails = [
+        {
+            title: 'Holder name',
+            dataIndex: 'accountHolderName',
+            key: 'accountHolderName',
+        },
+        {
+            title: 'Bank name',
+            dataIndex: 'bankName',
+            key: 'bankName',
+        },
+        {
+            title: 'Branch name',
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: 'IFSC Code',
+            dataIndex: 'ifscCode',
+            key: 'ifscCode',
+        },
+        {
+            title: 'Account no.',
+            dataIndex: 'accountNumber',
+            key: 'accountNumber',
+        },
+    ]
+    const callApiToGetStateBankDetails = () => {
+        let data = {
+            stateHandlerId: stateid
+        }
+        const token = localStorage.getItem('adminToken')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.post('/state/get-state-own-bank-details', data, config)
+            .then((res) => {
+                console.log(res.data)
+                setStateBankDetails(res.data.stateBankDetails)
+            })
+            .catch((err) => {
+                console.log(err.response.data.message)
+            })
+    }
+    // state upi id 
+    const columnStateUpi = [
+        {
+            title: 'User ID',
+            dataIndex: 'userId',
+            key: 'userId',
+        },
+        {
+            title: 'UPI ID',
+            dataIndex: 'upiId',
+            key: 'upiId',
+        },
+    ]
+
+    const callApiToGetStateUpiDetails = () => {
+        let data = {
+            userId: stateid
+        }
+        const token = localStorage.getItem('adminToken')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        axios.post('/state/get-state-own-upi', data, config)
+            .then((res) => {
+                console.log(res.data)
+                setUpiDetails(res.data.stateUpiId)
+            })
+            .catch((err) => {
+                console.log(err.response.data.message)
+            })
     }
 
     return (
@@ -195,12 +293,19 @@ const StateAccountSection = () => {
                     <Table columns={columns} dataSource={requestDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>
                 <TabPane tab="Approved History" key="2">
-                <Table columns={columnsApproved} dataSource={approvedStateDetails} scroll={{ x: 800, y: 350 }} />
+                    <Table columns={columnsApproved} dataSource={approvedStateDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>
                 <TabPane tab="Bank Details" key="3">
-                    Content for Tab 3
+                    <Radio.Group onChange={handleRadioChange} value={selectedValue} style={{ marginBottom: 10 }}>
+                        <Radio value={1}>Bank</Radio>
+                        <Radio value={2}>UPI</Radio>
+                    </Radio.Group>
+                {selectedValue === 1 ? <Table columns={columnForBankDetails} dataSource={stateBankDetails} scroll={{ x: 800, y: 350 }}/> :  <Table columns={columnStateUpi} dataSource={stateUpiDetails} scroll={{ x: 800, y: 350 }}/>}
+
                 </TabPane>
             </Tabs>
+
+            
 
         </>
 

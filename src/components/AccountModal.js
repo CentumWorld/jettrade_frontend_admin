@@ -1,18 +1,27 @@
 import React, { useState } from "react";
-import { Col, Form, Input, Modal, Row, Select, Button } from "antd";
+import { Col, Form, Input, Modal, Row, Select, Button, Tabs, message } from "antd";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import { BiGitBranch } from "react-icons/bi"
 import banks from "../utils/banknames/banks";
 import "../css/accountmodal.css";
+import axios from "axios";
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 
 const AccountModal = ({ isVisible, onClose }) => {
   const [form] = Form.useForm();
+  const [accountHolderName, setAccountHolderName] = useState("");
   const [selectedBank, setSelectedBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [ifscCode, setIFSCCode] = useState("");
+  const [branchName, settBranchName] = useState("");
   const [savedData, setSavedData] = useState(null);
+  const [upiNO, setUpiNo] = useState('')
 
+  const selectAccountHolderName = (e) => {
+    setAccountHolderName(e.target.value)
+  }
   const handleBankSelect = (value) => {
     setSelectedBank(value);
   };
@@ -25,80 +34,167 @@ const AccountModal = ({ isVisible, onClose }) => {
     setAccountNumber(e.target.value);
   };
 
+  const selectBranchName = (e) => {
+    settBranchName(e.target.value)
+  }
+
   const handleSave = () => {
-    const formData = form.getFieldsValue();
-    setSavedData(formData);
+    let data = {
+      accountHolderName: accountHolderName,
+      branchName: branchName,
+      accountNumber: accountNumber,
+      bankName: selectedBank,
+      ifscCode: ifscCode,
+      userId: localStorage.getItem('stateHandlerId')
+    }
+    const token = localStorage.getItem('stateHandlerToken')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    axios.post("/state/create-state-bank-account-holder", data, config)
+      .then((res) => {
+        console.log(res.data)
+        message.success(res.data.message)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
   };
+
+  const stateUpi = (e)=>{
+    setUpiNo(e.target.value)
+  }
+  const upiSave = () =>{
+    const token = localStorage.getItem('stateHandlerToken')
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    let data ={
+      upiId:upiNO,
+      userId: localStorage.getItem('stateHandlerId')
+    }
+    axios.post("/state/create-state-upi-holder", data, config)
+    .then((res)=>{
+      message.success(res.data.message)
+      setUpiNo('');
+    })
+    .catch((err)=>{
+      message.warning(err.response.data.message)
+    })
+
+  }
 
   return (
     <Modal
       title="Account Details"
-      visible={isVisible}
+      open={isVisible}
       onCancel={onClose}
       footer={null}
     >
-      <p className="account-modal-amount">Total Amount: </p>
-      <Form form={form} layout="vertical">
-        <Form.Item label="Account Holder Name">
-          <Input
-            placeholder="Account holder name"
-            prefix={<MdOutlineAccountCircle />}
-            style={{ width: "50%" }}
-          />
-        </Form.Item>
-        <Form.Item label="Select Bank">
-          <Select
-            placeholder="Select a bank"
-            value={selectedBank}
-            onChange={handleBankSelect}
-            style={{ width: "100%" }}
-          >
-            <Option value="" disabled>
-              -- Select a bank --
-            </Option>
-            {Object.keys(banks).map((bankName) => (
-              <Option key={bankName} value={bankName}>
-                {bankName}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Account Number">
-              <Input
-                placeholder="Account number"
-                value={accountNumber}
-                onChange={handleAccountNumberChange}
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Bank Details" key="1">
+          <Form form={form} layout="vertical">
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Account Holder Name">
+                  <Input
+                    placeholder="Account holder name"
+                    prefix={<MdOutlineAccountCircle />}
+                    style={{ width: "100%" }}
+                    onChange={selectAccountHolderName}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Branch name">
+                  <Input
+                    placeholder="Branch name"
+                    prefix={<BiGitBranch />}
+                    style={{ width: "100%" }}
+                    onChange={selectBranchName}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Form.Item label="Select Bank">
+              <Select
+                placeholder="Select a bank"
+                value={selectedBank}
+                onChange={handleBankSelect}
                 style={{ width: "100%" }}
+              >
+                <Option value="" disabled>
+                  -- Select a bank --
+                </Option>
+                {Object.keys(banks).map((bankName) => (
+                  <Option key={bankName} value={bankName}>
+                    {bankName}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Account Number">
+                  <Input
+                    placeholder="Account number"
+                    value={accountNumber}
+                    onChange={handleAccountNumberChange}
+                    style={{ width: "100%" }}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="IFSC Code">
+                  <Input
+                    placeholder="IFSC code"
+                    value={ifscCode}
+                    onChange={handleIFSCCodeChange}
+                    style={{ width: "100%" }}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item>
+              <Button type="primary" onClick={handleSave}>
+                Save
+              </Button>
+            </Form.Item>
+          </Form>
+          {savedData && (
+            <div className="account-details">
+              <p>Account Holder Name: {savedData["accountHolderName"]}</p>
+              <p>Bank: {savedData["bank"]}</p>
+              <p>Account Number: {savedData["accountNumber"]}</p>
+              <p>IFSC Code: {savedData["ifscCode"]}</p>
+            </div>
+          )}
+        </TabPane>
+        <TabPane tab="UPI ID" key="2">
+          <Form>
+            <Form.Item label="Enter UPI ID">
+              <Input
+                placeholder="92XXXXXXXX@ybl"
+                style={{ width: "100%" }}
+                onChange={stateUpi}
               />
             </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="IFSC Code">
-              <Input
-                placeholder="IFSC code"
-                value={ifscCode}
-                onChange={handleIFSCCodeChange}
-                style={{ width: "100%" }}
-              />
+            <Form.Item>
+              <Button type="primary" onClick={upiSave}>
+                Save
+              </Button>
             </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item>
-          <Button type="primary" onClick={handleSave}>
-            Save
-          </Button>
-        </Form.Item>
-      </Form>
-      {savedData && (
-        <div className="account-details">
-          <p>Account Holder Name: {savedData["accountHolderName"]}</p>
-          <p>Bank: {savedData["bank"]}</p>
-          <p>Account Number: {savedData["accountNumber"]}</p>
-          <p>IFSC Code: {savedData["ifscCode"]}</p>
-        </div>
-      )}
+          </Form>
+
+        </TabPane>
+      </Tabs>
+
     </Modal>
   );
 };

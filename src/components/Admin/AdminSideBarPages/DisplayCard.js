@@ -6,11 +6,14 @@ import baseUrl from "../../../baseUrl";
 import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
-import { BsWallet2 } from "react-icons/bs";
-import { Modal, Input, message, Button } from "antd";
-import { FaRupeeSign } from "react-icons/fa";
+import { BsWallet2 } from 'react-icons/bs'
+import { Modal, Input, message, Button, Tabs } from 'antd'
+import { FaRupeeSign } from 'react-icons/fa';
+import { Radio } from 'antd';
+
 
 const apiurl = baseUrl.apiUrl;
+const { TabPane } = Tabs;
 
 const DisplayCard = () => {
   const navigate = useNavigate();
@@ -24,6 +27,9 @@ const DisplayCard = () => {
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
+  const [stateUpiId, setStateUpiId] = useState([]);
+  const [selectStateUpiId, setSelectedUpiId] = useState('');
+  const [stateBankDetails, setStateBankDetails] = useState([]);
   const [progressiveBar, setProgressigeBar] = useState({
     totalCount: 0,
     runningCount: 0,
@@ -40,6 +46,8 @@ const DisplayCard = () => {
     setAdminDetails({ adminid: localStorage.getItem("adminId") });
     callApiToSubscriptionCharge();
     callApiToTotalUserRunningTrialExpire();
+    callApiToStateUpiDetails();
+    callApitoStateBankDetails();
   }, []);
 
   // joinChat
@@ -93,6 +101,13 @@ const DisplayCard = () => {
   const goToRegister = () => {
     navigate("/admindashboard/createuser");
   };
+
+
+  const closeStatePaymentModal = () => {
+    setOpenStateHandlerModal(false);
+    setSelectedUpiId(null)
+  }
+
 
   const callApiToSubscriptionCharge = () => {
     const token = localStorage.getItem("adminToken");
@@ -177,6 +192,7 @@ const DisplayCard = () => {
       let data = {
         stateHandlerId: localStorage.getItem("stateHandlerId"),
         amount: amount,
+        paymentBy: selectStateUpiId
       };
 
       axios
@@ -221,6 +237,47 @@ const DisplayCard = () => {
         });
     }
   };
+
+  // fetching upi  details
+
+  const callApiToStateUpiDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isStateHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("stateHandlerId")
+    }
+    axios.post('/state/get-state-own-upi', data, config)
+      .then((res) => {
+        setStateUpiId(res.data.stateUpiId)
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+  }
+
+  const handleRadioChangeStateValue = (e) => {
+    setSelectedUpiId(e.target.value);
+    console.log(e.target.value)
+  }
+
+  // fetching state bank details
+  const callApitoStateBankDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isStateHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("stateHandlerId")
+    }
+    axios.post('/state/get-state-own-bank-details', data, config)
+      .then((res) => {
+        console.log(res.data)
+        setStateBankDetails(res.data.stateBankDetails)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
 
   return (
     <>
@@ -417,14 +474,37 @@ const DisplayCard = () => {
       <Modal
         title="Request here"
         open={openStateHandlerModal}
-        onCancel={() => setOpenStateHandlerModal(false)}
+        onCancel={closeStatePaymentModal}
         onOk={withdrawalAmountSubmit}
+        okText="Proceed"
+        okButtonProps={{ disabled: !selectStateUpiId }}
       >
         <div className="state-available-balance">
-          <p style={{ fontWeight: "600" }}>
-            Available Balance :<FaRupeeSign />
-            {stateHandlerTotalWallet}
-          </p>
+          <p style={{ fontWeight: '600' }}>Available Balance :<FaRupeeSign />{stateHandlerTotalWallet}</p>
+        </div>
+        <div className="bank-method">
+          <strong style={{ marginBottom: 0 }}>Select payment method</strong>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="BANK" key="1" style={{ marginBottom: 16 }}>
+              <Radio.Group onChange={handleRadioChangeStateValue} value={selectStateUpiId}>
+                {stateBankDetails.map((option) => (
+                  <Radio key={option.bankName} value={option.bankName}>
+                    {option.bankName}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </TabPane>
+            <TabPane tab="UPI" key="2" style={{ marginBottom: 16 }}>
+              <Radio.Group onChange={handleRadioChangeStateValue} value={selectStateUpiId}>
+                {stateUpiId.map((option) => (
+                  <Radio key={option.upiId} value={option.upiId}>
+                    {option.upiId}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </TabPane>
+          </Tabs>
+
         </div>
         <div className="payment-container">
           <div className="payment-div" onClick={() => setWithdrawalAmount(500)}>
