@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './StateAccountSection.css'
-import { Tabs, Table, Button, message } from 'antd';
+import { Tabs, Table, Button, message, Modal } from 'antd';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -14,10 +14,13 @@ const StateAccountSection = () => {
     const { stateid } = useParams();
     const [stateTotalBalance, setStateTotalBalance] = useState(0);
     const [requestDetails, setRequestDetails] = useState([])
+    const [approvedStateDetails, setApprovedStateDetails] = useState([])
+  
 
     useEffect(() => {
         callApiToGetStateHandlerToalBalance();
         callApiToGetRequestHistory();
+        callApiToGetApprovedHistory();
     }, [])
 
 
@@ -52,6 +55,38 @@ const StateAccountSection = () => {
                 <Button type='primary' onClick={() => handleApprove(record._id)}>Approve</Button>
             ),
         },
+    ];
+    //approveDate
+    const columnsApproved = [
+        {
+            title: 'Id',
+            dataIndex: 'stateHandlerId',
+            key: 'stateHandlerId',
+        },
+        {
+            title: 'Amount',
+            dataIndex: 'amount',
+            key: 'amount',
+            render: (amount) =>
+                new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 2,
+                }).format(amount),
+        },
+        {
+            title: 'Requset Date',
+            dataIndex: 'requestDate',
+            key: 'requestDate',
+            render: (dateTime) => moment(dateTime).format('Do MMMM YYYY, h:mm A'),
+        },
+        {
+            title: 'Approved Date',
+            dataIndex: 'approveDate',
+            key: 'requestapproveDateDate',
+            render: (dateTime) => moment(dateTime).format('Do MMMM YYYY, h:mm A'),
+        },
+       
     ];
     const callApiToGetStateHandlerToalBalance = () => {
         console.log(stateid);
@@ -95,9 +130,7 @@ const StateAccountSection = () => {
 
 
     // handle APPROVE
-
     const handleApprove = (id) => {
-        console.log(id)
         const requestData = {
             id: id,
         };
@@ -108,16 +141,46 @@ const StateAccountSection = () => {
                 Authorization: `Bearer ${token}`,
             },
         };
-
-        axios.post('/admin/approve-payment-request-of-state', requestData, config)
-            .then((res) => {
-                message.success(res.data.message);
-                callApiToGetRequestHistory();
-            })
-            .catch((err) => {
-                console.log(err.response.data.message);
-            });
+        Modal.confirm({
+            title: 'Confirm',
+            content: 'Are you sure you want to proceed?',
+            okText: 'Confirm',
+            cancelText: 'Cancel',
+            onOk() {
+                axios.post('/admin/approve-payment-request-of-state', requestData, config)
+                    .then((res) => {
+                        message.success(res.data.message);
+                        callApiToGetRequestHistory();
+                        callApiToGetApprovedHistory();
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message);
+                    });
+            },
+            onCancel() {
+                console.log('User clicked Cancel');
+            },
+        });
     };
+
+    const callApiToGetApprovedHistory = ()=>{
+        let data = {
+            stateHandlerId: stateid
+        }
+        const token = localStorage.getItem('adminToken')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        axios.post("/admin/admin-fetch-state-handler-approve-withdrawal", data, config)
+        .then((res)=>{
+            setApprovedStateDetails(res.data.stateHandlerApproveWithdrawal)
+        })
+        .catch((err)=>{
+            console.log(err.response.data.message)
+        })
+    }
 
     return (
         <>
@@ -129,15 +192,16 @@ const StateAccountSection = () => {
             </div>
             <Tabs defaultActiveKey="1">
                 <TabPane tab="Request History" key="1">
-                    <Table columns={columns} dataSource={requestDetails} scroll={{ x: 800, y: 350 }}  />
+                    <Table columns={columns} dataSource={requestDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>
                 <TabPane tab="Approved History" key="2">
-                    Content for Tab 2
+                <Table columns={columnsApproved} dataSource={approvedStateDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>
                 <TabPane tab="Bank Details" key="3">
                     Content for Tab 3
                 </TabPane>
             </Tabs>
+
         </>
 
 
