@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import { Col, Form, Input, Modal, Row, Select, Button, Tabs, message } from "antd";
+import {
+  Col,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Select,
+  Button,
+  Tabs,
+  message,
+} from "antd";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { BiGitBranch } from "react-icons/bi"
+import { BiGitBranch } from "react-icons/bi";
 import banks from "../utils/banknames/banks";
 import "../css/accountmodal.css";
 import axios from "axios";
@@ -17,11 +27,11 @@ const AccountModal = ({ isVisible, onClose }) => {
   const [ifscCode, setIFSCCode] = useState("");
   const [branchName, settBranchName] = useState("");
   const [savedData, setSavedData] = useState(null);
-  const [upiNO, setUpiNo] = useState('')
+  const [upiNO, setUpiNo] = useState("");
 
   const selectAccountHolderName = (e) => {
-    setAccountHolderName(e.target.value)
-  }
+    setAccountHolderName(e.target.value);
+  };
   const handleBankSelect = (value) => {
     setSelectedBank(value);
   };
@@ -35,8 +45,14 @@ const AccountModal = ({ isVisible, onClose }) => {
   };
 
   const selectBranchName = (e) => {
-    settBranchName(e.target.value)
-  }
+    settBranchName(e.target.value);
+  };
+
+  const stateHandlerId = localStorage.getItem("stateHandlerId");
+  const businessId = localStorage.getItem("businessId");
+  const frenchiseId = localStorage.getItem("frenchiseId");
+
+  console.log("=========>", frenchiseId, businessId, stateHandlerId);
 
   const handleSave = () => {
     let data = {
@@ -45,49 +61,120 @@ const AccountModal = ({ isVisible, onClose }) => {
       accountNumber: accountNumber,
       bankName: selectedBank,
       ifscCode: ifscCode,
-      userId: localStorage.getItem('stateHandlerId')
-    }
-    const token = localStorage.getItem('stateHandlerToken')
+      userId:
+        localStorage.getItem("stateHandlerId") ||
+        localStorage.getItem("businessId") ||
+        localStorage.getItem("frenchiseId"),
+    };
+    let token =
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("bussinessAdminToken") ||
+      localStorage.getItem("franchiseToken");
+
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if (stateHandlerId) {
+      axios
+        .post("/state/create-state-bank-account-holder", data, config)
+        .then((res) => {
+          console.log(res.data);
+          message.success(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
+    } else if (businessId) {
+      axios
+        .post(
+          "/businessDeveloper/create-business-developer-bank-account-holder",
+          data,
+          config
+        )
+        .then((res) => {
+          console.log(res.data);
+          message.success(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
+    } else if (frenchiseId) {
+      axios
+        .post("/state/create-state-bank-account-holder", data, config)
+        .then((res) => {
+          console.log(res.data);
+          message.success(res.data.message);
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
     }
-
-    axios.post("/state/create-state-bank-account-holder", data, config)
-      .then((res) => {
-        console.log(res.data)
-        message.success(res.data.message)
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
   };
 
-  const stateUpi = (e)=>{
-    setUpiNo(e.target.value)
-  }
-  const upiSave = () =>{
-    const token = localStorage.getItem('stateHandlerToken')
+  const stateUpi = (e) => {
+    setUpiNo(e.target.value);
+  };
+  const upiSave = () => {
+    let token =
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("bussinessAdminToken") ||
+      localStorage.getItem("franchiseToken");
+
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-    let data ={
-      upiId:upiNO,
-      userId: localStorage.getItem('stateHandlerId')
-    }
-    axios.post("/state/create-state-upi-holder", data, config)
-    .then((res)=>{
-      message.success(res.data.message)
-      setUpiNo('');
-    })
-    .catch((err)=>{
-      message.warning(err.response.data.message)
-    })
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let data = {
+      upiId: upiNO,
+      userId:
+        localStorage.getItem("stateHandlerId") ||
+        localStorage.getItem("businessId") ||
+        localStorage.getItem("frenchiseId"),
+    };
 
-  }
+    if (stateHandlerId) {
+      axios
+        .post("/state/create-state-upi-holder", data, config)
+        .then((res) => {
+          message.success(res.data.message);
+          setUpiNo("");
+        })
+        .catch((err) => {
+          message.warning(err.response.data.message);
+        });
+    } else if (businessId) {
+      axios
+        .post(
+          "/businessDeveloper/create-business-developer-upi-holder",
+          data,
+          config
+        )
+        .then((res) => {
+          message.success(res.data.message);
+          setUpiNo("");
+        })
+        .catch((err) => {
+          message.warning(err.response.data.message);
+        });
+    } else if (frenchiseId) {
+      axios
+        .post(
+          "/franchise/create-franchise-upi-holder",
+          data,
+          config
+        )
+        .then((res) => {
+          message.success(res.data.message);
+          setUpiNo("");
+        })
+        .catch((err) => {
+          message.warning(err.response.data.message);
+        });
+    }
+  };
 
   return (
     <Modal
@@ -191,10 +278,8 @@ const AccountModal = ({ isVisible, onClose }) => {
               </Button>
             </Form.Item>
           </Form>
-
         </TabPane>
       </Tabs>
-
     </Modal>
   );
 };

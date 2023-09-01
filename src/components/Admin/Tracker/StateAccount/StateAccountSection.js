@@ -305,9 +305,6 @@ const StateAccountSection = () => {
 
                 </TabPane>
             </Tabs>
-
-            
-
         </>
 
 

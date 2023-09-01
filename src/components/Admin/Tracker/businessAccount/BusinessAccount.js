@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../StateAccount/StateAccountSection.css";
-import { Tabs, Table, Button, message, Modal } from "antd";
+import { Tabs, Table, Button, message, Modal,Radio } from "antd";
 import moment from "moment";
 import axios from "axios";
 import { FaRupeeSign } from "react-icons/fa";
@@ -13,11 +13,21 @@ const BusinessAccount = () => {
   const [stateTotalBalance, setStateTotalBalance] = useState(0);
   const [requestDetails, setRequestDetails] = useState([]);
   const [approvedStateDetails, setApprovedStateDetails] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(1);
+  const [stateBankDetails, setStateBankDetails] = useState([]);
+  const [stateUpiDetails, setUpiDetails] = useState([]);
+
+  const handleRadioChange = (e) => {
+    setSelectedValue(e.target.value);
+    console.log(e.target.value);
+  };
 
   useEffect(() => {
     callApiToGetStateHandlerToalBalance();
     callApiToGetRequestHistory();
     callApiToGetApprovedHistory();
+    callApiToGetBusinessBankDetails();
+    callApiToGetBusinessUpiDetails();
   }, []);
 
   const columns = [
@@ -102,9 +112,9 @@ const BusinessAccount = () => {
         config
       )
       .then((res) => {
-          setStateTotalBalance(
-              res.data.particularBusinessDeveloperDetails.businessDeveloperWallet
-              );
+        setStateTotalBalance(
+          res.data.particularBusinessDeveloperDetails.businessDeveloperWallet
+        );
       })
       .catch((err) => {
         console.log(err.response.data.message);
@@ -113,7 +123,7 @@ const BusinessAccount = () => {
 
   const callApiToGetRequestHistory = () => {
     let data = {
-        businessDeveloperId: businessId,
+      businessDeveloperId: businessId,
     };
     const token = localStorage.getItem("adminToken");
     const config = {
@@ -154,7 +164,11 @@ const BusinessAccount = () => {
       cancelText: "Cancel",
       onOk() {
         axios
-          .post("/admin/approve-payment-request-of-business-developer", requestData, config)
+          .post(
+            "/admin/approve-payment-request-of-business-developer",
+            requestData,
+            config
+          )
           .then((res) => {
             message.success(res.data.message);
             callApiToGetRequestHistory();
@@ -172,7 +186,7 @@ const BusinessAccount = () => {
 
   const callApiToGetApprovedHistory = () => {
     let data = {
-        businessDeveloperId: businessId,
+      businessDeveloperId: businessId,
     };
     const token = localStorage.getItem("adminToken");
     const config = {
@@ -181,9 +195,101 @@ const BusinessAccount = () => {
       },
     };
     axios
-      .post("/admin/admin-fetch-business-developer-approve-withdrawl", data, config)
+      .post(
+        "/admin/admin-fetch-business-developer-approve-withdrawl",
+        data,
+        config
+      )
       .then((res) => {
         setApprovedStateDetails(res.data.businessDeveloperApproveWithdrawal);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+  // bank details-----------------------------------------
+  const columnForBankDetails = [
+    {
+      title: "Holder name",
+      dataIndex: "accountHolderName",
+      key: "accountHolderName",
+    },
+    {
+      title: "Bank name",
+      dataIndex: "bankName",
+      key: "bankName",
+    },
+    {
+      title: "Branch name",
+      dataIndex: "branchName",
+      key: "branchName",
+    },
+    {
+      title: "IFSC Code",
+      dataIndex: "ifscCode",
+      key: "ifscCode",
+    },
+    {
+      title: "Account no.",
+      dataIndex: "accountNumber",
+      key: "accountNumber",
+    },
+  ];
+  const callApiToGetBusinessBankDetails = () => {
+    let data = {
+      businessId: businessId,
+    };
+    const token = localStorage.getItem("adminToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .post(
+        "/businessDeveloper/get-business-developer-own-bank-details",
+        data,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setStateBankDetails(res.data.businessDeveloperBankDetails);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+  // state upi id
+  const columnStateUpi = [
+    {
+      title: "User ID",
+      dataIndex: "userId",
+      key: "userId",
+    },
+    {
+      title: "UPI ID",
+      dataIndex: "upiId",
+      key: "upiId",
+    },
+  ];
+
+  const callApiToGetBusinessUpiDetails = () => {
+    let data = {
+      userId: businessId,
+    };
+    const token = localStorage.getItem("adminToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+      .post("/businessDeveloper/get-business-developer-own-upi", data, config)
+      .then((res) => {
+        console.log(res.data);
+        setUpiDetails(res.data.businessDeveloperUpiId);
       })
       .catch((err) => {
         console.log(err.response.data.message);
@@ -217,7 +323,27 @@ const BusinessAccount = () => {
           />
         </TabPane>
         <TabPane tab="Bank Details" key="3">
-          Content for Tab 3
+          <Radio.Group
+            onChange={handleRadioChange}
+            value={selectedValue}
+            style={{ marginBottom: 10 }}
+          >
+            <Radio value={1}>Bank</Radio>
+            <Radio value={2}>UPI</Radio>
+          </Radio.Group>
+          {selectedValue === 1 ? (
+            <Table
+              columns={columnForBankDetails}
+              dataSource={stateBankDetails}
+              scroll={{ x: 800, y: 350 }}
+            />
+          ) : (
+            <Table
+              columns={columnStateUpi}
+              dataSource={stateUpiDetails}
+              scroll={{ x: 800, y: 350 }}
+            />
+          )}
         </TabPane>
       </Tabs>
     </>
