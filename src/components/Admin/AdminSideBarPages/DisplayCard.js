@@ -24,6 +24,7 @@ const DisplayCard = () => {
   const isAdmin = localStorage.getItem("adminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isBusinessHandler = localStorage.getItem("bussinessAdminToken");
+  const isFrenchise = localStorage.getItem('franchiseToken')
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
@@ -182,6 +183,20 @@ const DisplayCard = () => {
           console.log(err.response.data.massage);
         });
     }
+    else if(isFrenchise){
+      setOpenStateHandlerModal(true);
+      const config = {
+        headers: { Authorization: `Bearer ${isBusinessHandler}` },
+      };
+      axios
+        .get("/franchise/get-own-franchise-details", config)
+        .then((res) => {
+          setStateHandlerTotalWallet(res.data.data.frenchiseWallet);
+        })
+        .catch((err) => {
+          console.log(err.response.data.massage);
+        });
+    }
   };
   const withdrawalAmountSubmit = () => {
     let amount = Number(withdrawalStateAmount);
@@ -221,6 +236,35 @@ const DisplayCard = () => {
       axios
         .post(
           "/businessDeveloper/create-business-developer-payment-request",
+          data,
+          config
+        )
+        .then((res) => {
+          console.log(res.data);
+          message.success(
+            "Payment request successful, It will be credited within 48 hours."
+          );
+          setOpenStateHandlerModal(false);
+          setWithdrawalAmount(0);
+        })
+        .catch((err) => {
+          message.warning(err.response.data.message);
+        });
+    }
+    else if (isFrenchise){
+      let amount = Number(withdrawalStateAmount);
+      const config = {
+        headers: { Authorization: `Bearer ${isFrenchise}` },
+      };
+      let data = {
+        franchiseId: localStorage.getItem("frenchiseId"),
+        amount: amount,
+        paymentBy:'7004001861@ybl'
+      };
+
+      axios
+        .post(
+          "/franchise/create-franchise-payment-request",
           data,
           config
         )
@@ -354,7 +398,7 @@ const DisplayCard = () => {
             </>
           )}
         </div>
-        {isStateHandler || isBusinessHandler ? (
+        {isStateHandler || isBusinessHandler || isFrenchise ? (
           <div className="card1">
             <div className="live-chat">
               <h6>Withdrawal</h6>

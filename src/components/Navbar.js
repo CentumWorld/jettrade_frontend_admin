@@ -27,7 +27,7 @@ function Navbar() {
   const [bussinessDevShow, setBussinessDevShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
-  const [walletamount, setWalletAmount] = useState("");
+  const [walletamount, setWalletAmount] = useState(0);
   const isFrachiseToken = localStorage.getItem("franchiseToken");
   const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
@@ -100,8 +100,10 @@ function Navbar() {
           console.error("Error fetching state details", error);
         }
       }
+
+
       fetchBussinessDetails();
-    }else if (isAdminToken){
+    } else if (isAdminToken) {
       async function fetchAdminDetails() {
         try {
           const response = await fetch(
@@ -115,7 +117,20 @@ function Navbar() {
             }
           );
           const data = await response.json();
-          setWalletAmount(data.data.adminWallet);
+          function formatIndianRupees(adminWallet) {
+            const formatter = new Intl.NumberFormat('en-IN', {
+              style: 'currency',
+              currency: 'INR'
+            });
+            return formatter.format(adminWallet);
+          }
+
+          const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
+          const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
+
+          console.log('Formatted admin wallet:', formattedAdminWallet); // Log the formatted wallet amount
+          setWalletAmount(formattedAdminWallet);
+
         } catch (error) {
           console.error("Error fetching state details", error);
         }

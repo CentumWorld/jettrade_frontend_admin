@@ -8,6 +8,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import aadharFront from '../../../img/aadhar.jpg';
 import allState from "./AllStateAndDistrict";
 import { DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl
@@ -15,6 +16,7 @@ const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 
 const Frenchie = () => {
+  const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
@@ -40,6 +42,7 @@ const Frenchie = () => {
     state: "",
     city: []
   })
+  const [frenchiseId,setFrenchiseId] = useState('');
 
   const closeEditModal = () => {
     setEditModalVisible(false)
@@ -121,7 +124,7 @@ const Frenchie = () => {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted)} style={{ cursor: 'pointer' }} />
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted,record.frenchiseId)} style={{ cursor: 'pointer' }} />
         </Dropdown>
       ),
 
@@ -173,10 +176,11 @@ const Frenchie = () => {
 
 
   // handle action
-  const trigerAction = (id, block, franchiseDelete) => {
+  const trigerAction = (id, block, franchiseDelete,frenchiseId) => {
     setMyID(id);
     setIsBlock(block);
     setIsDeleted(franchiseDelete)
+    setFrenchiseId(frenchiseId);
   }
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -191,7 +195,9 @@ const Frenchie = () => {
       editFranchiseDataFunction(myID);
     }else if(e.key === 'delete'){
       deleteAndRecoverFranchise(myID)
-
+    }
+    else if(e.key === 'account'){
+      navigate(`/admindashboard/tracker/frenchise-account/${frenchiseId}`)
     }
   };
 
@@ -204,6 +210,7 @@ const Frenchie = () => {
         {isBlocked ? 'Unblock' : 'Block'}
       </Menu.Item>
       <Menu.Item key="delete">{isDeleted?'Recover':'Delete'}</Menu.Item>
+      <Menu.Item key="account">Account</Menu.Item>
     </Menu>
   );
   const blockUnblock = (id) => {

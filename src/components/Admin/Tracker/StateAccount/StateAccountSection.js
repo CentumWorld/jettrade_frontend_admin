@@ -73,6 +73,7 @@ const StateAccountSection = () => {
             ),
         },
     ];
+    
     //approveDate
     const columnsApproved = [
         {
