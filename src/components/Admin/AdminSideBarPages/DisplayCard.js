@@ -29,6 +29,7 @@ const DisplayCard = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
   const [stateUpiId, setStateUpiId] = useState([]);
+  const [frenchiseUpiId,setFrenchiseUpiId] = useState([]);
   const [selectStateUpiId, setSelectedUpiId] = useState('');
   const [stateBankDetails, setStateBankDetails] = useState([]);
   const [progressiveBar, setProgressigeBar] = useState({
@@ -48,7 +49,11 @@ const DisplayCard = () => {
     callApiToSubscriptionCharge();
     callApiToTotalUserRunningTrialExpire();
     callApiToStateUpiDetails();
+    callApiToFrenchiseUpiDetails();
+    callApiToBusinessDUpiDetails();
     callApitoStateBankDetails();
+    callApiToFrenchiseBankDetails();
+    callApiToBusinessDBankDetails();
   }, []);
 
   // joinChat
@@ -231,6 +236,7 @@ const DisplayCard = () => {
       let data = {
         businessDeveloperId: localStorage.getItem("businessId"),
         amount: amount,
+        paymentBy: selectStateUpiId
       };
 
       axios
@@ -259,7 +265,7 @@ const DisplayCard = () => {
       let data = {
         franchiseId: localStorage.getItem("frenchiseId"),
         amount: amount,
-        paymentBy:'7004001861@ybl'
+        paymentBy: selectStateUpiId  // using the same state
       };
 
       axios
@@ -300,6 +306,40 @@ const DisplayCard = () => {
       })
   }
 
+  // callApiToFrenchiseUpiDetails
+  const callApiToFrenchiseUpiDetails=()=>{
+    const config = {
+      headers: { Authorization: `Bearer ${isFrenchise}` },
+    };
+    let data = {
+      userId: localStorage.getItem("frenchiseId")
+    }
+    axios.post('/franchise/get-franchise-own-upi', data, config)
+      .then((res) => {
+        setStateUpiId(res.data.franchiseUpiId)
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+  }
+
+  // callApiToBuinsessDUpiDetails
+  const callApiToBusinessDUpiDetails=()=>{
+    const config = {
+      headers: { Authorization: `Bearer ${isBusinessHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("businessId")
+    }
+    axios.post('/businessDeveloper/get-business-developer-own-upi', data, config)
+      .then((res) => {
+        setStateUpiId(res.data.businessDeveloperUpiId)
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+  }
+
   const handleRadioChangeStateValue = (e) => {
     setSelectedUpiId(e.target.value);
     console.log(e.target.value)
@@ -317,6 +357,42 @@ const DisplayCard = () => {
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.stateBankDetails)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+
+  // callApiToFrenchiseBankDetails
+  const callApiToFrenchiseBankDetails = ()=> {
+    const config = {
+      headers: { Authorization: `Bearer ${isFrenchise}` },
+    };
+    let data = {
+      userId: localStorage.getItem("frenchiseId")
+    }
+    axios.post('/franchise/get-franchise-own-bank-details', data, config)
+      .then((res) => {
+        console.log(res.data)
+        setStateBankDetails(res.data.franchiseBankDetails)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+
+  // callApiToBusinessDBankDetails
+  const callApiToBusinessDBankDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isBusinessHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("businessId")
+    }
+    axios.post('/businessDeveloper/get-business-developer-own-bank-details', data, config)
+      .then((res) => {
+        console.log(res.data)
+        setStateBankDetails(res.data.businessDeveloperBankDetails)
       })
       .catch((err) => {
         console.log(err.response.data.message)

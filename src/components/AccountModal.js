@@ -102,7 +102,7 @@ const AccountModal = ({ isVisible, onClose }) => {
         });
     } else if (frenchiseId) {
       axios
-        .post("/state/create-state-bank-account-holder", data, config)
+        .post("/franchise/create-franchise-bank-account-holder", data, config)
         .then((res) => {
           console.log(res.data);
           message.success(res.data.message);
