@@ -34,7 +34,7 @@ const State = () => {
   };
 
   const fetchStateDataApi = () => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken") 
 
     const config = {
       headers: { Authorization: `Bearer ${token}` },
