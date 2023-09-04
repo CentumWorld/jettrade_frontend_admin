@@ -69,11 +69,11 @@ const  Adminroutes =  [
       subRoutes:[
         {
           path:'tracker/state-tracer',
-          name : 'State Traker'
+          name : 'State Tracker'
         },
         {
           path:'tracker/frenchie',
-          name :'Frenchies'
+          name :'Franchise'
         },
         {
           path:'tracker/businness-developer',

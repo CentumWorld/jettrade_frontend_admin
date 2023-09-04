@@ -103,6 +103,7 @@ function Dashboard() {
   }, []);
 
   const token = localStorage.getItem("adminToken");
+  const subadminToken =  localStorage.getItem("subAdminToken")
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem(
     "stateHandlerRefferalID"
@@ -115,10 +116,10 @@ function Dashboard() {
   console.log("=========>", bussinessDeveloperReferralId, bussinessDeveloperToken);
   const fetchData = async () => {
 
-    if (token) {
+    if (token || subadminToken) {
       try {
         const config = {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token || subadminToken}` },
         };
         const response = await axios.get(`${apiurl}` + "/admin/fetch-user-details", config);
         setData(response.data.result);
@@ -191,7 +192,7 @@ function Dashboard() {
   };
   // console.log(data);
   const handleVerifyClick = (id) => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
     let data = {
       id: id,
       status: true,
@@ -214,8 +215,10 @@ function Dashboard() {
         toast.warning("Not verified!");
       });
   };
+
+
   const handleViewClick = (id) => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
     let data = {
       _id: id,
     };
@@ -284,38 +287,15 @@ function Dashboard() {
         );
       },
     },
-    // {
-    //   title: "Action",
-    //   dataIndex: "action",
-    //   render: (_, record) => (
-    //     <>
-    //       <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
-    //         <BsThreeDotsVertical
-    //           size={24}
-    //           onClick={() =>
-    //             trigerAction(
-    //               record._id,
-    //               record.userid,
-    //               record.status,
-    //               record.isBlocked,
-    //               record.isSubAdmin
-    //             )
-    //           }
-    //           style={{ cursor: "pointer" }}
-    //         />
-    //       </Dropdown>
-    //     </>
-    //   ),
-    // },
   ];
 
-  if (token) {
+  if (token || subadminToken) {
     columns.push({
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <>
-          <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+          <Dropdown overlay={token ? menu : Submenu} placement="bottomLeft" trigger={["click"]}>
             <BsThreeDotsVertical
               size={24}
               onClick={() =>
@@ -380,14 +360,24 @@ function Dashboard() {
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
       <Menu.Item key="account">Account</Menu.Item>
       <Menu.Item key="withdrawal">Withdrawal</Menu.Item>
-      {/* <Menu.Item disabled={notAllow} key="admin">{isSubAdmin ? "Remove Sub Admin" : "Make Sub Admin"}</Menu.Item> */}
+    </Menu>
+  );
+
+  const Submenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="verify" disabled={userStatus}>
+        Verify
+      </Menu.Item>
+      <Menu.Item key="view">View</Menu.Item>
+      <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
     </Menu>
   );
 
   //   ------------------------------
   const fetchUserDocuments = (userid) => {
     //console.log(userid,'131');
-    let token = localStorage.getItem("adminToken");
+    let token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
     let data = {
       userid: userid,
     };
@@ -459,7 +449,7 @@ function Dashboard() {
   //--------- user details Edit section
 
   const fetchUserDetailsForEdit = (id) => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
     let data = {
       _id: id,
     };
@@ -644,7 +634,7 @@ function Dashboard() {
       title: `${actionText} User`,
       content: `Are you sure you want to  ${actionText.toLowerCase()} this User?`,
       onOk() {
-        const token = localStorage.getItem("adminToken");
+        const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
