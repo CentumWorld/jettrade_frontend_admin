@@ -108,6 +108,7 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
+        console.log("data=========>",res.data)
         setReferralsDetails(res.data.traderCreditWalletTransactions);
       })
       .catch((err) => {
@@ -161,6 +162,7 @@ const RefferalPayout = () => {
       });
   };
 
+
   const fetchBussinessDeveloperTransactionInState = () => {
     let config = {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
@@ -169,20 +171,21 @@ const RefferalPayout = () => {
     axios
       .post(
         `${apiurl}` +
-          "/state/get-own-members-inside-state-credit-wallet-transaction-details",
+          "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
         {
           stateHandlerId: stateHandlerId,
         },
         config
       )
       .then((res) => {
-        console.log("====>", res.data.memberCreditWalletTransactions);
+        console.log("180====>", res);
         setBussinessDeveloperDetails(res.data.memberCreditWalletTransactions);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
+
 
   const fetchTraderPayoutInState = () => {
     let config = {

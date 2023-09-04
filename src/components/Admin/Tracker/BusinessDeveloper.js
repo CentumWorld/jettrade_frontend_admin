@@ -122,6 +122,12 @@ const BusinessDeveloper = () => {
       },
     },
     {
+      title: 'Status', dataIndex: 'isDeleted', render: (isDeleted) => {
+        const cellStyle = isDeleted ? { color: 'red' } : { color: 'green' };
+        return <span style={cellStyle}>{isDeleted ? 'Deleted' : 'Not Deleted '}</span>;
+      },
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (

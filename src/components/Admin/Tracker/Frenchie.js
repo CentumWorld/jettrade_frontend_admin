@@ -121,6 +121,12 @@ const Frenchie = () => {
       },
     },
     {
+      title: 'Status', dataIndex: 'isDeleted', render: (isDeleted) => {
+        const cellStyle = isDeleted ? { color: 'red' } : { color: 'green' };
+        return <span style={cellStyle}>{isDeleted ? 'Deleted' : 'Not Deleted '}</span>;
+      },
+    },
+    {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
@@ -500,9 +506,9 @@ const Frenchie = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>Frenchie</p>
+            <p>Franchise</p>
             <Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add Frenchie
+              <AiFillPlusCircle /> &nbsp;&nbsp;Add Franchise
             </Button>
           </div>
         </div>

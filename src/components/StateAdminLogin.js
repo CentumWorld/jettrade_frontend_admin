@@ -61,10 +61,23 @@ const StateAdminLogin = (props) => {
           setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
         }
         if (error.response.status === 404) {
-          toast.warning("Invalid Credential!", {
-            autoClose: 2000,
-            theme: "dark",
-          });
+          toast.warning(
+            `Invalid Credential! ${error.response.data.message}`, // Include the backend message in the toast
+            {
+              autoClose: 2000,
+              theme: "dark",
+            }
+          );
+        }
+        if (error.response && error.response.status === 400) {
+          // Invalid input data
+          toast.warning(
+            error.response.data.message || "Please check your input data.",
+            {
+              autoClose: 2000,
+              theme: "dark",
+            }
+          );
         }
       });
     setShow(false);
