@@ -127,6 +127,11 @@ const Frenchie = () => {
       },
     },
     {
+      title:"P/R",
+      dataIndex:"paymentRequestCount",
+      key:"paymentRequestCount"
+    },
+    {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>

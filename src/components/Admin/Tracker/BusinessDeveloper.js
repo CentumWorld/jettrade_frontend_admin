@@ -128,6 +128,11 @@ const BusinessDeveloper = () => {
       },
     },
     {
+      title:"P/R",
+      dataIndex:"paymentRequestCount",
+      key:"paymentRequestCount"
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
