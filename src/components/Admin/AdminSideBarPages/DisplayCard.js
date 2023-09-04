@@ -7,15 +7,16 @@ import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
 import { BsWallet2 } from 'react-icons/bs'
-import { Modal, Input, message, Button, Tabs } from 'antd'
+import { Modal, Input, message, Button, Tabs, Radio, Dropdown, Menu } from 'antd'
 import { FaRupeeSign } from 'react-icons/fa';
-import { Radio } from 'antd';
+
 
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
 
 const DisplayCard = () => {
+
   const navigate = useNavigate();
   const [adminDetails, setAdminDetails] = useState({
     adminid: "",
@@ -29,6 +30,7 @@ const DisplayCard = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
   const [stateUpiId, setStateUpiId] = useState([]);
+  const [frenchiseUpiId, setFrenchiseUpiId] = useState([]);
   const [selectStateUpiId, setSelectedUpiId] = useState('');
   const [stateBankDetails, setStateBankDetails] = useState([]);
   const [progressiveBar, setProgressigeBar] = useState({
@@ -43,12 +45,65 @@ const DisplayCard = () => {
   const [withdrawalStateAmount, setWithdrawalAmount] = useState(0);
   const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false);
 
+
+  const handleMenuClick = (e) => {
+    console.log(e.key);
+    if (e.key === "chat-with-admin") {
+      //openUserLoginFuction();
+      navigate("/admindashboard/chat/frenchisee-handler-chat");
+    }
+    if (e.key === "chat-with-sho") {
+      //console.log("hii");
+      // <NavLink to="/user-registration">Sign Up</NavLink>
+      navigate("/admindashboard/chat/frenchise-chat-with-SHO");
+    }
+    if (e.key === "chat-with-bd") {
+      navigate("/admindashboard/chat/frenchise-chat-with-BD");
+    }
+  };
+
+  const handleStateMenuClick = (e) => {
+    console.log(e.key);
+    if (e.key === "chat-with-admin") {
+      //openUserLoginFuction();
+      navigate("/admindashboard/chat/state-handler-chat");
+    }
+    if (e.key === "chat-with-frenchise") {
+      //console.log("hii");
+      // <NavLink to="/user-registration">Sign Up</NavLink>
+      navigate("/admindashboard/chat/state-chat-with-french");
+    }
+    
+  };
+
+  // State handler  chat menu
+  const stateMenu = (
+    <Menu onClick={handleStateMenuClick}>
+      <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
+      <Menu.Item key="chat-with-frenchise">Chat with SHO</Menu.Item>
+    </Menu>
+  );
+
+  // Frenchise chat menu
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
+      <Menu.Item key="chat-with-sho">Chat with SHO</Menu.Item>
+      <Menu.Item key="chat-with-bd">Chat with BD</Menu.Item>
+    </Menu>
+  );
+
+
   useEffect(() => {
     setAdminDetails({ adminid: localStorage.getItem("adminId") });
     callApiToSubscriptionCharge();
     callApiToTotalUserRunningTrialExpire();
     callApiToStateUpiDetails();
+    callApiToFrenchiseUpiDetails();
+    callApiToBusinessDUpiDetails();
     callApitoStateBankDetails();
+    callApiToFrenchiseBankDetails();
+    callApiToBusinessDBankDetails();
   }, []);
 
   // joinChat
@@ -183,7 +238,7 @@ const DisplayCard = () => {
           console.log(err.response.data.massage);
         });
     }
-    else if(isFrenchise){
+    else if (isFrenchise) {
       setOpenStateHandlerModal(true);
       const config = {
         headers: { Authorization: `Bearer ${isFrenchise}` },
@@ -231,6 +286,7 @@ const DisplayCard = () => {
       let data = {
         businessDeveloperId: localStorage.getItem("businessId"),
         amount: amount,
+        paymentBy: selectStateUpiId
       };
 
       axios
@@ -251,7 +307,7 @@ const DisplayCard = () => {
           message.warning(err.response.data.message);
         });
     }
-    else if (isFrenchise){
+    else if (isFrenchise) {
       let amount = Number(withdrawalStateAmount);
       const config = {
         headers: { Authorization: `Bearer ${isFrenchise}` },
@@ -259,7 +315,7 @@ const DisplayCard = () => {
       let data = {
         franchiseId: localStorage.getItem("frenchiseId"),
         amount: amount,
-        paymentBy:'7004001861@ybl'
+        paymentBy: selectStateUpiId  // using the same state
       };
 
       axios
@@ -300,6 +356,40 @@ const DisplayCard = () => {
       })
   }
 
+  // callApiToFrenchiseUpiDetails
+  const callApiToFrenchiseUpiDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isFrenchise}` },
+    };
+    let data = {
+      userId: localStorage.getItem("frenchiseId")
+    }
+    axios.post('/franchise/get-franchise-own-upi', data, config)
+      .then((res) => {
+        setStateUpiId(res.data.franchiseUpiId)
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+  }
+
+  // callApiToBuinsessDUpiDetails
+  const callApiToBusinessDUpiDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isBusinessHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("businessId")
+    }
+    axios.post('/businessDeveloper/get-business-developer-own-upi', data, config)
+      .then((res) => {
+        setStateUpiId(res.data.businessDeveloperUpiId)
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+  }
+
   const handleRadioChangeStateValue = (e) => {
     setSelectedUpiId(e.target.value);
     console.log(e.target.value)
@@ -317,6 +407,42 @@ const DisplayCard = () => {
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.stateBankDetails)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+
+  // callApiToFrenchiseBankDetails
+  const callApiToFrenchiseBankDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isFrenchise}` },
+    };
+    let data = {
+      userId: localStorage.getItem("frenchiseId")
+    }
+    axios.post('/franchise/get-franchise-own-bank-details', data, config)
+      .then((res) => {
+        console.log(res.data)
+        setStateBankDetails(res.data.franchiseBankDetails)
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
+  }
+
+  // callApiToBusinessDBankDetails
+  const callApiToBusinessDBankDetails = () => {
+    const config = {
+      headers: { Authorization: `Bearer ${isBusinessHandler}` },
+    };
+    let data = {
+      userId: localStorage.getItem("businessId")
+    }
+    axios.post('/businessDeveloper/get-business-developer-own-bank-details', data, config)
+      .then((res) => {
+        console.log(res.data)
+        setStateBankDetails(res.data.businessDeveloperBankDetails)
       })
       .catch((err) => {
         console.log(err.response.data.message)
@@ -384,18 +510,30 @@ const DisplayCard = () => {
               </div>
             </>
           )}
+
           {isStateHandler && (
             <>
-              <div className="d-flex">
-                <h6>Trader:</h6>&nbsp;&nbsp;{" "}
-                <span
-                  style={{ color: "yellow", cursor: "pointer" }}
-                  onClick={joinChatTrader}
-                >
-                  Admin Chat
-                </span>
-              </div>
+            <div className="live-chat">
+              <Dropdown
+                overlay={stateMenu}
+                trigger={["click"]}
+                placement="bottomCenter"
+              >
+                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
+              </Dropdown>
+            </div>
             </>
+          )}
+          {isFrenchise && (
+            <div className="live-chat">
+              <Dropdown
+                overlay={menu}
+                trigger={["click"]}
+                placement="bottomCenter"
+              >
+                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
+              </Dropdown>
+            </div>
           )}
         </div>
         {isStateHandler || isBusinessHandler || isFrenchise ? (
@@ -414,16 +552,22 @@ const DisplayCard = () => {
             </div>
           </div>
         ) : null}
-        <div className="card1">
-          <div className="trading-chart">
-            <h6>Total Subscription Amount</h6>
-          </div>
-          <div className="trading-chart-view">
-            <span style={{ color: "yellow", cursor: "pointer" }}>
-              {totalAmount}
-            </span>
-          </div>
-        </div>
+
+        {
+          isAdmin && (
+            <div className="card1">
+              <div className="trading-chart">
+                <h6>Total Subscription Amount</h6>
+              </div>
+              <div className="trading-chart-view">
+                <span style={{ color: "yellow", cursor: "pointer" }}>
+                  {totalAmount}
+                </span>
+              </div>
+            </div>
+          )
+        }
+
         <div className="card1">
           <div className="trading-chart">
             <h6>Trading Chart</h6>
@@ -489,6 +633,7 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+
         <div className="card1">
           <div className="refferal-payout">
             <h6>Referral Payout</h6>

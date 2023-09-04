@@ -48,24 +48,7 @@ const StateAdminLogin = (props) => {
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
-        console.log("Not login");
-        if (error.response.status === 422) {
-          toast.warning(
-            "Please Fill all Details!",
-            {
-              autoClose: 2000,
-              theme: "dark",
-            },
-            1000
-          );
-          setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
-        }
-        if (error.response.status === 404) {
-          toast.warning("Invalid Credential!", {
-            autoClose: 2000,
-            theme: "dark",
-          });
-        }
+        message.warning(error.response.data.message)
       });
     setShow(false);
   };
