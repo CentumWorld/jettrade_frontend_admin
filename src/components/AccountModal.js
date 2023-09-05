@@ -15,6 +15,9 @@ import { BiGitBranch } from "react-icons/bi";
 import banks from "../utils/banknames/banks";
 import "../css/accountmodal.css";
 import axios from "axios";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -78,7 +81,7 @@ const AccountModal = ({ isVisible, onClose }) => {
     };
     if (stateHandlerId) {
       axios
-        .post("/state/create-state-bank-account-holder", data, config)
+        .post(`${apiurl}` +"/state/create-state-bank-account-holder", data, config)
         .then((res) => {
           console.log(res.data);
           message.success(res.data.message);
@@ -89,7 +92,7 @@ const AccountModal = ({ isVisible, onClose }) => {
     } else if (businessId) {
       axios
         .post(
-          "/businessDeveloper/create-business-developer-bank-account-holder",
+          `${apiurl}` +"/businessDeveloper/create-business-developer-bank-account-holder",
           data,
           config
         )
@@ -102,7 +105,7 @@ const AccountModal = ({ isVisible, onClose }) => {
         });
     } else if (frenchiseId) {
       axios
-        .post("/franchise/create-franchise-bank-account-holder", data, config)
+        .post(`${apiurl}` +"/franchise/create-franchise-bank-account-holder", data, config)
         .then((res) => {
           console.log(res.data);
           message.success(res.data.message);
@@ -137,7 +140,7 @@ const AccountModal = ({ isVisible, onClose }) => {
 
     if (stateHandlerId) {
       axios
-        .post("/state/create-state-upi-holder", data, config)
+        .post(`${apiurl}` +"/state/create-state-upi-holder", data, config)
         .then((res) => {
           message.success(res.data.message);
           setUpiNo("");
@@ -148,7 +151,7 @@ const AccountModal = ({ isVisible, onClose }) => {
     } else if (businessId) {
       axios
         .post(
-          "/businessDeveloper/create-business-developer-upi-holder",
+          `${apiurl}` +"/businessDeveloper/create-business-developer-upi-holder",
           data,
           config
         )
@@ -162,7 +165,7 @@ const AccountModal = ({ isVisible, onClose }) => {
     } else if (frenchiseId) {
       axios
         .post(
-          "/franchise/create-franchise-upi-holder",
+          `${apiurl}` +"/franchise/create-franchise-upi-holder",
           data,
           config
         )

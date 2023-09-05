@@ -80,7 +80,7 @@ const DisplayCard = () => {
   const stateMenu = (
     <Menu onClick={handleStateMenuClick}>
       <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
-      <Menu.Item key="chat-with-frenchise">Chat with SHO</Menu.Item>
+      <Menu.Item key="chat-with-frenchise">Chat with Frenchise</Menu.Item>
     </Menu>
   );
 
@@ -217,7 +217,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isStateHandler}` },
       };
       axios
-        .get("/state/get-own-state-details", config)
+        .get(`${apiurl}` +"/state/get-own-state-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
         })
@@ -230,7 +230,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isBusinessHandler}` },
       };
       axios
-        .get("/businessDeveloper/get-own-business-developer-details", config)
+        .get(`${apiurl}` +"/businessDeveloper/get-own-business-developer-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
         })
@@ -244,7 +244,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isFrenchise}` },
       };
       axios
-        .get("/franchise/get-own-franchise-details", config)
+        .get(`${apiurl}` +"/franchise/get-own-franchise-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.frenchiseWallet);
         })
@@ -266,7 +266,7 @@ const DisplayCard = () => {
       };
 
       axios
-        .post("/state/create-state-payment-request", data, config)
+        .post(`${apiurl}` +"/state/create-state-payment-request", data, config)
         .then((res) => {
           console.log(res.data);
           message.success(
@@ -291,7 +291,7 @@ const DisplayCard = () => {
 
       axios
         .post(
-          "/businessDeveloper/create-business-developer-payment-request",
+          `${apiurl}` +"/businessDeveloper/create-business-developer-payment-request",
           data,
           config
         )
@@ -320,7 +320,7 @@ const DisplayCard = () => {
 
       axios
         .post(
-          "/franchise/create-franchise-payment-request",
+          `${apiurl}` +"/franchise/create-franchise-payment-request",
           data,
           config
         )
@@ -347,7 +347,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    axios.post('/state/get-state-own-upi', data, config)
+    axios.post(`${apiurl}` +'/state/get-state-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.stateUpiId)
       })
@@ -364,7 +364,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    axios.post('/franchise/get-franchise-own-upi', data, config)
+    axios.post(`${apiurl}` +'/franchise/get-franchise-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.franchiseUpiId)
       })
@@ -381,7 +381,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    axios.post('/businessDeveloper/get-business-developer-own-upi', data, config)
+    axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.businessDeveloperUpiId)
       })
@@ -403,7 +403,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    axios.post('/state/get-state-own-bank-details', data, config)
+    axios.post(`${apiurl}` +'/state/get-state-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.stateBankDetails)
@@ -421,7 +421,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    axios.post('/franchise/get-franchise-own-bank-details', data, config)
+    axios.post(`${apiurl}` +'/franchise/get-franchise-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.franchiseBankDetails)
@@ -439,7 +439,7 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    axios.post('/businessDeveloper/get-business-developer-own-bank-details', data, config)
+    axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.businessDeveloperBankDetails)

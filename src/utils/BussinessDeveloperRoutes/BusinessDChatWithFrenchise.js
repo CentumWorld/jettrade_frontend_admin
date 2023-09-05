@@ -106,7 +106,7 @@ const BusinessDChatWithFrenchise = ({ socket, businessname, room }) => {
             
         }
 
-        axios.post('/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',data,config)
+        axios.post(`${apiurl}` +'/businessDeveloper/businessDeveloper/Frenchise-online-or-not-for-businessD',data,config)
         
         .then((res)=>{
             console.log(res.data,'hii')

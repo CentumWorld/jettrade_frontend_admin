@@ -5,9 +5,10 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaRupeeSign } from 'react-icons/fa'
+import baseUrl from '../../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
-
-
 
 
 const StateAccountSection = () => {
@@ -117,7 +118,7 @@ const StateAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post("/admin/admin-fetch-particular-state-handler-details", data, config)
+        axios.post(`${apiurl}` +"/admin/admin-fetch-particular-state-handler-details", data, config)
             .then((res) => {
                 setStateTotalBalance(res.data.particularStateHandlerDetails.stateHandlerWallet)
             })
@@ -137,7 +138,7 @@ const StateAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post('/admin/admin-fetch-state-handler-payment-withdrawal-request', data, config)
+        axios.post(`${apiurl}` +'/admin/admin-fetch-state-handler-payment-withdrawal-request', data, config)
             .then((res) => {
                 setRequestDetails(res.data.stateHandlerPaymentWithdrawalRequests)
             })
@@ -165,7 +166,7 @@ const StateAccountSection = () => {
             okText: 'Confirm',
             cancelText: 'Cancel',
             onOk() {
-                axios.post('/admin/approve-payment-request-of-state', requestData, config)
+                axios.post(`${apiurl}` +'/admin/approve-payment-request-of-state', requestData, config)
                     .then((res) => {
                         message.success(res.data.message);
                         callApiToGetRequestHistory();
@@ -191,7 +192,7 @@ const StateAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post("/admin/admin-fetch-state-handler-approve-withdrawal", data, config)
+        axios.post(`${apiurl}` +"/admin/admin-fetch-state-handler-approve-withdrawal", data, config)
             .then((res) => {
                 setApprovedStateDetails(res.data.stateHandlerApproveWithdrawal)
             })
@@ -238,7 +239,7 @@ const StateAccountSection = () => {
             }
         }
 
-        axios.post('/state/get-state-own-bank-details', data, config)
+        axios.post(`${apiurl}` +'/state/get-state-own-bank-details', data, config)
             .then((res) => {
                 console.log(res.data)
                 setStateBankDetails(res.data.stateBankDetails)
@@ -271,7 +272,7 @@ const StateAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post('/state/get-state-own-upi', data, config)
+        axios.post(`${apiurl}` +'/state/get-state-own-upi', data, config)
             .then((res) => {
                 console.log(res.data)
                 setUpiDetails(res.data.stateUpiId)

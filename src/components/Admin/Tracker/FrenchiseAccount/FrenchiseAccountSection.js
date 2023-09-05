@@ -5,6 +5,9 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaRupeeSign } from 'react-icons/fa'
+import baseUrl from '../../../../baseUrl';
+
+const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 
@@ -100,7 +103,7 @@ const FrenchiseAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post("/admin/admin-fetch-particular-franchise-details", data, config)
+        axios.post(`${apiurl}` +"/admin/admin-fetch-particular-franchise-details", data, config)
             .then((res) => {
                 // console.log(res.data.particularFranchiseDetails.frenchiseWallet)
                  setFrenchiseTotalBalance(res.data.particularFranchiseDetails.frenchiseWallet)
@@ -121,7 +124,7 @@ const FrenchiseAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post('/admin/admin-fetch-franchise-payment-withdrawl-request', data, config)
+        axios.post(`${apiurl}` +'/admin/admin-fetch-franchise-payment-withdrawl-request', data, config)
             .then((res) => {
                 setRequestDetails(res.data.franchisePaymentWithdrawalRequests)
             })
@@ -150,7 +153,7 @@ const FrenchiseAccountSection = () => {
             okText: 'Confirm',
             cancelText: 'Cancel',
             onOk() {
-                axios.post('/admin/approve-payment-request-of-franchise', requestData, config)
+                axios.post(`${apiurl}` +'/admin/approve-payment-request-of-franchise', requestData, config)
                     .then((res) => {
                         message.success(res.data.message);
                         callApiToGetRequestHistory();
@@ -177,7 +180,7 @@ const FrenchiseAccountSection = () => {
                 Authorization: `Bearer ${token}`
             }
         }
-        axios.post("/admin/admin-fetch-franchise-approve-withdrawl", data, config)
+        axios.post(`${apiurl}` +"/admin/admin-fetch-franchise-approve-withdrawl", data, config)
         .then((res)=>{
             setApprovedStateDetails(res.data.franchiseApproveWithdrawal)
         })

@@ -5,6 +5,9 @@ import moment from "moment";
 import axios from "axios";
 import { FaRupeeSign } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import baseUrl from "../../../../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 const BusinessAccount = () => {
@@ -107,7 +110,7 @@ const BusinessAccount = () => {
     };
     axios
       .post(
-        "/admin/admin-fetch-particular-business-developer-details",
+        `${apiurl}` +"/admin/admin-fetch-particular-business-developer-details",
         data,
         config
       )
@@ -133,7 +136,7 @@ const BusinessAccount = () => {
     };
     axios
       .post(
-        "/admin/admin-fetch-business-developer-payment-withdrawl-request",
+        `${apiurl}` +"/admin/admin-fetch-business-developer-payment-withdrawl-request",
         data,
         config
       )
@@ -165,7 +168,7 @@ const BusinessAccount = () => {
       onOk() {
         axios
           .post(
-            "/admin/approve-payment-request-of-business-developer",
+            `${apiurl}` +"/admin/approve-payment-request-of-business-developer",
             requestData,
             config
           )
@@ -196,7 +199,7 @@ const BusinessAccount = () => {
     };
     axios
       .post(
-        "/admin/admin-fetch-business-developer-approve-withdrawl",
+        `${apiurl}` +"/admin/admin-fetch-business-developer-approve-withdrawl",
         data,
         config
       )
@@ -249,7 +252,7 @@ const BusinessAccount = () => {
 
     axios
       .post(
-        "/businessDeveloper/get-business-developer-own-bank-details",
+        `${apiurl}` +"/businessDeveloper/get-business-developer-own-bank-details",
         data,
         config
       )
@@ -286,7 +289,7 @@ const BusinessAccount = () => {
       },
     };
     axios
-      .post("/businessDeveloper/get-business-developer-own-upi", data, config)
+      .post(`${apiurl}` +"/businessDeveloper/get-business-developer-own-upi", data, config)
       .then((res) => {
         console.log(res.data);
         setUpiDetails(res.data.businessDeveloperUpiId);

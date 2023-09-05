@@ -9,7 +9,8 @@ import BusinessDChat from './BusinessDChat';
 
 const apiurl = baseUrl.apiUrl
 
-const socket = io.connect('http://localhost:4000');
+// const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://103.149.68.19:8081');
 
 const BusinessDLiveChat = () => {
     const businessFname = localStorage.getItem('businessFname');

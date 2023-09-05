@@ -25,7 +25,7 @@ function SubAdmin(props) {
     axios
       .post(`${apiurl}`+"/admin/sub-admin-login", data)
       .then((res) => {
-        console.log(res.data, "\\\\\\\\\\\\\\\\\\");
+        // console.log(res.data, "\\\\\\\\\\\\\\\\\\");
         localStorage.setItem("login", true);
         localStorage.setItem("subAdminToken", res.data.subAdmintoken);
 
