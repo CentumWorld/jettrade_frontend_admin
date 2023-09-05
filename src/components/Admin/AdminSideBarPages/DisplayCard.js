@@ -109,8 +109,21 @@ const DisplayCard = () => {
     if (e.key === "business-developer-details") {
       navigate("/admindashboard/tracker/businness-developer");
     }
-    
+
   };
+
+  const handleBusinessChatMenuClick = (e) => {
+    console.log(e.key);
+    if (e.key === "chat-with-admin") {
+      //openUserLoginFuction();
+      navigate("/admindashboard/chat/businessD-chat");
+    }
+    if (e.key === "chat-with-frenchise") {
+      navigate("/admindashboard/chat/BD-chat-with-frenchise");
+    }
+
+  };
+
 
   // Admin Chat menu 
   const AdminChatMenu = (
@@ -151,6 +164,13 @@ const DisplayCard = () => {
     </Menu>
   );
 
+  // Business Chat menu 
+  const businessChatMenu = (
+    <Menu onClick={handleBusinessChatMenuClick}>
+      <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
+      <Menu.Item key="chat-with-frenchise">Chat with Frenchise</Menu.Item>
+    </Menu>
+  );
 
   useEffect(() => {
     setAdminDetails({ adminid: localStorage.getItem("adminId") });
@@ -624,6 +644,17 @@ const DisplayCard = () => {
               </Dropdown>
             </div>
           )}
+          {isBusinessHandler && (
+            <div className="live-chat">
+              <Dropdown
+                overlay={businessChatMenu}
+                trigger={["click"]}
+                placement="bottomCenter"
+              >
+                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
+              </Dropdown>
+            </div>
+          )}
         </div>
         {isStateHandler || isBusinessHandler || isFrenchise ? (
           <div className="card1">
@@ -698,24 +729,24 @@ const DisplayCard = () => {
           </div>
         </div>
 
-       {
-        isAdmin && (
-          <div className="card1">
-          <div className="refferal-details">
-            <h6>Tracker</h6>
-          </div>
-          <div className="live-chat">
-              <Dropdown
-                overlay={trackerMenu}
-                trigger={["click"]}
-                placement="topCenter"
-              >
-                <span style={{ color: "yellow", cursor: "pointer" }}>details</span>
-              </Dropdown>
+        {
+          isAdmin && (
+            <div className="card1">
+              <div className="refferal-details">
+                <h6>Tracker</h6>
+              </div>
+              <div className="live-chat">
+                <Dropdown
+                  overlay={trackerMenu}
+                  trigger={["click"]}
+                  placement="topCenter"
+                >
+                  <span style={{ color: "yellow", cursor: "pointer" }}>details</span>
+                </Dropdown>
+              </div>
             </div>
-        </div>
-        )
-       }     
+          )
+        }
 
         <div className="card1">
           <div className="push-notification-card">
@@ -748,7 +779,15 @@ const DisplayCard = () => {
           <div className="refferal-payout">
             <h6>Referral Payout</h6>
           </div>
-          <div className="d-flex">
+
+          <div className="subscription-card">
+            <span style={{ color: "yellow", cursor: "pointer" }}
+              onClick={refferalPayoutTrader}
+              >
+                view
+              </span>
+          </div>
+          {/* <div className="d-flex">
             <h6>Trader:</h6>&nbsp;&nbsp;{" "}
             <span
               style={{ color: "yellow", cursor: "pointer" }}
@@ -765,8 +804,9 @@ const DisplayCard = () => {
             >
               View
             </span>
-          </div>
+          </div> */}
         </div>
+
       </div>
 
       {/* open state handler modal for payment */}

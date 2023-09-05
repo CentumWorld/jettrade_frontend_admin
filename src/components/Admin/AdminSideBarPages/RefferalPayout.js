@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 
 const RefferalPayout = () => {
   const [refferralsDetails, setReferralsDetails] = useState([]);
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("2");
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState(
     []
   );
@@ -998,7 +998,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {/* {stateHandlerId || businessId  ? (
+        {/* {/* {stateHandlerId || businessId  ? (
           <TabPane tab="Trader Payout" key="1">
             <div>
               <Table
@@ -1052,7 +1052,13 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsMemberBusiness}
                 dataSource={refferralsDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1064,7 +1070,13 @@ const RefferalPayout = () => {
               <Table
                 columns={memberColumnInFranchise}
                 dataSource={refferralsDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1076,7 +1088,13 @@ const RefferalPayout = () => {
               <Table
                 columns={memberDataInState}
                 dataSource={refferralsDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1088,7 +1106,13 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsState}
                 dataSource={stateHandlerDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1100,7 +1124,13 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsFranch}
                 dataSource={franchiseDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1121,7 +1151,13 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsBussinessDeveloper}
                 dataSource={bussinessDeveloperDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1133,7 +1169,13 @@ const RefferalPayout = () => {
               <Table
                 columns={bussinessColumnInStateRefferal}
                 dataSource={bussinessDeveloperDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1145,7 +1187,13 @@ const RefferalPayout = () => {
               <Table
                 columns={adminColumnDetails}
                 dataSource={adminDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{
+                  y: 400,
+                  x: true,
+                  y: 320,
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
