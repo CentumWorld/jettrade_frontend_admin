@@ -109,7 +109,7 @@ const RefferalPayout = () => {
       )
       .then((res) => {
         console.log("data=========>",res.data)
-        setReferralsDetails(res.data.traderCreditWalletTransactions);
+        setReferralsDetails(res.data.memberCreditWalletTransactions);
       })
       .catch((err) => {
         console.log(err.message);
@@ -651,7 +651,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Reffer User Id",
+      title: "Referral User Id",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -834,14 +834,14 @@ const RefferalPayout = () => {
   const memberColumnInFranchise = [
     {
       title: "User ID",
-      dataIndex: "userid",
+      dataIndex: "memberId",
       key: "userid",
       onFilter: (value, record) =>
         record.refferUserID.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Wallet Amount",
-      dataIndex: "referralAmount",
+      dataIndex: "creditAmount",
       key: "referralAmount",
       render: (text) =>
         new Intl.NumberFormat("en-IN", {
@@ -851,24 +851,19 @@ const RefferalPayout = () => {
     },
     {
       title: "Joining Date",
-      dataIndex: "joininigDate",
+      dataIndex: "Date",
       key: "joininigDate",
       render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
     },
     {
       title: "New/Renewal",
-      dataIndex: "userType",
+      dataIndex: "Type",
       key: "userType",
     },
     {
       title: "Referral User Id",
-      dataIndex: "refferal_id",
+      dataIndex: "refferUserId",
       key: "refferal_id",
-    },
-    {
-      title: "Reffer User Id",
-      dataIndex: "refferUserID",
-      key: "refferUserID",
     },
   ];
 
@@ -1017,7 +1012,7 @@ const RefferalPayout = () => {
             <div>
               <Table
                 columns={memberColumnInFranchise}
-                dataSource={userRefferalApproedDetails}
+                dataSource={refferralsDetails}
                 scroll={{ y: 400, x: true }}
               />
             </div>
