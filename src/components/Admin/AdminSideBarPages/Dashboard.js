@@ -369,8 +369,8 @@ function Dashboard() {
         Verify
       </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
-      <Menu.Item key="edit">Edit</Menu.Item>
-      <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
+      {/* <Menu.Item key="edit">Edit</Menu.Item>
+      <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item> */}
     </Menu>
   );
 

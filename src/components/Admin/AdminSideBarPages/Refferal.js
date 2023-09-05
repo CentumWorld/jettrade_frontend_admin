@@ -35,11 +35,11 @@ const Refferal = () => {
   const [aadhar, setAadhar] = useState("");
   const [pan, setPan] = useState("");
   const [myID, setMyID] = useState("");
-  const [memberType, setMemberType] = useState("")
+  const [memberType, setMemberType] = useState("");
   const [idCard, setIdCard] = useState({
     placeholder: aadharBackImage,
-    file: null
-  })
+    file: null,
+  });
   const [aadharFrontImage, setAadharFrontImage] = useState({
     placeholder: aadharImage,
     file: null,
@@ -88,6 +88,8 @@ const Refferal = () => {
   //   --------------
 
   // search bar -------------
+  const adminToken = localStorage.getItem("adminToken");
+  const subadminToken =  localStorage.getItem("subAdminToken")
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -95,7 +97,6 @@ const Refferal = () => {
     console.log("Performing search for:", value);
   };
   // -------------
-
   const columns = [
     { title: "Member ID", dataIndex: "memberid", key: "memberid" },
     { title: "First Name", dataIndex: "fname", key: "fname" },
@@ -106,6 +107,16 @@ const Refferal = () => {
     { title: "Referral", dataIndex: "refferal_id", key: "refferal_id" },
     {
       title: "Status",
+      dataIndex: "status",
+      render: (status) => {
+        const cellStyle = status ? { color: "green" } : { color: "red" };
+        return (
+          <span style={cellStyle}>{status ? "Verified" : "Not Verified"}</span>
+        );
+      },
+    },
+    {
+      title: "Block/Notblock",
       dataIndex: "isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
@@ -116,22 +127,15 @@ const Refferal = () => {
         );
       },
     },
-    {
+  ];
+
+  if (adminToken || subadminToken) {
+    columns.push({
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
         <>
-          {/* <Button onClick={() => handleVerifyClick(record._id)} disabled={record.status}
-                        style={buttonStyle}
-                    >
-                        Verify
-                    </Button > &nbsp;
-                    <Button type="primary" onClick={() => handleViewClick(record._id)}
-                        style={buttonStyle}
-                    >
-                        View
-                    </Button > */}
-          <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+          <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
             <BsThreeDotsVertical
               size={24}
               onClick={() => trigerAction(record._id, record.isBlocked)}
@@ -140,13 +144,14 @@ const Refferal = () => {
           </Dropdown>
 
           {/* <Button type="primary" onClick={showModal}>
-                        Open Dialog
-                    </Button> */}
+                          Open Dialog
+                      </Button> */}
         </>
       ),
-    },
-    // ...more columns
-  ];
+
+      // ...more columns
+    });
+  }
 
   // handle action
   const trigerAction = (id, block) => {
@@ -180,6 +185,13 @@ const Refferal = () => {
     </Menu>
   );
 
+  const subMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="verify">Verify</Menu.Item>
+      <Menu.Item key="view">View</Menu.Item>
+    </Menu>
+  );
+
   //   ------------------------------
 
   //call refferal details from api
@@ -191,7 +203,7 @@ const Refferal = () => {
   //Handle varify click
   const handleVerifyClick = (id) => {
     console.log(id);
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
     let data = {
       id: id,
       status: true,
@@ -202,7 +214,7 @@ const Refferal = () => {
       },
     };
     axios
-      .post(`${apiurl}`+"/admin/verify-member", data, config)
+      .post(`${apiurl}` + "/admin/verify-member", data, config)
       .then((res) => {
         message.success("Verify Successfully");
         callApiRefferalDetails();
@@ -214,9 +226,11 @@ const Refferal = () => {
 
   //hadle view click
   const handleViewClick = (id) => {
-    const token = localStorage.getItem("adminToken") ||
-    localStorage.getItem("stateHandlerToken") ||
-          localStorage.getItem("franchiseToken")|| localStorage.getItem("bussinessAdminToken");
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("franchiseToken") ||
+      localStorage.getItem("bussinessAdminToken");
     console.log("hii");
     let data = {
       _id: id,
@@ -228,7 +242,11 @@ const Refferal = () => {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
+      .post(
+        `${apiurl}` + "/admin/fetch-particular-member-details",
+        data,
+        config
+      )
       .then((res) => {
         console.log(res.data.result, "hii");
         //setAadhar(res.data.result.aadhar);
@@ -251,8 +269,11 @@ const Refferal = () => {
 
   const fetchMemberDocuments = (id) => {
     console.log(id, "131");
-    let token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||
-    localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
+    let token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("franchiseToken") ||
+      localStorage.getItem("bussinessAdminToken");
     let data = {
       _id: id,
     };
@@ -263,26 +284,32 @@ const Refferal = () => {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
+      .post(
+        `${apiurl}` + "/admin/fetch-particular-member-details",
+        data,
+        config
+      )
       .then((res) => {
         console.log(res.data.result.ID_Card, "hiii");
-        setMemberType(res.data.result.userType)
+        setMemberType(res.data.result.userType);
         if (res.data.result.userType === "other") {
-          setIdCard({placeholder:res.data.result.ID_Card})
+          setIdCard({ placeholder: res.data.result.ID_Card });
         } else {
           setLoading(true);
-          setAadharFrontImage({ placeholder: res.data.result.aadhar_front_side });
+          setAadharFrontImage({
+            placeholder: res.data.result.aadhar_front_side,
+          });
           setAadharBackImage({ placeholder: res.data.result.aadhar_back_side });
           setPanImage({ placeholder: res.data.result.pan_card });
         }
-
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+  const token =
+    localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken");
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
   const frenchiseToken = localStorage.getItem("franchiseToken");
@@ -290,7 +317,7 @@ const Refferal = () => {
   const bussinessToken = localStorage.getItem("bussinessAdminToken");
   const bussinessRefferalId = localStorage.getItem("bussinessRefferalId");
 
-  console.log("==============>",bussinessRefferalId,bussinessToken);
+  console.log("==============>", bussinessRefferalId, bussinessToken);
   const callApiRefferalDetails = async () => {
     if (token) {
       const config = {
@@ -299,7 +326,10 @@ const Refferal = () => {
         },
       };
       try {
-        const response = await axios.get(`${apiurl}`+"/admin/fetch-member-details", config);
+        const response = await axios.get(
+          `${apiurl}` + "/admin/fetch-member-details",
+          config
+        );
         setRefferalData(response.data.result);
         console.log(response);
         //setLength(response.data.result.length);
@@ -318,7 +348,7 @@ const Refferal = () => {
 
       try {
         const response = await axios.post(
-          `${apiurl}`+"/state/fetch-all-members-in-state",
+          `${apiurl}` + "/state/fetch-all-members-in-state",
           requestData,
           config
         );
@@ -328,8 +358,7 @@ const Refferal = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }
-    else if (frenchiseToken && franchiseRefferal) {
+    } else if (frenchiseToken && franchiseRefferal) {
       const config = {
         headers: { Authorization: `Bearer ${frenchiseToken}` },
       };
@@ -338,7 +367,11 @@ const Refferal = () => {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-        .post(`${apiurl}`+"/franchise/get-all-members-in-franchise", requestData, config)
+        .post(
+          `${apiurl}` + "/franchise/get-all-members-in-franchise",
+          requestData,
+          config
+        )
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
@@ -358,7 +391,7 @@ const Refferal = () => {
 
       try {
         const response = await axios.post(
-          `${apiurl}`+"/state/fetch-all-members-in-state",
+          `${apiurl}` + "/state/fetch-all-members-in-state",
           requestData,
           config
         );
@@ -368,18 +401,22 @@ const Refferal = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    }
-      else if (bussinessToken && bussinessRefferalId){
-        const config = {
-          headers: { Authorization: `Bearer ${bussinessToken}` },
-        };
-  
-        let requestData = {
-          businessDevRefferalId : bussinessRefferalId,
-        };
+    } else if (bussinessToken && bussinessRefferalId) {
+      const config = {
+        headers: { Authorization: `Bearer ${bussinessToken}` },
+      };
 
-        axios
-        .post(`${apiurl}`+"/businessDeveloper/get-all-members-in-business-developer",requestData, config)
+      let requestData = {
+        businessDevRefferalId: bussinessRefferalId,
+      };
+
+      axios
+        .post(
+          `${apiurl}` +
+            "/businessDeveloper/get-all-members-in-business-developer",
+          requestData,
+          config
+        )
         .then((res) => {
           console.log("Bussiness response-----------> ", res.data);
           setRefferalData(res.data.members);
@@ -387,7 +424,7 @@ const Refferal = () => {
         .catch((err) => {
           console.log("error", err);
         });
-      }
+    }
   };
 
   //    image download-----
@@ -417,8 +454,11 @@ const Refferal = () => {
   //--------- user details Edit section
 
   const fetchUserDetailsForEdit = (id) => {
-    const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
-    localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("franchiseToken") ||
+      localStorage.getItem("bussinessAdminToken");
     let data = {
       _id: id,
     };
@@ -428,7 +468,11 @@ const Refferal = () => {
       },
     };
     axios
-      .post(`${apiurl}`+"/admin/fetch-particular-member-details", data, config)
+      .post(
+        `${apiurl}` + "/admin/fetch-particular-member-details",
+        data,
+        config
+      )
       .then((result) => {
         setUserType(result.data.result.userType);
         console.log(result.data.result);
@@ -502,15 +546,18 @@ const Refferal = () => {
         pan: editUserData.pan,
         gender: editUserData.gender,
       };
-      const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
-      localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
+      const token =
+        localStorage.getItem("adminToken") ||
+        localStorage.getItem("stateHandlerToken") ||
+        localStorage.getItem("franchiseToken") ||
+        localStorage.getItem("bussinessAdminToken");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
         },
       };
       axios
-        .post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
+        .post(`${apiurl}` + "/admin/member-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -532,15 +579,18 @@ const Refferal = () => {
         Id_No: editUserData.Id_No,
         gender: editUserData.gender,
       };
-      const token = localStorage.getItem("adminToken")||localStorage.getItem("stateHandlerToken") ||
-      localStorage.getItem("franchiseToken")||localStorage.getItem("bussinessAdminToken");
+      const token =
+        localStorage.getItem("adminToken") ||
+        localStorage.getItem("stateHandlerToken") ||
+        localStorage.getItem("franchiseToken") ||
+        localStorage.getItem("bussinessAdminToken");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
         },
       };
       axios
-        .post(`${apiurl}`+"/admin/member-details-edit-admin", data, config)
+        .post(`${apiurl}` + "/admin/member-details-edit-admin", data, config)
         .then((res) => {
           message.success("Updated Successfully");
           setIsEditModalVisible(false);
@@ -564,7 +614,7 @@ const Refferal = () => {
         const token =
           localStorage.getItem("adminToken") ||
           localStorage.getItem("stateHandlerToken") ||
-          localStorage.getItem("franchiseToken")||
+          localStorage.getItem("franchiseToken") ||
           localStorage.getItem("bussinessAdminToken");
         const config = {
           headers: {
@@ -576,7 +626,7 @@ const Refferal = () => {
           block: !isBlocked,
         };
         axios
-          .post(`${apiurl}`+"/admin/block-member", data, config)
+          .post(`${apiurl}` + "/admin/block-member", data, config)
           .then((res) => {
             message.success(res.data.message);
             callApiRefferalDetails();
@@ -631,91 +681,88 @@ const Refferal = () => {
         footer={null}
       >
         <>
-          {memberType === "indian" ? <div>
+          {memberType === "indian" ? (
             <div>
-              <h6>Aadhar Front Side</h6>
-              <p>
-                Aadhar Number:{" "}
-                <span style={{ fontWeight: "bold" }}>{aadhar}</span>
-              </p>
-              {!imageError ? (
+              <div>
+                <h6>Aadhar Front Side</h6>
+                <p>
+                  Aadhar Number:{" "}
+                  <span style={{ fontWeight: "bold" }}>{aadhar}</span>
+                </p>
+                {!imageError ? (
+                  <img
+                    src={aadharFrontImage.placeholder}
+                    width={200}
+                    height={100}
+                    alt=""
+                    onError={handleImageError}
+                  />
+                ) : (
+                  <p>Error loading image.</p>
+                )}
+                <Button
+                  className="aadhar-front"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() =>
+                    downloadAadharFrontImage(aadharFrontImage.placeholder)
+                  }
+                >
+                  Download
+                </Button>
+              </div>
+              <hr />
+              <div>
+                <h6>Aadhar Back Side</h6>
+                {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
+                {!imageError ? (
+                  <img
+                    src={aadharBackImageSide.placeholder}
+                    width={200}
+                    height={100}
+                    alt=""
+                    onError={handleImageError}
+                  />
+                ) : (
+                  <p>Error loading image.</p>
+                )}
+                <Button
+                  className="aadhar-front"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() =>
+                    downloadAadharBackImage(aadharBackImageSide.placeholder)
+                  }
+                >
+                  Download
+                </Button>
+              </div>
+              <hr />
+              <div>
+                <h6>PAN</h6>
+                <p>
+                  PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
+                </p>
                 <img
-                  src={aadharFrontImage.placeholder}
+                  src={panImageSide.placeholder}
                   width={200}
                   height={100}
                   alt=""
-                  onError={handleImageError}
                 />
-              ) : (
-                <p>Error loading image.</p>
-              )}
-              <Button
-                className="aadhar-front"
-                disabled={!loading}
-                type="primary"
-                onClick={() =>
-                  downloadAadharFrontImage(aadharFrontImage.placeholder)
-                }
-              >
-                Download
-              </Button>
+                <Button
+                  className="aadhar-front"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() => downloadPanImage(panImageSide.placeholder)}
+                >
+                  Download
+                </Button>
+              </div>
             </div>
-            <hr />
-            <div>
-              <h6>Aadhar Back Side</h6>
-              {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
-              {!imageError ? (
-                <img
-                  src={aadharBackImageSide.placeholder}
-                  width={200}
-                  height={100}
-                  alt=""
-                  onError={handleImageError}
-                />
-              ) : (
-                <p>Error loading image.</p>
-              )}
-              <Button
-                className="aadhar-front"
-                disabled={!loading}
-                type="primary"
-                onClick={() =>
-                  downloadAadharBackImage(aadharBackImageSide.placeholder)
-                }
-              >
-                Download
-              </Button>
-            </div>
-            <hr />
-            <div>
-              <h6>PAN</h6>
-              <p>
-                PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
-              </p>
-              <img
-                src={panImageSide.placeholder}
-                width={200}
-                height={100}
-                alt=""
-              />
-              <Button
-                className="aadhar-front"
-                disabled={!loading}
-                type="primary"
-                onClick={() => downloadPanImage(panImageSide.placeholder)}
-              >
-                Download
-              </Button>
-            </div>
-          </div> :
+          ) : (
             <div>
               <h6>Id Card</h6>
-              <img
-                src={idCard.placeholder}
-                width={200}
-                height={100}
-                alt=""
-              />
+              <img src={idCard.placeholder} width={200} height={100} alt="" />
               <Button
                 className="aadhar-front"
                 disabled={!loading}
@@ -725,7 +772,7 @@ const Refferal = () => {
                 Download
               </Button>
             </div>
-          }
+          )}
         </>
       </Modal>
 
@@ -745,19 +792,19 @@ const Refferal = () => {
             />
           </div>
           <div className="user-table">
-              <Table
-                style={{
-                  width: "fit-content",
-                  marginTop: "10px",
-                  textOverflow: "ellipsis",
-                  // overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-                dataSource={refferalData}
-                columns={columns}
-                scroll={{ x: true, y: 320 }}
-                pagination={{ pageSize: 7 }}
-              />
+            <Table
+              style={{
+                width: "fit-content",
+                marginTop: "10px",
+                textOverflow: "ellipsis",
+                // overflow: "hidden",
+                whiteSpace: "nowrap",
+              }}
+              dataSource={refferalData}
+              columns={columns}
+              scroll={{ x: true, y: 320 }}
+              pagination={{ pageSize: 7 }}
+            />
           </div>
         </div>
       </div>
@@ -777,7 +824,7 @@ const Refferal = () => {
               Submit
             </Button>,
           ]}
-        //footer={null}
+          //footer={null}
         >
           <div className="edit-container">
             <div>
