@@ -108,7 +108,7 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
-        console.log("data=========>",res.data)
+        console.log("data=========>", res.data);
         setReferralsDetails(res.data.memberCreditWalletTransactions);
       })
       .catch((err) => {
@@ -162,7 +162,6 @@ const RefferalPayout = () => {
       });
   };
 
-
   const fetchBussinessDeveloperTransactionInState = () => {
     let config = {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
@@ -179,13 +178,14 @@ const RefferalPayout = () => {
       )
       .then((res) => {
         console.log("180====>", res);
-        setBussinessDeveloperDetails(res.data.businessDeveloperCreditWalletTransactions);
+        setBussinessDeveloperDetails(
+          res.data.businessDeveloperCreditWalletTransactions
+        );
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-
 
   const fetchTraderPayoutInState = () => {
     let config = {
@@ -361,7 +361,7 @@ const RefferalPayout = () => {
       fetchBussinessDeveloperDataInFranchise();
       fetchBussinessDeveloperDetails();
       fetchBussinessDeveloperTransactionInState();
-      fetchBusinessPayoutInBusiness()
+      fetchBusinessPayoutInBusiness();
     }
     if (key === "3" || stateHandlerId) {
       fetchStateDeveloperDetails();
@@ -585,6 +585,46 @@ const RefferalPayout = () => {
     },
   ];
 
+
+
+  const columnsMemberBusiness = [
+    {
+      title: "User ID",
+      dataIndex: "memberId",
+      key: "refferUserID",
+      onFilter: (value, record) =>
+        record.refferUserID.toLowerCase().includes(value.toLowerCase()),
+    },
+    {
+      title: "Wallet Amount",
+      dataIndex: "creditAmount",
+      key: "referralAmount",
+      render: (text) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(text),
+    },
+    {
+      title: "Joining Date",
+      dataIndex: "Date",
+      key: "joininigDate",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
+    {
+      title: "New/Renewal",
+      dataIndex: "Type",
+      key: "userType",
+    },
+    {
+      title: "Referral User",
+      dataIndex: "refferUserId",
+      key: "userid",
+    },
+  ];
+
+
+
   const columnsState = [
     {
       title: "State Developer ID",
@@ -691,7 +731,6 @@ const RefferalPayout = () => {
       dataIndex: "refferUserId",
       key: "refferal_id",
     },
-
   ];
 
   const columnsBussinessDeveloper = [
@@ -787,7 +826,6 @@ const RefferalPayout = () => {
       });
   };
 
-
   const fetchMemberPayoutInBusiness = () => {
     let config = {
       headers: { Authorization: `Bearer ${bussinessToken}` },
@@ -803,7 +841,8 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
-        setUserRefferalApprovdDetails(res.data.memberTransactions);
+        console.log("heyyyyyyyyyyyyyyyyyy", res.data);
+        setReferralsDetails(res.data.memberTransactions);
       })
       .catch((err) => {
         console.log(err.message);
@@ -995,12 +1034,24 @@ const RefferalPayout = () => {
           </TabPane>
         )} */}
 
-        {(adminToken || businessId) && (
+        {adminToken && (
           <TabPane tab="Members Payout" key="2">
             <div>
               <Table
                 columns={columnsUser}
                 dataSource={userRefferalApproedDetails}
+                scroll={{ y: 400, x: true }}
+              />
+            </div>
+          </TabPane>
+        )}
+
+        { businessId && (
+          <TabPane tab="Members Payout" key="2">
+            <div>
+              <Table
+                columns={columnsMemberBusiness}
+                dataSource={refferralsDetails}
                 scroll={{ y: 400, x: true }}
               />
             </div>
@@ -1031,7 +1082,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {(!businessId && !franchiseToken) && (
+        {!businessId && !franchiseToken && (
           <TabPane tab="State Payout" key="3">
             <div>
               <Table
