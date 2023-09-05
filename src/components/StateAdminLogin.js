@@ -57,7 +57,7 @@ const StateAdminLogin = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>State Admin Login</Modal.Title>
+          <Modal.Title>State Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-content">

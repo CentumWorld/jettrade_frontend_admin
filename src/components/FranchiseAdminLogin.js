@@ -56,7 +56,7 @@ const FranchiseAdminLogin = (props) => {
       <ToastContainer />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Franchise Admin Login</Modal.Title>
+          <Modal.Title>Franchise Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-content">

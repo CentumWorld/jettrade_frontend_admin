@@ -62,7 +62,7 @@ const State = () => {
       key: "lname",
     },
     {
-      title: "stateHandler Id",
+      title: "StateHandler Id",
       dataIndex: "stateHandlerId",
       key: "stateHandlerId",
     },
@@ -249,6 +249,7 @@ const State = () => {
               marginTop: "1rem",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
+          
             }}
           />
         </div>

@@ -71,6 +71,12 @@
   margin-left: 5px;
 }
 
+.document_verification .ant-modal-title {
+    font-size: 20px;
+    color: #5e72e4; 
+    font-family: Calibri;
+}
+
 /* media query */
 
 @media only screen and (max-width: 768px){

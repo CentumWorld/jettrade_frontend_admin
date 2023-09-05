@@ -746,6 +746,7 @@ function Dashboard() {
         open={visible}
         onCancel={handleCancel}
         footer={null}
+        style={{fontFamily:'Calibri'}}
       >
         <>
           {userTypeView === 'indian' ? <div>
@@ -896,8 +897,8 @@ function Dashboard() {
       <div>
         <Modal
           title={
-            <span style={{ color: "#5e72e4", fontFamily: "Calibri" }}>
-              EDIT INFORMATION
+            <span style={{ color: "#5e72e4", fontFamily: "Calibri",fontSize:20 }}>
+              EDIT INFORMATION 
             </span>
           }
           open={isModalVisible}
@@ -911,7 +912,7 @@ function Dashboard() {
         >
           <div className="edit-container">
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                 <Col span={12}>First Name :</Col>
                 <Col span={12}>
                   <Input
@@ -924,7 +925,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                 <Col span={12}>Last Name :</Col>
                 <Col span={12}>
                   <Input
@@ -937,7 +938,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                 <Col span={12}>Phone:</Col>
                 <Col span={12}>
                   <Input
@@ -950,7 +951,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                 <Col span={12}>Address :</Col>
                 <Col span={12}>
                   <Input
@@ -965,7 +966,7 @@ function Dashboard() {
             {userType === "indian" ? (
               <>
                 <div>
-                  <Row style={{ marginBottom: "5px" }}>
+                  <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                     <Col span={12}>Aadhar No. :</Col>
                     <Col span={12}>
                       <Input
@@ -978,7 +979,7 @@ function Dashboard() {
                   </Row>
                 </div>
                 <div>
-                  <Row style={{ marginBottom: "5px" }}>
+                  <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                     <Col span={12}>Pan No. :</Col>
                     <Col span={12}>
                       <Input
@@ -993,7 +994,7 @@ function Dashboard() {
               </>
             ) : (
               <div>
-                <Row style={{ marginBottom: "5px" }}>
+                <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                   <Col span={12}>ID NO. :</Col>
                   <Col span={12}>
                     <Input
@@ -1008,7 +1009,7 @@ function Dashboard() {
             )}
 
             <div>
-              <Row style={{ marginBottom: "5px" }}>
+              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
                 <Col span={12}>Gender :</Col>
                 <Col span={12}>
                   <Select

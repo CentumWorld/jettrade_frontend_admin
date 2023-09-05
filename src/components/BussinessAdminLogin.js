@@ -71,7 +71,7 @@ const BussinessAdminLogin = (props) => {
   return <>
   <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Bussiness Admin Login</Modal.Title>
+          <Modal.Title>Bussiness Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-content">

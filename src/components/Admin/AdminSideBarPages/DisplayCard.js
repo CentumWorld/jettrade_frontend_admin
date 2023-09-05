@@ -69,12 +69,61 @@ const DisplayCard = () => {
       navigate("/admindashboard/chat/state-handler-chat");
     }
     if (e.key === "chat-with-frenchise") {
+      navigate("/admindashboard/chat/state-chat-with-french");
+    }
+  };
+
+  const handleAdminChatMenuClick = (e) => {
+    console.log(e.key);
+    if (e.key === "chat-with-traders") {
+      //openUserLoginFuction();
+      navigate("/admindashboard/trader-chat");
+    }
+    if (e.key === "chat-with-referrals") {
       //console.log("hii");
       // <NavLink to="/user-registration">Sign Up</NavLink>
-      navigate("/admindashboard/chat/state-chat-with-french");
+      navigate("/admindashboard/refferal-chat");
+    }
+    if (e.key === "chat-with-state-handlers") {
+      navigate("/admindashboard/state-chat")
+    }
+    if (e.key === "chat-with-frenchise") {
+      navigate("/admindashboard/franchisee-chat")
+    }
+    if (e.key === "chat-with-business-developers") {
+      navigate("/admindashboard/business-developer-chat")
+    }
+
+  };
+
+  //  tracker detais
+  const handleTrackerDetailsMenuClick = (e) => {
+    console.log(e.key);
+    if (e.key === "state-details") {
+      //openUserLoginFuction();
+      navigate("/admindashboard/tracker/state-tracer");
+    }
+    if (e.key === "frenchise-details") {
+      navigate("/admindashboard/tracker/frenchie");
+    }
+    if (e.key === "business-developer-details") {
+      navigate("/admindashboard/tracker/businness-developer");
     }
     
   };
+
+  // Admin Chat menu 
+  const AdminChatMenu = (
+    <Menu onClick={handleAdminChatMenuClick}>
+      <Menu.Item key="chat-with-traders">Chat with Traders</Menu.Item>
+      <Menu.Item key="chat-with-referrals">Chat with Referrals</Menu.Item>
+      <Menu.Item key="chat-with-state-handlers">Chat with State Handlers</Menu.Item>
+      <Menu.Item key="chat-with-frenchise">Chat with Frenchise</Menu.Item>
+      <Menu.Item key="chat-with-business-developers">Chat with Business Developers</Menu.Item>
+
+    </Menu>
+  );
+
 
   // State handler  chat menu
   const stateMenu = (
@@ -90,6 +139,15 @@ const DisplayCard = () => {
       <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
       <Menu.Item key="chat-with-sho">Chat with SHO</Menu.Item>
       <Menu.Item key="chat-with-bd">Chat with BD</Menu.Item>
+    </Menu>
+  );
+
+  // Tracker menu
+  const trackerMenu = (
+    <Menu onClick={handleTrackerDetailsMenuClick}>
+      <Menu.Item key="state-details">State</Menu.Item>
+      <Menu.Item key="frenchise-details">Frenchise</Menu.Item>
+      <Menu.Item key="business-developer-details">Business Developer</Menu.Item>
     </Menu>
   );
 
@@ -170,50 +228,50 @@ const DisplayCard = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    if(isAdmin){
+    if (isAdmin) {
       axios
-      .get(
-        `${apiurl}` + "/admin/admin-sum-of-all-new-renewal-user-amount",
-        config
-      )
-      .then((res) => {
-        console.log(res.data.totalSubscriptionAmount);
-        const formattedRupees = new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-        }).format(res.data.totalSubscriptionAmount);
-        setTotalAmount(formattedRupees);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .get(
+          `${apiurl}` + "/admin/admin-sum-of-all-new-renewal-user-amount",
+          config
+        )
+        .then((res) => {
+          console.log(res.data.totalSubscriptionAmount);
+          const formattedRupees = new Intl.NumberFormat("en-IN", {
+            style: "currency",
+            currency: "INR",
+          }).format(res.data.totalSubscriptionAmount);
+          setTotalAmount(formattedRupees);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-   
+
   };
   const callApiToTotalUserRunningTrialExpire = () => {
     const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    if(isAdmin){
+    if (isAdmin) {
       axios
-      .get(`${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User", config)
-      .then((res) => {
-        setProgressigeBar({
-          totalCount: res.data.totalCount,
-          runningCount: res.data.runningCount,
-          runnigPercentage: res.data.runningPercentage,
-          trialCount: res.data.inactiveCount,
-          trialPercentage: res.data.inactivePercentage,
-          expireCount: res.data.expiredCount,
-          expirePercentage: res.data.expiredPercentage,
+        .get(`${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User", config)
+        .then((res) => {
+          setProgressigeBar({
+            totalCount: res.data.totalCount,
+            runningCount: res.data.runningCount,
+            runnigPercentage: res.data.runningPercentage,
+            trialCount: res.data.inactiveCount,
+            trialPercentage: res.data.inactivePercentage,
+            expireCount: res.data.expiredCount,
+            expirePercentage: res.data.expiredPercentage,
+          });
+        })
+        .catch((err) => {
+          console.log(err.response.data);
         });
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
     }
-   
+
   };
 
   const openWithrawalModalFunction = () => {
@@ -223,7 +281,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isStateHandler}` },
       };
       axios
-        .get(`${apiurl}` +"/state/get-own-state-details", config)
+        .get(`${apiurl}` + "/state/get-own-state-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
         })
@@ -236,7 +294,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isBusinessHandler}` },
       };
       axios
-        .get(`${apiurl}` +"/businessDeveloper/get-own-business-developer-details", config)
+        .get(`${apiurl}` + "/businessDeveloper/get-own-business-developer-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
         })
@@ -250,7 +308,7 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isFrenchise}` },
       };
       axios
-        .get(`${apiurl}` +"/franchise/get-own-franchise-details", config)
+        .get(`${apiurl}` + "/franchise/get-own-franchise-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.frenchiseWallet);
         })
@@ -272,7 +330,7 @@ const DisplayCard = () => {
       };
 
       axios
-        .post(`${apiurl}` +"/state/create-state-payment-request", data, config)
+        .post(`${apiurl}` + "/state/create-state-payment-request", data, config)
         .then((res) => {
           console.log(res.data);
           message.success(
@@ -297,7 +355,7 @@ const DisplayCard = () => {
 
       axios
         .post(
-          `${apiurl}` +"/businessDeveloper/create-business-developer-payment-request",
+          `${apiurl}` + "/businessDeveloper/create-business-developer-payment-request",
           data,
           config
         )
@@ -326,7 +384,7 @@ const DisplayCard = () => {
 
       axios
         .post(
-          `${apiurl}` +"/franchise/create-franchise-payment-request",
+          `${apiurl}` + "/franchise/create-franchise-payment-request",
           data,
           config
         )
@@ -353,16 +411,16 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    if(isStateHandler){
-      axios.post(`${apiurl}` +'/state/get-state-own-upi', data, config)
-      .then((res) => {
-        setStateUpiId(res.data.stateUpiId)
-      })
-      .catch((err) => {
-        message.error(err.response.data.message)
-      })
+    if (isStateHandler) {
+      axios.post(`${apiurl}` + '/state/get-state-own-upi', data, config)
+        .then((res) => {
+          setStateUpiId(res.data.stateUpiId)
+        })
+        .catch((err) => {
+          message.error(err.response.data.message)
+        })
     }
-    
+
   }
 
   // callApiToFrenchiseUpiDetails
@@ -373,16 +431,16 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    if(isFrenchise){
-      axios.post(`${apiurl}` +'/franchise/get-franchise-own-upi', data, config)
-      .then((res) => {
-        setStateUpiId(res.data.franchiseUpiId)
-      })
-      .catch((err) => {
-        message.error(err.response.data.message)
-      })
+    if (isFrenchise) {
+      axios.post(`${apiurl}` + '/franchise/get-franchise-own-upi', data, config)
+        .then((res) => {
+          setStateUpiId(res.data.franchiseUpiId)
+        })
+        .catch((err) => {
+          message.error(err.response.data.message)
+        })
     }
-   
+
   }
 
   // callApiToBuinsessDUpiDetails
@@ -393,14 +451,14 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    if(isBusinessHandler){
-      axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-upi', data, config)
-      .then((res) => {
-        setStateUpiId(res.data.businessDeveloperUpiId)
-      })
-      .catch((err) => {
-        message.error(err.response.data.message)
-      })
+    if (isBusinessHandler) {
+      axios.post(`${apiurl}` + '/businessDeveloper/get-business-developer-own-upi', data, config)
+        .then((res) => {
+          setStateUpiId(res.data.businessDeveloperUpiId)
+        })
+        .catch((err) => {
+          message.error(err.response.data.message)
+        })
 
     }
   }
@@ -418,15 +476,15 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    if(isStateHandler){
-      axios.post(`${apiurl}` +'/state/get-state-own-bank-details', data, config)
-      .then((res) => {
-        console.log(res.data)
-        setStateBankDetails(res.data.stateBankDetails)
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
+    if (isStateHandler) {
+      axios.post(`${apiurl}` + '/state/get-state-own-bank-details', data, config)
+        .then((res) => {
+          console.log(res.data)
+          setStateBankDetails(res.data.stateBankDetails)
+        })
+        .catch((err) => {
+          console.log(err.response.data.message)
+        })
     }
   }
 
@@ -438,15 +496,15 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    if(isFrenchise){
-      axios.post(`${apiurl}` +'/franchise/get-franchise-own-bank-details', data, config)
-      .then((res) => {
-        console.log(res.data)
-        setStateBankDetails(res.data.franchiseBankDetails)
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
+    if (isFrenchise) {
+      axios.post(`${apiurl}` + '/franchise/get-franchise-own-bank-details', data, config)
+        .then((res) => {
+          console.log(res.data)
+          setStateBankDetails(res.data.franchiseBankDetails)
+        })
+        .catch((err) => {
+          console.log(err.response.data.message)
+        })
     }
   }
 
@@ -458,15 +516,15 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    if(isBusinessHandler){
-      axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-bank-details', data, config)
-      .then((res) => {
-        console.log(res.data)
-        setStateBankDetails(res.data.businessDeveloperBankDetails)
-      })
-      .catch((err) => {
-        console.log(err.response.data.message)
-      })
+    if (isBusinessHandler) {
+      axios.post(`${apiurl}` + '/businessDeveloper/get-business-developer-own-bank-details', data, config)
+        .then((res) => {
+          console.log(res.data)
+          setStateBankDetails(res.data.businessDeveloperBankDetails)
+        })
+        .catch((err) => {
+          console.log(err.response.data.message)
+        })
     }
   }
 
@@ -511,7 +569,17 @@ const DisplayCard = () => {
           </div>
           {isAdmin && (
             <>
-              <div className="d-flex">
+
+              <div className="live-chat">
+                <Dropdown
+                  overlay={AdminChatMenu}
+                  trigger={["click"]}
+                  placement="topCenter"
+                >
+                  <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
+                </Dropdown>
+              </div>
+              {/* <div className="d-flex">
                 <h6>Trader:</h6>&nbsp;&nbsp;{" "}
                 <span
                   style={{ color: "yellow", cursor: "pointer" }}
@@ -528,21 +596,21 @@ const DisplayCard = () => {
                 >
                   join
                 </span>
-              </div>
+              </div> */}
             </>
           )}
 
           {isStateHandler && (
             <>
-            <div className="live-chat">
-              <Dropdown
-                overlay={stateMenu}
-                trigger={["click"]}
-                placement="bottomCenter"
-              >
-                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
-              </Dropdown>
-            </div>
+              <div className="live-chat">
+                <Dropdown
+                  overlay={stateMenu}
+                  trigger={["click"]}
+                  placement="bottomCenter"
+                >
+                  <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
+                </Dropdown>
+              </div>
             </>
           )}
           {isFrenchise && (
@@ -615,6 +683,7 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+
         <div className="card1">
           <div className="refferal-details">
             <h6>Referral Details</h6>
@@ -628,6 +697,26 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+
+       {
+        isAdmin && (
+          <div className="card1">
+          <div className="refferal-details">
+            <h6>Tracker</h6>
+          </div>
+          <div className="live-chat">
+              <Dropdown
+                overlay={trackerMenu}
+                trigger={["click"]}
+                placement="topCenter"
+              >
+                <span style={{ color: "yellow", cursor: "pointer" }}>details</span>
+              </Dropdown>
+            </div>
+        </div>
+        )
+       }     
+
         <div className="card1">
           <div className="push-notification-card">
             <h6>Push Notification</h6>
