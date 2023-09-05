@@ -143,7 +143,7 @@ const Frenchie = () => {
 
   ];
 
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
 
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem(
