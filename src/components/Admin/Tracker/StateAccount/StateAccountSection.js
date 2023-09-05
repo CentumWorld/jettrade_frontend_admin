@@ -263,6 +263,7 @@ const StateAccountSection = () => {
     ]
 
     const callApiToGetStateUpiDetails = () => {
+        console.log('---------------')
         let data = {
             userId: stateid
         }

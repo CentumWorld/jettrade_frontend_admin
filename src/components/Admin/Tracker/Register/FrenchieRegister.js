@@ -140,12 +140,10 @@ const FrenchieRegister = (props) => {
                 setLoading(false);
                 setAadharImage({ file: null });
                 setPanImage({ file: null });
-
-
             })
             .catch(err => {
                 setLoading(false);
-                message.error(err.response.data.message);
+                console.log(err.response.data.message);
             })
 
     };

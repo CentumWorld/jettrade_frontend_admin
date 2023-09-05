@@ -44,7 +44,7 @@ function SubAdmin(props) {
     <>
       <Modal
         title="Sub Admin"
-        visible={modalVisible}
+        open={modalVisible}
         onCancel={handleClose}
         footer={null}
       >

@@ -46,24 +46,7 @@ const FranchiseAdminLogin = (props) => {
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
-        console.log("Not login");
-        if (error.response.status === 422) {
-          toast.warning(
-            "Please Fill all Details!",
-            {
-              autoClose: 2000,
-              theme: "dark",
-            },
-            1000
-          );
-          setFranchiseAdmin({ franchiseAdmin_id: "", franchiseAdmin_password: "" });
-        }
-        if (error.response.status === 404) {
-          toast.warning("Invalid Credential!", {
-            autoClose: 2000,
-            theme: "dark",
-          });
-        }
+        message.warning(error.response.data.message)
       });
     setShow(false);
   };

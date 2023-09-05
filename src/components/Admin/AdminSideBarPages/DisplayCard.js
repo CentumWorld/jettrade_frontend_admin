@@ -170,7 +170,8 @@ const DisplayCard = () => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios
+    if(isAdmin){
+      axios
       .get(
         `${apiurl}` + "/admin/admin-sum-of-all-new-renewal-user-amount",
         config
@@ -186,13 +187,16 @@ const DisplayCard = () => {
       .catch((err) => {
         console.log(err);
       });
+    }
+   
   };
   const callApiToTotalUserRunningTrialExpire = () => {
     const token = localStorage.getItem("adminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios
+    if(isAdmin){
+      axios
       .get(`${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User", config)
       .then((res) => {
         setProgressigeBar({
@@ -208,6 +212,8 @@ const DisplayCard = () => {
       .catch((err) => {
         console.log(err.response.data);
       });
+    }
+   
   };
 
   const openWithrawalModalFunction = () => {
@@ -347,13 +353,16 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    axios.post(`${apiurl}` +'/state/get-state-own-upi', data, config)
+    if(isStateHandler){
+      axios.post(`${apiurl}` +'/state/get-state-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.stateUpiId)
       })
       .catch((err) => {
         message.error(err.response.data.message)
       })
+    }
+    
   }
 
   // callApiToFrenchiseUpiDetails
@@ -364,13 +373,16 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    axios.post(`${apiurl}` +'/franchise/get-franchise-own-upi', data, config)
+    if(isFrenchise){
+      axios.post(`${apiurl}` +'/franchise/get-franchise-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.franchiseUpiId)
       })
       .catch((err) => {
         message.error(err.response.data.message)
       })
+    }
+   
   }
 
   // callApiToBuinsessDUpiDetails
@@ -381,13 +393,16 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-upi', data, config)
+    if(isBusinessHandler){
+      axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-upi', data, config)
       .then((res) => {
         setStateUpiId(res.data.businessDeveloperUpiId)
       })
       .catch((err) => {
         message.error(err.response.data.message)
       })
+
+    }
   }
 
   const handleRadioChangeStateValue = (e) => {
@@ -403,7 +418,8 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("stateHandlerId")
     }
-    axios.post(`${apiurl}` +'/state/get-state-own-bank-details', data, config)
+    if(isStateHandler){
+      axios.post(`${apiurl}` +'/state/get-state-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.stateBankDetails)
@@ -411,6 +427,7 @@ const DisplayCard = () => {
       .catch((err) => {
         console.log(err.response.data.message)
       })
+    }
   }
 
   // callApiToFrenchiseBankDetails
@@ -421,7 +438,8 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("frenchiseId")
     }
-    axios.post(`${apiurl}` +'/franchise/get-franchise-own-bank-details', data, config)
+    if(isFrenchise){
+      axios.post(`${apiurl}` +'/franchise/get-franchise-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.franchiseBankDetails)
@@ -429,6 +447,7 @@ const DisplayCard = () => {
       .catch((err) => {
         console.log(err.response.data.message)
       })
+    }
   }
 
   // callApiToBusinessDBankDetails
@@ -439,7 +458,8 @@ const DisplayCard = () => {
     let data = {
       userId: localStorage.getItem("businessId")
     }
-    axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-bank-details', data, config)
+    if(isBusinessHandler){
+      axios.post(`${apiurl}` +'/businessDeveloper/get-business-developer-own-bank-details', data, config)
       .then((res) => {
         console.log(res.data)
         setStateBankDetails(res.data.businessDeveloperBankDetails)
@@ -447,6 +467,7 @@ const DisplayCard = () => {
       .catch((err) => {
         console.log(err.response.data.message)
       })
+    }
   }
 
   return (
