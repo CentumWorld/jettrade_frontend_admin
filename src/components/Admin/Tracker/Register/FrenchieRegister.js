@@ -117,7 +117,7 @@ const FrenchieRegister = (props) => {
 
         console.log(formData, "44");
 
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -171,7 +171,7 @@ const RefferalPayout = () => {
     axios
       .post(
         `${apiurl}` +
-          "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
+          "/state/get-own-business-developer-inside-state-credit-wallet-transaction-details",
         {
           stateHandlerId: stateHandlerId,
         },
@@ -179,7 +179,7 @@ const RefferalPayout = () => {
       )
       .then((res) => {
         console.log("180====>", res);
-        setBussinessDeveloperDetails(res.data.memberCreditWalletTransactions);
+        setBussinessDeveloperDetails(res.data.businessDeveloperCreditWalletTransactions);
       })
       .catch((err) => {
         console.log(err.message);
@@ -225,7 +225,7 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
-        setUserRefferalApprovdDetails(res.data.memberCreditWalletTransactions);
+        setReferralsDetails(res.data.memberCreditWalletTransactions);
       })
       .catch((err) => {
         console.log(err.message);
@@ -234,15 +234,15 @@ const RefferalPayout = () => {
 
   const memberDataInState = [
     {
-      title: "User ID",
-      dataIndex: "userid",
+      title: "Member Id",
+      dataIndex: "memberId",
       key: "userid",
       onFilter: (value, record) =>
         record.refferUserID.toLowerCase().includes(value.toLowerCase()),
     },
     {
-      title: "Wallet Amount",
-      dataIndex: "referralAmount",
+      title: "Credit Amount",
+      dataIndex: "creditAmount",
       key: "referralAmount",
       render: (text) =>
         new Intl.NumberFormat("en-IN", {
@@ -258,18 +258,13 @@ const RefferalPayout = () => {
     },
     {
       title: "New/Renewal",
-      dataIndex: "userType",
+      dataIndex: "Type",
       key: "userType",
     },
     {
-      title: "Referral User Id",
-      dataIndex: "refferal_id",
+      title: "RefferUser Id",
+      dataIndex: "refferUserId",
       key: "refferal_id",
-    },
-    {
-      title: "Reffer User Id",
-      dataIndex: "refferUserID",
-      key: "refferUserID",
     },
   ];
 
@@ -665,14 +660,14 @@ const RefferalPayout = () => {
   const bussinessColumnInStateRefferal = [
     {
       title: "Bussiness Developer ID",
-      dataIndex: "userid",
+      dataIndex: "businessDeveloperId",
       key: "userid",
       onFilter: (value, record) =>
         record.refferUserID.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Refferal Amount",
-      dataIndex: "referralAmount",
+      dataIndex: "creditAmount",
       key: "referralAmount",
       render: (text) =>
         new Intl.NumberFormat("en-IN", {
@@ -688,19 +683,15 @@ const RefferalPayout = () => {
     },
     {
       title: "New/Renewal",
-      dataIndex: "userType",
+      dataIndex: "Type",
       key: "userType",
     },
     {
       title: "Referral User Id",
-      dataIndex: "refferal_id",
+      dataIndex: "refferUserId",
       key: "refferal_id",
     },
-    {
-      title: "Reffer User Id",
-      dataIndex: "refferUserID",
-      key: "refferUserID",
-    },
+
   ];
 
   const columnsBussinessDeveloper = [
@@ -973,7 +964,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {stateHandlerId || businessId  ? (
+        {/* {stateHandlerId || businessId  ? (
           <TabPane tab="Trader Payout" key="1">
             <div>
               <Table
@@ -1007,7 +998,7 @@ const RefferalPayout = () => {
               />
             </div>
           </TabPane>
-        )}
+        )} */}
 
         {(adminToken || businessId) && (
           <TabPane tab="Members Payout" key="2">
@@ -1038,7 +1029,7 @@ const RefferalPayout = () => {
             <div>
               <Table
                 columns={memberDataInState}
-                dataSource={userRefferalApproedDetails}
+                dataSource={refferralsDetails}
                 scroll={{ y: 400, x: true }}
               />
             </div>

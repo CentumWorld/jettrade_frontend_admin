@@ -683,7 +683,7 @@ const DisplayCard = () => {
                 ))}
               </Radio.Group>
             </TabPane>
-            <TabPane tab="UPI" key="2" style={{ marginBottom: 16 }}>
+            <TabPane tab="UPI" key="2" style={{ marginBottom: 16 }} >
               <Radio.Group onChange={handleRadioChangeStateValue} value={selectStateUpiId}>
                 {stateUpiId.map((option) => (
                   <Radio key={option.upiId} value={option.upiId}>

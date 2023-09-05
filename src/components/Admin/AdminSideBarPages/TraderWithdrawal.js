@@ -24,7 +24,7 @@ const { Option } = Select;
 const TraderWithdrawal = () => {
   const { id } = useParams();
   const [selectedDate, onDateChange] = useState(null);
-  const [totalAmount, setToalAmount] = useState(50000);
+  const [totalAmount, setToalAmount] = useState(0);
   const [userData, setUserData] = useState([]);
   const handleMenuVisibleChange = (visible) => {
     if (!visible) {
@@ -290,7 +290,7 @@ const TraderWithdrawal = () => {
              columns={[
               ...columns,
               {
-                title: 'Deposit Date',
+                title: 'withdwal Date',
                 dataIndex: 'date',
                 key: 'date',
                 render: (date) => {

@@ -173,7 +173,7 @@ const Refferal = () => {
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="verify">Verify</Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
@@ -282,7 +282,7 @@ const Refferal = () => {
       });
   };
 
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
   const frenchiseToken = localStorage.getItem("franchiseToken");
