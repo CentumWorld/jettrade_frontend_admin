@@ -584,8 +584,6 @@ const RefferalPayout = () => {
     },
   ];
 
-
-
   const columnsMemberBusiness = [
     {
       title: "User ID",
@@ -621,8 +619,6 @@ const RefferalPayout = () => {
       key: "userid",
     },
   ];
-
-
 
   const columnsState = [
     {
@@ -1146,7 +1142,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        { businessId && (
+        {businessId && (
           <TabPane tab="Members Payout" key="2">
             <div>
               <Table
@@ -1281,6 +1277,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
+   
         {adminToken && (
           <TabPane tab="Admin Payout" key="6">
             <div>
