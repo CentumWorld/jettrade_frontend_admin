@@ -881,7 +881,7 @@ const RefferalPayout = () => {
     };
 
     let config = {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${adminToken}` },
     };
 
     axios
