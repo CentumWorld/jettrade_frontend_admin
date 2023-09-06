@@ -159,7 +159,6 @@ const SubAdminSignUpForm = () => {
     formData.append("gender", subadminData.gender);
     formData.append("dob", subadminData.dob);
     // ...
-    formData.append("isVideoCreator", subadminData.isVideoCreator);
     //
 
     console.log(formData, "44");

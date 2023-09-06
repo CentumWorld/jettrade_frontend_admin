@@ -872,13 +872,16 @@ const RefferalPayout = () => {
   //=============================================
 
   const fetchFilterData = (type, id) => {
+
+    const token = localStorage.getItem('adminToken')||localStorage.getItem('stateHandlerToken')
+
     const requestData = {
       type: type,
       id: id,
     };
 
     let config = {
-      headers: { Authorization: `Bearer ${adminToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     axios
