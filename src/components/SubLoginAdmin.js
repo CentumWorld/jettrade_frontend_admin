@@ -40,10 +40,17 @@ function SubAdmin(props) {
     console.log("Form validation failed:", errorInfo);
   };
 
+
+  // -------------
+  const titleStyles = {
+    color: "#5e72e4", // Change this to your desired title color
+  };
   return (
     <>
       <Modal
-        title="Sub Admin"
+        title={
+          <span style={titleStyles}>Sub Admin</span> 
+        }
         open={modalVisible}
         onCancel={handleClose}
         footer={null}
@@ -59,12 +66,13 @@ function SubAdmin(props) {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Enter subadmin Id" />
           </Form.Item>
 
           <Form.Item
             label="Password"
             name="password"
+           
             rules={[
               {
                 required: true,
@@ -72,7 +80,7 @@ function SubAdmin(props) {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password  placeholder="Enter Password" />
           </Form.Item>
 
           <Form.Item>

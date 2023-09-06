@@ -873,7 +873,7 @@ const RefferalPayout = () => {
 
   const fetchFilterData = (type, id) => {
 
-    const token = localStorage.getItem('adminToken')||localStorage.getItem('stateHandlerToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('stateHandlerToken')
 
     const requestData = {
       type: type,

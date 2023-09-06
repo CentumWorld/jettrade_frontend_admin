@@ -56,11 +56,11 @@ const subAdminRoutes = [
       name: "New/Renewal Users",
       icon: <MdAutorenew />,
     },
-    {
-      path: "/admindashboard/subadmin",
-      name: "Sub-Admin",
-      icon: <IoMdCreate />
-    },
+    // {
+    //   path: "/admindashboard/subadmin",
+    //   name: "Sub-Admin",
+    //   icon: <IoMdCreate />
+    // },
     {
       path: "/admindashboard/tracker",
       name: "Tracker",
@@ -121,11 +121,11 @@ const subAdminRoutes = [
         },
       ],
     },
-    {
-      path: "/admindashboard/video",
-      name: "upload videos",
-      icon: <MdCloudUpload />,
-    },
+    // {
+    //   path: "/admindashboard/video",
+    //   name: "upload videos",
+    //   icon: <MdCloudUpload />,
+    // },
     {
       path: "/admindashboard/allvideo",
       name: "Video",

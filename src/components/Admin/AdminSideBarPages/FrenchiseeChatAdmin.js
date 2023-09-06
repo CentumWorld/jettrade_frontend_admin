@@ -51,22 +51,16 @@ const FrenchiseeChatAdmin = ({ socket, frenchiseename, room, sendDataToParent })
 
         });
 
-
-
         //Listen for user offline event
         socket.on('frenchiseeOffline', (userId) => {
             stateOnlineOrNOt(userId)
         })
 
-
-
-
-
     }, [socket]);
 
 
     const fetchChatMessage = () => {
-        let token = localStorage.getItem('adminToken')
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         console.log(room, '71');
         let data = {
             room: room
@@ -93,7 +87,7 @@ const FrenchiseeChatAdmin = ({ socket, frenchiseename, room, sendDataToParent })
         const data1 = {
             frenchiseId: data
         }
-        let token = localStorage.getItem('adminToken');
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };

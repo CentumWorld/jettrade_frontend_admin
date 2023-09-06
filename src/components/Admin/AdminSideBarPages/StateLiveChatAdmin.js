@@ -51,7 +51,7 @@ const StateLiveChatAdmin = () => {
     }, [])
 
     const fetchAllUserChat = () => {
-        let token = localStorage.getItem('adminToken');
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };

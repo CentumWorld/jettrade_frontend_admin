@@ -25,7 +25,8 @@ const DisplayCard = () => {
   const isAdmin = localStorage.getItem("adminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isBusinessHandler = localStorage.getItem("bussinessAdminToken");
-  const isFrenchise = localStorage.getItem('franchiseToken')
+  const isFrenchise = localStorage.getItem('franchiseToken');
+  const isSubAdmin = localStorage.getItem('subAdminToken');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
@@ -587,7 +588,7 @@ const DisplayCard = () => {
           <div className="live-chat">
             <h6>Live Chat</h6>
           </div>
-          {isAdmin && (
+          {isAdmin || isSubAdmin ? (
             <>
 
               <div className="live-chat">
@@ -618,7 +619,7 @@ const DisplayCard = () => {
                 </span>
               </div> */}
             </>
-          )}
+          ):null}
 
           {isStateHandler && (
             <>
@@ -730,7 +731,7 @@ const DisplayCard = () => {
         </div>
 
         {
-          isAdmin && (
+          isAdmin || isSubAdmin ? (
             <div className="card1">
               <div className="refferal-details">
                 <h6>Tracker</h6>
@@ -741,11 +742,11 @@ const DisplayCard = () => {
                   trigger={["click"]}
                   placement="topCenter"
                 >
-                  <span style={{ color: "yellow", cursor: "pointer" }}>details</span>
+                  <span style={{ color: "yellow", cursor: "pointer" }}>View</span>
                 </Dropdown>
               </div>
             </div>
-          )
+          ):null
         }
 
         <div className="card1">

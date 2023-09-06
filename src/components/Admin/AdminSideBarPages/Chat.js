@@ -68,7 +68,7 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
 
 
     const fetchChatMessage = () =>{
-        let token = localStorage.getItem('adminToken')
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken')
         console.log(room,'40');
         let data = {
             room:room
@@ -91,17 +91,17 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
 
     // user online or not
     const userOnlineOrNOt = (data) =>{
-        console.log(data);
         const data1 = {
             userid : data
         }
-        let token = localStorage.getItem('adminToken');
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
         axios.post(`${apiurl}`+'/admin/user-online-or-not',data1,config)
         .then((res)=>{
             setUserOnline(res.data.isOnline)
+          
         })
         .catch((err)=>{
             console.log(err.response)

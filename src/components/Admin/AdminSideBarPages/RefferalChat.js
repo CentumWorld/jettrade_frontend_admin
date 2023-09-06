@@ -67,7 +67,7 @@ const Chat = ({ socket, username, room, sendDataToParent }) => {
 
 
     const fetchChatMessage = () => {
-        let token = localStorage.getItem('adminToken')
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         console.log(room, '40');
         let data = {
             room: room
@@ -94,7 +94,7 @@ const Chat = ({ socket, username, room, sendDataToParent }) => {
         const data1 = {
             memberid: data
         }
-        let token = localStorage.getItem('adminToken');
+        let token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
         const config = {
             headers: { Authorization: `Bearer ${token}` }
         };
