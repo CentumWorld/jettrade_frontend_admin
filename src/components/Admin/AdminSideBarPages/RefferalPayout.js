@@ -13,7 +13,6 @@ const RefferalPayout = () => {
   const [refferralsDetails, setReferralsDetails] = useState([]);
   const [activeTab, setActiveTab] = useState("2");
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState(
-    
     []
   );
   const [bussinessDeveloperDetails, setBussinessDeveloperDetails] = useState(
@@ -27,6 +26,7 @@ const RefferalPayout = () => {
   const stateHandlerToken = localStorage.getItem("stateHandlerToken");
   const adminToken = localStorage.getItem("adminToken");
   const franchiseToken = localStorage.getItem("franchiseToken");
+  const businessDeveloperToken = localStorage.getItem("businessDeveloperToken");
   const stateHandlerId = localStorage.getItem("stateHandlerId");
   const franchiseId = localStorage.getItem("frenchiseId");
 
@@ -387,9 +387,7 @@ const RefferalPayout = () => {
   };
 
   useEffect(() => {
-   
     fetchTraderRefferalPayout();
-  
   }, []);
 
   const fetchTraderRefferalPayout = () => {
@@ -584,8 +582,6 @@ const RefferalPayout = () => {
     },
   ];
 
-
-
   const columnsMemberBusiness = [
     {
       title: "User ID",
@@ -621,8 +617,6 @@ const RefferalPayout = () => {
       key: "userid",
     },
   ];
-
-
 
   const columnsState = [
     {
@@ -872,8 +866,7 @@ const RefferalPayout = () => {
   //=============================================
 
   const fetchFilterData = (type, id) => {
-
-    const token = localStorage.getItem('adminToken') || localStorage.getItem('stateHandlerToken')
+    const token = adminToken || stateHandlerToken;
 
     const requestData = {
       type: type,
@@ -881,7 +874,7 @@ const RefferalPayout = () => {
     };
 
     let config = {
-      headers: { Authorization: `Bearer ${adminToken}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     axios
@@ -992,49 +985,31 @@ const RefferalPayout = () => {
     { title: "Date", dataIndex: "Date", key: "Date" },
   ];
 
-  const handleRoleChange = (value,) => {
-
-
+  const handleRoleChange = (value) => {
     console.log("Role selected:", value);
     setSelectedRole(value);
-
 
     console.log("Before API call");
 
     if (value === "trader") {
       setActiveTab("1");
       fetchTraderRefferalPayout();
-
-
     } else if (value === "member") {
       setActiveTab("2");
       fetchMemberRefferalPayout();
-
-    
     } else if (value === "businessdeveloper") {
       setActiveTab("5");
       fetchBussinessDeveloperDetails();
-
-  
     } else if (value === "franchise") {
       setActiveTab("4");
       fetchFranchiseDeveloperHandler();
-
- 
     } else if (value === "statehandler") {
       setActiveTab("3");
       fetchStateDeveloperDetails();
-
- 
     }
     console.log(" API call");
-
   };
 
-  const handleTabchange = (value) => {
-
-
-  }
 
   return (
     <div className="reffer-container">
@@ -1044,21 +1019,69 @@ const RefferalPayout = () => {
             <p>Referral Payout</p>
           </div>
           <div className="search-box">
-          
+            
+            {adminToken && (
+              <Select
+                defaultValue="trader"
+                style={{ width: 120, marginRight: 10 }}
+                onChange={handleRoleChange}
+              >
+                <Select.Option value="trader">User</Select.Option>
+                <Select.Option value="member">Member</Select.Option>
+                <Select.Option value="businessdeveloper">
+                  Business Developer
+                </Select.Option>
+                <Select.Option value="franchise">Franchise</Select.Option>
+                <Select.Option value="statehandler">
+                  State Handler
+                </Select.Option>
+              </Select>
+            )}
 
-            <Select
-              defaultValue="trader"
-              style={{ width: 120, marginRight: 10 }}
-              onChange={handleRoleChange}
-            >
-              <Select.Option value="trader">User</Select.Option>
-              <Select.Option value="member">Member</Select.Option>
-              <Select.Option value="businessdeveloper">
-                Business Developer
-              </Select.Option>
-              <Select.Option value="franchise">Franchise</Select.Option>
-              <Select.Option value="statehandler">State Handler</Select.Option>
-            </Select>
+            {stateHandlerToken && (
+              <Select
+                defaultValue="member"
+                style={{ width: 120, marginRight: 10 }}
+                onChange={handleRoleChange}
+              >
+                <Select.Option value="member">Member</Select.Option>
+                <Select.Option value="businessdeveloper">
+                  Business Developer
+                </Select.Option>
+                <Select.Option value="franchise">Franchise</Select.Option>
+                <Select.Option value="statehandler">
+                  State Handler
+                </Select.Option>
+              </Select>
+            )}
+
+            {franchiseToken && (
+              <Select
+                defaultValue="member"
+                style={{ width: 120, marginRight: 10 }}
+                onChange={handleRoleChange}
+              >
+                <Select.Option value="member">Member</Select.Option>
+                <Select.Option value="businessdeveloper">
+                  Business Developer
+                </Select.Option>
+                <Select.Option value="franchise">Franchise</Select.Option>
+              </Select>
+            )}
+
+            {businessDeveloperToken && (
+              <Select
+                defaultValue="member"
+                style={{ width: 120, marginRight: 10 }}
+                onChange={handleRoleChange}
+              >
+                <Select.Option value="member">Member</Select.Option>
+                <Select.Option value="businessdeveloper">
+                  Business Developer
+                </Select.Option>
+                <Select.Option value="franchise">Franchise</Select.Option>
+              </Select>
+            )}
 
             <Input
               placeholder="Enter User ID"
@@ -1071,7 +1094,6 @@ const RefferalPayout = () => {
             <Button
               onClick={() => fetchFilterData(selectedRole, searchByUserID)}
               disabled={!searchByUserID}
-
             >
               Filter
             </Button>
@@ -1146,7 +1168,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        { businessId && (
+        {businessId && (
           <TabPane tab="Members Payout" key="2">
             <div>
               <Table
