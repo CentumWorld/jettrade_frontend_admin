@@ -47,7 +47,6 @@ const LiveChat = () => {
         //admin logout
         return () =>{
             socket.emit('adminLogout', 'admin');
-            //socket.disconnect();
         }
         
     }, [])

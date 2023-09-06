@@ -40,7 +40,7 @@ const VideoPlayer = ({
   const [views, setViews] = useState(0);
   
   const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") || localStorage.getItem("bussinessAdminToken")
-
+                || localStorage.getItem("videoCreatorToken");
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

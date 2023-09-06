@@ -6,8 +6,14 @@ import io from "socket.io-client";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const videoCreator = localStorage.getItem("videoCreatorToken")
   useEffect(() => {
-    navigate("/admindashboard/dashboard");
+    if(videoCreator){
+      navigate("/admindashboard/video");
+    }else{
+      navigate("/admindashboard/dashboard");
+    }
+    
   }, []);
 
   return (

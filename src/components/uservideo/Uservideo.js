@@ -47,7 +47,7 @@ const Uservideo = () => {
 
       await axios.post("/admin/createvideo", formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("adminToken")|| localStorage.getItem("videoCreatorToken")}`,
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
