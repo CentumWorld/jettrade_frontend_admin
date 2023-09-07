@@ -1,28 +1,58 @@
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, Table, message } from "antd";
+import { Button, Table, message,Form, Input,Select } from "antd";
 import StateRegister from "./Register/StateRegister";
 import axios from "axios";
-import { Menu, Dropdown, Modal } from 'antd'
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { Menu, Dropdown, Modal } from "antd";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from "../../../baseUrl";
 import { useNavigate } from "react-router-dom";
+import allState from "./AllStateAndDistrict";
 
-const apiurl = baseUrl.apiUrl
-
+const apiurl = baseUrl.apiUrl;
+const { Option } = Select;
 const State = () => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
   const [isDeleted, setIsDeleted] = useState(true);
-  const [myID, setMyID] = useState('');
-  const [deleteOpenModal, setDeleteOpenModal] = useState(false)
-  const [ stateHandlerID,setStateHandlerID] = useState('');
+  const [myID, setMyID] = useState("");
+  const [deleteOpenModal, setDeleteOpenModal] = useState(false);
+  const [stateHandlerID, setStateHandlerID] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [uploadButton, setUploadButton] = useState(true);
+  const [uploadButtonPan, setUploadButtonPan] = useState(true);
+  const [aadharCard, setAadharCard] = useState({
+    placeholder: "",
+    file: null,
+  });
+  const [panCard, setPanCard] = useState({
+    placeholder: "",
+    file: null,
+  });
+  
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [frenchieData, setFrenchieData] = useState([]);
+  const [editFranchiseData, setFranchiseData] = useState({
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+    gender: "",
+    selectedState: "",
+    city: []
+  });
+
+  const closeEditModal = () => {
+    setEditModalVisible(false)
+  }
+
 
   useEffect(() => {
     fetchStateDataApi();
+    fetchFrenchieseDataApi();
   }, []);
 
   const showModal = () => {
@@ -33,14 +63,24 @@ const State = () => {
     setIsModalVisible(false);
   };
 
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
   const fetchStateDataApi = () => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken") 
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
 
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get(`${apiurl}`+"/admin/fetch-all-state", config)
+      .get(`${apiurl}` + "/admin/fetch-all-state", config)
       .then((res) => {
         console.log("State response -> ", res.data);
         setStateData(res.data.data);
@@ -90,12 +130,12 @@ const State = () => {
       title: "Wallet",
       dataIndex: "stateHandlerWallet",
       key: "stateHandlerWallet",
-      render: amount => (
+      render: (amount) => (
         <span>
-          ₹ {amount.toFixed(2)} {/* Indian Rupee symbol + amount with 2 decimal places */}
+          ₹ {amount.toFixed(2)}{" "}
+          {/* Indian Rupee symbol + amount with 2 decimal places */}
         </span>
       ),
-    
     },
     {
       title: "State",
@@ -103,49 +143,121 @@ const State = () => {
       key: "selectedState",
     },
     {
-      title: 'Status', dataIndex: 'isBlocked', render: (isBlocked) => {
-        const cellStyle = isBlocked ? { color: 'red' } : { color: 'green' };
-        return <span style={cellStyle}>{isBlocked ? 'Blocked' : 'Not Blocked '}</span>;
+      title: "Status",
+      dataIndex: "isBlocked",
+      render: (isBlocked) => {
+        const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
+        return (
+          <span style={cellStyle}>
+            {isBlocked ? "Blocked" : "Not Blocked "}
+          </span>
+        );
       },
     },
     {
-      title: 'Status', dataIndex: 'isDeleted', render: (isDeleted) => {
-        const cellStyle = isDeleted ? { color: 'red' } : { color: 'green' };
-        return <span style={cellStyle}>{isDeleted ? 'Deletes' : 'Not Deleted '}</span>;
+      title: "Status",
+      dataIndex: "isDeleted",
+      render: (isDeleted) => {
+        const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
+        return (
+          <span style={cellStyle}>
+            {isDeleted ? "Deletes" : "Not Deleted "}
+          </span>
+        );
       },
     },
     {
-      title:"P/R",
-      dataIndex:"paymentRequestCount",
-      key:"paymentRequestCount"
+      title: "P/R",
+      dataIndex: "paymentRequestCount",
+      key: "paymentRequestCount",
     },
     {
-      title: 'Action', dataIndex: 'action',
+      title: "Action",
+      dataIndex: "action",
       render: (_, record) => (
-        <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted, record.stateHandlerId)} style={{ cursor: 'pointer' }} />
+        <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+          <BsThreeDotsVertical
+            size={24}
+            onClick={() =>
+              trigerAction(
+                record._id,
+                record.isBlocked,
+                record.isDeleted,
+                record.stateHandlerId
+              )
+            }
+            style={{ cursor: "pointer" }}
+          />
         </Dropdown>
       ),
-
-    }
+    },
   ];
 
+
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+
+  const stateToken = localStorage.getItem("stateHandlerToken");
+  const stateHandlerRefferalID = localStorage.getItem(
+    "stateHandlerRefferalID"
+  );
+  console.log("===============>", stateToken, stateHandlerRefferalID);
+
+  const fetchFrenchieseDataApi = () => {
+    if (token) {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .get(`${apiurl}`+"/admin/fetch-all-frenchise", config)
+        .then((res) => {
+          console.log("Frenchese Data -> ", res.data);
+          setFrenchieData(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    } else if (stateToken && stateHandlerRefferalID) {
+      const requestData = {
+        stateReferralId: stateHandlerRefferalID,
+      };
+      const config = {
+        headers: { Authorization: `Bearer ${stateToken}` },
+      };
+      axios
+        .post(`${apiurl}`+"/state/fetch-all-franchise-in-state", requestData, config)
+        .then((res) => {
+          console.log("Franchise in state response -----> ", res.data.data[0].adharCard);
+          setFrenchieData(res.data.data)
+
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+    }
+  };
+
   // handle action
-  const trigerAction = (id, block,stateDelete,stateHandlerid) => {
+  const trigerAction = (id, block, stateDelete, stateHandlerid) => {
     setMyID(id);
     setIsBlock(block);
-    setIsDeleted(stateDelete)
-    setStateHandlerID(stateHandlerid)
-  }
+    setIsDeleted(stateDelete);
+    setStateHandlerID(stateHandlerid);
+  };
   const handleMenuClick = (e) => {
     console.log(e.key);
-   
-    if (e.key === 'block') {
+
+    if (e.key === "block") {
       blockUnblock(myID);
-    }else if(e.key === 'delete'){
-      deleteAndRecoverState(myID)
-    }else if(e.key === 'account'){
-      navigate(`/admindashboard/tracker/state-account/${stateHandlerID}`)
+    } else if (e.key === "view") {
+      setVisible(true);
+      openViewModal(myID);
+    }else if (e.key === 'edit') {
+      setEditModalVisible(true);
+      editFranchiseDataFunction(myID);
+    } else if (e.key === "delete") {
+      deleteAndRecoverState(myID);
+    } else if (e.key === "account") {
+      navigate(`/admindashboard/tracker/state-account/${stateHandlerID}`);
     }
   };
 
@@ -154,76 +266,297 @@ const State = () => {
       {/* <Menu.Item key="verify">Verify</Menu.Item> */}
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
-      <Menu.Item key="block">
-        {isBlocked ? 'Unblock' : 'Block'}
-      </Menu.Item>
-      <Menu.Item key="delete">{isDeleted ? 'Recover' : 'Delete'}</Menu.Item>
+      <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
+      <Menu.Item key="delete">{isDeleted ? "Recover" : "Delete"}</Menu.Item>
       <Menu.Item key="account">Account</Menu.Item>
     </Menu>
   );
 
-  const blockUnblock = (id) =>{
-    const actionText = isBlocked ? 'Unblock' : 'Block'
-        Modal.confirm({
-            title: `${actionText} State handler`,
-            content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
-            onOk() {
-                const token = localStorage.getItem('adminToken')
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-                const data = {
-                    id: id,
-                    block: !isBlocked
-                }
-                axios.post(`${apiurl}`+"/admin/block-state-by-admin", data, config)
-                    .then((res) => {
-                        message.success(res.data.message)
-                        fetchStateDataApi();
-                    })
-                    .catch((err) => {
-                        message.warning('Something went wrong!')
-                    })
-            },
-            onCancel() {
-                console.log('Deletion cancelled');
-            },
-        });
+  const blockUnblock = (id) => {
+    const actionText = isBlocked ? "Unblock" : "Block";
+    Modal.confirm({
+      title: `${actionText} State handler`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+      onOk() {
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const data = {
+          id: id,
+          block: !isBlocked,
+        };
+        axios
+          .post(`${apiurl}` + "/admin/block-state-by-admin", data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchStateDataApi();
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("Deletion cancelled");
+      },
+    });
+  };
+
+  const openViewModal = (id) => {
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    let data = {
+      id: id,
+    };
+    axios
+      .post(`${apiurl}` + "/admin/get-one-state-details", data, config)
+      .then((res) => {
+        setAadharCard({ placeholder: res.data.data.adharCard });
+        setPanCard({ placeholder: res.data.data.panCard });
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+  const handleImageChange = (e) => {
+    e.preventDefault();
+    document.getElementById("adhar-image").click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/jpeg"
+      ) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setAadharCard({
+            placeholder: reader.result,
+            file: selectedFile,
+          });
+          setUploadButton(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  };
+
+  const uploadAadhar = () => {
+    console.log(aadharCard.file);
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = new FormData();
+    data.append("id", myID);
+    data.append("adharCard", aadharCard.file);
+    axios
+      .put(`${apiurl}` + "/admin/update-adhar-card-state-handler", data, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButton(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+  const handleImageChangePan = (e) => {
+    e.preventDefault();
+    document.getElementById("pan-image").click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/jpeg"
+      ) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setPanCard({
+            placeholder: reader.result,
+            file: selectedFile,
+          });
+          setUploadButtonPan(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  };
+
+  const uploadPan = () => {
+    console.log(panCard.file);
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = new FormData();
+    data.append("id", myID);
+    data.append("panCard", panCard.file);
+    axios
+      .put(`${apiurl}` + "/admin/update-pan-card-state-handler", data, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButtonPan(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+  const deleteAndRecoverState = (id) => {
+    const actionText = isDeleted ? "Recover" : "Delete";
+    Modal.confirm({
+      title: `${actionText} State handler`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this state?`,
+      onOk() {
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const data = {
+          id: id,
+          delete: !isDeleted,
+        };
+        axios
+          .post(`${apiurl}` + "/admin/delete-state", data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchStateDataApi();
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("Deletion cancelled");
+      },
+    });
+  };
+
+  const handleCitySelectChange = (selectedCities) => {
+    setFranchiseData({
+      ...editFranchiseData,
+      city: selectedCities,
+    });
+
+  };
+
+  const editFranchiseDataFunction = (id) => {
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    let data = {
+      id: id
+    }
+    axios.post(`${apiurl}`+"/admin/get-one-state-details", data, config)
+      .then((res) => {
+        console.log(res.data)
+        setFranchiseData({
+          fname: res.data.data.fname,
+          lname: res.data.data.lname,
+          phone: res.data.data.phone,
+          email: res.data.data.email,
+          gender: res.data.data.gender,
+          state: res.data.data.selectedState,
+        })
+      })
+      .catch((err => {
+        console.log(err.response.data.messsage)
+      }))
   }
 
-  const deleteAndRecoverState = (id) =>{
-    const actionText = isDeleted ? 'Recover' : 'Delete'
-        Modal.confirm({
-            title: `${actionText} State handler`,
-            content: `Are you sure you want to  ${actionText.toLowerCase()} this state?`,
-            onOk() {
-                const token = localStorage.getItem('adminToken')
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-                const data = {
-                    id: id,
-                    delete: !isDeleted
-                }
-                axios.post(`${apiurl}`+"/admin/delete-state", data, config)
-                    .then((res) => {
-                        message.success(res.data.message)
-                        fetchStateDataApi();
-                    })
-                    .catch((err) => {
-                        message.warning('Something went wrong!')
-                    })
-            },
-            onCancel() {
-                console.log('Deletion cancelled');
-            },
-        });
+  const submitEditForm = () => {
+
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+    console.log(myID,'508')
+    let data = {
+      fname: editFranchiseData.fname,
+      lname: editFranchiseData.lname,
+      phone: editFranchiseData.phone,
+      email: editFranchiseData.email,
+      selectedState: editFranchiseData.state,
+      gender: editFranchiseData.gender,
+      id: myID,
+    }
+    axios.put(`${apiurl}`+"/admin/update-state-handler", data, config)
+      .then((res) => {
+        message.success(res.data.message)
+        fetchFrenchieseDataApi();
+        setEditModalVisible(false)
+        setFranchiseData({ fname: "", lname: "", email: "", phone: "", selectedState: "",  gender: "" })
+      })
+      .catch((err) => {
+        message.error(err.response.data.message)
+      })
+    console.log(editFranchiseData)
+  };
+
+  const inputChangeValue = (event) => {
+    const { name, value } = event.target;
+    setFranchiseData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const genderChange = (name, value) =>{
+    setFranchiseData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   }
-  
+  const genderChangeValue = (value) =>{
+    genderChange('gender', value)
+  };
+
+  const selectStateFromDeopDown = (selectedState) => {
+    const selectedStateData = allState.states.find(state => state.state === selectedState);
+    if (selectedStateData) {
+      setFranchiseData({
+        ...editFranchiseData,
+        state: selectedState,
+        city: [], // Use districts as cities for the selected state
+      });
+    }
+  };
+
+
   return (
     <>
       <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} />
@@ -249,10 +582,155 @@ const State = () => {
               marginTop: "1rem",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-          
             }}
           />
         </div>
+        {/* view model */}
+
+        {visible ? (
+          <Modal
+            title="View Document Details"
+            open={visible}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <input
+              id="adhar-image"
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+            <div className="d-flex">
+              <label htmlFor="adhar-image">
+                <img
+                  src={aadharCard.placeholder}
+                  height={200}
+                  width={300}
+                  alt="Selected Image"
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <Button disabled={uploadButton} onClick={uploadAadhar}>
+                Upload
+              </Button>
+            </div>
+            <hr />
+            <input
+              id="pan-image"
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleImageChangePan}
+            />
+            <div className="d-flex">
+              <label htmlFor="pan-image">
+                <img
+                  src={panCard.placeholder}
+                  height={200}
+                  width={300}
+                  alt="Selected Image"
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <Button disabled={uploadButtonPan} onClick={uploadPan}>
+                Upload
+              </Button>
+            </div>
+          </Modal>
+        ) : (
+          ""
+        )}
+
+        {/* edit model   */}
+        {editModalVisible ? (
+          <Modal
+            title="Edit Details"
+            open={editModalVisible}
+            onOk={submitEditForm}
+            onCancel={closeEditModal}
+          >
+            <Form.Item label="Fname:">
+              <Input
+                placeholder="First name.."
+                name="fname"
+                onChange={inputChangeValue}
+                type="text"
+                value={editFranchiseData.fname}
+              />
+            </Form.Item>
+            <Form.Item label="Lname:">
+              <Input
+                placeholder="Last name"
+                name="lname"
+                onChange={inputChangeValue}
+                type="text"
+                value={editFranchiseData.lname}
+              />
+            </Form.Item>
+            <Form.Item label="Email:">
+              <Input
+                placeholder="Email"
+                name="email"
+                onChange={inputChangeValue}
+                type="email"
+                value={editFranchiseData.email}
+              />
+            </Form.Item>
+            <Form.Item label="Phone:">
+              <Input
+                placeholder="Phone"
+                name="phone"
+                onChange={inputChangeValue}
+                type="text"
+                value={editFranchiseData.phone}
+              />
+            </Form.Item>
+            <Form.Item label="Gender">
+              <Select
+                value={editFranchiseData.gender}
+                style={{ width: 120 }}
+                onChange={genderChangeValue}
+              >
+                <Option value="male">Male</Option>
+                <Option value="female">Female</Option>
+                <Option value="other">Other</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="State">
+              <Select
+                style={{ width: 200 }}
+                value={editFranchiseData.state}
+                onChange={selectStateFromDeopDown}
+              >
+                {allState.states.map((state) => (
+                  <Option key={state.state} value={state.state}>
+                    {state.state}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            {/* <Form.Item label="City">
+              {editFranchiseData.state && (
+                <Select
+                  placeholder="Select city"
+                  mode="multiple"
+                  style={{ width: 200 }}
+                  value={editFranchiseData.city}
+                  onChange={handleCitySelectChange}
+                >
+                  {allState.states
+                    .find((state) => state.state === editFranchiseData.state)
+                    ?.districts.map((city) => (
+                      <Option key={city} value={city}>
+                        {city}
+                      </Option>
+                    ))}
+                </Select>
+              )}
+            </Form.Item> */}
+          </Modal>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

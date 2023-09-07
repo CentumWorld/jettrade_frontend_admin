@@ -57,10 +57,10 @@ const Chat = ({ socket ,username, room, sendDataToParent }) => {
 
         //Listen for user offline event
         socket.on('userOffline', (userId)=>{
+            console.log(userId);
             userOnlineOrNOt(userId)
         })
 
-        
         
 
         

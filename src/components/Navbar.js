@@ -8,6 +8,7 @@ import SubAdmin from "./SubLoginAdmin";
 import StateAdminLogin from "./StateAdminLogin";
 import FranchiseAdminLogin from "./FranchiseAdminLogin";
 import BussinessAdminLogin from "./BussinessAdminLogin";
+import VideoCreatorLogin from "./VideoCreatorLogin";
 import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +26,7 @@ function Navbar() {
   const [stateOfficerShow, setStateOfficerShow] = useState(false);
   const [franchiseShow, setFranchiseShow] = useState(false);
   const [bussinessDevShow, setBussinessDevShow] = useState(false);
+  const [videoCreatorShow, setVideoCreatorShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
   const [walletamount, setWalletAmount] = useState(0);
@@ -147,6 +149,7 @@ function Navbar() {
   const pullSho = (data) => setStateOfficerShow(data);
   const pullFranchise = (data) => setFranchiseShow(data);
   const pullBussiness = (data) => setBussinessDevShow(data);
+  const pullVideoCreator = (data) => setVideoCreatorShow(data);
 
   const RenderMenu = () => {
     const adminSubAdminModal = (e) => {
@@ -165,6 +168,9 @@ function Navbar() {
       if (e.key === "bussinessDev") {
         setBussinessDevShow(true);
       }
+      if (e.key === "video") {
+        setVideoCreatorShow(true);
+      }
     };
 
     const menu = (
@@ -174,6 +180,7 @@ function Navbar() {
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
         <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
+        <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
     );
 
@@ -318,6 +325,11 @@ function Navbar() {
         ) : (
           ""
         )}
+        {videoCreatorShow ? (
+          <VideoCreatorLogin VideoCreatorLoginFunc={pullVideoCreator} />
+        ) : ("")
+
+        }
       </nav>
     </>
   );
