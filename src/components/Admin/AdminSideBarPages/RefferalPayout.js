@@ -11,7 +11,7 @@ const { TabPane } = Tabs;
 const RefferalPayout = () => {
   const [selectedRole, setSelectedRole] = useState("trader");
   const [refferralsDetails, setReferralsDetails] = useState([]);
-  const [activeTab, setActiveTab] = useState("2");
+  const [activeTab, setActiveTab] = useState("1");
   const [userRefferalApproedDetails, setUserRefferalApprovdDetails] = useState(
     []
   );
@@ -354,7 +354,7 @@ const RefferalPayout = () => {
     if (key === "1") {
       setRole("User");
       setSearchByUserID("");
-      fetchTraderRefferalPayout("User");
+      fetchTraderRefferalPayout();
       fetchTraderPayoutInState();
       fetchTraderPayoutInBusiness();
       fetchTraderDetailsinFranchise();
@@ -866,7 +866,9 @@ const RefferalPayout = () => {
   //=============================================
 
   const fetchFilterData = (type, id) => {
-    const token = adminToken || stateHandlerToken;
+    const token = adminToken || stateHandlerToken||franchiseToken||businessDeveloperToken;
+    console.log(token, "token =====")
+    alert(token, "[[[[[")
 
     const requestData = {
       type: type,
