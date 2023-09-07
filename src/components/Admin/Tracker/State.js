@@ -91,6 +91,8 @@ const State = () => {
       });
   };
 
+  const adminToken = localStorage.getItem("adminToken");
+  const subAdminToken = localStorage.getItem("subAdminToken")
   const columns = [
     {
       title: "Fname",
@@ -188,7 +190,7 @@ const State = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+        <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
           <BsThreeDotsVertical
             size={24}
             onClick={() =>
@@ -289,6 +291,12 @@ const State = () => {
     </Menu>
   );
 
+  const subMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="verify" disabled={stateVerify}>Verify</Menu.Item>
+      <Menu.Item key="view">View</Menu.Item>
+    </Menu>
+  );
   const blockUnblock = (id) => {
     const actionText = isBlocked ? "Unblock" : "Block";
     Modal.confirm({
@@ -324,7 +332,8 @@ const State = () => {
   const openViewModal = (id) => {
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken");
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -375,7 +384,8 @@ const State = () => {
     console.log(aadharCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken");
+      localStorage.getItem("stateHandlerToken")||
+      localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -426,7 +436,8 @@ const State = () => {
     console.log(panCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken");
+      localStorage.getItem("stateHandlerToken")||
+      localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -487,7 +498,7 @@ const State = () => {
   };
 
   const editFranchiseDataFunction = (id) => {
-    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken") || localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
@@ -578,7 +589,7 @@ const State = () => {
       title: "Verify SHO",
       content: `Are you sure you want to  verify SHO?`,
       onOk() {
-        const token = localStorage.getItem("adminToken");
+        const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,

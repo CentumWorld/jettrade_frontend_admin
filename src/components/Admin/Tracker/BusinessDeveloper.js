@@ -62,7 +62,10 @@ const BusinessDeveloper = () => {
 
   const closeViewModal = ()=>{
     setOpenViewModal(false)
-  }
+  };
+
+  const adminToken = localStorage.getItem("adminToken");
+  const subAdminToken = localStorage.getItem("subAdminToken")
 
   const columns = [
     {
@@ -143,7 +146,7 @@ const BusinessDeveloper = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
+        <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
           <BsThreeDotsVertical
             size={24}
             onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted,record.businessDeveloperId, record.isVerify)}
@@ -256,6 +259,14 @@ const BusinessDeveloper = () => {
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
       <Menu.Item key="delete">{isDeleted?'Recover':'Delete'}</Menu.Item>
       <Menu.Item key="account">Account</Menu.Item>
+    </Menu>
+  );
+
+  
+  const subMenu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="verify" disabled={bdVerify}>Verify</Menu.Item>
+      <Menu.Item key="view">View</Menu.Item>
     </Menu>
   );
 
@@ -434,7 +445,8 @@ const BusinessDeveloper = () => {
   }
 
   const callApiToFetchDocument = () =>{
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken")
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||
+    localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -502,7 +514,8 @@ const BusinessDeveloper = () => {
   }
   const uploadAadhar = () => {
     console.log(aadharCard.file)
-    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")||
+    localStorage.getItem("subAdminToken")
     ||  localStorage.getItem("franchiseToken");
     const config = {
       headers: {
@@ -525,7 +538,8 @@ const BusinessDeveloper = () => {
   
   const uploadPan = () => {
     console.log(panCard.file)
-    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken") ||
+    localStorage.getItem("subAdminToken")
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
@@ -550,7 +564,9 @@ const BusinessDeveloper = () => {
       title: "Verify Business Developer",
       content: `Are you sure you want to  verify Business Developer?`,
       onOk() {
-        const token = localStorage.getItem("adminToken");
+        const token = localStorage.getItem("adminToken")||
+        localStorage.getItem("subAdminToken") ||
+        localStorage.getItem("stateHandlerToken")
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
