@@ -24,7 +24,8 @@ const BusinessDeveloper = () => {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
-  const [businessId, setbussinessId] = useState("")
+  const [businessId, setbussinessId] = useState("");
+  const [bdVerify , setBdVerify] = useState(false);
   const [aadharCard, setAadharCard] = useState({
     placeholder:"",
     file:null
@@ -122,9 +123,15 @@ const BusinessDeveloper = () => {
       },
     },
     {
-      title: 'Status', dataIndex: 'isDeleted', render: (isDeleted) => {
+      title: 'Verify', dataIndex: 'isVerify', render: (isVerify) => {
+        const cellStyle = isVerify ? { color: 'green' } : { color: 'red' };
+        return <span style={cellStyle}>{isVerify ? 'Verified' : 'Not Verify '}</span>;
+      },
+    },
+    {
+      title: 'Delete', dataIndex: 'isDeleted', render: (isDeleted) => {
         const cellStyle = isDeleted ? { color: 'red' } : { color: 'green' };
-        return <span style={cellStyle}>{isDeleted ? 'Deleted' : 'Not Deleted '}</span>;
+        return <span style={cellStyle}>{isDeleted ? 'Deleted' : 'Not Delete'}</span>;
       },
     },
     {
@@ -139,7 +146,7 @@ const BusinessDeveloper = () => {
         <Dropdown overlay={menu} placement="bottomLeft" trigger={["click"]}>
           <BsThreeDotsVertical
             size={24}
-            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted,record.businessDeveloperId)}
+            onClick={() => trigerAction(record._id, record.isBlocked, record.referredId, record.isDeleted,record.businessDeveloperId, record.isVerify)}
             style={{ cursor: "pointer" }}
           />
         </Dropdown>
@@ -211,12 +218,13 @@ const BusinessDeveloper = () => {
   };
 
   // handle action
-  const trigerAction = (id, block, refferalid, businessDeveloperDelete,bussinessId) => {
+  const trigerAction = (id, block, refferalid, businessDeveloperDelete,bussinessId, verify) => {
     setMyID(id);
     setIsBlock(block);
     setRefferedID(refferalid)
     setIsDeleted(businessDeveloperDelete)
     setbussinessId(bussinessId)
+    setBdVerify(verify)
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -235,12 +243,14 @@ const BusinessDeveloper = () => {
  
     }else if(e.key === 'account'){
       navigate(`/admindashboard/tracker/business-account/${businessId}`)
+    }else if(e.key === "verify"){
+      callApiToVerifyBD(bdVerify)
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="verify" disabled={bdVerify}>Verify</Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
@@ -533,6 +543,37 @@ const BusinessDeveloper = () => {
       .catch((err) => {
         console.log(err.response.data.message)
       })
+  }
+
+  const callApiToVerifyBD = (bdVerify) =>{
+    Modal.confirm({
+      title: "Verify Business Developer",
+      content: `Are you sure you want to  verify Business Developer?`,
+      onOk() {
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const data = {
+          id: myID,
+          isVerify: bdVerify,
+        };
+        axios
+          .post(`${apiurl}` + "/admin/verify-business-developer", data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchBussinesDeveloperDataApi();
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("verify cancelled");
+      },
+    });
   }
 
   return (
