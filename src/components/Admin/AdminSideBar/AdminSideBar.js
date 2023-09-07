@@ -24,7 +24,7 @@ function AdminSideBar() {
 
   const updateUser = () => {
     if (isSubAdmin) {
-      setUser("Sub Admin");
+      setUser("Back Office");
     } else if (isStateHandler) {
       setUser("State Admin");
     } else if (isAdmin) {
