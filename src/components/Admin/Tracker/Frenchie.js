@@ -122,7 +122,13 @@ const Frenchie = () => {
       },
     },
     {
-      title: 'Status', dataIndex: 'isDeleted', render: (isDeleted) => {
+      title: 'Verify', dataIndex: 'isVerify', render: (isVerify) => {
+        const cellStyle = isVerify ? { color: 'green' } : { color: 'red' };
+        return <span style={cellStyle}>{isVerify ? 'Verified' : 'Not Verify '}</span>;
+      },
+    },
+    {
+      title: 'Delete', dataIndex: 'isDeleted', render: (isDeleted) => {
         const cellStyle = isDeleted ? { color: 'red' } : { color: 'green' };
         return <span style={cellStyle}>{isDeleted ? 'Deleted' : 'Not Deleted '}</span>;
       },
@@ -218,7 +224,7 @@ const Frenchie = () => {
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify">Verify</Menu.Item>
+      <Menu.Item key="verify" disabled={frenchiseVerify}>Verify</Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">
@@ -508,6 +514,34 @@ const Frenchie = () => {
 
   const callApiToVerifyFrenchise = (frenchiseVerify) =>{
     console.log(frenchiseVerify)
+    Modal.confirm({
+      title: "Verify Franchise",
+      content: `Are you sure you want to  verify Franchise?`,
+      onOk() {
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const data = {
+          id: myID,
+          isVerify: frenchiseVerify,
+        };
+        axios
+          .post(`${apiurl}` + "/admin/verify-franchise", data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchFrenchieseDataApi(); 
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("verify cancelled");
+      },
+    });
   }
 
   return (

@@ -574,7 +574,6 @@ const State = () => {
   };
 
   const callApiToVerifyState = (stateVerify)=>{
-    console.log(stateVerify);
     Modal.confirm({
       title: "Verify SHO",
       content: `Are you sure you want to  verify SHO?`,
