@@ -129,11 +129,11 @@ const DisplayCard = () => {
   // Admin Chat menu 
   const AdminChatMenu = (
     <Menu onClick={handleAdminChatMenuClick}>
-      <Menu.Item key="chat-with-traders">Chat with Traders</Menu.Item>
-      <Menu.Item key="chat-with-referrals">Chat with Referrals</Menu.Item>
-      <Menu.Item key="chat-with-state-handlers">Chat with State Handlers</Menu.Item>
-      <Menu.Item key="chat-with-frenchise">Chat with Frenchise</Menu.Item>
-      <Menu.Item key="chat-with-business-developers">Chat with Business Developers</Menu.Item>
+      <Menu.Item key="chat-with-traders"> Traders</Menu.Item>
+      <Menu.Item key="chat-with-referrals">Referrals</Menu.Item>
+      <Menu.Item key="chat-with-state-handlers">State Handlers</Menu.Item>
+      <Menu.Item key="chat-with-frenchise">Frenchise</Menu.Item>
+      <Menu.Item key="chat-with-business-developers">Business Developers</Menu.Item>
 
     </Menu>
   );

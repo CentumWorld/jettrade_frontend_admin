@@ -29,13 +29,15 @@ const RefferalPayout = () => {
   const businessDeveloperToken = localStorage.getItem("businessDeveloperToken");
   const stateHandlerId = localStorage.getItem("stateHandlerId");
   const franchiseId = localStorage.getItem("frenchiseId");
+  const isSubAdmin = localStorage.getItem('subAdminToken');
 
   const fetchStateCreditWalletTransaction = () => {
+
     let config = {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
-
-    axios
+    if(stateHandlerToken){
+      axios
       .post(
         `${apiurl}` + "/state/get-own-state-credit-wallet-transaction-details",
         {
@@ -49,6 +51,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchFranchiesCreditWaletTransaction = () => {
@@ -56,21 +59,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
+   if(stateHandlerToken){
     axios
-      .post(
-        `${apiurl}` +
-          "/state/get-own-franchsie-inside-state-credit-wallet-transaction-details",
-        {
-          stateHandlerId: stateHandlerId,
-        },
-        config
-      )
-      .then((res) => {
-        setFranchiseDetails(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    .post(
+      `${apiurl}` +
+        "/state/get-own-franchsie-inside-state-credit-wallet-transaction-details",
+      {
+        stateHandlerId: stateHandlerId,
+      },
+      config
+    )
+    .then((res) => {
+      setFranchiseDetails(res.data.data);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+   }
   };
 
   const fetchTraderDetailsinFranchise = () => {
@@ -100,7 +105,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    axios
+    if(franchiseToken){
+      axios
       .post(
         `${apiurl}` +
           "/franchise/get-own-members-inside-franchise-credit-wallet-transaction-details",
@@ -116,6 +122,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchFranchiseDetailsInFranchise = () => {
@@ -123,7 +130,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    axios
+    if(franchiseToken){
+      axios
       .post(
         `${apiurl}` +
           "/franchise/get-own-franchise-credit-wallet-transaction-details",
@@ -138,6 +146,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchBussinessDeveloperDataInFranchise = () => {
@@ -145,7 +154,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    axios
+    if(franchiseToken){
+      axios
       .post(
         `${apiurl}` +
           "/franchise/get-own-business-developer-inside-franchise-credit-wallet-transaction-details",
@@ -162,6 +172,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchBussinessDeveloperTransactionInState = () => {
@@ -169,7 +180,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
-    axios
+    if(stateHandlerToken){
+      axios
       .post(
         `${apiurl}` +
           "/state/get-own-business-developer-inside-state-credit-wallet-transaction-details",
@@ -179,7 +191,7 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
-        console.log("180====>", res);
+        // console.log("180====>", res);
         setBussinessDeveloperDetails(
           res.data.businessDeveloperCreditWalletTransactions
         );
@@ -187,6 +199,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchTraderPayoutInState = () => {
@@ -217,21 +230,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
+   if(stateHandlerToken){
     axios
-      .post(
-        `${apiurl}` +
-          "/state/get-own-members-inside-state-credit-wallet-transaction-details",
-        {
-          stateHandlerId: stateHandlerId,
-        },
-        config
-      )
-      .then((res) => {
-        setReferralsDetails(res.data.memberCreditWalletTransactions);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    .post(
+      `${apiurl}` +
+        "/state/get-own-members-inside-state-credit-wallet-transaction-details",
+      {
+        stateHandlerId: stateHandlerId,
+      },
+      config
+    )
+    .then((res) => {
+      setReferralsDetails(res.data.memberCreditWalletTransactions);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+   }
   };
 
   const memberDataInState = [
@@ -271,7 +286,7 @@ const RefferalPayout = () => {
   ];
 
   const fetchBussinessDeveloperDetails = () => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -291,7 +306,7 @@ const RefferalPayout = () => {
   };
 
   const fetchStateDeveloperDetails = () => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -310,7 +325,7 @@ const RefferalPayout = () => {
   };
 
   const fetchFranchiseDeveloperHandler = () => {
-    const token = localStorage.getItem("adminToken");
+    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -527,11 +542,12 @@ const RefferalPayout = () => {
     const data = {
       role: id,
     };
-    let token = localStorage.getItem("adminToken");
+    let token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios
+    if(adminToken || isSubAdmin){
+      axios
       .get(
         `${apiurl}` + "/admin/fetch-member-credit-wallet-transaction-details",
 
@@ -544,6 +560,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err);
       });
+    }
   };
 
   const columnsMember = [
@@ -824,7 +841,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${bussinessToken}` },
     };
 
-    axios
+    if(bussinessToken){
+      axios
       .post(
         `${apiurl}` +
           "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
@@ -834,12 +852,13 @@ const RefferalPayout = () => {
         config
       )
       .then((res) => {
-        console.log("heyyyyyyyyyyyyyyyyyy", res.data);
+        // console.log("heyyyyyyyyyyyyyyyyyy", res.data);
         setReferralsDetails(res.data.memberTransactions);
       })
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
 
   const fetchBusinessPayoutInBusiness = () => {
@@ -847,7 +866,8 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${bussinessToken}` },
     };
 
-    axios
+    if(bussinessToken){
+      axios
       .post(
         `${apiurl}` +
           "/businessDeveloper/get-own-business-developer-wallet-transaction-details",
@@ -862,6 +882,7 @@ const RefferalPayout = () => {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   };
   //=============================================
 
@@ -1224,7 +1245,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {!businessId && !franchiseToken && (
+        {!businessId && !franchiseToken &&  (
           <TabPane tab="State Payout" key="3">
             <div>
               <Table
@@ -1306,7 +1327,7 @@ const RefferalPayout = () => {
         )}
 
    
-        {adminToken && (
+        {adminToken &&  (
           <TabPane tab="Admin Payout" key="6">
             <div>
               <Table
