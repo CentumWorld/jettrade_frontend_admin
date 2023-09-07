@@ -34,6 +34,8 @@ const DisplayCard = () => {
   const [frenchiseUpiId, setFrenchiseUpiId] = useState([]);
   const [selectStateUpiId, setSelectedUpiId] = useState('');
   const [stateBankDetails, setStateBankDetails] = useState([]);
+  const [paymentModal, setPaymentModal] = useState(false);
+  const [verifyDate, setVerifyDate] = useState("");
   const [progressiveBar, setProgressigeBar] = useState({
     totalCount: 0,
     runningCount: 0,
@@ -295,6 +297,61 @@ const DisplayCard = () => {
 
   };
 
+  const callApiToEligibaleWithdrawalForState = ()=>{
+    console.log('opne')
+    const config = {
+      headers: { Authorization: `Bearer ${isStateHandler}` },
+    };
+    let data = {
+      stateHandlerId:localStorage.getItem("stateHandlerId")
+    }
+    axios.post("/state/eligible-for-withdrawal",data,config)
+    .then((res)=>{
+      setPaymentModal(res.data.updatedState.firstPayment);
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+  }
+
+  const callApiToEligibaleWithdrawalForFranchise = ()=>{
+    console.log('opne')
+    const config = {
+      headers: { Authorization: `Bearer ${isFrenchise}` },
+    };
+    let data = {
+      franchiseId:localStorage.getItem("frenchiseId")
+    }
+    axios.post("/franchise/eligible-franchise-for-withdrawal",data,config)
+    .then((res)=>{
+      console.log(res.data)
+      setPaymentModal(res.data.updatedFranchise.firstPayment);
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+
+  }
+
+  const callApiToEligibaleWithdrawalForBD = ()=>{
+    console.log('opne')
+    const config = {
+      headers: { Authorization: `Bearer ${isBusinessHandler}` },
+    };
+    let data = {
+      businessDeveloperId:localStorage.getItem("businessId")
+    }
+    axios.post("/businessDeveloper/eligible-business-developer-for-withdrawal",data,config)
+    .then((res)=>{
+      console.log(res.data)
+      setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+  }
+
+
   const openWithrawalModalFunction = () => {
     if (isStateHandler) {
       setOpenStateHandlerModal(true);
@@ -304,7 +361,25 @@ const DisplayCard = () => {
       axios
         .get(`${apiurl}` + "/state/get-own-state-details", config)
         .then((res) => {
+          setPaymentModal(res.data.data.firstPayment);
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
+          setVerifyDate(res.data.data.verifyDate);
+
+
+          const isoDateString = res.data.data.verifyDate;
+          const convertedDateString = isoDateString.substring(0, 10);
+          console.log(convertedDateString)
+          const currentDate = new Date();
+          const date = new Date(convertedDateString);
+
+
+          const differenceInMilliseconds = currentDate - date;
+          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          console.log(`Difference in days: ${differenceInDays}`);
+          if(differenceInDays > 30 ){
+            callApiToEligibaleWithdrawalForState()
+          }
+
         })
         .catch((err) => {
           console.log(err.response.data.massage);
@@ -318,6 +393,24 @@ const DisplayCard = () => {
         .get(`${apiurl}` + "/businessDeveloper/get-own-business-developer-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
+          console.log(res.data.data)
+          setPaymentModal(res.data.data.firstPayment);
+          setVerifyDate(res.data.data.verifyDate);
+
+          const isoDateString = res.data.data.verifyDate;
+          const convertedDateString = isoDateString.substring(0, 10);
+          console.log(convertedDateString)
+          const currentDate = new Date();
+          const date = new Date(convertedDateString);
+
+
+          const differenceInMilliseconds = currentDate - date;
+          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          console.log(`Difference in days: ${differenceInDays}`);
+          
+          if(differenceInDays > 7 ){
+            callApiToEligibaleWithdrawalForBD()
+          }
         })
         .catch((err) => {
           console.log(err.response.data.massage);
@@ -332,6 +425,23 @@ const DisplayCard = () => {
         .get(`${apiurl}` + "/franchise/get-own-franchise-details", config)
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.frenchiseWallet);
+          setPaymentModal(res.data.data.firstPayment);
+          setVerifyDate(res.data.data.verifyDate);
+
+
+          const isoDateString = res.data.data.verifyDate;
+          const convertedDateString = isoDateString.substring(0, 10);
+          console.log(convertedDateString)
+          const currentDate = new Date();
+          const date = new Date(convertedDateString);
+
+
+          const differenceInMilliseconds = currentDate - date;
+          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          console.log(`Difference in days: ${differenceInDays}`);
+          if(differenceInDays > 30 ){
+            callApiToEligibaleWithdrawalForFranchise()
+          }
         })
         .catch((err) => {
           console.log(err.response.data.massage);
@@ -619,7 +729,7 @@ const DisplayCard = () => {
                 </span>
               </div> */}
             </>
-          ):null}
+          ) : null}
 
           {isStateHandler && (
             <>
@@ -746,7 +856,7 @@ const DisplayCard = () => {
                 </Dropdown>
               </div>
             </div>
-          ):null
+          ) : null
         }
 
         <div className="card1">
@@ -784,9 +894,9 @@ const DisplayCard = () => {
           <div className="subscription-card">
             <span style={{ color: "yellow", cursor: "pointer" }}
               onClick={refferalPayoutTrader}
-              >
-                view
-              </span>
+            >
+              view
+            </span>
           </div>
           {/* <div className="d-flex">
             <h6>Trader:</h6>&nbsp;&nbsp;{" "}
@@ -811,7 +921,7 @@ const DisplayCard = () => {
       </div>
 
       {/* open state handler modal for payment */}
-      <Modal
+      {paymentModal ? <Modal
         title="Request here"
         open={openStateHandlerModal}
         onCancel={closeStatePaymentModal}
@@ -878,7 +988,16 @@ const DisplayCard = () => {
         <small style={{ color: "red" }}>
           Request payment will be credited within 48 hours.
         </small>
-      </Modal>
+      </Modal> :
+
+        < Modal
+          title="Withdrawal request here"
+          open={openStateHandlerModal}
+          onCancel={closeStatePaymentModal}
+          footer={null}
+        >
+          {isBusinessHandler?<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after seven days.</h5>:<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after one months.</h5>}
+        </Modal >}
     </>
   );
 };
