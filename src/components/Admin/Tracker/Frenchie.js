@@ -24,6 +24,7 @@ const Frenchie = () => {
   const [myID, setMyID] = useState('');
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
+  const [frenchiseVerify , setFrenchiseVerify] = useState(false);
   const [aadharCard, setAadharCard] = useState({
     placeholder: aadharFront,
     file: null
@@ -135,7 +136,7 @@ const Frenchie = () => {
       title: 'Action', dataIndex: 'action',
       render: (_, record) => (
         <Dropdown overlay={menu} placement="bottomLeft" trigger={['click']}>
-          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted,record.frenchiseId)} style={{ cursor: 'pointer' }} />
+          <BsThreeDotsVertical size={24} onClick={() => trigerAction(record._id, record.isBlocked, record.isDeleted,record.frenchiseId, record.isVerify)} style={{ cursor: 'pointer' }} />
         </Dropdown>
       ),
 
@@ -187,11 +188,12 @@ const Frenchie = () => {
 
 
   // handle action
-  const trigerAction = (id, block, franchiseDelete,frenchiseId) => {
+  const trigerAction = (id, block, franchiseDelete,frenchiseId, verify) => {
     setMyID(id);
     setIsBlock(block);
     setIsDeleted(franchiseDelete)
     setFrenchiseId(frenchiseId);
+    setFrenchiseVerify(verify)
   }
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -209,12 +211,14 @@ const Frenchie = () => {
     }
     else if(e.key === 'account'){
       navigate(`/admindashboard/tracker/frenchise-account/${frenchiseId}`)
+    }else if(e.key === "verify"){
+      callApiToVerifyFrenchise(frenchiseVerify)
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="verify">Verify</Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">
@@ -500,6 +504,10 @@ const Frenchie = () => {
   }
   const genderChangeValue = (value) =>{
     genderChange('gender', value)
+  }
+
+  const callApiToVerifyFrenchise = (frenchiseVerify) =>{
+    console.log(frenchiseVerify)
   }
 
   return (

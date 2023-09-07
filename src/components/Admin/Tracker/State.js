@@ -24,6 +24,7 @@ const State = () => {
   const [visible, setVisible] = useState(false);
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
+  const [stateVerify , setIsVerify] = useState(false);
   const [aadharCard, setAadharCard] = useState({
     placeholder: "",
     file: null,
@@ -155,13 +156,25 @@ const State = () => {
       },
     },
     {
-      title: "Status",
+      title: "Verification",
+      dataIndex: "isVerify",
+      render: (isVerify) => {
+        const cellStyle = isVerify ? { color: "green" } : { color: "red" };
+        return (
+          <span style={cellStyle}>
+            {isVerify ? "Verified" : "Not Verify "}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Delete",
       dataIndex: "isDeleted",
       render: (isDeleted) => {
         const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
         return (
           <span style={cellStyle}>
-            {isDeleted ? "Deletes" : "Not Deleted "}
+            {isDeleted ? "Deleted" : "Not Delete"}
           </span>
         );
       },
@@ -183,7 +196,8 @@ const State = () => {
                 record._id,
                 record.isBlocked,
                 record.isDeleted,
-                record.stateHandlerId
+                record.stateHandlerId,
+                record.isVerify
               )
             }
             style={{ cursor: "pointer" }}
@@ -237,11 +251,12 @@ const State = () => {
   };
 
   // handle action
-  const trigerAction = (id, block, stateDelete, stateHandlerid) => {
+  const trigerAction = (id, block, stateDelete, stateHandlerid, verify) => {
     setMyID(id);
     setIsBlock(block);
     setIsDeleted(stateDelete);
     setStateHandlerID(stateHandlerid);
+    setIsVerify(verify)
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -258,12 +273,14 @@ const State = () => {
       deleteAndRecoverState(myID);
     } else if (e.key === "account") {
       navigate(`/admindashboard/tracker/state-account/${stateHandlerID}`);
+    }else if(e.key === "verify"){
+      callApiToVerifyState(stateVerify)
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      {/* <Menu.Item key="verify">Verify</Menu.Item> */}
+      <Menu.Item key="verify" disabled={stateVerify}>Verify</Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
@@ -555,6 +572,38 @@ const State = () => {
       });
     }
   };
+
+  const callApiToVerifyState = (stateVerify)=>{
+    console.log(stateVerify);
+    Modal.confirm({
+      title: "Verify SHO",
+      content: `Are you sure you want to  verify SHO?`,
+      onOk() {
+        const token = localStorage.getItem("adminToken");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const data = {
+          id: myID,
+          isVerify: stateVerify,
+        };
+        axios
+          .post(`${apiurl}` + "/admin/verify-state", data, config)
+          .then((res) => {
+            message.success(res.data.message);
+            fetchStateDataApi();
+          })
+          .catch((err) => {
+            message.warning("Something went wrong!");
+          });
+      },
+      onCancel() {
+        console.log("verify cancelled");
+      },
+    });
+  }
 
 
   return (
