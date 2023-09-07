@@ -176,7 +176,7 @@ function Navbar() {
     const menu = (
       <Menu onClick={adminSubAdminModal}>
         <Menu.Item key="admin">Admin</Menu.Item>
-        <Menu.Item key="subadmin">Sub Admin</Menu.Item>
+        <Menu.Item key="subadmin">Back Office</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
         <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>

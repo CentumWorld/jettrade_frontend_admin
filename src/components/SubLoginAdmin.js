@@ -49,7 +49,7 @@ function SubAdmin(props) {
     <>
       <Modal
         title={
-          <span style={titleStyles}>Sub Admin</span> 
+          <span style={titleStyles}>Back Office</span> 
         }
         open={modalVisible}
         onCancel={handleClose}
