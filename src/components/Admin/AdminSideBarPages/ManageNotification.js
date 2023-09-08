@@ -36,7 +36,7 @@ const ManageNotification = () => {
     const data = {
       message: allNotification,
     }
-    const token = localStorage.getItem('adminToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const ManageNotification = () => {
       message: allTraderNotification,
       investerType: "allTrader",
     }
-    const token = localStorage.getItem('adminToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ const ManageNotification = () => {
       message: allRefferalNotification,
       investerType: "allRefferal",
     }
-    const token = localStorage.getItem('adminToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ const ManageNotification = () => {
       message: particularTraderNotification.message,
       userid: particularTraderNotification.userid
     }
-    const token = localStorage.getItem('adminToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -145,7 +145,7 @@ const ManageNotification = () => {
       message: particularRefferalNotification.message,
       memberid: particularRefferalNotification.memberid
     }
-    const token = localStorage.getItem('adminToken')
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('subAdminToken');
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

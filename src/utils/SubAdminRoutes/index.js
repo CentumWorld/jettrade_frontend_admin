@@ -99,11 +99,11 @@ const subAdminRoutes = [
         //     path:"manage/investment",
         //     name:"Manage Investment"
         // },
-        {
-          path: "manage/investor-refferal-payout",
-          name: "Referral Payout",
-          // icon: <FaAmazonPay />
-        },
+        // {
+        //   path: "manage/investor-refferal-payout",
+        //   name: "Referral Payout",
+        //   // icon: <FaAmazonPay />
+        // },
       ],
     },
     {
