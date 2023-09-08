@@ -89,7 +89,8 @@ const Refferal = () => {
 
   // search bar -------------
   const adminToken = localStorage.getItem("adminToken");
-  const subadminToken =  localStorage.getItem("subAdminToken")
+  const subadminToken =  localStorage.getItem("subAdminToken");
+  const isBusiness = localStorage.getItem('bussinessAdminToken');
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -129,7 +130,7 @@ const Refferal = () => {
     },
   ];
 
-  if (adminToken || subadminToken) {
+  if (adminToken || subadminToken || isBusiness) {
     columns.push({
       title: "Action",
       dataIndex: "action",
@@ -203,7 +204,7 @@ const Refferal = () => {
   //Handle varify click
   const handleVerifyClick = (id) => {
     console.log(id);
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken") || localStorage.getItem('bussinessAdminToken')
     let data = {
       id: id,
       status: true,
