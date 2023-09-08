@@ -31,7 +31,7 @@ const BussinessDeveloperRoutes = [
     subRoutes:[
       {
         path:'tracker/members',
-        name:'Members'
+        name:'Referrals'
       },
       {
         path:'tracker/traders',
