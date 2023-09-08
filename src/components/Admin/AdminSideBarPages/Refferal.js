@@ -75,6 +75,7 @@ const Refferal = () => {
   //isBlock
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
 
   // edit modal
   const editModal = () => {
@@ -139,7 +140,7 @@ const Refferal = () => {
           <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
             <BsThreeDotsVertical
               size={24}
-              onClick={() => trigerAction(record._id, record.isBlocked)}
+              onClick={() => trigerAction(record._id, record.isBlocked,record.status)}
               style={{ cursor: "pointer" }}
             />
           </Dropdown>
@@ -155,9 +156,10 @@ const Refferal = () => {
   }
 
   // handle action
-  const trigerAction = (id, block) => {
+  const trigerAction = (id, block,verify) => {
     setMyID(id);
     setIsBlock(block);
+    setIsVerified(verify);
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -188,7 +190,9 @@ const Refferal = () => {
 
   const subMenu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify">Verify</Menu.Item>
+       <Menu.Item key="verify" disabled={isVerified}>
+      Verify
+    </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
     </Menu>
   );
@@ -253,6 +257,7 @@ const Refferal = () => {
         //setAadhar(res.data.result.aadhar);
         //setPan(res.data.result.pan);
         fetchMemberDocuments(res.data.result._id);
+
       })
       .catch((error) => {
         message.warning("Somthing went wrong!");
@@ -421,6 +426,7 @@ const Refferal = () => {
         .then((res) => {
           console.log("Bussiness response-----------> ", res.data);
           setRefferalData(res.data.members);
+          
         })
         .catch((err) => {
           console.log("error", err);
