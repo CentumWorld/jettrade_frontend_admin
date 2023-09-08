@@ -566,7 +566,8 @@ const BusinessDeveloper = () => {
       onOk() {
         const token = localStorage.getItem("adminToken")||
         localStorage.getItem("subAdminToken") ||
-        localStorage.getItem("stateHandlerToken")
+        localStorage.getItem("stateHandlerToken") ||
+        localStorage.getItem("franchiseToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
