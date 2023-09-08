@@ -175,10 +175,10 @@ const ManageNotification = () => {
           <div>
             <Select defaultValue="All" onChange={handleChange} style={{ width: '200px', marginBottom: '10px' }}>
               <Option value="all">All</Option>
-              <Option value="alltraders">All Traders</Option>
-              <Option value="allrefferals">All Refferals</Option>
-              <Option value="particulartrader">Particular Trader</Option>
-              <Option value="particularrefferal">Particular Refferal</Option>
+              <Option value="allTraders">All Traders</Option>
+              <Option value="allReferrals">All Refferals</Option>
+              <Option value="particularTrader">Particular Trader</Option>
+              <Option value="particularReferral">Particular Refferal</Option>
             </Select>
 
             {selectedOption === 'all' && (
