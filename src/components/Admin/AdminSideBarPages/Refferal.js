@@ -19,6 +19,7 @@ import aadharImage from "../../../img/aadhar.jpg";
 import aadharBackImage from "../../../img/Aadhaar-back.jpg";
 import panImage from "../../../img/pan.jpg";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl;
@@ -26,6 +27,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const Refferal = () => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [refferalData, setRefferalData] = useState([]);
@@ -76,6 +78,7 @@ const Refferal = () => {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
+  const [memberId,setMemberId] = useState('');
 
   // edit modal
   const editModal = () => {
@@ -140,7 +143,7 @@ const Refferal = () => {
           <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
             <BsThreeDotsVertical
               size={24}
-              onClick={() => trigerAction(record._id, record.isBlocked,record.status)}
+              onClick={() => trigerAction(record._id, record.isBlocked,record.status,record.memberid)}
               style={{ cursor: "pointer" }}
             />
           </Dropdown>
@@ -156,10 +159,11 @@ const Refferal = () => {
   }
 
   // handle action
-  const trigerAction = (id, block,verify) => {
+  const trigerAction = (id, block,verify,memberId) => {
     setMyID(id);
     setIsBlock(block);
     setIsVerified(verify);
+    setMemberId(memberId);
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -177,6 +181,9 @@ const Refferal = () => {
     if (e.key === "block") {
       blockUnblock(myID);
     }
+    if(e.key === "account"){
+      navigate(`/admindashboard/refferal/refferal-account/${memberId}`);
+    }
   };
 
   const menu = (
@@ -185,6 +192,7 @@ const Refferal = () => {
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
+      <Menu.Item key="account">Account</Menu.Item>
     </Menu>
   );
 

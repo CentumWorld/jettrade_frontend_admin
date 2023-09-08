@@ -80,6 +80,7 @@ import StateAccountSection from "./components/Admin/Tracker/StateAccount/StateAc
 import FrenchiseAccountSection from "./components/Admin/Tracker/FrenchiseAccount/FrenchiseAccountSection";
 
 import BusinessAccount from "./components/Admin/Tracker/businessAccount/BusinessAccount";
+import MemberAccountSection from "./components/Admin/AdminSideBarPages/MemberAccountSection";
 
 export const UserContext = createContext();
 //App
@@ -167,6 +168,7 @@ function App() {
             <Route path="tracker/state-account/:stateid" element={<StateAccountSection/>}/>
             <Route path="tracker/frenchise-account/:frenchiseId" element={<FrenchiseAccountSection/>} />
             <Route path="tracker/business-account/:businessId" element={<BusinessAccount/>}/>
+            <Route path="refferal/refferal-account/:memberid" element={<MemberAccountSection/>} />
             
 
             <Route
