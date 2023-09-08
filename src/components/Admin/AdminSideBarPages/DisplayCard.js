@@ -27,6 +27,7 @@ const DisplayCard = () => {
   const isBusinessHandler = localStorage.getItem("bussinessAdminToken");
   const isFrenchise = localStorage.getItem('franchiseToken');
   const isSubAdmin = localStorage.getItem('subAdminToken');
+  const [dayDifference, setDayDifference] = useState(0)
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
@@ -375,6 +376,7 @@ const DisplayCard = () => {
 
           const differenceInMilliseconds = currentDate - date;
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          setDayDifference(30 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
           if(differenceInDays > 30 ){
             callApiToEligibaleWithdrawalForState()
@@ -406,6 +408,7 @@ const DisplayCard = () => {
 
           const differenceInMilliseconds = currentDate - date;
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          setDayDifference(7 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
           
           if(differenceInDays > 7 ){
@@ -438,7 +441,9 @@ const DisplayCard = () => {
 
           const differenceInMilliseconds = currentDate - date;
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+          setDayDifference(30 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
+
           if(differenceInDays > 30 ){
             callApiToEligibaleWithdrawalForFranchise()
           }
@@ -996,7 +1001,7 @@ const DisplayCard = () => {
           onCancel={closeStatePaymentModal}
           footer={null}
         >
-          {isBusinessHandler?<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after seven days.</h5>:<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after one months.</h5>}
+          {isBusinessHandler?<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>:<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>}
         </Modal >}
     </>
   );
