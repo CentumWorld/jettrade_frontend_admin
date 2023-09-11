@@ -335,7 +335,7 @@ const FrenchieRegister = (props) => {
                         <div className='state-field'>
                             <label> User ID</label>
                             <Input type='text'
-                                placeholder='State Handler Id'
+                                placeholder='Frenchise Id'
                                 name="stateRegisterId"
                                 value={stateRegisterData.stateRegisterId}
                                 onChange={stateRegiInputs}

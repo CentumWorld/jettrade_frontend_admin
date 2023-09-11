@@ -319,7 +319,7 @@ const BusinessDeveloperRegister = (props) => {
                         <div className='state-field'>
                             <label> User ID</label>
                             <Input type='text'
-                                placeholder='State Handler Id'
+                                placeholder='Businesss Developer Id'
                                 name="stateRegisterId"
                                 value={stateRegisterData.stateRegisterId}
                                 onChange={stateRegiInputs}
