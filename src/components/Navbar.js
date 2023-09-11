@@ -52,7 +52,7 @@ function Navbar() {
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch("/state/get-own-state-details", {
+          const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -69,7 +69,7 @@ function Navbar() {
     } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch("/franchise/get-own-franchise-details", {
+          const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -87,7 +87,7 @@ function Navbar() {
       async function fetchBussinessDetails() {
         try {
           const response = await fetch(
-            "/businessDeveloper/get-own-business-developer-details",
+            `${apiurl}`+"/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
               headers: {
@@ -109,7 +109,7 @@ function Navbar() {
       async function fetchAdminDetails() {
         try {
           const response = await fetch(
-            "/admin/fetch-admin",
+            `${apiurl}`+"/admin/fetch-admin",
             {
               method: "GET",
               headers: {
@@ -175,17 +175,17 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        <Menu.Item key="admin">Admin</Menu.Item>
-        <Menu.Item key="subadmin">Back Office</Menu.Item>
-        <Menu.Item key="sho">State Head Officer</Menu.Item>
+        {/* <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="subadmin">Back Office</Menu.Item> */}
+        {/* <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
+        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
         <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
     );
 
     const handleLogout = () => {
-      fetch("/admin/logout", {
+      fetch(`${apiurl}`+"/admin/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",

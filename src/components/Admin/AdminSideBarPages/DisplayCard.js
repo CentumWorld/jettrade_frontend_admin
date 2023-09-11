@@ -306,7 +306,7 @@ const DisplayCard = () => {
     let data = {
       stateHandlerId:localStorage.getItem("stateHandlerId")
     }
-    axios.post("/state/eligible-for-withdrawal",data,config)
+    axios.post(`${apiurl}` + "/state/eligible-for-withdrawal",data,config)
     .then((res)=>{
       setPaymentModal(res.data.updatedState.firstPayment);
     })
@@ -323,7 +323,7 @@ const DisplayCard = () => {
     let data = {
       franchiseId:localStorage.getItem("frenchiseId")
     }
-    axios.post("/franchise/eligible-franchise-for-withdrawal",data,config)
+    axios.post(`${apiurl}` + "/franchise/eligible-franchise-for-withdrawal",data,config)
     .then((res)=>{
       console.log(res.data)
       setPaymentModal(res.data.updatedFranchise.firstPayment);
@@ -342,7 +342,7 @@ const DisplayCard = () => {
     let data = {
       businessDeveloperId:localStorage.getItem("businessId")
     }
-    axios.post("/businessDeveloper/eligible-business-developer-for-withdrawal",data,config)
+    axios.post(`${apiurl}` + "/businessDeveloper/eligible-business-developer-for-withdrawal",data,config)
     .then((res)=>{
       console.log(res.data)
       setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
