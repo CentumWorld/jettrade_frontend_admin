@@ -8,7 +8,7 @@
 
 .refferal-container-header {
     width: 100%;
-    height: max-content;
+    /* height: max-content; */
     z-index: 10;
     background: #01015d;
     border-radius: 5px;
@@ -34,7 +34,23 @@
     gap: .5rem;
 }
 
+.withdraw-table{
+    overflow-x: scroll;
+}
+
 @media only screen and (max-width: 518px) {
+    .refferal-header-content {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px 0 10px;
+    }
+    .search-box {
+        flex-direction: column; /* Change flex direction to column for mobile screens */
+    }
+}
+
+
+@media only screen and (max-width: 919px) {
     .refferal-header-content {
         display: flex;
         flex-direction: column;

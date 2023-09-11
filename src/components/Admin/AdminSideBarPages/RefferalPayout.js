@@ -1153,6 +1153,7 @@ const RefferalPayout = () => {
 
             {/* Add a button to trigger the filtering */}
             <Button
+            style={{width: "120px"}}
               onClick={() => fetchFilterData(selectedRole, searchByUserID)}
               disabled={!searchByUserID}
             >
@@ -1165,15 +1166,15 @@ const RefferalPayout = () => {
       <Tabs activeKey={activeTab} onChange={handleTabChange}>
         {adminToken && (
           <TabPane tab="Trader Payout" key="1">
-            <div>
+            <div className="withdraw-table">
               <Table
                 columns={columns}
                 dataSource={userDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1187,7 +1188,13 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsMember}
                 dataSource={refferralsDetails}
-                scroll={{ y: 400, x: true }}
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
+                  textOverflow: "ellipsis",
+                  // overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
               />
             </div>
           </TabPane>
@@ -1199,11 +1206,11 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsMemberBusiness}
                 dataSource={refferralsDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1217,11 +1224,11 @@ const RefferalPayout = () => {
               <Table
                 columns={memberColumnInFranchise}
                 dataSource={refferralsDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1235,11 +1242,11 @@ const RefferalPayout = () => {
               <Table
                 columns={memberDataInState}
                 dataSource={refferralsDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1253,11 +1260,11 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsState}
                 dataSource={stateHandlerDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1271,11 +1278,11 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsFranch}
                 dataSource={franchiseDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1298,11 +1305,11 @@ const RefferalPayout = () => {
               <Table
                 columns={columnsBussinessDeveloper}
                 dataSource={bussinessDeveloperDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1316,11 +1323,11 @@ const RefferalPayout = () => {
               <Table
                 columns={bussinessColumnInStateRefferal}
                 dataSource={bussinessDeveloperDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
@@ -1334,11 +1341,11 @@ const RefferalPayout = () => {
               <Table
                 columns={adminColumnDetails}
                 dataSource={adminDetails}
-                scroll={{
-                  y: 400,
-                  x: true,
-                  y: 320,
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
                   textOverflow: "ellipsis",
+                  // overflow: "hidden",
                   whiteSpace: "nowrap",
                 }}
               />
