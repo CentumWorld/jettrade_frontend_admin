@@ -41,6 +41,7 @@ function AdminLogin(props) {
         localStorage.setItem("login", true);
         localStorage.setItem("adminToken", response.data.token);
         localStorage.setItem("adminId", response.data.admin_id);
+        localStorage.setItem("adminRefferalId",response.data.referralId)
         setAdmin({ admin_id: "", admin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard");
       })
