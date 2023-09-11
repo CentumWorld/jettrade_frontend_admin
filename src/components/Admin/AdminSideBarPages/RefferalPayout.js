@@ -1072,6 +1072,7 @@ const RefferalPayout = () => {
           </div>
           <div className="search-box">
             {adminToken && (
+              // <div className="admin-search-box">
               <Select
                 defaultValue="trader"
                 style={{ width: 120, marginRight: 10 }}
@@ -1087,6 +1088,7 @@ const RefferalPayout = () => {
                   State Handler
                 </Select.Option>
               </Select>
+              // </div>
             )}
 
             {stateHandlerToken && (
