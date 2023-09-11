@@ -30,6 +30,9 @@ const StateRegister = (props) => {
     const [aadharImage, setAadharImage] = useState({
         file: null,
     });
+    const [backsideAadhar,setBackAadharImage] = useState({
+        file:null
+    })
     const [panImage, setPanImage] = useState({
         file: null,
     });
@@ -66,6 +69,16 @@ const StateRegister = (props) => {
             panImage.file = null;
         }
     }
+    // back side adhar
+    const handleClickBackAadharFrontImage = (e)=>{
+        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+            //preview shoe
+            setBackAadharImage({ file: e.target.files[0] })
+        } else {
+            message.error("Invalid File !! ");
+            panImage.file = null;
+        }
+    }
 
     //hadle pan card image function
     const handleClickPanCardImage = (e) => {
@@ -84,7 +97,7 @@ const StateRegister = (props) => {
         const dataList = "update List"
         setLoading(true);
         e.preventDefault();
-        console.log(stateRegisterData, selectedStates,aadharImage.file);
+        console.log(aadharImage.file);
         const formData = new FormData();
         formData.append("fname", stateRegisterData.fname);
         formData.append("lname", stateRegisterData.lname);
@@ -93,7 +106,8 @@ const StateRegister = (props) => {
         formData.append("gender", stateRegisterData.gender);
         formData.append("password", stateRegisterData.password);
         formData.append("stateHandlerId", stateRegisterData.stateRegisterId);
-        formData.append("adharCard", aadharImage.file);
+        formData.append("adhar_front_side", aadharImage.file);
+        formData.append("adhar_back_side", backsideAadhar.file);
         formData.append("panCard", panImage.file);
         formData.append("selectedState",selectedStates);
         formData.append("referredId", stateRegisterData.referredId);
@@ -128,6 +142,7 @@ const StateRegister = (props) => {
 
             })
             .catch(err=>{
+                setLoading(false);
                 message.error(err.response.data.message);
             })
 
@@ -234,7 +249,7 @@ const StateRegister = (props) => {
                                         }))
                                     }
 
-                                    style={{ width: 150 }}>
+                                    style={{ width: '100%' }}>
                                     <Option value='Male'>Male</Option>
                                     <Option value='Female'>Female</Option>
                                     <Option value='Other'>Other</Option>
@@ -247,9 +262,10 @@ const StateRegister = (props) => {
                                     value={stateRegisterData.state}
                                     onChange={stateRegiInputs}
                                     trigger={['click']}
+                                    
 
                                 >
-                                    <Button>Select state</Button>
+                                    <Button style={{width:'100%'}}>Select state</Button>
                                 </Dropdown>
                                 <div>
                                     <strong>Selected States:</strong>
@@ -262,11 +278,19 @@ const StateRegister = (props) => {
                             </div>
                         </div>
                         <div className='state-field'>
-                            <label>Aadhar</label>
+                            <label>Front side aadhar</label>
                             <Input type='file'
                                 placeholder='Aadhar'
                                 name="aadhar"
                                 onChange={handleClickAadharFrontImage}
+                            />
+                        </div>
+                        <div className='state-field'>
+                            <label>Back side aadhar</label>
+                            <Input type='file'
+                                placeholder='Aadhar'
+                                name="aadhar"
+                                onChange={handleClickBackAadharFrontImage}
                             />
                         </div>
                         <div className='state-field'>
