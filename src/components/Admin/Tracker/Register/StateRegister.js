@@ -4,6 +4,7 @@ import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message,Spin } from 'antd';
 import baseUrl from '../../../../baseUrl';
+import './css/StateRegister.css'
 
 const apiurl = baseUrl.apiUrl
 
@@ -122,7 +123,7 @@ const StateRegister = (props) => {
                 setSelectedStates([]);
                 setAadharImage({ file: null });
                 setPanImage({ file: null });
-
+               
 
             })
             .catch(err=>{
@@ -149,8 +150,6 @@ const StateRegister = (props) => {
         </Menu>
     );
 
-    
-
 
 
     return (
@@ -158,7 +157,6 @@ const StateRegister = (props) => {
 
         <>
                 
-            <div>
                 <Modal
                     title="State Register"
                     open={props.isModalVisible}
@@ -167,8 +165,8 @@ const StateRegister = (props) => {
                     okText={loading?<Spin/> : 'Submit'}
                 >
                     <div className='form-container'>
-                        <div className='state-field'>
-                            <label>Referred ID</label>
+                        <div className='state-fieldOne'>
+                            <label >Referred ID</label>
                             <Input
                                 placeholder='Referred ID'
                                 name="referredId"
@@ -300,7 +298,6 @@ const StateRegister = (props) => {
                     </div>
                 </Modal>
 
-            </div>
         </>
     );
 };

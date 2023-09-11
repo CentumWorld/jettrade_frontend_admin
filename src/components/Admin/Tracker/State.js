@@ -83,7 +83,7 @@ const State = () => {
     axios
       .get(`${apiurl}` + "/admin/fetch-all-state", config)
       .then((res) => {
-        console.log("State response -> ", res.data);
+        // console.log("State response -> ", res.data);
         setStateData(res.data.data);
       })
       .catch((err) => {
