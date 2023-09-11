@@ -410,7 +410,6 @@ const DisplayCard = () => {
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
           setDayDifference(7 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
-          
           if(differenceInDays > 7 ){
             callApiToEligibaleWithdrawalForBD()
           }

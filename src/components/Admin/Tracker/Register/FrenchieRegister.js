@@ -293,27 +293,6 @@ const FrenchieRegister = (props) => {
                                     ))}
                                 </Select>
                             </div>
-                            {/* <div className='state-field'>
-                                <label>City</label><br />
-                                <Select
-                                    placeholder="Select City"
-                                    name="city"
-                                    value={stateRegisterData.city}
-                                    onChange={(value) =>
-                                        setStateRegisterData((prevData) => ({
-                                            ...prevData,
-                                            city: value,
-                                        }))
-                                    }
-                                    style={{ width: 150 }}
-                                >
-                                    {selectedCities.map(city => (
-                                        <Option key={city} value={city}>
-                                            {city}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </div> */}
                             <div className='state-field'>
                                 <label>City</label><br />
                                 <Dropdown overlay={menu}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../css/TraderAccount.css";
-import { DatePicker, Menu, Dropdown, Button, Select, Table } from "antd";
+import { DatePicker, Menu, Dropdown, Button, Select, Table, Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import moment from 'moment';
 import {
@@ -19,6 +19,7 @@ import axios from "axios";
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl
+const { TabPane } = Tabs;
 
 const { Option } = Select;
 const TraderAccount = () => {
@@ -26,6 +27,8 @@ const TraderAccount = () => {
   const [selectedDate, onDateChange] = useState(null);
   const [totalAmount, setToalAmount] = useState(50000);
   const [userData, setUserData] = useState([]);
+  const [userBankDetails , setUserBankDetails] = useState([]);
+  const [userUpiDetails, setUserUpiDetails] = useState([]);
   const handleMenuVisibleChange = (visible) => {
     if (!visible) {
       document.getElementById("date-picker-dropdown").click();
@@ -36,11 +39,19 @@ const TraderAccount = () => {
     callApiToAllUserTradingAcountDetails();
     callApiToFetchUserWallet();
   }, []);
+
+  const callApiToTableData = useCallback((activKey)=>{
+    if(activKey === '1'){
+      callApiToAllUserTradingAcountDetails();
+    }else{
+      callApiToUserBankDetailsAndUpiDetails()
+    }
+  })
   const formatDate = (date) => {
     return date
       ? format(utcToZonedTime(date, "Asia/Kolkata"), "dd MMMM yyyy", {
-          locale: enIN,
-        })
+        locale: enIN,
+      })
       : "Select Date";
   };
   const handleDatePickerClick = (e) => {
@@ -69,7 +80,7 @@ const TraderAccount = () => {
     const monthStartingDate = format(selectedMonth, "dd MMMM yyyy");
     handleMenuVisibleChange(false);
     console.log("Week Starting Date:", monthStartingDate);
-    filterMonth(selectedMonth.getFullYear(), selectedMonth.getMonth()+1);
+    filterMonth(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1);
   };
   const handleWeekClick = (value) => {
     //const selectedWeek = subWeeks(new Date(), week);
@@ -79,7 +90,7 @@ const TraderAccount = () => {
     handleMenuVisibleChange(false);
     console.log("Week Starting Date:");
     callApiToAllUserTradingAcountDetails();
-    
+
   };
   const menu = (
     <Menu onVisibleChange={handleMenuVisibleChange}>
@@ -144,7 +155,7 @@ const TraderAccount = () => {
               All
             </Option>
           ))}
-          
+
         </Select>
       </Menu.Item>
     </Menu>
@@ -166,7 +177,7 @@ const TraderAccount = () => {
         return <span>₹{formattedAmount}</span>;
       },
     },
-   
+
   ];
 
   const callApiToAllUserTradingAcountDetails = () => {
@@ -178,7 +189,7 @@ const TraderAccount = () => {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post(`${apiurl}` + "/admin/filter-Transactions-With-Year-Month-Week", data, config)
       .then((res) => {
         setUserData(res.data.allData);
       })
@@ -187,17 +198,17 @@ const TraderAccount = () => {
       });
   };
 
-  const filterYear = (year) =>{
+  const filterYear = (year) => {
     let data = {
-      userid:id,
-      year:year
+      userid: id,
+      year: year
     }
     const token = localStorage.getItem('adminToken');
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post(`${apiurl}` + "/admin/filter-Transactions-With-Year-Month-Week", data, config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -206,19 +217,19 @@ const TraderAccount = () => {
       });
   }
 
-  const filterMonth = (year, month) =>{
+  const filterMonth = (year, month) => {
     console.log(year, month)
     let data = {
-      userid:id,
-      year:year,
-      month:month
+      userid: id,
+      year: year,
+      month: month
     }
     const token = localStorage.getItem('adminToken');
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/admin/filter-Transactions-With-Year-Month-Week", data,config)
+      .post(`${apiurl}` + "/admin/filter-Transactions-With-Year-Month-Week", data, config)
       .then((res) => {
         setUserData(res.data.transactions);
       })
@@ -227,23 +238,83 @@ const TraderAccount = () => {
       });
   }
 
-  const callApiToFetchUserWallet = () =>{
+  const callApiToFetchUserWallet = () => {
     let data = {
-      userid:id
+      userid: id
     }
     const token = localStorage.getItem('adminToken');
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    axios.post(`${apiurl}`+"/admin/fetch-particular-user-details-from-admin-using-userid",data,config)
-    .then((res)=>{
-      setToalAmount(res.data.result.tradingWallet + res.data.result.wallet);
-      console.log(res.data.result.tradingWallet)
-    })
-    .catch(err=>{
-      console.log(err)
-    })
+    axios.post(`${apiurl}` + "/admin/fetch-particular-user-details-from-admin-using-userid", data, config)
+      .then((res) => {
+        setToalAmount(res.data.result.tradingWallet + res.data.result.wallet);
+        console.log(res.data.result.tradingWallet)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   };
+
+  const columnsBankDetails = [
+    {
+      title:"Holder name",
+      dataIndex:"accountHolderName",
+      key:"accountHolderName"
+    },
+    {
+      title:"Bank name",
+      dataIndex:"bankName",
+      key:"bankName"
+    },
+    {
+      title:"Branch name",
+      dataIndex:"branchName",
+      key:"branchName"
+    },
+    {
+      title:"Account no",
+      dataIndex:"accountNumber",
+      key:"accountNumber"
+    },
+    {
+      title:"IFSC Code",
+      dataIndex:"ifscCode",
+      key:"ifscCode"
+    },
+    
+  ]
+
+  const upiDetails = [
+    {
+      title:"user Id",
+      dataIndex:"userId",
+      key:"userId"
+    },
+    {
+      title:'UPI ID',
+      dataIndex:"upiId",
+      key:"upiId"
+    }
+  ]
+  const callApiToUserBankDetailsAndUpiDetails =()=>{
+    let data = {
+      userId: id
+    }
+    const token = localStorage.getItem('adminToken');
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios.post("/admin/get-user-bank-and-upi-details", data, config)
+    .then((res)=>{
+      console.log(res.data)
+      setUserBankDetails(res.data.userBankDetails);
+      setUserUpiDetails(res.data.userUpiId)
+    })
+    .catch((err)=>{
+      console.log(err.response.data.message)
+    })
+  }
   return (
     <>
       <div className="trading-container">
@@ -264,25 +335,39 @@ const TraderAccount = () => {
             </div>
           </div>
         </div>
-        <div style={{ height: "500px", overflow: "auto", marginTop:"1rem" }}>
-          <Table dataSource={userData}
+        <div style={{ height: "500px", overflow: "auto", marginTop: "1rem" }}>
+          <Tabs defaultActiveKey="1" onChange={callApiToTableData}>
+            <TabPane tab="Deposite" key="1">
+              <Table dataSource={userData}
+                columns={[
+                  ...columns,
+                  {
+                    title: 'Deposit Date',
+                    dataIndex: 'date',
+                    key: 'date',
+                    render: (date) => {
+                      // Format the date using moment.js
+                      const formattedDate = moment(date).format('YYYY-MM-DD HH:mm');
 
-          
-             columns={[
-              ...columns,
-              {
-                title: 'Deposit Date',
-                dataIndex: 'date',
-                key: 'date',
-                render: (date) => {
-                  // Format the date using moment.js
-                  const formattedDate = moment(date).format('YYYY-MM-DD HH:mm');
-    
-                  return <span>{formattedDate}</span>;
-                },
-              },
-            ]}
-          />
+                      return <span>{formattedDate}</span>;
+                    },
+                  },
+                ]}
+              />
+            </TabPane>
+            <TabPane tab="Bank details" key="2">
+              <Table
+                columns={columnsBankDetails}
+                dataSource={userBankDetails}
+              />
+            </TabPane>
+            <TabPane tab="UPI ID" key="3">
+              <Table
+                columns={upiDetails}
+                dataSource={userUpiDetails}
+              />
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     </>

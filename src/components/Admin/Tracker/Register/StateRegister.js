@@ -154,10 +154,7 @@ const StateRegister = (props) => {
 
 
     return (
-
-
-        <>
-                
+        <>  
             <div>
                 <Modal
                     title="State Register"
