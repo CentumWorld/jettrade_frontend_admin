@@ -1253,7 +1253,7 @@ const RefferalPayout = () => {
         )}
 
         {!businessId && !franchiseToken &&  (
-          <TabPane tab="State Payout" key="3">
+          <TabPane tab="BMM Payout" key="3">
             <div>
               <Table
                 columns={columnsState}
@@ -1287,17 +1287,9 @@ const RefferalPayout = () => {
             </div>
           </TabPane>
         )}
-        {/* <TabPane tab="Franchise Payout" key="4">
-          <div>
-            <Table
-              columns={columnsFranch}
-              dataSource={franchiseDetails}
-              scroll={{ y: 400, x: true }}
-            />
-          </div>
-        </TabPane> */}
+        
 
-        {!stateHandlerToken && (
+        {/* {!stateHandlerToken && (
           <TabPane tab="Bussiness Developer Payout" key="5">
             <div>
               <Table
@@ -1313,9 +1305,9 @@ const RefferalPayout = () => {
               />
             </div>
           </TabPane>
-        )}
+        )} */}
 
-        {stateHandlerToken && (
+        {/* {stateHandlerToken && (
           <TabPane tab="Bussiness Developer Payout" key="5">
             <div>
               <Table
@@ -1331,7 +1323,7 @@ const RefferalPayout = () => {
               />
             </div>
           </TabPane>
-        )}
+        )} */}
 
    
         {adminToken &&  (

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from 'antd';
+import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu, DatePicker } from 'antd';
 import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message, Spin } from 'antd';
 import baseUrl from '../../../../baseUrl';
+import TextArea from 'antd/es/input/TextArea';
+import moment from 'moment';
+
 
 const apiurl = baseUrl.apiUrl
 
@@ -28,6 +31,10 @@ const BusinessDeveloperRegister = (props) => {
         password: "",
         referralid: '',
         city:"",
+        aadhar:"",
+        dob:"",
+        address:"",
+        pan_no:"",
         referredId:localStorage.getItem('franchiseRefferal')
     });
     const [aadharImage, setAadharImage] = useState({
@@ -70,9 +77,14 @@ const BusinessDeveloperRegister = (props) => {
 
 
     const stateRegiInputs = (e) => {
-        e.preventDefault();
+        
         setStateRegisterData({ ...stateRegisterData, [e.target.name]: e.target.value });
     };
+
+    const handleDateChange = (date, dateString) => {
+        setStateRegisterData({ ...stateRegisterData, dob: date });
+    };
+    
 
 
     //handle front aadhar image function
@@ -114,20 +126,23 @@ const BusinessDeveloperRegister = (props) => {
         const updateList = "updateData"
         setLoading(true);
         e.preventDefault();
-        console.log(stateRegisterData, panImage.file, aadharImage.file, backaadharImage.file);
+        console.log(stateRegisterData,panImage.file, aadharImage.file, backaadharImage.file);
         const formData = new FormData();
-        formData.append("referredId", localStorage.getItem('franchiseRefferal'))
+        formData.append("reffered_id", localStorage.getItem('franchiseRefferal'))
         formData.append("fname", stateRegisterData.fname);
         formData.append("lname", stateRegisterData.lname);
         formData.append("email", stateRegisterData.email);
         formData.append("phone", stateRegisterData.phone);
         formData.append("gender", stateRegisterData.gender);
         formData.append("password", stateRegisterData.password);
-        formData.append("businessDeveloperId", stateRegisterData.stateRegisterId);
-        formData.append("adhar_front_side", aadharImage.file);
-        formData.append("adhar_back_side", backaadharImage.file)
-        formData.append("panCard", panImage.file);
-        formData.append("buisnessCity", stateRegisterData.city);
+        formData.append("memberid", stateRegisterData.stateRegisterId);
+        formData.append("aadhar_front_side", aadharImage.file);
+        formData.append("aadhar_back_side", backaadharImage.file)
+        formData.append("pan_card", panImage.file);
+        formData.append("address", stateRegisterData.address);
+        formData.append("aadhar", stateRegisterData.aadhar);
+        formData.append("dob", stateRegisterData.dob);
+        formData.append("pan", stateRegisterData.pan_no);
 
 
         console.log(formData, "44");
@@ -138,7 +153,7 @@ const BusinessDeveloperRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post(`${apiurl}`+"/admin/create-business-developer", formData, config)
+        axios.post(`${apiurl}`+"/member/member-registration", formData, config)
             .then((res) => {
                 message.success(res.data.message)
                 setStateRegisterData({
@@ -147,7 +162,6 @@ const BusinessDeveloperRegister = (props) => {
                     email: "",
                     phone: "",
                     gender: "",
-                    state: '',
                     stateRegisterId: "",
                     password: "",
                 });
@@ -227,12 +241,13 @@ const BusinessDeveloperRegister = (props) => {
         }))
     }
 
+
     return (
 
         <>
             <div>
                 <Modal
-                    title="Business Developar Register page"
+                    title="Member Register"
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}
@@ -307,8 +322,8 @@ const BusinessDeveloperRegister = (props) => {
                                 </Select>
                             </div>
                             <div className='state-field'>
-                                <label>State</label>
-                                <Select
+                                <label>Address</label>
+                                {/* <Select
                                     placeholder="Select state"
                                     name="state"
                                     value={stateRegisterData.state}
@@ -321,11 +336,17 @@ const BusinessDeveloperRegister = (props) => {
                                             {state.state}
                                         </Option>
                                     ))}
-                                </Select>
+                                </Select> */}
+                                <TextArea rows={4} name="address"
+                                value={stateRegisterData.address}
+                                onChange={stateRegiInputs} placeholder="Enter your address" />
                             </div>
                             <div className='state-field'>
-                                <label>City</label><br />
-                                <Select
+                                <label>DOB</label><br />
+                                <DatePicker name="dob"
+                               value={stateRegisterData.dob ? moment(stateRegisterData.dob) : null}
+                                onChange={handleDateChange}/>
+                                {/* <Select
                                     placeholder="Select City"
                                     name="city"
                                     value={stateRegisterData.city}
@@ -342,7 +363,16 @@ const BusinessDeveloperRegister = (props) => {
                                             {city}
                                         </Option>
                                     ))}
-                                </Select>
+                                </Select> */}
+                            </div>
+                            <div className='state-field'>
+                                <label>Aadhar no.</label>
+                                <Input
+                                placeholder='Aadhar no.'
+                                name="aadhar"
+                                value={stateRegisterData.aadhar}
+                                onChange={stateRegiInputs}
+                            />
                             </div>
                         <div className='state-field'>
                             <label>Front aadhar card</label>
@@ -366,6 +396,14 @@ const BusinessDeveloperRegister = (props) => {
                                 placeholder='Pan'
                                 name="pan"
                                 onChange={handleClickPanCardImage}
+                            />
+                        </div>
+                        <div className='state-field'>
+                            <label>Pan no. </label>
+                            <Input type='text'
+                                placeholder='Pan no.'
+                                name="pan_no"
+                                onChange={stateRegiInputs}
                             />
                         </div>
                         <div className='state-field'>

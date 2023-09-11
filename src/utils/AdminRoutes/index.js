@@ -84,16 +84,16 @@ const Adminroutes = [
     subRoutes: [
       {
         path: "tracker/state-tracer",
-        name: "State Handler(SHO)",
+        name: "BMM",
       },
       {
         path: "tracker/frenchie",
         name: "Franchise",
       },
-      {
-        path: "tracker/businness-developer",
-        name: "Business Developer",
-      },
+      // {
+      //   path: "tracker/businness-developer",
+      //   name: "Business Developer",
+      // },
     ],
   },
   {

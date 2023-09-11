@@ -39,7 +39,7 @@ const BusinessDeveloper = () => {
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
   const [businessId, setbussinessId] = useState("");
-  const [bdVerify, setBdVerify] = useState(false);
+  const [memberVerify, setMemberVerify] = useState(false);
   const [aadharCard, setAadharCard] = useState({
     placeholder: "",
     file: null,
@@ -88,9 +88,9 @@ const BusinessDeveloper = () => {
 
   const columns = [
     {
-      title: "Business ID",
-      dataIndex: "businessDeveloperId",
-      key: "businessDeveloperId",
+      title: "Member ID",
+      dataIndex: "memberid",
+      key: "memberid",
     },
     {
       title: "First Name",
@@ -114,19 +114,20 @@ const BusinessDeveloper = () => {
       key: "email",
     },
     {
-      title: "Gender",
-      dataIndex: "gender",
-      key: "gender",
+      title:"Adress",
+      dataIndex:"address",
+      key:"address"
     },
+    
     {
       title: "Referred ID",
-      dataIndex: "referredId",
-      key: "referredId",
+      dataIndex: "reffered_id",
+      key: "reffered_id",
     },
     {
       title: "Referral ID",
-      dataIndex: "referralId",
-      key: "referralId",
+      dataIndex: "refferal_id",
+      key: "refferal_id",
       render: (text) => (
         <span
           style={{ cursor: "pointer", userSelect: "all" }}
@@ -140,12 +141,7 @@ const BusinessDeveloper = () => {
       ),
     },
     {
-      title: "City",
-      dataIndex: "buisnessCity",
-      key: "buisnessCity",
-    },
-    {
-      title: "Status",
+      title: "Block Status",
       dataIndex: "isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
@@ -157,29 +153,14 @@ const BusinessDeveloper = () => {
       },
     },
     {
-      title: "Verify",
-      dataIndex: "isVerify",
-      render: (isVerify) => {
-        const cellStyle = isVerify ? { color: "green" } : { color: "red" };
+      title: "Status",
+      dataIndex: "status",
+      render: (status) => {
+        const cellStyle = status ? { color: "green" } : { color: "red" };
         return (
-          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verified "}</span>
+          <span style={cellStyle}>{status ? "Verified" : "Not Verified "}</span>
         );
       },
-    },
-    {
-      title: "Delete",
-      dataIndex: "isDeleted",
-      render: (isDeleted) => {
-        const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
-        return (
-          <span style={cellStyle}>{isDeleted ? "Deleted" : "Not Deleted"}</span>
-        );
-      },
-    },
-    {
-      title: "P/R",
-      dataIndex: "paymentRequestCount",
-      key: "paymentRequestCount",
     },
     {
       title: "Action",
@@ -198,8 +179,8 @@ const BusinessDeveloper = () => {
                 record.isBlocked,
                 record.referredId,
                 record.isDeleted,
-                record.businessDeveloperId,
-                record.isVerify
+                record.memberid,
+                record.status
               )
             }
             style={{ cursor: "pointer" }}
@@ -210,7 +191,7 @@ const BusinessDeveloper = () => {
   ];
   //token
   const token =
-    localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken");
+    localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken") || localStorage.getItem("franchiseToken");
   const stateToken = localStorage.getItem("stateHandlerToken");
   const frenchiseToken = localStorage.getItem("franchiseToken");
   //referralId
@@ -224,8 +205,11 @@ const BusinessDeveloper = () => {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
+      const data = {
+        referralId: franchiseRefferal
+      }
       axios
-        .get(`${apiurl}` + "/admin/fetch-all-businessDeveloper", config)
+        .post(`${apiurl}` + "/franchise/fetch-member-by-referral-id-Of-franchise",data, config)
         .then((res) => {
           setLoading(true);
           setbussinessData(res.data.data);
@@ -295,7 +279,7 @@ const BusinessDeveloper = () => {
     setRefferedID(refferalid);
     setIsDeleted(businessDeveloperDelete);
     setbussinessId(bussinessId);
-    setBdVerify(verify);
+    setMemberVerify(verify);
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -314,13 +298,13 @@ const BusinessDeveloper = () => {
     } else if (e.key === "account") {
       navigate(`/admindashboard/tracker/business-account/${businessId}`);
     } else if (e.key === "verify") {
-      callApiToVerifyBD(bdVerify);
+      callApiToVerifyMember(memberVerify);
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify" disabled={bdVerify}>
+      <Menu.Item key="verify" disabled={memberVerify}>
         Verify
       </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
@@ -333,7 +317,7 @@ const BusinessDeveloper = () => {
 
   const subMenu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify" disabled={bdVerify}>
+      <Menu.Item key="verify" disabled={memberVerify}>
         Verify
       </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
@@ -548,19 +532,19 @@ const BusinessDeveloper = () => {
       },
     };
     let data = {
-      id: myID,
+      _id: myID,
     };
     axios
       .post(
-        `${apiurl}` + "/admin/get-one-business-developer-details",
+        `${apiurl}` + "/admin/fetch-particular-member-details",
         data,
         config
       )
       .then((res) => {
-        console.log(res.data);
-        setAadharCard({ placeholder: res.data.data.adhar_front_side });
-        setAadharCardBackSide({ placeholder: res.data.data.adhar_back_side });
-        setPanCard({ placeholder: res.data.data.panCard });
+        console.log(res.data.result);
+        setAadharCard({ placeholder: res.data.result.aadhar_front_side });
+        setAadharCardBackSide({ placeholder: res.data.result.aadhar_back_side });
+        setPanCard({ placeholder: res.data.result.pan_card });
       })
       .catch((err) => {
         message.error(err.response.data.message);
@@ -736,10 +720,10 @@ const BusinessDeveloper = () => {
       });
   };
 
-  const callApiToVerifyBD = (bdVerify) => {
+  const callApiToVerifyMember = (memberVerify) => {
     Modal.confirm({
-      title: "Verify Business Developer",
-      content: `Are you sure you want to verify this Business Developer?`,
+      title: "Verify Member",
+      content: `Are you sure you want to verify this Member?`,
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
@@ -753,10 +737,10 @@ const BusinessDeveloper = () => {
         };
         const data = {
           id: myID,
-          isVerify: bdVerify,
+          status: !memberVerify,
         };
         axios
-          .post(`${apiurl}` + "/admin/verify-business-developer", data, config)
+          .post(`${apiurl}` + "/admin/verify-member", data, config)
           .then((res) => {
             message.success(res.data.message);
             fetchBussinesDeveloperDataApi();
@@ -844,12 +828,12 @@ const BusinessDeveloper = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <span style={{ color: "wheat" }}>
+            <span style={{ color: "wheat", display:"flex" }}>
               <BiArrowBack
                 style={{ cursor: "pointer" }}
                 onClick={gotoDashboard}
               />
-              &nbsp;Business Developer
+              &nbsp;&nbsp;&nbsp;Member
             </span>
 
             <Search
@@ -863,7 +847,7 @@ const BusinessDeveloper = () => {
 
             {frenchiseToken ? (
               <Button type="primary" onClick={showModal}>
-                <AiFillPlusCircle /> &nbsp;&nbsp;Add Business Developer
+                <AiFillPlusCircle /> &nbsp;&nbsp;Add member
               </Button>
             ) : (
               ""
@@ -1006,12 +990,11 @@ const BusinessDeveloper = () => {
                 style={{ cursor: "pointer" }}
               />
             </label>
-            <Button
-              // disabled={uploadButton}
+            {/* <Button
               onClick={uploadAadhar}
             >
               Upload
-            </Button>
+            </Button> */}
 
             <Button
               className="id-card"
@@ -1043,12 +1026,11 @@ const BusinessDeveloper = () => {
                 style={{ cursor: "pointer" }}
               />
             </label>
-            <Button
-              //  disabled={uploadButton}
+            {/* <Button
               onClick={uploadAadharBackSide}
             >
               Upload
-            </Button>
+            </Button> */}
 
             <Button
               className="id-card"
@@ -1083,12 +1065,11 @@ const BusinessDeveloper = () => {
                 style={{ cursor: "pointer" }}
               />
             </label>
-            <Button
-              // disabled={uploadButtonPan}
+            {/* <Button
               onClick={uploadPan}
             >
               Upload
-            </Button>
+            </Button> */}
 
             <Button
               className="id-card"

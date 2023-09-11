@@ -30,8 +30,8 @@ const franchiseAdminRoutes = [
     target: "_blank",
   },
   {
-    path: "tracker/businness-developer",
-    name: "Create BD",
+    path: "tracker/create-member",
+    name: "Create Member",
     icon: <MdOutlineCreate />,
   },
   {
@@ -44,14 +44,6 @@ const franchiseAdminRoutes = [
     name: "Manage",
     icon: <SiPivotaltracker />,
     subRoutes: [
-      {
-        path: "tracker/businness-developer",
-        name: "Business Developer",
-      },
-      {
-        path: "tracker/members",
-        name: "Members",
-      },
       {
         path: "tracker/traders",
         name: "Traders",

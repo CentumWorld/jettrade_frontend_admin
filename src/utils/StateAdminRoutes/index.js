@@ -52,10 +52,6 @@ const stateAdminRoutes = [
           name :'Franchise'
         },
         {
-          path:'tracker/businness-developer',
-          name:'Business Developer'
-        },
-        {
           path:'tracker/members',
           name:'Members'
         },

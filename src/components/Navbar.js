@@ -251,12 +251,12 @@ function Navbar() {
       <Menu onClick={adminSubAdminModal}>
         <Menu.Item key="admin">Admin</Menu.Item>
         <Menu.Item key="subadmin">Back Office</Menu.Item>
-        <Menu.Item key="sho">State Head Officer</Menu.Item>
+        <Menu.Item key="sho">BMM</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
+        {/* <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
         {/* <Menu.Item key="video">Video Creator</Menu.Item> */}
       </Menu>
-    ); 
+    );  
 
     const handleLogout = () => {
       fetch("/admin/logout", {
