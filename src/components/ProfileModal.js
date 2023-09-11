@@ -32,7 +32,7 @@ const ProfileModal = ({ visible, onCancel }) => {
   useEffect(() => {
     async function fetchStateDetails() {
       try {
-        const response = await fetch("/state/get-own-state-details", {
+        const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
           method: "GET",
           headers: {
             Accept: "application/json",
@@ -49,7 +49,7 @@ const ProfileModal = ({ visible, onCancel }) => {
     // franchise details api
     async function fetchFranchiseDetails() {
       try {
-        const response = await fetch("/franchise/get-own-franchise-details", {
+        const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
           method: "GET",
           headers: {
             Accept: "application/json",
@@ -67,7 +67,7 @@ const ProfileModal = ({ visible, onCancel }) => {
     async function fetchBussinessDetails() {
       try {
         const response = await fetch(
-          "/businessDeveloper/get-own-business-developer-details",
+          `${apiurl}`+"/businessDeveloper/get-own-business-developer-details",
           {
             method: "GET",
             headers: {
@@ -85,7 +85,7 @@ const ProfileModal = ({ visible, onCancel }) => {
 
     async function fetchSubAdminDetails() {
       try {
-        const response = await fetch("/subAdmin/get-own-sub-admin-details", {
+        const response = await fetch(`${apiurl}`+"/subAdmin/get-own-sub-admin-details", {
           method: "GET",
           headers: {
             Accept: "application/json",
