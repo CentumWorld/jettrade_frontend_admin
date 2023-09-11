@@ -815,7 +815,9 @@ const Refferal = () => {
         <div className="refferal-dashboard-card">
           <div className="refferal-profile-verification-heading">
             <div className="txt-btn"></div>
-            <h5 style={{ fontFamily: "Calibri" }}>Referral Profile Details</h5>
+            <h5 style={{ fontFamily: "Calibri", display: "inline-block" }}>
+              Referral Profile Details
+            </h5>
             <NavLink
               className="create-referral"
               to="/admindashboard/createreferral"
