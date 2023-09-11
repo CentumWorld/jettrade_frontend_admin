@@ -116,7 +116,7 @@ const BusinessDeveloperRegister = (props) => {
 
         console.log(formData, "44");
 
-        const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+        const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken") || localStorage.getItem('franchiseToken');
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
