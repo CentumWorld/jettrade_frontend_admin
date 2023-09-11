@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
 import AccountModal from "./AccountModal";
 import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
+import baseUrl from "../baseUrl";
+
+const apiurl = baseUrl.apiUrl
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -175,11 +178,11 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        {/* <Menu.Item key="admin">Admin</Menu.Item>
-        <Menu.Item key="subadmin">Back Office</Menu.Item> */}
-        {/* <Menu.Item key="sho">State Head Officer</Menu.Item>
+        <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="subadmin">Back Office</Menu.Item> 
+         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
+        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
         <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
     );

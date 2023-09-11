@@ -27,7 +27,11 @@ const DisplayCard = () => {
   const isBusinessHandler = localStorage.getItem("bussinessAdminToken");
   const isFrenchise = localStorage.getItem('franchiseToken');
   const isSubAdmin = localStorage.getItem('subAdminToken');
-  const [dayDifference, setDayDifference] = useState(0)
+
+  const Id = localStorage.getItem('stateHandlerId') || localStorage.getItem('adminId') || localStorage.getItem('businessId') || localStorage.getItem('frenchiseId');
+  const ReferralId = localStorage.getItem('stateHandlerRefferalID') || localStorage.getItem('adminRefferalId') || localStorage.getItem('bussinessRefferalId') || localStorage.getItem('franchiseRefferal') ;
+
+  const [dayDifference, setDayDifference] = useState(0);
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
@@ -177,7 +181,7 @@ const DisplayCard = () => {
   );
 
   useEffect(() => {
-    setAdminDetails({ adminid: localStorage.getItem("adminId") });
+    // setAdminDetails({ adminid: localStorage.getItem("adminId") });
     callApiToSubscriptionCharge();
     callApiToTotalUserRunningTrialExpire();
     callApiToStateUpiDetails();
@@ -298,58 +302,58 @@ const DisplayCard = () => {
 
   };
 
-  const callApiToEligibaleWithdrawalForState = ()=>{
+  const callApiToEligibaleWithdrawalForState = () => {
     console.log('opne')
     const config = {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
     let data = {
-      stateHandlerId:localStorage.getItem("stateHandlerId")
+      stateHandlerId: localStorage.getItem("stateHandlerId")
     }
-    axios.post(`${apiurl}` + "/state/eligible-for-withdrawal",data,config)
-    .then((res)=>{
-      setPaymentModal(res.data.updatedState.firstPayment);
-    })
-    .catch((err)=>{
-      console.log(err.response.data.message)
-    })
+    axios.post(`${apiurl}` + "/state/eligible-for-withdrawal", data, config)
+      .then((res) => {
+        setPaymentModal(res.data.updatedState.firstPayment);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
   }
 
-  const callApiToEligibaleWithdrawalForFranchise = ()=>{
+  const callApiToEligibaleWithdrawalForFranchise = () => {
     console.log('opne')
     const config = {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
     let data = {
-      franchiseId:localStorage.getItem("frenchiseId")
+      franchiseId: localStorage.getItem("frenchiseId")
     }
-    axios.post(`${apiurl}` + "/franchise/eligible-franchise-for-withdrawal",data,config)
-    .then((res)=>{
-      console.log(res.data)
-      setPaymentModal(res.data.updatedFranchise.firstPayment);
-    })
-    .catch((err)=>{
-      console.log(err.response.data.message)
-    })
+    axios.post(`${apiurl}` + "/franchise/eligible-franchise-for-withdrawal", data, config)
+      .then((res) => {
+        console.log(res.data)
+        setPaymentModal(res.data.updatedFranchise.firstPayment);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
 
   }
 
-  const callApiToEligibaleWithdrawalForBD = ()=>{
+  const callApiToEligibaleWithdrawalForBD = () => {
     console.log('opne')
     const config = {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
     let data = {
-      businessDeveloperId:localStorage.getItem("businessId")
+      businessDeveloperId: localStorage.getItem("businessId")
     }
-    axios.post(`${apiurl}` + "/businessDeveloper/eligible-business-developer-for-withdrawal",data,config)
-    .then((res)=>{
-      console.log(res.data)
-      setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
-    })
-    .catch((err)=>{
-      console.log(err.response.data.message)
-    })
+    axios.post(`${apiurl}` + "/businessDeveloper/eligible-business-developer-for-withdrawal", data, config)
+      .then((res) => {
+        console.log(res.data)
+        setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message)
+      })
   }
 
 
@@ -378,7 +382,7 @@ const DisplayCard = () => {
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
           setDayDifference(30 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
-          if(differenceInDays > 30 ){
+          if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForState()
           }
 
@@ -410,7 +414,8 @@ const DisplayCard = () => {
           const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
           setDayDifference(7 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
-          if(differenceInDays > 7 ){
+
+          if (differenceInDays > 7) {
             callApiToEligibaleWithdrawalForBD()
           }
         })
@@ -443,7 +448,7 @@ const DisplayCard = () => {
           setDayDifference(30 - differenceInDays)
           console.log(`Difference in days: ${differenceInDays}`);
 
-          if(differenceInDays > 30 ){
+          if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForFranchise()
           }
         })
@@ -666,6 +671,26 @@ const DisplayCard = () => {
   return (
     <>
       <div className="card1-container">
+
+        {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
+          <div className="card1">
+            <div className="d-flex">
+              <h6>UserID :</h6> &nbsp;&nbsp;{" "}
+              <span style={{ color: "yellow" }}>{isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? Id : null}</span>
+            </div>
+            <div className="d-flex">
+              <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={goToRegister}
+              >
+                {isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? ReferralId : null}
+              </span>
+            </div>
+          </div>
+        )}
+
+
         {isAdmin && (
           <div className="card1">
             <RunningProgressiveBar percent={progressiveBar} />
@@ -681,23 +706,7 @@ const DisplayCard = () => {
             <ExpireProgressiveBar percent={progressiveBar} />
           </div>
         )}
-        {isAdmin && (
-          <div className="card1">
-            <div className="d-flex">
-              <h6>UserID :</h6> &nbsp;&nbsp;{" "}
-              <span style={{ color: "yellow" }}>{adminDetails.adminid}</span>
-            </div>
-            <div className="d-flex">
-              <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
-              <span
-                style={{ color: "yellow", cursor: "pointer" }}
-                onClick={goToRegister}
-              >
-                admin@123
-              </span>
-            </div>
-          </div>
-        )}
+
         <div className="card1">
           <div className="live-chat">
             <h6>Live Chat</h6>
@@ -1000,7 +1009,7 @@ const DisplayCard = () => {
           onCancel={closeStatePaymentModal}
           footer={null}
         >
-          {isBusinessHandler?<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>:<h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>}
+          {isBusinessHandler ? <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5> : <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>}
         </Modal >}
     </>
   );
