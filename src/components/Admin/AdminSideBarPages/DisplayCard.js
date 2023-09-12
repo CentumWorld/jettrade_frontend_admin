@@ -29,7 +29,7 @@ const DisplayCard = () => {
   const isSubAdmin = localStorage.getItem('subAdminToken');
 
   const Id = localStorage.getItem('stateHandlerId') || localStorage.getItem('adminId') || localStorage.getItem('businessId') || localStorage.getItem('frenchiseId');
-  const ReferralId = localStorage.getItem('stateHandlerRefferalID') || localStorage.getItem('adminRefferalId') || localStorage.getItem('bussinessRefferalId') || localStorage.getItem('franchiseRefferal') ;
+  const ReferralId = localStorage.getItem('stateHandlerRefferalID') || localStorage.getItem('adminRefferalId') || localStorage.getItem('bussinessRefferalId') || localStorage.getItem('franchiseRefferal');
 
   const [dayDifference, setDayDifference] = useState(0);
 
@@ -682,7 +682,7 @@ const DisplayCard = () => {
               <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
               <span
                 style={{ color: "yellow", cursor: "pointer" }}
-                onClick={isAdmin ? goToRegister:null}
+                onClick={isAdmin ? goToRegister : null}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? ReferralId : null}
               </span>
@@ -707,7 +707,7 @@ const DisplayCard = () => {
           </div>
         )}
 
-        <div className="card1">
+        {/* <div className="card1">
           <div className="live-chat">
             <h6>Live Chat</h6>
           </div>
@@ -723,24 +723,6 @@ const DisplayCard = () => {
                   <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
                 </Dropdown>
               </div>
-              {/* <div className="d-flex">
-                <h6>Trader:</h6>&nbsp;&nbsp;{" "}
-                <span
-                  style={{ color: "yellow", cursor: "pointer" }}
-                  onClick={joinChatTrader}
-                >
-                  join
-                </span>
-              </div>
-              <div className="d-flex">
-                <h6>Referral:</h6>&nbsp;&nbsp;{" "}
-                <span
-                  style={{ color: "yellow", cursor: "pointer" }}
-                  onClick={joinChatRefferal}
-                >
-                  join
-                </span>
-              </div> */}
             </>
           ) : null}
 
@@ -779,7 +761,7 @@ const DisplayCard = () => {
               </Dropdown>
             </div>
           )}
-        </div>
+        </div> */}
         {isStateHandler || isBusinessHandler || isFrenchise ? (
           <div className="card1">
             <div className="live-chat">

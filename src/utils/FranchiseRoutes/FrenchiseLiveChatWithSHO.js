@@ -9,89 +9,89 @@ import FrenchiseChatWithSHO from './FrenchiseChatWithSHO';
 
 const apiurl = baseUrl.apiUrl
 
- const socket = io.connect('http://103.149.68.19:8081');
+//  const socket = io.connect('http://103.149.68.19:8081');
 // const socket = io.connect('http://localhost:4000');
 
 const FrenchiseLiveChatWithSHO = () => {
-    const frenchFname = localStorage.getItem('frenchFname');
-    const frenchId = localStorage.getItem('frenchiseId');
+    // const frenchFname = localStorage.getItem('frenchFname');
+    // const frenchId = localStorage.getItem('frenchiseId');
 
-    const [frenchname, setFrenchname] = useState(frenchFname);
-    const [room, setRoom] = useState(frenchId );
-    const [showChat, setShowChat] = useState(false);
-    const [type, setType] = useState('FRENCHWITHSHO');
+    // const [frenchname, setFrenchname] = useState(frenchFname);
+    // const [room, setRoom] = useState(frenchId );
+    // const [showChat, setShowChat] = useState(false);
+    // const [type, setType] = useState('FRENCHWITHSHO');
 
-    const joinRoom = () => {
-        if (frenchname !== "" && room !== "") {
-            // console.log(frenchname,room,type)
-            socket.emit("join_room", room, type);
-            setShowChat(true);
-        }
-    }
+    // const joinRoom = () => {
+    //     if (frenchname !== "" && room !== "") {
+    //         // console.log(frenchname,room,type)
+    //         socket.emit("join_room", room, type);
+    //         setShowChat(true);
+    //     }
+    // }
 
-    useEffect(() => {
-        exitChatFrench();
-    }, [])
+    // useEffect(() => {
+    //     exitChatFrench();
+    // }, [])
 
-    const exitChatFrench = () => {
-        let token = localStorage.getItem('franchiseToken')
-        let data = {
-            frenchiseId: localStorage.getItem('frenchiseId')
-        }
+    // const exitChatFrench = () => {
+    //     let token = localStorage.getItem('franchiseToken')
+    //     let data = {
+    //         frenchiseId: localStorage.getItem('frenchiseId')
+    //     }
 
-        let config = {
-            headers: { 'Authorization': `Bearer ${token}` }
-        }
+    //     let config = {
+    //         headers: { 'Authorization': `Bearer ${token}` }
+    //     }
 
-        axios.post(`${apiurl}`+'/frenchise/frenchise/fetch-chat-details-frechise-with-sho', data, config)
-            .then((result) => {
-                const length = result.data.frenchChatDetailsWithSHO.length;
-                console.log(length);
-                if (length > 0) {
-                    joinRoom()
-                    setShowChat(true)
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    //     axios.post(`${apiurl}`+'/frenchise/frenchise/fetch-chat-details-frechise-with-sho', data, config)
+    //         .then((result) => {
+    //             const length = result.data.frenchChatDetailsWithSHO.length;
+    //             console.log(length);
+    //             if (length > 0) {
+    //                 joinRoom()
+    //                 setShowChat(true)
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
 
-    }
+    // }
 
 
-    return (
-        <>
-            <div className="text-center">
-                {!showChat ? (
-                    <div className='joinChatContainer'>
-                <h3 >Join a Chat</h3>
-                <Input
-                    type="text"
-                    value={frenchname}
-                    placeholder='Join......'
-                    onChange={(event) => { setFrenchname(event.target.value) }
-                    }
-                    disabled={true}
-                     />
-                <Input
-                    type="text"
-                    value={room}
-                    placeholder='Room Id...'
-                    onChange={(event) => { setRoom(event.target.value) }
-                    }
-                    disabled={true} />
+    // return (
+    //     <>
+    //         <div className="text-center">
+    //             {!showChat ? (
+    //                 <div className='joinChatContainer'>
+    //             <h3 >Join a Chat</h3>
+    //             <Input
+    //                 type="text"
+    //                 value={frenchname}
+    //                 placeholder='Join......'
+    //                 onChange={(event) => { setFrenchname(event.target.value) }
+    //                 }
+    //                 disabled={true}
+    //                  />
+    //             <Input
+    //                 type="text"
+    //                 value={room}
+    //                 placeholder='Room Id...'
+    //                 onChange={(event) => { setRoom(event.target.value) }
+    //                 }
+    //                 disabled={true} />
 
-                    <button className='btn btn-primary' onClick={joinRoom} style={{fontFamily:'Calibri'}} >Join Chat</button>
-                </div>
+    //                 <button className='btn btn-primary' onClick={joinRoom} style={{fontFamily:'Calibri'}} >Join Chat</button>
+    //             </div>
 
-            )
-            : (
-            <FrenchiseChatWithSHO socket={socket} frenchname={frenchname} room={room} />
-                )}
-        </div >
+    //         )
+    //         : (
+    //         <FrenchiseChatWithSHO socket={socket} frenchname={frenchname} room={room} />
+    //             )}
+    //     </div >
 
-        </>
-    )
+    //     </>
+    // )
 }
 
 export default FrenchiseLiveChatWithSHO

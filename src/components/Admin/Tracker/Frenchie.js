@@ -604,7 +604,8 @@ const Frenchie = () => {
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
-          localStorage.getItem("subAdminToken");
+          localStorage.getItem("subAdminToken") ||
+           localStorage.getItem('stateHandlerToken');
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,

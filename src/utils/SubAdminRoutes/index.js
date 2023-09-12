@@ -106,21 +106,21 @@ const subAdminRoutes = [
         // },
       ],
     },
-    {
-      path: "/admindashboard",
-      name: "Chat",
-      icon: <BsFillChatTextFill />,
-      subRoutes: [
-        {
-          path: "trader-chat",
-          name: "Traders",
-        },
-        {
-          path: "refferal-chat",
-          name: "Referral",
-        },
-      ],
-    },
+    // {
+    //   path: "/admindashboard",
+    //   name: "Chat",
+    //   icon: <BsFillChatTextFill />,
+    //   subRoutes: [
+    //     {
+    //       path: "trader-chat",
+    //       name: "Traders",
+    //     },
+    //     {
+    //       path: "refferal-chat",
+    //       name: "Referral",
+    //     },
+    //   ],
+    // },
     // {
     //   path: "/admindashboard/video",
     //   name: "upload videos",

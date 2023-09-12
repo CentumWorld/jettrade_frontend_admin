@@ -9,124 +9,124 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://103.149.68.19:8081');
+// const socket = io.connect('http://103.149.68.19:8081');
 // const socket = io.connect('http://localhost:4000');
 
 const StateLiveChatWithFrench = () => {
 
-    const frenchName = localStorage.getItem('stateHandlerName')
-    const [frenchiseename, setFrenchiseename] = useState(frenchName);
-    const [room1, setRoom] = useState(localStorage.getItem('stateHandlerId'));
-    const [showChat, setShowChat] = useState(false);
-    const [type, setType] = useState('STATE')
-    const [chatFrenchisee, setChatFrenchisee] = useState([]);
-    const [notification, setNotificaton] = useState('');
-    const [SHOownDetails, setSHOownDetails] = useState("");
+    // const frenchName = localStorage.getItem('stateHandlerName')
+    // const [frenchiseename, setFrenchiseename] = useState(frenchName);
+    // const [room1, setRoom] = useState(localStorage.getItem('stateHandlerId'));
+    // const [showChat, setShowChat] = useState(false);
+    // const [type, setType] = useState('STATE')
+    // const [chatFrenchisee, setChatFrenchisee] = useState([]);
+    // const [notification, setNotificaton] = useState('');
+    // const [SHOownDetails, setSHOownDetails] = useState("");
 
 
 
-    const handleDataFromChild = (data) => {
-        setShowChat(data);
-    };
-    const joinRoom = (id) => {
+    // const handleDataFromChild = (data) => {
+    //     setShowChat(data);
+    // };
+    // const joinRoom = (id) => {
 
-        setRoom(id);
+    //     setRoom(id);
 
-        if (frenchiseename !== "" && room1 !== "") {
-            socket.emit("join_room", room1, type);
-            // ---------------------------------
-            setShowChat(true);
-            setNotificaton('');
-        }
-    }
+    //     if (frenchiseename !== "" && room1 !== "") {
+    //         socket.emit("join_room", room1, type);
+    //         // ---------------------------------
+    //         setShowChat(true);
+    //         setNotificaton('');
+    //     }
+    // }
 
-    useEffect(() => {
-        setNotificaton(localStorage.getItem('noti'))
-        SHOfetchOwnDetails()
-        fetchAllUserChat();
+    // useEffect(() => {
+    //     setNotificaton(localStorage.getItem('noti'))
+    //     SHOfetchOwnDetails()
+    //     fetchAllUserChat();
 
-        //admin logout
-        return () => {
-            socket.emit('adminLogout', 'admin');
-            //socket.disconnect();
-        }
-    }, [])
+    //     //admin logout
+    //     return () => {
+    //         socket.emit('adminLogout', 'admin');
+    //         //socket.disconnect();
+    //     }
+    // }, [])
 
-    const SHOfetchOwnDetails = () => {
-        let token = localStorage.getItem('stateHandlerToken');
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-        axios.get(`${apiurl}`+'/state/get-own-state-details', config)
-            .then((result) => {
-                  console.log(result.data.data.referralId)
-                 setSHOownDetails(result.data.data.referralId);
-                 fetchAllUserChat(result.data.data.referralId)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-
-    const fetchAllUserChat = (referralId) => {
-        let token = localStorage.getItem('stateHandlerToken');
-
-        const data = {
-            refferedId:referralId
-        }
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-
-        axios.post(`${apiurl}`+'/state/state/fetch-frenchise-chat-count-with-state', data,config)
-            .then((result) => {
-                // console.log(result.data.frenchChatCount,'82')
-                 setChatFrenchisee(result.data.frenchChatCount);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+    // const SHOfetchOwnDetails = () => {
+    //     let token = localStorage.getItem('stateHandlerToken');
+    //     const config = {
+    //         headers: { Authorization: `Bearer ${token}` }
+    //     };
+    //     axios.get(`${apiurl}`+'/state/get-own-state-details', config)
+    //         .then((result) => {
+    //               console.log(result.data.data.referralId)
+    //              setSHOownDetails(result.data.data.referralId);
+    //              fetchAllUserChat(result.data.data.referralId)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
 
-    return (
-        <>
-            <div className="text-center">
-                {!showChat ? (
-                    <div className='chat-window'>
-                        <div className="chat-header">
-                            <p>Chat History</p>
-                        </div>
-                        <div className='chat-body'>
-                            <ScrollToBottom className='message-container'>
-                                {chatFrenchisee.map((item, index) => (
-                                    <div key={index}>
-                                        <div className='chat-request-person'
-                                            onClick={() => joinRoom(item.frenchiseId)}
-                                        >
+    // const fetchAllUserChat = (referralId) => {
+    //     let token = localStorage.getItem('stateHandlerToken');
 
-                                            <div><img src={chatIcon} /> &nbsp;{item.frenchiseId}</div>
-                                            {notification === item.frenchiseId ? <div style={{ color: 'green' }}><AiOutlineBell /></div> : ''}
-                                        </div>
-                                    </div>
-                                ))}
+    //     const data = {
+    //         refferedId:referralId
+    //     }
+    //     const config = {
+    //         headers: { Authorization: `Bearer ${token}` }
+    //     };
 
-                            </ScrollToBottom>
-                        </div>
-                        <div className='chat-footer'>
+    //     axios.post(`${apiurl}`+'/state/state/fetch-frenchise-chat-count-with-state', data,config)
+    //         .then((result) => {
+    //             // console.log(result.data.frenchChatCount,'82')
+    //              setChatFrenchisee(result.data.frenchChatCount);
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
-                        </div>
 
-                    </div>
-                )
-                    : (
-                        <StateChatWithFrench socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
-                    )}
-            </div>
+    // return (
+    //     <>
+    //         <div className="text-center">
+    //             {!showChat ? (
+    //                 <div className='chat-window'>
+    //                     <div className="chat-header">
+    //                         <p>Chat History</p>
+    //                     </div>
+    //                     <div className='chat-body'>
+    //                         <ScrollToBottom className='message-container'>
+    //                             {chatFrenchisee.map((item, index) => (
+    //                                 <div key={index}>
+    //                                     <div className='chat-request-person'
+    //                                         onClick={() => joinRoom(item.frenchiseId)}
+    //                                     >
 
-        </>
-    )
+    //                                         <div><img src={chatIcon} /> &nbsp;{item.frenchiseId}</div>
+    //                                         {notification === item.frenchiseId ? <div style={{ color: 'green' }}><AiOutlineBell /></div> : ''}
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+
+    //                         </ScrollToBottom>
+    //                     </div>
+    //                     <div className='chat-footer'>
+
+    //                     </div>
+
+    //                 </div>
+    //             )
+    //                 : (
+    //                     <StateChatWithFrench socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
+    //                 )}
+    //         </div>
+
+    //     </>
+    // )
 }
 
 export default StateLiveChatWithFrench

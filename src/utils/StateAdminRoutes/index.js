@@ -52,21 +52,21 @@ const stateAdminRoutes = [
       name: "Video",
       icon: <AiFillVideoCamera />,
     },
-    {
-      path: "/admindashboard/chat",
-      name: "Chat",
-      icon: <BsFillChatTextFill />,
-      subRoutes:[
-        {
-          path:'chat/state-handler-chat',
-          name:'Chat with Admin'
-        },
-        {
-          path:'chat/state-chat-with-french',
-          name :'Chat with Frenchise'
-        },
-      ]
-    },
+    // {
+    //   path: "/admindashboard/chat",
+    //   name: "Chat",
+    //   icon: <BsFillChatTextFill />,
+    //   subRoutes:[
+    //     {
+    //       path:'chat/state-handler-chat',
+    //       name:'Chat with Admin'
+    //     },
+    //     {
+    //       path:'chat/state-chat-with-french',
+    //       name :'Chat with Frenchise'
+    //     },
+    //   ]
+    // },
     {
       path: "manage/investor-refferal-payout",
       name: "Referral Payout",

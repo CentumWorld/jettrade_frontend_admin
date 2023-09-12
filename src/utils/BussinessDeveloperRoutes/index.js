@@ -39,21 +39,21 @@ const BussinessDeveloperRoutes = [
       }
     ]
   },
-  {
-    path: "businessD-chat",
-    name: "Chat",
-    icon: <BsFillChatTextFill />,
-    subRoutes:[
-      {
-        path:'chat/businessD-chat',
-        name:'Chat with Admin'
-      },
-      {
-        path:'chat/BD-chat-with-frenchise',
-        name :'Chat with Frenchise'
-      },
-    ]
-  },
+  // {
+  //   path: "businessD-chat",
+  //   name: "Chat",
+  //   icon: <BsFillChatTextFill />,
+  //   subRoutes:[
+  //     {
+  //       path:'chat/businessD-chat',
+  //       name:'Chat with Admin'
+  //     },
+  //     {
+  //       path:'chat/BD-chat-with-frenchise',
+  //       name :'Chat with Frenchise'
+  //     },
+  //   ]
+  // },
   {
     path: "/admindashboard/allvideo",
     name: "Video",

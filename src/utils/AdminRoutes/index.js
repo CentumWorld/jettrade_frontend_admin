@@ -107,33 +107,33 @@ const  Adminroutes =  [
         },
       ],
     },
-    {
-      path: "/admindashboard",
-      name: "Chat",
-      icon: <BsFillChatTextFill />,
-      subRoutes: [
-        {
-          path: "trader-chat",
-          name: "Traders",
-        },
-        {
-          path: "refferal-chat",
-          name: "Referral",
-        },
-        {
-          path:"state-chat",
-          name:"State Chat"
-        },
-        {
-          path:"franchisee-chat",
-          name:"Franchisee Chat"
-        },
-        {
-          path:"business-developer-chat",
-          name:"Business developer chat"
-        }
-      ],
-    },
+    // {
+    //   path: "/admindashboard",
+    //   name: "Chat",
+    //   icon: <BsFillChatTextFill />,
+    //   subRoutes: [
+    //     {
+    //       path: "trader-chat",
+    //       name: "Traders",
+    //     },
+    //     {
+    //       path: "refferal-chat",
+    //       name: "Referral",
+    //     },
+    //     {
+    //       path:"state-chat",
+    //       name:"State Chat"
+    //     },
+    //     {
+    //       path:"franchisee-chat",
+    //       name:"Franchisee Chat"
+    //     },
+    //     {
+    //       path:"business-developer-chat",
+    //       name:"Business developer chat"
+    //     }
+    //   ],
+    // },
     {
       path: "/admindashboard/video",
       name: "upload videos",

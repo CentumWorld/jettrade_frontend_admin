@@ -9,124 +9,124 @@ import { AiOutlineBell } from 'react-icons/ai';
 import baseUrl from '../../baseUrl';
 
 const apiurl = baseUrl.apiUrl
-const socket = io.connect('http://103.149.68.19:8081');
+// const socket = io.connect('http://103.149.68.19:8081');
 // const socket = io.connect('http://localhost:4000');
 
 const FrenchiseLiveChatWithBD = () => {
 
-    const [frenchiseename, setFrenchiseename] = useState(localStorage.getItem('frenchFname'));
-    const [room1, setRoom] = useState(localStorage.getItem('frenchiseId'));
-    const [showChat, setShowChat] = useState(false);
-    const [type, setType] = useState('FRENCH')
-    const [chatFrenchisee, setChatFrenchisee] = useState([]);
-    const [notification, setNotificaton] = useState('');
-    const [frenchiseOwnDetails, setFrenchiseOwnDetails] = useState("");
+    // const [frenchiseename, setFrenchiseename] = useState(localStorage.getItem('frenchFname'));
+    // const [room1, setRoom] = useState(localStorage.getItem('frenchiseId'));
+    // const [showChat, setShowChat] = useState(false);
+    // const [type, setType] = useState('FRENCH')
+    // const [chatFrenchisee, setChatFrenchisee] = useState([]);
+    // const [notification, setNotificaton] = useState('');
+    // const [frenchiseOwnDetails, setFrenchiseOwnDetails] = useState("");
 
 
 
-    const handleDataFromChild = (data) => {
-        setShowChat(data);
-    };
-    const joinRoom = (id) => {
+    // const handleDataFromChild = (data) => {
+    //     setShowChat(data);
+    // };
+    // const joinRoom = (id) => {
 
-        setRoom(id);
+    //     setRoom(id);
 
-        if (frenchiseename !== "" && room1 !== "") {
-            socket.emit("join_room", room1, type);
-            // ---------------------------------
-            setShowChat(true);
-            setNotificaton('');
-        }
+    //     if (frenchiseename !== "" && room1 !== "") {
+    //         socket.emit("join_room", room1, type);
+    //         // ---------------------------------
+    //         setShowChat(true);
+    //         setNotificaton('');
+    //     }
 
-    }
+    // }
 
-    useEffect(() => {
-        setNotificaton(localStorage.getItem('noti'))
-        frenchiseFetchOwnDetails()
-        fetchAllUserChat();
+    // useEffect(() => {
+    //     setNotificaton(localStorage.getItem('noti'))
+    //     frenchiseFetchOwnDetails()
+    //     fetchAllUserChat();
 
-        //admin logout
-        return () => {
-            socket.emit('frenchLogout', room1);
-            //socket.disconnect();
-        }
-    }, [])
+    //     //admin logout
+    //     return () => {
+    //         socket.emit('frenchLogout', room1);
+    //         //socket.disconnect();
+    //     }
+    // }, [])
 
-    const frenchiseFetchOwnDetails = () => {
-        let token = localStorage.getItem('franchiseToken');
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-        axios.get(`${apiurl}`+'/franchise/get-own-franchise-details', config)
-            .then((result) => {
-                  console.log(result.data.data.referralId)
-                setFrenchiseOwnDetails(result.data.data.referralId);
-                 fetchAllUserChat(result.data.data.referralId)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-
-    const fetchAllUserChat = (referralId) => {
-        let token = localStorage.getItem('franchiseToken');
-
-        const data = {
-            refferedId:referralId
-        }
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-
-        axios.post(`${apiurl}`+'/frenchise/frenchise/get-business-chat-count-with-frenchise', data,config)
-            .then((result) => {
-                 console.log(result.data.frenchChatCount,'82')
-                 setChatFrenchisee(result.data.frenchChatCount);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
+    // const frenchiseFetchOwnDetails = () => {
+    //     let token = localStorage.getItem('franchiseToken');
+    //     const config = {
+    //         headers: { Authorization: `Bearer ${token}` }
+    //     };
+    //     axios.get(`${apiurl}`+'/franchise/get-own-franchise-details', config)
+    //         .then((result) => {
+    //               console.log(result.data.data.referralId)
+    //             setFrenchiseOwnDetails(result.data.data.referralId);
+    //              fetchAllUserChat(result.data.data.referralId)
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
 
-    return (
-        <>
-            <div className="text-center">
-                {!showChat ? (
-                    <div className='chat-window'>
-                        <div className="chat-header">
-                            <p>Chat History</p>
-                        </div>
-                        <div className='chat-body'>
-                            <ScrollToBottom className='message-container'>
-                                {chatFrenchisee.map((item, index) => (
-                                    <div key={index}>
-                                        <div className='chat-request-person'
-                                            onClick={() => joinRoom(item.businessDeveloperId)}
-                                        >
+    // const fetchAllUserChat = (referralId) => {
+    //     let token = localStorage.getItem('franchiseToken');
 
-                                            <div><img src={chatIcon} /> &nbsp;{item.businessDeveloperId}</div>
-                                            {notification === item.businessDeveloperId ? <div style={{ color: 'green' }}><AiOutlineBell /></div> : ''}
-                                        </div>
-                                    </div>
-                                ))}
+    //     const data = {
+    //         refferedId:referralId
+    //     }
+    //     const config = {
+    //         headers: { Authorization: `Bearer ${token}` }
+    //     };
 
-                            </ScrollToBottom>
-                        </div>
-                        <div className='chat-footer'>
+    //     axios.post(`${apiurl}`+'/frenchise/frenchise/get-business-chat-count-with-frenchise', data,config)
+    //         .then((result) => {
+    //              console.log(result.data.frenchChatCount,'82')
+    //              setChatFrenchisee(result.data.frenchChatCount);
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
+    // }
 
-                        </div>
 
-                    </div>
-                )
-                    : (
-                        <FrenchiseChatWithBD socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
-                    )}
-            </div>
+    // return (
+    //     <>
+    //         <div className="text-center">
+    //             {!showChat ? (
+    //                 <div className='chat-window'>
+    //                     <div className="chat-header">
+    //                         <p>Chat History</p>
+    //                     </div>
+    //                     <div className='chat-body'>
+    //                         <ScrollToBottom className='message-container'>
+    //                             {chatFrenchisee.map((item, index) => (
+    //                                 <div key={index}>
+    //                                     <div className='chat-request-person'
+    //                                         onClick={() => joinRoom(item.businessDeveloperId)}
+    //                                     >
 
-        </>
-    )
+    //                                         <div><img src={chatIcon} /> &nbsp;{item.businessDeveloperId}</div>
+    //                                         {notification === item.businessDeveloperId ? <div style={{ color: 'green' }}><AiOutlineBell /></div> : ''}
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+
+    //                         </ScrollToBottom>
+    //                     </div>
+    //                     <div className='chat-footer'>
+
+    //                     </div>
+
+    //                 </div>
+    //             )
+    //                 : (
+    //                     <FrenchiseChatWithBD socket={socket} frenchiseename={frenchiseename} room={room1} sendDataToParent={handleDataFromChild} />
+    //                 )}
+    //         </div>
+
+    //     </>
+    // )
 }
 
 export default FrenchiseLiveChatWithBD

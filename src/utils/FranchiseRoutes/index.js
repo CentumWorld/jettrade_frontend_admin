@@ -45,25 +45,25 @@ const franchiseAdminRoutes = [
     name: "Video",
     icon: <AiFillVideoCamera />,
   },
-  {
-    path: "/admindashboard/chat",
-    name: "Chat",
-    icon: <BsFillChatTextFill />,
-    subRoutes: [
-      {
-        path: "chat/frenchisee-handler-chat",
-        name: "Chat with Admin",
-      },
-      {
-        path: "chat/frenchise-chat-with-SHO",
-        name: "Chat with SHO",
-      },
-      {
-        path: "chat/frenchise-chat-with-BD",
-        name: "Chat with BD",
-      },
-    ],
-  },
+  // {
+  //   path: "/admindashboard/chat",
+  //   name: "Chat",
+  //   icon: <BsFillChatTextFill />,
+  //   subRoutes: [
+  //     {
+  //       path: "chat/frenchisee-handler-chat",
+  //       name: "Chat with Admin",
+  //     },
+  //     {
+  //       path: "chat/frenchise-chat-with-SHO",
+  //       name: "Chat with SHO",
+  //     },
+  //     {
+  //       path: "chat/frenchise-chat-with-BD",
+  //       name: "Chat with BD",
+  //     },
+  //   ],
+  // },
   {
     path: "manage/investor-refferal-payout",
     name: "Referral Payout",

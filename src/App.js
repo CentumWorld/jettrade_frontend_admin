@@ -184,9 +184,9 @@ function App() {
               path="manage/investor-refferal-payout"
               element={<RefferalPayout />}
             />
-            <Route path="trader-chat" element={<LiveChat />} />
-            <Route path="refferal-chat" element={<RefferalLiveChat />} />
-            <Route path="state-chat" element={<StateLiveChatAdmin/>} />
+            {/* <Route path="trader-chat" element={<LiveChat />} />
+            <Route path="refferal-chat" element={<RefferalLiveChat />} /> */}
+            {/* <Route path="state-chat" element={<StateLiveChatAdmin/>} />
             <Route path="chat/state-handler-chat" element={<StateLiveChat/>} />
             <Route path="franchisee-chat" element={<FrenchiseeLiveChatAdmin/>} />
             <Route path="chat/frenchisee-handler-chat" element={<FrenchiseeLiveChat/>} />
@@ -195,7 +195,7 @@ function App() {
             <Route path="business-developer-chat" element={<BusinessLiveChatAdmin/>} /> 
             <Route path="chat/state-chat-with-french" element={<StateLiveChatWithFrench/>} />
             <Route path="chat/frenchise-chat-with-BD" element={<FrenchiseLiveChatWithBD/>} />
-            <Route path="chat/BD-chat-with-frenchise" element={<BusinessDLiveChatWithFrenchise/>} />
+            <Route path="chat/BD-chat-with-frenchise" element={<BusinessDLiveChatWithFrenchise/>} /> */}
 
             <Route path="trader-accounts/:id" element={<TraderAccount />} />
             <Route
