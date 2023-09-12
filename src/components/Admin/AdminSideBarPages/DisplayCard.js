@@ -682,7 +682,7 @@ const DisplayCard = () => {
               <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
               <span
                 style={{ color: "yellow", cursor: "pointer" }}
-                onClick={goToRegister}
+                onClick={isAdmin ? goToRegister:null}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? ReferralId : null}
               </span>
