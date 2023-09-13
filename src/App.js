@@ -47,6 +47,7 @@ import FullForexTicker from "./components/FullForexTicker";
 import Dashboard from "./components/Admin/AdminSideBarPages/Dashboard";
 import Refferal from "./components/Admin/AdminSideBarPages/Refferal";
 import CreateUserInAdmin from "./components/Admin/AdminSideBarPages/CreateUserInAdmin";
+
 import ManageNotification from "./components/Admin/AdminSideBarPages/ManageNotification";
 import ManageSubscription from "./components/Admin/AdminSideBarPages/ManageSubscription";
 import ManageInvestment from "./components/Admin/AdminSideBarPages/ManageInvestment";
@@ -81,6 +82,7 @@ import FrenchiseAccountSection from "./components/Admin/Tracker/FrenchiseAccount
 
 import BusinessAccount from "./components/Admin/Tracker/businessAccount/BusinessAccount";
 import MemberAccountSection from "./components/Admin/AdminSideBarPages/MemberAccountSection";
+import CreateReferralInAdmin from "./components/Admin/AdminSideBarPages/CreateReferralInAdmin";
 
 export const UserContext = createContext();
 //App
@@ -154,6 +156,7 @@ function App() {
 
             <Route path="refferal" element={<Refferal />} />
             <Route path="createuser" element={<CreateUserInAdmin />} />
+            <Route path = "createReferral" element = {<CreateReferralInAdmin/>}/>
             <Route path="withdrawal" element={<Withdrawal />} />
             <Route path="video" element={<Uservideo />} />
             <Route path="allvideo" element={<Video />} />

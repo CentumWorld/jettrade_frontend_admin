@@ -13,6 +13,7 @@ import {
   DatePicker,
   message,
 } from "antd";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import aadharImage from "../../../img/aadhar.jpg";
@@ -689,6 +690,17 @@ const Refferal = () => {
 
   return (
     <>
+   <NavLink
+                className="create-user"
+                to="/admindashboard/createreferral"
+                exact
+                activeClassName="active"
+                // style={navLinkStyle}
+                // activeStyle={activeStyle}
+              >
+                + Create Referral
+              </NavLink>
+
       <Modal
         className="document_verification"
         title="Documents Verification"
