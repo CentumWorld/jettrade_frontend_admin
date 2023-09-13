@@ -53,8 +53,8 @@ function Dashboard() {
   const [idCard, setIdCard] = useState({
     placeholder: "",
     file: null,
-    no:""
-  })
+    no: "",
+  });
   // edit user details -----------
   const [isModalVisible, setIsEditModalVisible] = useState(false);
   const [editUserData, setEditUserData] = useState({
@@ -78,7 +78,7 @@ function Dashboard() {
   const [isBlocked, setIsBlock] = useState(true);
   const [isSubAdmin, setIsSubAdmin] = useState(false);
   // search bar -------------
-  const notAllow = localStorage.getItem('isSubAdmin');
+  const notAllow = localStorage.getItem("isSubAdmin");
   const handleSearch = (value) => {
     setSearchText(value);
     // Perform search or other operations based on the search text
@@ -103,34 +103,40 @@ function Dashboard() {
   }, []);
 
   const token = localStorage.getItem("adminToken");
-  const subadminToken =  localStorage.getItem("subAdminToken")
+  const subadminToken = localStorage.getItem("subAdminToken");
   const stateToken = localStorage.getItem("stateHandlerToken");
-  const stateHandlerRefferalID = localStorage.getItem(
-    "stateHandlerRefferalID"
-  );
+  const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
   const frenchiseToken = localStorage.getItem("franchiseToken");
   const franchiseRefferal = localStorage.getItem("franchiseRefferal");
   const bussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
-  const bussinessDeveloperReferralId = localStorage.getItem("bussinessRefferalId");
+  const bussinessDeveloperReferralId = localStorage.getItem(
+    "bussinessRefferalId"
+  );
 
-  console.log("=========>", bussinessDeveloperReferralId, bussinessDeveloperToken);
+  console.log(
+    "=========>",
+    bussinessDeveloperReferralId,
+    bussinessDeveloperToken
+  );
   const fetchData = async () => {
-
     if (token || subadminToken) {
       try {
         const config = {
           headers: { Authorization: `Bearer ${token || subadminToken}` },
         };
-        const response = await axios.get(`${apiurl}` + "/admin/fetch-user-details", config);
+        const response = await axios.get(
+          `${apiurl}` + "/admin/fetch-user-details",
+          config
+        );
         setData(response.data.result);
         //console.log(typeof(response.data.result[0].phone));
         setFilteredDataSource(response.data.result);
+        console.log("data fetching", response.data.result);
         setLength(response.data.result.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     } else if (stateToken && stateHandlerRefferalID) {
-
       try {
         const config = {
           headers: { Authorization: `Bearer ${stateToken}` },
@@ -141,7 +147,8 @@ function Dashboard() {
         };
 
         const response = await axios.post(
-          `${apiurl}` + "/state/fetch-all-users-in-state", requestData,
+          `${apiurl}` + "/state/fetch-all-users-in-state",
+          requestData,
           config
         );
 
@@ -152,7 +159,6 @@ function Dashboard() {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-
     } else if (frenchiseToken && franchiseRefferal) {
       const config = {
         headers: { Authorization: `Bearer ${frenchiseToken}` },
@@ -162,7 +168,11 @@ function Dashboard() {
         franchiseReferralId: franchiseRefferal,
       };
       axios
-        .post(`${apiurl}` + "/franchise/get-all-users-in-franchise", requestData, config)
+        .post(
+          `${apiurl}` + "/franchise/get-all-users-in-franchise",
+          requestData,
+          config
+        )
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setFilteredDataSource(res.data.data);
@@ -179,7 +189,12 @@ function Dashboard() {
         businessDevRefferalId: bussinessDeveloperReferralId,
       };
       axios
-        .post(`${apiurl}` + "/businessDeveloper/get-all-users-in-business-developer", requestData, config)
+        .post(
+          `${apiurl}` +
+            "/businessDeveloper/get-all-users-in-business-developer",
+          requestData,
+          config
+        )
         .then((res) => {
           console.log("Bussiness responebhejo-> ", res.data);
           setFilteredDataSource(res.data.users);
@@ -188,11 +203,12 @@ function Dashboard() {
           console.log("error", err);
         });
     }
-
   };
   // console.log(data);
   const handleVerifyClick = (id) => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let data = {
       id: id,
       status: true,
@@ -216,9 +232,10 @@ function Dashboard() {
       });
   };
 
-
   const handleViewClick = (id) => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let data = {
       _id: id,
     };
@@ -265,6 +282,7 @@ function Dashboard() {
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Address", dataIndex: "address", key: "address" },
     { title: "Referred ID", dataIndex: "reffered_id", key: "reffered_id" },
+    { title: "Referral ID", dataIndex: "refferal_id", key: "refferal_id" },
     {
       title: "Status",
       dataIndex: "status",
@@ -295,7 +313,11 @@ function Dashboard() {
       dataIndex: "action",
       render: (_, record) => (
         <>
-          <Dropdown overlay={token ? menu : Submenu} placement="bottomLeft" trigger={["click"]}>
+          <Dropdown
+            overlay={token ? menu : Submenu}
+            placement="bottomLeft"
+            trigger={["click"]}
+          >
             <BsThreeDotsVertical
               size={24}
               onClick={() =>
@@ -312,7 +334,7 @@ function Dashboard() {
           </Dropdown>
         </>
       ),
-    })
+    });
   }
 
   // handle action
@@ -321,7 +343,7 @@ function Dashboard() {
     setUserStatus(status);
     setIsBlock(block);
     setUserID(userid);
-    setIsSubAdmin(subadmin)
+    setIsSubAdmin(subadmin);
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -375,7 +397,9 @@ function Dashboard() {
   //   ------------------------------
   const fetchUserDocuments = (userid) => {
     //console.log(userid,'131');
-    let token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+    let token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let data = {
       userid: userid,
     };
@@ -388,10 +412,10 @@ function Dashboard() {
     axios
       .post(`${apiurl}` + "/admin/fetch-user-document-adminside", data, config)
       .then((res) => {
-        console.log(res.data.result[0].userType)
+        console.log(res.data.result[0].userType);
         setUserTypeView(res.data.result[0].userType);
         if (res.data.result.length > 0) {
-          if (res.data.result[0].userTpe === 'indian') {
+          if (res.data.result[0].userTpe === "indian") {
             setLoading(true);
             setAadharFrontImage({
               placeholder: res.data.result[0].aadhar_front_side,
@@ -403,11 +427,10 @@ function Dashboard() {
           } else {
             setLoading(true);
             setIdCard({
-              placeholder: res.data.result[0].ID_Card, no:res.data.result[0].Id_No
-            })
-            
+              placeholder: res.data.result[0].ID_Card,
+              no: res.data.result[0].Id_No,
+            });
           }
-
         } else {
           setAadharFrontImage({ placeholder: aadharImage });
           setAadharBackImage({ placeholder: aadharBackImage });
@@ -447,7 +470,9 @@ function Dashboard() {
   //--------- user details Edit section
 
   const fetchUserDetailsForEdit = (id) => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let data = {
       _id: id,
     };
@@ -632,7 +657,9 @@ function Dashboard() {
       title: `${actionText} User`,
       content: `Are you sure you want to  ${actionText.toLowerCase()} this User?`,
       onOk() {
-        const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+        const token =
+          localStorage.getItem("adminToken") ||
+          localStorage.getItem("subAdminToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -699,39 +726,36 @@ function Dashboard() {
   const makeSubAdmin = (myID) => {
     const actionText = isSubAdmin ? "Remove" : "Make";
     Modal.confirm({
-
       title: `${actionText} Sub-Admin`,
       content: `Do you want to ${actionText.toLowerCase()} this user Sub-Admin?`,
-      okText: 'Sure',
-      cancelText: 'Cancel',
+      okText: "Sure",
+      cancelText: "Cancel",
       onOk() {
         let data = {
           userId: myID,
-          isSubAdmin: !isSubAdmin
-        }
+          isSubAdmin: !isSubAdmin,
+        };
         const token = localStorage.getItem("adminToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         };
-        axios.post(`${apiurl}` + "/admin/manage-subadmin", data, config)
+        axios
+          .post(`${apiurl}` + "/admin/manage-subadmin", data, config)
           .then((res) => {
-            console.log(res.data)
+            console.log(res.data);
             message.success(res.data.message);
             fetchData();
           })
-          .catch((err => {
-            console.log(err.response.data.message)
-          }))
+          .catch((err) => {
+            console.log(err.response.data.message);
+          });
       },
-      onCancel() {
-
-      },
+      onCancel() {},
     });
-    console.log(myID)
-  }
-
+    console.log(myID);
+  };
 
   return (
     <>
@@ -744,95 +768,92 @@ function Dashboard() {
         open={visible}
         onCancel={handleCancel}
         footer={null}
-        style={{fontFamily:'Calibri'}}
+        style={{ fontFamily: "Calibri" }}
       >
         <>
-          {userTypeView === 'indian' ? <div>
-            <h6>Aadhar Front Side</h6>
-            <p>
-              Aadhar Number:{" "}
-              <span style={{ fontWeight: "bold" }}>{aadhar}</span>
-            </p>
-            {!imageError ? (
+          {userTypeView === "indian" ? (
+            <div>
+              <h6>Aadhar Front Side</h6>
+              <p>
+                Aadhar Number:{" "}
+                <span style={{ fontWeight: "bold" }}>{aadhar}</span>
+              </p>
+              {!imageError ? (
+                <img
+                  src={aadharFrontImage.placeholder}
+                  width={200}
+                  height={100}
+                  alt=""
+                  onError={handleImageError}
+                />
+              ) : (
+                <p>Error loading image.</p>
+              )}
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharFrontImage(aadharFrontImage.placeholder)
+                }
+              >
+                Download
+              </Button>
+
+              <hr />
+
+              <h6>Aadhar Back Side</h6>
+              {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
+              {!imageError ? (
+                <img
+                  src={aadharBackImageSide.placeholder}
+                  width={200}
+                  height={100}
+                  alt=""
+                  onError={handleImageError}
+                />
+              ) : (
+                <p>Error loading image.</p>
+              )}
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharBackImage(aadharBackImageSide.placeholder)
+                }
+              >
+                Download
+              </Button>
+
+              <hr />
+
+              <h6>PAN</h6>
+              <p>
+                PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
+              </p>
               <img
-                src={aadharFrontImage.placeholder}
+                src={panImageSide.placeholder}
                 width={200}
                 height={100}
                 alt=""
-                onError={handleImageError}
               />
-            ) : (
-              <p>Error loading image.</p>
-            )}
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() =>
-                downloadAadharFrontImage(aadharFrontImage.placeholder)
-              }
-            >
-              Download
-            </Button>
-
-            <hr />
-
-            <h6>Aadhar Back Side</h6>
-            {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
-            {!imageError ? (
-              <img
-                src={aadharBackImageSide.placeholder}
-                width={200}
-                height={100}
-                alt=""
-                onError={handleImageError}
-              />
-            ) : (
-              <p>Error loading image.</p>
-            )}
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() =>
-                downloadAadharBackImage(aadharBackImageSide.placeholder)
-              }
-            >
-              Download
-            </Button>
-
-            <hr />
-
-            <h6>PAN</h6>
-            <p>
-              PAN Number: <span style={{ fontWeight: "bold" }}>{pan}</span>{" "}
-            </p>
-            <img
-              src={panImageSide.placeholder}
-              width={200}
-              height={100}
-              alt=""
-            />
-            <Button
-              className="aadhar-front"
-              disabled={!loading}
-              type="primary"
-              onClick={() => downloadPanImage(panImageSide.placeholder)}
-            >
-              Download
-            </Button>
-          </div> :
+              <Button
+                className="aadhar-front"
+                disabled={!loading}
+                type="primary"
+                onClick={() => downloadPanImage(panImageSide.placeholder)}
+              >
+                Download
+              </Button>
+            </div>
+          ) : (
             <>
-              <h6>ID  Card</h6>
+              <h6>ID Card</h6>
               <p>
                 Card no: <span style={{ fontWeight: "bold" }}>{idCard.no}</span>{" "}
               </p>
-              <img
-                src={idCard.placeholder}
-                width={200}
-                height={100}
-                alt=""
-              />
+              <img src={idCard.placeholder} width={200} height={100} alt="" />
               <Button
                 className="aadhar-front"
                 disabled={!loading}
@@ -842,8 +863,7 @@ function Dashboard() {
                 Download
               </Button>
             </>
-
-          }
+          )}
         </>
       </Modal>
       <div className="admin-dashboard">
@@ -870,21 +890,19 @@ function Dashboard() {
               onSearch={searchUser}
             />
           </div>
-          <div
-            className="user-table"
-          >
+          <div className="user-table">
             <Table
               dataSource={filteredDataSource}
               // dataSource={data}
               style={{
-                width: "fit-content", textOverflow: 'ellipsis',
+                width: "fit-content",
+                textOverflow: "ellipsis",
                 // overflow: "hidden",
-                whiteSpace: 'nowrap'
+                whiteSpace: "nowrap",
               }}
               columns={columns}
               scroll={{ x: true, y: 320 }}
               pagination={{ pageSize: 7 }}
-
             />
           </div>
         </div>
@@ -895,8 +913,10 @@ function Dashboard() {
       <div>
         <Modal
           title={
-            <span style={{ color: "#5e72e4", fontFamily: "Calibri",fontSize:20 }}>
-              EDIT INFORMATION 
+            <span
+              style={{ color: "#5e72e4", fontFamily: "Calibri", fontSize: 20 }}
+            >
+              EDIT INFORMATION
             </span>
           }
           open={isModalVisible}
@@ -906,11 +926,11 @@ function Dashboard() {
               Submit
             </Button>,
           ]}
-        //footer={null}
+          //footer={null}
         >
           <div className="edit-container">
             <div>
-              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+              <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                 <Col span={12}>First Name :</Col>
                 <Col span={12}>
                   <Input
@@ -923,7 +943,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+              <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                 <Col span={12}>Last Name :</Col>
                 <Col span={12}>
                   <Input
@@ -936,7 +956,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+              <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                 <Col span={12}>Phone:</Col>
                 <Col span={12}>
                   <Input
@@ -949,7 +969,7 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+              <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                 <Col span={12}>Address :</Col>
                 <Col span={12}>
                   <Input
@@ -964,7 +984,7 @@ function Dashboard() {
             {userType === "indian" ? (
               <>
                 <div>
-                  <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+                  <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                     <Col span={12}>Aadhar No. :</Col>
                     <Col span={12}>
                       <Input
@@ -977,7 +997,7 @@ function Dashboard() {
                   </Row>
                 </div>
                 <div>
-                  <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+                  <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                     <Col span={12}>Pan No. :</Col>
                     <Col span={12}>
                       <Input
@@ -992,7 +1012,7 @@ function Dashboard() {
               </>
             ) : (
               <div>
-                <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+                <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                   <Col span={12}>ID NO. :</Col>
                   <Col span={12}>
                     <Input
@@ -1007,7 +1027,7 @@ function Dashboard() {
             )}
 
             <div>
-              <Row style={{ marginBottom: "5px",fontWeight:600 }}>
+              <Row style={{ marginBottom: "5px", fontWeight: 600 }}>
                 <Col span={12}>Gender :</Col>
                 <Col span={12}>
                   <Select
@@ -1038,7 +1058,6 @@ function Dashboard() {
             </div>
           </div>
         </Modal>
-
       </div>
     </>
   );

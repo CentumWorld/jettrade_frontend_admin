@@ -28,28 +28,28 @@ const RefferalPayout = () => {
   console.log(businessDeveloperToken, "ijiji");
   const stateHandlerId = localStorage.getItem("stateHandlerId");
   const franchiseId = localStorage.getItem("frenchiseId");
-  const isSubAdmin = localStorage.getItem('subAdminToken');
+  const isSubAdmin = localStorage.getItem("subAdminToken");
 
   const fetchStateCreditWalletTransaction = () => {
-
     let config = {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
-    if(stateHandlerToken){
+    if (stateHandlerToken) {
       axios
-      .post(
-        `${apiurl}` + "/state/get-own-state-credit-wallet-transaction-details",
-        {
-          stateHandlerId: stateHandlerId,
-        },
-        config
-      )
-      .then((res) => {
-        setStateHandlerDetails(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/state/get-own-state-credit-wallet-transaction-details",
+          {
+            stateHandlerId: stateHandlerId,
+          },
+          config
+        )
+        .then((res) => {
+          setStateHandlerDetails(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -58,23 +58,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
-   if(stateHandlerToken){
-    axios
-    .post(
-      `${apiurl}` +
-        "/state/get-own-franchsie-inside-state-credit-wallet-transaction-details",
-      {
-        stateHandlerId: stateHandlerId,
-      },
-      config
-    )
-    .then((res) => {
-      setFranchiseDetails(res.data.data);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-   }
+    if (stateHandlerToken) {
+      axios
+        .post(
+          `${apiurl}` +
+            "/state/get-own-franchsie-inside-state-credit-wallet-transaction-details",
+          {
+            stateHandlerId: stateHandlerId,
+          },
+          config
+        )
+        .then((res) => {
+          setFranchiseDetails(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   };
 
   const fetchTraderDetailsinFranchise = () => {
@@ -104,23 +104,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    if(franchiseToken){
+    if (franchiseToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/franchise/get-own-members-inside-franchise-credit-wallet-transaction-details",
-        {
-          franchiseId: franchiseId,
-        },
-        config
-      )
-      .then((res) => {
-        console.log("data=========>", res.data);
-        setReferralsDetails(res.data.memberCreditWalletTransactions);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/franchise/get-own-members-inside-franchise-credit-wallet-transaction-details",
+          {
+            franchiseId: franchiseId,
+          },
+          config
+        )
+        .then((res) => {
+          console.log("data=========>", res.data);
+          setReferralsDetails(res.data.memberCreditWalletTransactions);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -129,22 +129,22 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    if(franchiseToken){
+    if (franchiseToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/franchise/get-own-franchise-credit-wallet-transaction-details",
-        {
-          franchiseId: franchiseId,
-        },
-        config
-      )
-      .then((res) => {
-        setFranchiseDetails(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/franchise/get-own-franchise-credit-wallet-transaction-details",
+          {
+            franchiseId: franchiseId,
+          },
+          config
+        )
+        .then((res) => {
+          setFranchiseDetails(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -153,24 +153,24 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${franchiseToken}` },
     };
 
-    if(franchiseToken){
+    if (franchiseToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/franchise/get-own-business-developer-inside-franchise-credit-wallet-transaction-details",
-        {
-          franchiseId: franchiseId,
-        },
-        config
-      )
-      .then((res) => {
-        setBussinessDeveloperDetails(
-          res.data.businessDeveloperCreditWalletTransactions
-        );
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/franchise/get-own-business-developer-inside-franchise-credit-wallet-transaction-details",
+          {
+            franchiseId: franchiseId,
+          },
+          config
+        )
+        .then((res) => {
+          setBussinessDeveloperDetails(
+            res.data.businessDeveloperCreditWalletTransactions
+          );
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -179,25 +179,25 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
-    if(stateHandlerToken){
+    if (stateHandlerToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/state/get-own-business-developer-inside-state-credit-wallet-transaction-details",
-        {
-          stateHandlerId: stateHandlerId,
-        },
-        config
-      )
-      .then((res) => {
-        // console.log("180====>", res);
-        setBussinessDeveloperDetails(
-          res.data.businessDeveloperCreditWalletTransactions
-        );
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/state/get-own-business-developer-inside-state-credit-wallet-transaction-details",
+          {
+            stateHandlerId: stateHandlerId,
+          },
+          config
+        )
+        .then((res) => {
+          // console.log("180====>", res);
+          setBussinessDeveloperDetails(
+            res.data.businessDeveloperCreditWalletTransactions
+          );
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -229,23 +229,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${stateHandlerToken}` },
     };
 
-   if(stateHandlerToken){
-    axios
-    .post(
-      `${apiurl}` +
-        "/state/get-own-members-inside-state-credit-wallet-transaction-details",
-      {
-        stateHandlerId: stateHandlerId,
-      },
-      config
-    )
-    .then((res) => {
-      setReferralsDetails(res.data.memberCreditWalletTransactions);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-   }
+    if (stateHandlerToken) {
+      axios
+        .post(
+          `${apiurl}` +
+            "/state/get-own-members-inside-state-credit-wallet-transaction-details",
+          {
+            stateHandlerId: stateHandlerId,
+          },
+          config
+        )
+        .then((res) => {
+          setReferralsDetails(res.data.memberCreditWalletTransactions);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   };
 
   const memberDataInState = [
@@ -285,7 +285,9 @@ const RefferalPayout = () => {
   ];
 
   const fetchBussinessDeveloperDetails = () => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -305,7 +307,9 @@ const RefferalPayout = () => {
   };
 
   const fetchStateDeveloperDetails = () => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -324,7 +328,9 @@ const RefferalPayout = () => {
   };
 
   const fetchFranchiseDeveloperHandler = () => {
-    const token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     let config = {
       headers: { Authorization: `Bearer ${token}` },
     };
@@ -401,26 +407,25 @@ const RefferalPayout = () => {
   };
 
   useEffect(() => {
-    if(adminToken){
+    if (adminToken) {
       setActiveTab("1");
-      fetchTraderRefferalPayout()
+      fetchTraderRefferalPayout();
     }
 
-
-   if (stateHandlerToken) {
+    if (stateHandlerToken) {
       setActiveTab("2");
-      fetchMemberTransactionInState()
-    
-    } if (franchiseToken){
-      setActiveTab("2")
-      fetchMemberDetailsInFranchise()
-    } if (businessDeveloperToken){
-      setActiveTab("2")
-
-      fetchMemberPayoutInBusiness()
-
+      fetchMemberTransactionInState();
     }
-  }, [adminToken,stateHandlerToken,franchiseToken,businessDeveloperToken]);
+    if (franchiseToken) {
+      setActiveTab("2");
+      fetchMemberDetailsInFranchise();
+    }
+    if (businessDeveloperToken) {
+      setActiveTab("2");
+
+      fetchMemberPayoutInBusiness();
+    }
+  }, [adminToken, stateHandlerToken, franchiseToken, businessDeveloperToken]);
 
   const fetchTraderRefferalPayout = () => {
     const token = localStorage.getItem("adminToken");
@@ -559,24 +564,25 @@ const RefferalPayout = () => {
     const data = {
       role: id,
     };
-    let token = localStorage.getItem("adminToken") || localStorage.getItem('subAdminToken');
+    let token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    if(adminToken || isSubAdmin){
+    if (adminToken || isSubAdmin) {
       axios
-      .get(
-        `${apiurl}` + "/admin/fetch-member-credit-wallet-transaction-details",
+        .get(
+          `${apiurl}` + "/admin/fetch-member-credit-wallet-transaction-details",
 
-        config
-      )
-      .then((res) => {
-      
-        setReferralsDetails(res.data.fetchedData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          config
+        )
+        .then((res) => {
+          setReferralsDetails(res.data.fetchedData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -858,23 +864,23 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${bussinessToken}` },
     };
 
-    if(bussinessToken){
+    if (bussinessToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
-        {
-          businessDeveloperId: businessId,
-        },
-        config
-      )
-      .then((res) => {
-        // console.log("heyyyyyyyyyyyyyyyyyy", res.data);
-        setReferralsDetails(res.data.memberTransactions);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/businessDeveloper/get-own-members-inside-business-developer-wallet-transaction-details",
+          {
+            businessDeveloperId: businessId,
+          },
+          config
+        )
+        .then((res) => {
+          // console.log("heyyyyyyyyyyyyyyyyyy", res.data);
+          setReferralsDetails(res.data.memberTransactions);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
 
@@ -883,22 +889,22 @@ const RefferalPayout = () => {
       headers: { Authorization: `Bearer ${bussinessToken}` },
     };
 
-    if(bussinessToken){
+    if (bussinessToken) {
       axios
-      .post(
-        `${apiurl}` +
-          "/businessDeveloper/get-own-business-developer-wallet-transaction-details",
-        {
-          businessDeveloperId: businessId,
-        },
-        config
-      )
-      .then((res) => {
-        setBussinessDeveloperDetails(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+        .post(
+          `${apiurl}` +
+            "/businessDeveloper/get-own-business-developer-wallet-transaction-details",
+          {
+            businessDeveloperId: businessId,
+          },
+          config
+        )
+        .then((res) => {
+          setBussinessDeveloperDetails(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     }
   };
   //=============================================
@@ -936,7 +942,6 @@ const RefferalPayout = () => {
           setReferralsDetails(res.data);
           console.log(res.data, "rrrrrrrrrrrrrrrrrrr");
         } else if (type === "trader") {
-          
           setReferralsDetails(res.data);
         }
       });
@@ -1026,7 +1031,12 @@ const RefferalPayout = () => {
     { title: "Credit Amount", dataIndex: "creditAmount", key: "creditAmount" },
     { title: "Type", dataIndex: "Type", key: "Type" },
     { title: "Reffer User Id", dataIndex: "refferUserId", key: "refferUserId" },
-    { title: "Date", dataIndex: "Date", key: "Date" },
+    {
+      title: "Joining Date",
+      dataIndex: "Date",
+      key: "Date",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
   ];
 
   const handleRoleChange = (value) => {
@@ -1042,19 +1052,17 @@ const RefferalPayout = () => {
       setActiveTab("2");
       fetchMemberRefferalPayout();
       // fetchMemberTransactionInState();
-
     } else if (value === "businessdeveloper") {
       setActiveTab("5");
       fetchBussinessDeveloperDetails();
-      fetchBussinessDeveloperTransactionInState()
-      fetchBussinessDeveloperDataInFranchise()
-      fetchBusinessPayoutInBusiness()
+      fetchBussinessDeveloperTransactionInState();
+      fetchBussinessDeveloperDataInFranchise();
+      fetchBusinessPayoutInBusiness();
     } else if (value === "franchise") {
       setActiveTab("4");
       fetchFranchiseDeveloperHandler();
       fetchFranchiesCreditWaletTransaction();
-      fetchFranchiseDetailsInFranchise()
-
+      fetchFranchiseDetailsInFranchise();
     } else if (value === "statehandler") {
       setActiveTab("3");
       fetchStateDeveloperDetails();
@@ -1094,7 +1102,7 @@ const RefferalPayout = () => {
             {stateHandlerToken && (
               <Select
                 // defaultValue="member"
-                value = {selectedRole}
+                value={selectedRole}
                 style={{ width: 120, marginRight: 10 }}
                 onChange={handleRoleChange}
               >
@@ -1221,7 +1229,6 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-
         {stateHandlerId && (
           <TabPane tab="Member Payout" key="2">
             <div>
@@ -1240,7 +1247,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-        {!businessId && !franchiseToken &&  (
+        {!businessId && !franchiseToken && (
           <TabPane tab="State Payout" key="3">
             <div>
               <Table
@@ -1321,8 +1328,7 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
-   
-        {adminToken &&  (
+        {adminToken && (
           <TabPane tab="Admin Payout" key="6">
             <div>
               <Table

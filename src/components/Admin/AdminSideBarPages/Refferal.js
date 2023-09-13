@@ -111,6 +111,7 @@ const Refferal = () => {
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Address", dataIndex: "address", key: "address" },
     { title: "Referral", dataIndex: "refferal_id", key: "refferal_id" },
+    { title: "Referred", dataIndex: "reffered_id", key: "reffered_id" },
     {
       title: "Status",
       dataIndex: "status",
