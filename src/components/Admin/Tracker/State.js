@@ -53,7 +53,7 @@ const State = () => {
 
   useEffect(() => {
     fetchStateDataApi();
-    fetchFrenchieseDataApi();
+    //fetchFrenchieseDataApi();
   }, []);
 
   const showModal = () => {
