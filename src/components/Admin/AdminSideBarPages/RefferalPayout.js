@@ -1145,6 +1145,7 @@ const RefferalPayout = () => {
 
             {/* Add a button to trigger the filtering */}
             <Button
+            className="filter-search-button"
               onClick={() => fetchFilterData(selectedRole, searchByUserID)}
               disabled={!searchByUserID}
             >
