@@ -375,9 +375,29 @@ const RefferalPayout = () => {
       setRole("User");
       setSearchByUserID("");
       fetchTraderRefferalPayout();
+    }
+    if (key === "1" && stateHandlerToken) {
+      setRole("User");
+      setSearchByUserID("");
       fetchTraderPayoutInState();
-      fetchTraderPayoutInBusiness();
+    }
+    if (key === "1" && franchiseToken) {
+      setRole("User");
+      setSearchByUserID("");
+      // fetchTraderRefferalPayout();
+
+      // fetchTraderPayoutInState();
+      // fetchTraderPayoutInBusiness();
       fetchTraderDetailsinFranchise();
+    }
+    if (key === "1" && bussinessToken) {
+      setRole("User");
+      setSearchByUserID("");
+      // fetchTraderRefferalPayout();
+
+      // fetchTraderPayoutInState();
+      fetchTraderPayoutInBusiness();
+      // fetchTraderDetailsinFranchise();
     }
     if (key === "5") {
       fetchBussinessDeveloperDataInFranchise();
@@ -396,10 +416,12 @@ const RefferalPayout = () => {
     }
     if (key === "6") {
       fetchAdminDetails();
+    }
+    if (key === "2") {
+      fetchMemberRefferalPayout("Member");
     } else {
       setRole("Member");
       setSearchByUserID("");
-      fetchMemberRefferalPayout("Member");
       fetchMemberTransactionInState();
       fetchMemberPayoutInBusiness();
       fetchMemberDetailsInFranchise();
