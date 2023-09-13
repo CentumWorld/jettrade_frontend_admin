@@ -15,9 +15,6 @@ import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
 import AccountModal from "./AccountModal";
 import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
-import baseUrl from "../baseUrl";
-
-const apiurl = baseUrl.apiUrl
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -55,7 +52,7 @@ function Navbar() {
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
+          const response = await fetch("/state/get-own-state-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -72,7 +69,7 @@ function Navbar() {
     } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
+          const response = await fetch("/franchise/get-own-franchise-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -90,7 +87,7 @@ function Navbar() {
       async function fetchBussinessDetails() {
         try {
           const response = await fetch(
-            `${apiurl}`+"/businessDeveloper/get-own-business-developer-details",
+            "/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
               headers: {
@@ -112,7 +109,7 @@ function Navbar() {
       async function fetchAdminDetails() {
         try {
           const response = await fetch(
-            `${apiurl}`+"/admin/fetch-admin",
+            "/admin/fetch-admin",
             {
               method: "GET",
               headers: {
@@ -178,17 +175,17 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-         <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="admin">Admin</Menu.Item>
         <Menu.Item key="subadmin">Back Office</Menu.Item>
-         <Menu.Item key="sho">State Head Officer</Menu.Item>
+        <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
         <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
-         <Menu.Item key="video">Video Creator</Menu.Item>
+        <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
     );
 
     const handleLogout = () => {
-      fetch(`${apiurl}`+"/admin/logout", {
+      fetch("/admin/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",

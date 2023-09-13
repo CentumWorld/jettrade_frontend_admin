@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import './StateAccountSection.css'
 import { Tabs, Table, Button, message, Modal, Radio } from 'antd';
 import moment from 'moment';
@@ -30,9 +30,9 @@ const StateAccountSection = () => {
     useEffect(() => {
         callApiToGetStateHandlerToalBalance();
         callApiToGetRequestHistory();
-        callApiToGetApprovedHistory();
-        callApiToGetStateBankDetails();
-        callApiToGetStateUpiDetails();
+        // callApiToGetApprovedHistory();
+        // callApiToGetStateBankDetails();
+        // callApiToGetStateUpiDetails();
 
     }, [])
 
@@ -282,6 +282,16 @@ const StateAccountSection = () => {
                 console.log(err.response.data.message)
             })
     }
+    const callApi = useCallback((key)=>{
+        if(key === '1'){
+            callApiToGetRequestHistory();
+        }else if(key === '2'){
+            callApiToGetApprovedHistory();
+        }else if(key === '3'){
+            callApiToGetStateBankDetails();
+            callApiToGetStateUpiDetails();
+        }
+    })
 
     return (
         <>
@@ -291,7 +301,7 @@ const StateAccountSection = () => {
                     <div className='state-account-wallet'><FaRupeeSign />{stateTotalBalance}</div>
                 </div>
             </div>
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="1" onChange={callApi}>
                 <TabPane tab="Request History" key="1">
                     <Table columns={columns} dataSource={requestDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>

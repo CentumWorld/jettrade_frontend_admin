@@ -82,7 +82,7 @@ const StateRegister = (props) => {
     const handleStateRegiSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
-        console.log(stateRegisterData, selectedStates);
+        console.log(stateRegisterData, selectedStates,aadharImage.file);
         const formData = new FormData();
         formData.append("fname", stateRegisterData.fname);
         formData.append("lname", stateRegisterData.lname);

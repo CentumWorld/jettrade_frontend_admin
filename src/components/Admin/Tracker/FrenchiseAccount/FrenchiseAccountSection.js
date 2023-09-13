@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import '../StateAccount/StateAccountSection.css'
-import { Tabs, Table, Button, message,Modal } from 'antd';
+import { Tabs, Table, Button, message,Modal, Radio } from 'antd';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -17,12 +17,15 @@ const FrenchiseAccountSection = () => {
     const { frenchiseId } = useParams();
     const [frenchiseTotalBalance, setFrenchiseTotalBalance] = useState(0);
     const [requestDetails, setRequestDetails] = useState([])
-    const [approvedStateDetails, setApprovedStateDetails] = useState([])
+    const [approvedStateDetails, setApprovedStateDetails] = useState([]);
+    const [selectedValue, setSelectedValue] = useState(1)
+    const [stateBankDetails, setStateBankDetails] = useState([]);
+    const [stateUpiDetails, setUpiDetails] = useState([]);
 
     useEffect(() => {
         callApiToGetFrenchiseTotalBalance();
          callApiToGetRequestHistory();
-         callApiToGetApprovedHistory();
+        //  callApiToGetApprovedHistory();
     }, [])
 
 
@@ -189,6 +192,102 @@ const FrenchiseAccountSection = () => {
         })
     }
 
+    const callApi = useCallback((activeKey)=>{
+        if(activeKey === "1"){
+            callApiToGetRequestHistory();
+        }else if(activeKey === "2"){
+            callApiToGetApprovedHistory();
+        }else{
+            callApiToFrechiseBankDetails();
+            callApiToFrenchiseUpiDetails();
+        }
+    })
+
+    const callApiToFrechiseBankDetails = ()=>{
+        let data = {
+            userId: frenchiseId
+        }
+        const token = localStorage.getItem('adminToken')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.post(`${apiurl}` +"/franchise/get-franchise-own-bank-details", data, config)
+        .then((res)=>{
+            setStateBankDetails(res.data.franchiseBankDetails)
+        })
+        .catch((err)=>{
+            console.log(err.response.data.message)
+        })
+    }
+
+    const callApiToFrenchiseUpiDetails = ()=>{
+        let data = {
+            userId: frenchiseId
+        }
+        const token = localStorage.getItem('adminToken')
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.post(`${apiurl}` +"/franchise/get-franchise-own-upi", data, config)
+        .then((res)=>{
+            setUpiDetails(res.data.franchiseUpiId)
+            console.log(res.data.franchiseUpiId)
+        })
+        .catch((err)=>{
+            console.log(err.response.data.message)
+        })
+    }
+    const handleRadioChange = (e) => {
+        setSelectedValue(e.target.value);
+        console.log(e.target.value)
+    };
+    // bank details-----------------------------------------
+    const columnForBankDetails = [
+        {
+            title: 'Holder name',
+            dataIndex: 'accountHolderName',
+            key: 'accountHolderName',
+        },
+        {
+            title: 'Bank name',
+            dataIndex: 'bankName',
+            key: 'bankName',
+        },
+        {
+            title: 'Branch name',
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: 'IFSC Code',
+            dataIndex: 'ifscCode',
+            key: 'ifscCode',
+        },
+        {
+            title: 'Account no.',
+            dataIndex: 'accountNumber',
+            key: 'accountNumber',
+        },
+    ]
+    // state upi id 
+    const columnStateUpi = [
+        {
+            title: 'User ID',
+            dataIndex: 'userId',
+            key: 'userId',
+        },
+        {
+            title: 'UPI ID',
+            dataIndex: 'upiId',
+            key: 'upiId',
+        },
+    ]
 
     return (
         <>
@@ -198,7 +297,7 @@ const FrenchiseAccountSection = () => {
                     <div className='state-account-wallet'><FaRupeeSign />{frenchiseTotalBalance}</div>
                 </div>
             </div>
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="1" onChange={callApi}>
                 <TabPane tab="Request History" key="1">
                     <Table columns={columns} dataSource={requestDetails} scroll={{ x: 800, y: 350 }}  />
                 </TabPane>
@@ -206,7 +305,11 @@ const FrenchiseAccountSection = () => {
                 <Table columns={columnsApproved} dataSource={approvedStateDetails} scroll={{ x: 800, y: 350 }} />
                 </TabPane>
                 <TabPane tab="Bank Details" key="3">
-                    Content for Tab 3
+                <Radio.Group onChange={handleRadioChange} value={selectedValue} style={{ marginBottom: 10 }}>
+                        <Radio value={1}>Bank</Radio>
+                        <Radio value={2}>UPI</Radio>
+                    </Radio.Group>
+                {selectedValue === 1 ? <Table columns={columnForBankDetails} dataSource={stateBankDetails} scroll={{ x: 800, y: 350 }}/> :  <Table columns={columnStateUpi} dataSource={stateUpiDetails} scroll={{ x: 800, y: 350 }}/>}
                 </TabPane>
             </Tabs>
         </>

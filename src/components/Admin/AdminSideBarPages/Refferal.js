@@ -111,6 +111,7 @@ const Refferal = () => {
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Address", dataIndex: "address", key: "address" },
     { title: "Referral", dataIndex: "refferal_id", key: "refferal_id" },
+    { title: "Referred", dataIndex: "reffered_id", key: "reffered_id" },
     {
       title: "Status",
       dataIndex: "status",
@@ -814,7 +815,9 @@ const Refferal = () => {
         <div className="refferal-dashboard-card">
           <div className="refferal-profile-verification-heading">
             <div className="txt-btn"></div>
-            <h5 style={{ fontFamily: "Calibri" }}>Referral Profile Details</h5>
+            <h5 style={{ fontFamily: "Calibri", display: "inline-block" }}>
+              Referral Profile Details
+            </h5>
             <NavLink
               className="create-referral"
               to="/admindashboard/createreferral"

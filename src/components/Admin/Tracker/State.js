@@ -53,7 +53,7 @@ const State = () => {
 
   useEffect(() => {
     fetchStateDataApi();
-    fetchFrenchieseDataApi();
+    //fetchFrenchieseDataApi();
   }, []);
 
   const showModal = () => {
@@ -85,6 +85,7 @@ const State = () => {
       .then((res) => {
         // console.log("State response -> ", res.data);
         setStateData(res.data.data);
+        console.log("data coming",res.data.data);
       })
       .catch((err) => {
         console.log("error", err);
@@ -92,7 +93,9 @@ const State = () => {
   };
 
   const adminToken = localStorage.getItem("adminToken");
-  const subAdminToken = localStorage.getItem("subAdminToken")
+  const subAdminToken = localStorage.getItem("subAdminToken");
+
+
   const columns = [
     {
       title: "Fname",
@@ -128,6 +131,11 @@ const State = () => {
       title: "Refferal Id",
       dataIndex: "referralId",
       key: "referralId",
+    },
+     {
+      title: "reffered Id",
+      dataIndex: "referredId",
+      key: "reffered_id",
     },
     {
       title: "Wallet",
