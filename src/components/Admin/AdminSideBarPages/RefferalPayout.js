@@ -520,7 +520,7 @@ const RefferalPayout = () => {
       key: "userType",
     },
     {
-      title: "Referral User",
+      title: "Referr User Id",
       dataIndex: "refferUserId",
       key: "userid",
     },
