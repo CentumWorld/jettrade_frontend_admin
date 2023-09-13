@@ -28,7 +28,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const Refferal = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [refferalData, setRefferalData] = useState([]);
@@ -79,7 +79,7 @@ const Refferal = () => {
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
-  const [memberId,setMemberId] = useState('');
+  const [memberId, setMemberId] = useState("");
 
   // edit modal
   const editModal = () => {
@@ -94,8 +94,8 @@ const Refferal = () => {
 
   // search bar -------------
   const adminToken = localStorage.getItem("adminToken");
-  const subadminToken =  localStorage.getItem("subAdminToken");
-  const isBusiness = localStorage.getItem('bussinessAdminToken');
+  const subadminToken = localStorage.getItem("subAdminToken");
+  const isBusiness = localStorage.getItem("bussinessAdminToken");
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -141,10 +141,21 @@ const Refferal = () => {
       dataIndex: "action",
       render: (_, record) => (
         <>
-          <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
+          <Dropdown
+            overlay={adminToken ? menu : subMenu}
+            placement="bottomLeft"
+            trigger={["click"]}
+          >
             <BsThreeDotsVertical
               size={24}
-              onClick={() => trigerAction(record._id, record.isBlocked,record.status,record.memberid)}
+              onClick={() =>
+                trigerAction(
+                  record._id,
+                  record.isBlocked,
+                  record.status,
+                  record.memberid
+                )
+              }
               style={{ cursor: "pointer" }}
             />
           </Dropdown>
@@ -160,7 +171,7 @@ const Refferal = () => {
   }
 
   // handle action
-  const trigerAction = (id, block,verify,memberId) => {
+  const trigerAction = (id, block, verify, memberId) => {
     setMyID(id);
     setIsBlock(block);
     setIsVerified(verify);
@@ -182,15 +193,16 @@ const Refferal = () => {
     if (e.key === "block") {
       blockUnblock(myID);
     }
-    if(e.key === "account"){
+    if (e.key === "account") {
       navigate(`/admindashboard/refferal/refferal-account/${memberId}`);
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-
-      <Menu.Item key="verify"  disabled={isVerified}>Verify</Menu.Item>
+      <Menu.Item key="verify" disabled={isVerified}>
+        Verify
+      </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
@@ -200,9 +212,9 @@ const Refferal = () => {
 
   const subMenu = (
     <Menu onClick={handleMenuClick}>
-       <Menu.Item key="verify" disabled={isVerified}>
-      Verify
-    </Menu.Item>
+      <Menu.Item key="verify" disabled={isVerified}>
+        Verify
+      </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
     </Menu>
   );
@@ -218,7 +230,10 @@ const Refferal = () => {
   //Handle varify click
   const handleVerifyClick = (id) => {
     console.log(id);
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken") || localStorage.getItem('bussinessAdminToken')
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("subAdminToken") ||
+      localStorage.getItem("bussinessAdminToken");
     let data = {
       id: id,
       status: true,
@@ -267,7 +282,6 @@ const Refferal = () => {
         //setAadhar(res.data.result.aadhar);
         //setPan(res.data.result.pan);
         fetchMemberDocuments(res.data.result._id);
-
       })
       .catch((error) => {
         message.warning("Somthing went wrong!");
@@ -436,7 +450,6 @@ const Refferal = () => {
         .then((res) => {
           console.log("Bussiness response-----------> ", res.data);
           setRefferalData(res.data.members);
-          
         })
         .catch((err) => {
           console.log("error", err);
@@ -686,21 +699,14 @@ const Refferal = () => {
     setFilteredDataSource(filteredData);
   };
 
+  const activeStyle = {
+    backgroundColor: "#333333",
+    color: "#ffffff",
+  };
   // ---------------
 
   return (
     <>
-   <NavLink
-                className="create-user"
-                to="/admindashboard/createreferral"
-                exact
-                activeClassName="active"
-                // style={navLinkStyle}
-                // activeStyle={activeStyle}
-              >
-                + Create Referral
-              </NavLink>
-
       <Modal
         className="document_verification"
         title="Documents Verification"
@@ -807,7 +813,18 @@ const Refferal = () => {
       <div className="refferral-dashboard">
         <div className="refferal-dashboard-card">
           <div className="refferal-profile-verification-heading">
+            <div className="txt-btn"></div>
             <h5 style={{ fontFamily: "Calibri" }}>Referral Profile Details</h5>
+            <NavLink
+              className="create-referral"
+              to="/admindashboard/createreferral"
+              exact
+              activeClassName="active"
+              activeStyle={activeStyle}
+              style={{ float: "right" }}
+            >
+              + Create Referral
+            </NavLink>
           </div>
 
           <div>
