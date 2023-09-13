@@ -47,7 +47,10 @@ const Uservideo = () => {
 
       await axios.post("/admin/createvideo", formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")|| localStorage.getItem("videoCreatorToken")}`,
+          Authorization: `Bearer ${
+            localStorage.getItem("adminToken") ||
+            localStorage.getItem("videoCreatorToken")
+          }`,
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
@@ -75,14 +78,7 @@ const Uservideo = () => {
   return (
     <div className="upload-container">
       <h1 className="upload-heading">Video Upload</h1>
-      {isUploading && (
-        <div className="upload-loader">Uploading... {uploadProgress}%</div>
-      )}
-      {uploadSuccess && (
-        <div className="upload-success">
-          Video and Thumbnail uploaded successfully!
-        </div>
-      )}
+
       {uploadError && (
         <div className="upload-error">
           Failed to upload video and/or thumbnail!
@@ -130,6 +126,14 @@ const Uservideo = () => {
           "Upload Video"
         )}
       </button>
+      {isUploading && (
+        <div className="upload-loader">Uploading... {uploadProgress}%</div>
+      )}
+      {uploadSuccess && (
+        <div className="upload-success">
+          Video and Thumbnail uploaded successfully!
+        </div>
+      )}
     </div>
   );
 };
