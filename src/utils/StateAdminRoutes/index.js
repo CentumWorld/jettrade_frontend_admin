@@ -7,12 +7,21 @@ import { SiPivotaltracker } from "react-icons/si"
 import { MdBarChart } from "react-icons/md";
 import { BsFillChatTextFill } from "react-icons/bs";
 import { FaAmazonPay } from "react-icons/fa";
+import { FcNeutralTrading } from 'react-icons/fc';
+
 
 const stateAdminRoutes = [
     {
       path: "/admindashboard/dashboard",
       name: "Dashboard",
       icon: <MdDashboard />,
+    },
+    {
+      path: "https://centumo.centumworld.com/#/exchange/quick",
+      name: "CENTUMO Swap",
+      icon: <FcNeutralTrading />,
+      externalLink: true,
+      target: "_blank",
     },
     {
       path: "tracker/frenchie",

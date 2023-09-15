@@ -133,25 +133,6 @@ function AdminSideBar() {
         </div>
         {isAdmin && (
           <section className="admin_routes">
-            {/* {Adminroutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
-                return (
-                  <NavLink
-                    to={route.path}
-                    key={route.name}
-                    className={
-                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
-                    }
-                  >
-                    <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
-                      {route.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })} */}
             {Adminroutes.map((route) => {
               if (route.subRoutes) {
                 return <AdminSideBarMenu isOpen={isOpen} route={route} />;
@@ -199,6 +180,25 @@ function AdminSideBar() {
               if (route.subRoutes) {
                 return <AdminSideBarMenu isOpen={isOpen} route={route} />;
               }
+              if (route.externalLink) {
+                // For the "CENTUMO Swap" link, open in a new tab
+                return (
+                  <a
+                    href={route.path}
+                    key={route.name}
+                    className={
+                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                    }
+                    target="_blank" // This will open "CENTUMO Swap" in a new tab
+                    rel="noopener noreferrer" // Recommended for security
+                  >
+                    <div className="admin-icon">{route.icon}</div>
+                    <motion.div className="admin_link_text">
+                      {route.name}
+                    </motion.div>
+                  </a>
+                );
+              }
               return (
                 <NavLink
                   to={route.path}
@@ -221,6 +221,25 @@ function AdminSideBar() {
             {subAdminRoutes.map((route) => {
               if (route.subRoutes) {
                 return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              if (route.externalLink) {
+                // For the "CENTUMO Swap" link, open in a new tab
+                return (
+                  <a
+                    href={route.path}
+                    key={route.name}
+                    className={
+                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                    }
+                    target="_blank" // This will open "CENTUMO Swap" in a new tab
+                    rel="noopener noreferrer" // Recommended for security
+                  >
+                    <div className="admin-icon">{route.icon}</div>
+                    <motion.div className="admin_link_text">
+                      {route.name}
+                    </motion.div>
+                  </a>
+                );
               }
               return (
                 <NavLink
@@ -245,6 +264,25 @@ function AdminSideBar() {
               if (route.subRoutes) {
                 return <AdminSideBarMenu isOpen={isOpen} route={route} />;
               }
+              if (route.externalLink) {
+                // For the "CENTUMO Swap" link, open in a new tab
+                return (
+                  <a
+                    href={route.path}
+                    key={route.name}
+                    className={
+                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                    }
+                    target="_blank" // This will open "CENTUMO Swap" in a new tab
+                    rel="noopener noreferrer" // Recommended for security
+                  >
+                    <div className="admin-icon">{route.icon}</div>
+                    <motion.div className="admin_link_text">
+                      {route.name}
+                    </motion.div>
+                  </a>
+                );
+              }
               return (
                 <NavLink
                   to={route.path}
@@ -267,6 +305,25 @@ function AdminSideBar() {
             {BussinessDeveloperRoutes.map((route) => {
               if (route.subRoutes) {
                 return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              if (route.externalLink) {
+                // For the "CENTUMO Swap" link, open in a new tab
+                return (
+                  <a
+                    href={route.path}
+                    key={route.name}
+                    className={
+                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                    }
+                    target="_blank" // This will open "CENTUMO Swap" in a new tab
+                    rel="noopener noreferrer" // Recommended for security
+                  >
+                    <div className="admin-icon">{route.icon}</div>
+                    <motion.div className="admin_link_text">
+                      {route.name}
+                    </motion.div>
+                  </a>
+                );
               }
               return (
                 <NavLink

@@ -23,13 +23,11 @@ import { IoMdCreate } from "react-icons/io";
 import { BsFillChatTextFill } from "react-icons/bs";
 import { SiPivotaltracker } from "react-icons/si";
 import { SiManageiq } from "react-icons/si";
-import { FcNeutralTrading } from "react-icons/fc";
 import { MdBarChart } from "react-icons/md";
 import { RxCountdownTimer } from "react-icons/rx";
 import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
 import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
-// import { BiStar } from "react-icons/bi";
-import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { FcNeutralTrading } from "react-icons/fc";
 
 const Adminroutes = [
   {
@@ -40,18 +38,9 @@ const Adminroutes = [
   {
     path: "https://centumo.centumworld.com/#/exchange/quick",
     name: "CENTUMO Swap",
-    icon: <IoIosArrowDroprightCircle />,
+    icon: <FcNeutralTrading />,
     externalLink: true,
     target: "_blank",
-    style: {
-      display: "inline-block",
-      padding: "10px 20px",
-      backgroundColor: "#007bff",
-      color: "#fff",
-      borderRadius: "5px",
-      textDecoration: "none",
-      cursor: "pointer",
-    },
   },
   {
     path: "/admindashboard/chart",
