@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, Button, Select, DatePicker, Space } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Button,
+  Select,
+  DatePicker,
+  Space,
+  Upload,
+  message,
+  Spin,
+} from "antd";
 import {
   UserOutlined,
   MobileOutlined,
@@ -10,6 +21,8 @@ import axios from "axios";
 import moment from "moment";
 import baseUrl from "../baseUrl";
 import { FaPenAlt } from "react-icons/fa";
+import profile from "../img/logo1.png";
+import { ToastContainer, toast } from "react-toastify";
 
 const apiurl = baseUrl.apiUrl;
 
@@ -17,6 +30,7 @@ const { Option } = Select;
 
 const ProfileModal = ({ visible, onCancel }) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [editingField, setEditingField] = useState(null);
   const stateAdmintoken = localStorage.getItem("stateHandlerToken");
   const franchiseToken = localStorage.getItem("franchiseToken");
@@ -240,6 +254,92 @@ const ProfileModal = ({ visible, onCancel }) => {
     }
   };
 
+  const [image, setImage] = useState({
+    placeholder: "",
+    file: null,
+  });
+
+  const handleProfileImageChange = (e) => {
+    //e.preventDefault();
+
+    document.getElementById("file-input").click();
+
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      //preview shoe
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage({
+          placeholder: reader.result,
+          file: e.target.files[0],
+        });
+      };
+      reader.readAsDataURL(e.target.files[0]);
+
+      //uploadProfile(e.target.files[0]);
+    } else {
+      toast.error("Invalid File !! ");
+      image.file = null;
+    }
+  };
+
+  const uploadProfile = (event) => {
+    event.preventDefault();
+
+    if (stateAdmintoken) {
+      const token = localStorage.getItem("stateHandlerToken");
+      setLoading(true);
+      let formData = new FormData();
+      formData.append("profilePhoto", image.file);
+      formData.append("userid", localStorage.getItem("stateHandlerId"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .post(`${apiurl}` + "/state/upload-sho-profile-photo", formData, config)
+        .then((res) => message.success(res.data.message))
+        .catch((err) => message.warning(err.response.data.message));
+      setLoading(false);
+    } else if (franchiseToken) {
+      const token = localStorage.getItem("franchiseToken");
+      setLoading(true);
+      let formData = new FormData();
+      formData.append("profilePhoto", image.file);
+      formData.append("userid", localStorage.getItem("frenchiseId"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .post(`${apiurl}` + "/franchise/upload-franchise-profile-photo", formData, config)
+        .then((res) => message.success(res.data.message))
+        .catch((err) => message.warning(err.response.data.message));
+      setLoading(false);
+    } else {
+      const token = localStorage.getItem("bussinessAdminToken");
+      setLoading(true);
+      let formData = new FormData();
+      formData.append("profilePhoto", image.file);
+      formData.append("userid", localStorage.getItem("businessId"));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .post(`${apiurl}` + "/businessDeveloper/upload-bd-profile-photo", formData, config)
+        .then((res) => message.success(res.data.message))
+        .catch((err) => message.warning(err.response.data.message));
+      setLoading(false);
+
+    }
+  };
+
   return (
     <Modal
       visible={visible}
@@ -256,7 +356,33 @@ const ProfileModal = ({ visible, onCancel }) => {
         ),
       ]}
     >
+      <ToastContainer />
       <Form form={form} layout="vertical">
+        <Form.Item label="Avatar">
+          <div className="pic">
+            <form>
+              <input
+                id="file-input"
+                type="file"
+                name="file1"
+                onChange={handleProfileImageChange}
+              />
+              <label htmlFor="file-input">
+                <img src={image.placeholder} alt="" height={100} width={100} style={{objectFit: "cover"}} />
+              </label>
+
+              <div className="upload_file d-grid mx-auto">
+                <button
+                  className="btn btn-primary"
+                  type="submit"
+                  onClick={uploadProfile}
+                >
+                  {loading ? <Spin /> : "Upload"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </Form.Item>
         <Form.Item label="First name" initialValue={fieldValue.fname}>
           <Input
             prefix={<UserOutlined />}
