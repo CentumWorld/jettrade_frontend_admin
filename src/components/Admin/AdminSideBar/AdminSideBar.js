@@ -9,7 +9,7 @@ import subAdminRoutes from "../../../utils/SubAdminRoutes";
 import franchiseAdminRoutes from "../../../utils/FranchiseRoutes";
 import { FaBars } from "react-icons/fa";
 import BussinessDeveloperRoutes from "../../../utils/BussinessDeveloperRoutes";
-import VideoCreatorRoutes from "../../../utils/VideoCreator"
+import VideoCreatorRoutes from "../../../utils/VideoCreator";
 
 function AdminSideBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,16 +32,15 @@ function AdminSideBar() {
     } else if (isBussinessDeveloper) {
       setUser("Bussiness Developer");
     } else if (isFranchise) {
-      setUser("Franchise Admin")
-    } else if(isCreatorVideo){
-      setUser("Video Creator")
+      setUser("Franchise Admin");
+    } else if (isCreatorVideo) {
+      setUser("Video Creator");
     }
-  }
+  };
 
   useEffect(() => {
     updateUser();
-  }, [])
-
+  }, []);
 
   const toggle = () => setIsOpen(!isOpen);
   const userid = localStorage.getItem("userid");
@@ -52,9 +51,7 @@ function AdminSideBar() {
         className="admin-sidebar"
       >
         <div className="admin-top-section">
-          {isOpen && (
-            <h5 className="admin_logo">{user}</h5>
-          )}
+          {isOpen && <h5 className="admin_logo">{user}</h5>}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}
 
           {/* <h1 className="">Badal</h1> */}
@@ -62,10 +59,9 @@ function AdminSideBar() {
             <FaBars onClick={toggle} />
           </div>
         </div>
-        {
-          isAdmin && (
-            <section className="admin_routes">
-              {Adminroutes.map((route) => {
+        {isAdmin && (
+          <section className="admin_routes">
+            {/* {Adminroutes.map((route) => {
                 if (route.subRoutes) {
                   return <AdminSideBarMenu isOpen={isOpen} route={route} />;
                 }
@@ -83,135 +79,163 @@ function AdminSideBar() {
                     </motion.div>
                   </NavLink>
                 );
-              })}
-            </section>
-          )
-        }
-        {
-          isStateHandler && (
-            <section className="admin_routes">
-              {stateAdminRoutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
+              })} */}
+            {Adminroutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              if (route.externalLink) {
+                // For the "CENTUMO Swap" link, open in a new tab
                 return (
-                  <NavLink
-                    to={route.path}
+                  <a
+                    href={route.path}
                     key={route.name}
                     className={
                       isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                     }
+                    target="_blank" // This will open "CENTUMO Swap" in a new tab
+                    rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
                     <motion.div className="admin_link_text">
                       {route.name}
                     </motion.div>
-                  </NavLink>
+                  </a>
                 );
-              })}
-            </section>
-          )
-        }
-        {
-          isSubAdmin && (
-            <section className="admin_routes">
-              {subAdminRoutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
-                return (
-                  <NavLink
-                    to={route.path}
-                    key={route.name}
-                    className={
-                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
-                    }
-                  >
-                    <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
-                      {route.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })}
-            </section>
-          )
-        }
-        {
-          isFranchise && (
-            <section className="admin_routes">
-              {franchiseAdminRoutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
-                return (
-                  <NavLink
-                    to={route.path}
-                    key={route.name}
-                    className={
-                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
-                    }
-                  >
-                    <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
-                      {route.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })}
-            </section>
-          )
-        }
-        {
-          isBussinessDeveloper && (
-            <section className="admin_routes">
-              {BussinessDeveloperRoutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
-                return (
-                  <NavLink
-                    to={route.path}
-                    key={route.name}
-                    className={
-                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
-                    }
-                  >
-                    <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
-                      {route.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })}
-            </section>
-          )
-        }
-        {
-          isCreatorVideo && (
-            <section className="admin_routes">
-              {VideoCreatorRoutes.map((route) => {
-                if (route.subRoutes) {
-                  return <AdminSideBarMenu isOpen={isOpen} route={route} />;
-                }
-                return (
-                  <NavLink
-                    to={route.path}
-                    key={route.name}
-                    className={
-                      isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
-                    }
-                  >
-                    <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
-                      {route.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })}
-            </section>
-          )
-        }
+              }
+              // For other links, open in the same page using NavLink
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
+        {isStateHandler && (
+          <section className="admin_routes">
+            {stateAdminRoutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
+        {isSubAdmin && (
+          <section className="admin_routes">
+            {subAdminRoutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
+        {isFranchise && (
+          <section className="admin_routes">
+            {franchiseAdminRoutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
+        {isBussinessDeveloper && (
+          <section className="admin_routes">
+            {BussinessDeveloperRoutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
+        {isCreatorVideo && (
+          <section className="admin_routes">
+            {VideoCreatorRoutes.map((route) => {
+              if (route.subRoutes) {
+                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+              }
+              return (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className={
+                    isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
+                  }
+                >
+                  <div className="admin-icon">{route.icon}</div>
+                  <motion.div className="admin_link_text">
+                    {route.name}
+                  </motion.div>
+                </NavLink>
+              );
+            })}
+          </section>
+        )}
       </motion.div>
     </div>
   );

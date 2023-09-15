@@ -49,6 +49,7 @@
 
 .admin-bars {
     font-size: 24px;
+    cursor: pointer;
 }
 
 .admin_sidebar_link {

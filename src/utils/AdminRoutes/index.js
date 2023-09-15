@@ -21,130 +21,145 @@ import { RiUserShared2Fill } from "react-icons/ri";
 import { AiFillVideoCamera } from "react-icons/ai";
 import { IoMdCreate } from "react-icons/io";
 import { BsFillChatTextFill } from "react-icons/bs";
-import { SiPivotaltracker } from "react-icons/si"
+import { SiPivotaltracker } from "react-icons/si";
 import { SiManageiq } from "react-icons/si";
 import { FcNeutralTrading } from "react-icons/fc";
 import { MdBarChart } from "react-icons/md";
 import { RxCountdownTimer } from "react-icons/rx";
 import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
 import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
-import { BiStar } from "react-icons/bi";
+// import { BiStar } from "react-icons/bi";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
 
+const Adminroutes = [
+  {
+    path: "/admindashboard/dashboard",
+    name: "Dashboard",
+    icon: <MdDashboard />,
+  },
+  {
+    path: "https://centumo.centumworld.com/#/exchange/quick",
+    name: "CENTUMO Swap",
+    icon: <IoIosArrowDroprightCircle />,
+    externalLink: true,
+    target: "_blank",
+    style: {
+      display: "inline-block",
+      padding: "10px 20px",
+      backgroundColor: "#007bff",
+      color: "#fff",
+      borderRadius: "5px",
+      textDecoration: "none",
+      cursor: "pointer",
+    },
+  },
+  {
+    path: "/admindashboard/chart",
+    name: "Chart",
+    icon: <MdBarChart />,
+  },
+  {
+    path: "/admindashboard/user",
+    name: "User",
+    icon: <FaUserTie />,
+  },
+  {
+    path: "/admindashboard/refferal",
+    name: "Referral",
+    icon: <FaSlideshare />,
+  },
+  {
+    path: "/admindashboard/new-renewal",
+    name: "New/Renewal Users",
+    icon: <MdAutorenew />,
+  },
+  {
+    path: "/admindashboard/subadmin",
+    name: "Sub-Admin",
+    icon: <IoMdCreate />,
+  },
+  {
+    path: "/admindashboard/tracker",
+    name: "Tracker",
+    icon: <SiPivotaltracker />,
+    subRoutes: [
+      {
+        path: "tracker/state-tracer",
+        name: "State Tracker",
+      },
+      {
+        path: "tracker/frenchie",
+        name: "Franchise",
+      },
+      {
+        path: "tracker/businness-developer",
+        name: "Business Developer",
+      },
+    ],
+  },
+  {
+    path: "/admindashboard/manage",
+    name: "Manage",
+    icon: <SiManageiq />,
+    subRoutes: [
+      {
+        path: "manage/push-notification",
+        name: " Manage Push Notification",
+        // icon: <IoNotificationsSharp />,
+      },
+      {
+        path: "manage/subscription",
+        name: "Manage Subscription",
+        // icon: <MdUnsubscribe />
+      },
+      // {
+      //     path:"manage/investment",
+      //     name:"Manage Investment"
+      // },
+      {
+        path: "manage/investor-refferal-payout",
+        name: "Referral Payout",
+        // icon: <FaAmazonPay />
+      },
+    ],
+  },
+  // {
+  //   path: "/admindashboard",
+  //   name: "Chat",
+  //   icon: <BsFillChatTextFill />,
+  //   subRoutes: [
+  //     {
+  //       path: "trader-chat",
+  //       name: "Traders",
+  //     },
+  //     {
+  //       path: "refferal-chat",
+  //       name: "Referral",
+  //     },
+  //     {
+  //       path:"state-chat",
+  //       name:"State Chat"
+  //     },
+  //     {
+  //       path:"franchisee-chat",
+  //       name:"Franchisee Chat"
+  //     },
+  //     {
+  //       path:"business-developer-chat",
+  //       name:"Business developer chat"
+  //     }
+  //   ],
+  // },
+  {
+    path: "/admindashboard/video",
+    name: "upload videos",
+    icon: <MdCloudUpload />,
+  },
+  {
+    path: "/admindashboard/allvideo",
+    name: "Video",
+    icon: <AiFillVideoCamera />,
+  },
+];
 
-const  Adminroutes =  [
-    {
-      path: "/admindashboard/dashboard",
-      name: "Dashboard",
-      icon: <MdDashboard />,
-    },
-    {
-      path: "/admindashboard/chart",
-      name: "Chart",
-      icon: <MdBarChart />,
-    },
-    {
-      path: "/admindashboard/user",
-      name: "User",
-      icon: <FaUserTie />,
-    },
-    {
-      path: "/admindashboard/refferal",
-      name: "Referral",
-      icon: <FaSlideshare />,
-    },
-    {
-      path: "/admindashboard/new-renewal",
-      name: "New/Renewal Users",
-      icon: <MdAutorenew />,
-    },
-    {
-      path: "/admindashboard/subadmin",
-      name: "Sub-Admin",
-      icon: <IoMdCreate />
-    },
-    {
-      path: "/admindashboard/tracker",
-      name: "Tracker",
-      icon: <SiPivotaltracker />,
-      subRoutes:[
-        {
-          path:'tracker/state-tracer',
-          name : 'State Tracker'
-        },
-        {
-          path:'tracker/frenchie',
-          name :'Franchise'
-        },
-        {
-          path:'tracker/businness-developer',
-          name:'Business Developer'
-        }
-      ]
-    },
-    {
-      path: "/admindashboard/manage",
-      name: "Manage",
-      icon: <SiManageiq />,
-      subRoutes: [
-        {
-          path: "manage/push-notification",
-          name: " Manage Push Notification",
-          // icon: <IoNotificationsSharp />,
-        },
-        {
-          path: "manage/subscription",
-          name: "Manage Subscription",
-          // icon: <MdUnsubscribe />
-        },
-        // {
-        //     path:"manage/investment",
-        //     name:"Manage Investment"
-        // },
-        {
-          path: "manage/investor-refferal-payout",
-          name: "Referral Payout",
-          // icon: <FaAmazonPay />
-        },
-      ],
-    },
-    // {
-    //   path: "/admindashboard",
-    //   name: "Chat",
-    //   icon: <BsFillChatTextFill />,
-    //   subRoutes: [
-    //     {
-    //       path: "trader-chat",
-    //       name: "Traders",
-    //     },
-    //     {
-    //       path: "refferal-chat",
-    //       name: "Referral",
-    //     },
-    //     {
-    //       path:"state-chat",
-    //       name:"State Chat"
-    //     },
-    //     {
-    //       path:"franchisee-chat",
-    //       name:"Franchisee Chat"
-    //     },
-    //     {
-    //       path:"business-developer-chat",
-    //       name:"Business developer chat"
-    //     }
-    //   ],
-    // },
-    {
-      path: "/admindashboard/video",
-      name: "upload videos",
-      icon: <MdCloudUpload />,
-    },
-    {
-      path: "/admindashboard/allvideo",
-      name: "Video",
-      icon: <AiFillVideoCamera />,
-    },
-    
-  ];
-
-  export default Adminroutes;
+export default Adminroutes;
