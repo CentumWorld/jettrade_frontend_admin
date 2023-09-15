@@ -6,9 +6,8 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
-import { ToastContainer, toast } from "react-toastify";
 import baseUrl from "../baseUrl";
-import { UploadOutlined } from '@ant-design/icons';
+
 import allState from "./Admin/Tracker/AllStateAndDistrict";
 
 const apiurl = baseUrl.apiUrl;

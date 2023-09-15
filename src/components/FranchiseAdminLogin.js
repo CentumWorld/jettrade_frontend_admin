@@ -10,6 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import baseUrl from "../baseUrl";
 import FrenchieRegister from "./Admin/Tracker/Register/FrenchieRegister";
 import allState from "./Admin/Tracker/AllStateAndDistrict";
+import { MdVerified } from 'react-icons/md'
+import {ImCross} from 'react-icons/im'
 
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
@@ -18,6 +20,8 @@ const { Option } = Select;
 const FranchiseAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
+  const [correct, setCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false)
   const [franchiseAdmin, setFranchiseAdmin] = useState({
     franchiseAdmin_id: "",
     franchiseAdmin_password: "",
@@ -95,12 +99,16 @@ const FranchiseAdminLogin = (props) => {
 
     axios.post(`${apiurl}` + '/admin/verify-franchie-before-registration', data)
       .then((res) => {
-        message.success("Verify successfully");
+        setCorrect(true);
+        setIncorrect(false)
         console.log(res.data)
         setStateFrenchise(res.data.stateUserState);
+
       })
       .catch((err) => {
-        message.warning(err.response.data.message)
+        setCorrect(false);
+        setIncorrect(true);
+        setStateFrenchise([]);
       })
   }
   const handleStateChange = (value) => {
@@ -236,7 +244,12 @@ const FranchiseAdminLogin = (props) => {
                 >
                   <Input placeholder='Referal ID' onChange={(e) => setStateRegisterData({ referredId: e.target.value })} />
                 </Form.Item>
-                <Button type="primay" onClick={verifyReferralID}>Verify</Button>
+                <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferralID}>Verify</Button>
+                  <div>
+                    {correct ? <small style={{color:"green"}}><MdVerified style={{ fontSize: "20px" }} />&nbsp; Verify successful</small> : ""}
+                    {incorrect ? <small style={{color:"red"}}><ImCross style={{ fontSize: "20px" }} />&nbsp; Invalid referral id</small> : ""}
+                  </div>
+                </div>
                 <hr />
                 <Form.Item
                   label="First name"

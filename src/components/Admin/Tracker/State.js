@@ -152,6 +152,7 @@ const State = () => {
       title: "State",
       dataIndex: "selectedState",
       key: "selectedState",
+      render: (selectedState) => selectedState.join(', '),
     },
     {
       title: "Status",
@@ -623,10 +624,15 @@ const State = () => {
     });
   }
 
+  const updateList = (data)=>{
+    console.log('hiiiiiiiiiiiiii')
+    fetchStateDataApi();
+  }
+
 
   return (
     <>
-      <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} />
+      <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} updateData={updateList} />
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">

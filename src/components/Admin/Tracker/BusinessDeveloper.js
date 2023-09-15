@@ -592,12 +592,17 @@ const BusinessDeveloper = () => {
       },
     });
   }
+  
+  const updateList = (dataList)=>{
+    fetchBussinesDeveloperDataApi();
+  }
 
   return (
     <>
       <BusinessDeveloperRegister
         isModalVisible={isModalVisible}
         closeModal={closeModal}
+        updateData={updateList}
       />
       <div className="new-renewal-container">
         <div className="new-renewal-header">
