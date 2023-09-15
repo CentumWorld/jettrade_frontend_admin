@@ -128,6 +128,7 @@ const Frenchie = () => {
       title: "City",
       dataIndex: "franchiseCity",
       key: "franchiseCity",
+      render: (franchiseCity) => franchiseCity.join(', '),
     },
     {
       title: "Status",
@@ -631,11 +632,16 @@ const Frenchie = () => {
     });
   };
 
+  const getChildUpdate = (childData)=>{
+    fetchFrenchieseDataApi();
+  }
+
   return (
     <>
       <FrenchieRegister
         isModalVisible={isModalVisible}
         closeModal={closeModal}
+        dataUpdate={getChildUpdate}
       />
       <div className="new-renewal-container">
         <div className="new-renewal-header">

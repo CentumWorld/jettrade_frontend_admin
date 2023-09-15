@@ -11,6 +11,7 @@ const { Option } = Select;
 
 const FrenchieRegister = (props) => {
     // const navigate = useNavigate();
+    const {dataUpdate} = props;
     const [selectedStates, setSelectedStates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState([]);
@@ -97,6 +98,7 @@ const FrenchieRegister = (props) => {
 
 
     const handleFrenchaeRegiSubmit = async (e) => {
+        const frenchData = "update";
         setLoading(true);
         e.preventDefault();
         console.log(stateRegisterData, selectedStates);
@@ -140,6 +142,7 @@ const FrenchieRegister = (props) => {
                 setLoading(false);
                 setAadharImage({ file: null });
                 setPanImage({ file: null });
+                dataUpdate(frenchData)
             })
             .catch(err => {
                 setLoading(false);
@@ -343,7 +346,7 @@ const FrenchieRegister = (props) => {
                         </div>
                         <div className='state-field'>
                             <label>Password</label>
-                            <Input type='password'
+                            <Input.Password type='password'
                                 placeholder='Password'
                                 name="password"
                                 value={stateRegisterData.password}

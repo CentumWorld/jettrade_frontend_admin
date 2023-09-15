@@ -9,11 +9,17 @@ import subAdminRoutes from "../../../utils/SubAdminRoutes";
 import franchiseAdminRoutes from "../../../utils/FranchiseRoutes";
 import { FaBars } from "react-icons/fa";
 import BussinessDeveloperRoutes from "../../../utils/BussinessDeveloperRoutes";
-import VideoCreatorRoutes from "../../../utils/VideoCreator";
+import VideoCreatorRoutes from "../../../utils/VideoCreator"
+import baseUrl from "../../../baseUrl";
+
+
+const apiurl = baseUrl.apiUrl;
 
 function AdminSideBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState("");
+  const [name, setName] = useState("");
+  console.log("name ===> ", name)
 
   const isSubAdmin = localStorage.getItem("subAdminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
@@ -22,19 +28,83 @@ function AdminSideBar() {
   const isFranchise = localStorage.getItem("franchiseToken");
   const isCreatorVideo = localStorage.getItem("videoCreatorToken");
 
+  const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
+  const isFrachiseToken = localStorage.getItem("franchiseToken");
+  const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
+
+  useEffect(() => {
+    if (isStateHandlerToken) {
+      async function fetchStateDetails() {
+        try {
+          const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isStateHandlerToken}`,
+            },
+          });
+          const data = await response.json();
+          setName(data.data.fname);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchStateDetails();
+    } else if (isFrachiseToken) {
+      async function fetchFracnhiseDetails() {
+        try {
+          const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isFrachiseToken}`,
+            },
+          });
+          const data = await response.json();
+          setName(data.data.fname);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchFracnhiseDetails();
+    } else if (isBussinessDeveloperToken) {
+      async function fetchBussinessDetails() {
+        try {
+          const response = await fetch(
+            `${apiurl}`+ "/businessDeveloper/get-own-business-developer-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isBussinessDeveloperToken}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setName(data.data.fname);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+
+
+      fetchBussinessDetails();
+    }
+  }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken]);
+
   const updateUser = () => {
     if (isSubAdmin) {
       setUser("Back Office");
     } else if (isStateHandler) {
-      setUser("State Admin");
+      setUser(name);
     } else if (isAdmin) {
       setUser("Admin");
     } else if (isBussinessDeveloper) {
-      setUser("Bussiness Developer");
+      setUser(name);
     } else if (isFranchise) {
-      setUser("Franchise Admin");
-    } else if (isCreatorVideo) {
-      setUser("Video Creator");
+      setUser(name)
+    } else if(isCreatorVideo){
+      setUser(name)
     }
   };
 
@@ -51,7 +121,9 @@ function AdminSideBar() {
         className="admin-sidebar"
       >
         <div className="admin-top-section">
-          {isOpen && <h5 className="admin_logo">{user}</h5>}
+          {isOpen && (
+            <h5 className="admin_logo">{name || user}</h5>
+          )}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}
 
           {/* <h1 className="">Badal</h1> */}

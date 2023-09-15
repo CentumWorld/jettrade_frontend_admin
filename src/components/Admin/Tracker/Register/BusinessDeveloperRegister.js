@@ -11,6 +11,7 @@ const { Option } = Select;
 
 const BusinessDeveloperRegister = (props) => {
     // const navigate = useNavigate();
+    const {updateData} = props;
     const [selectedStates, setSelectedStates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [city, setCity] = useState([]);
@@ -97,6 +98,7 @@ const BusinessDeveloperRegister = (props) => {
 
 
     const handleFrenchaeRegiSubmit = async (e) => {
+        const updateList = "updateData"
         setLoading(true);
         e.preventDefault();
         console.log(stateRegisterData, panImage.file, aadharImage.file);
@@ -138,7 +140,7 @@ const BusinessDeveloperRegister = (props) => {
                 setLoading(false);
                 setAadharImage({ file: null });
                 setPanImage({ file: null });
-
+                updateData(updateList)
 
             })
             .catch(err => {
@@ -327,7 +329,7 @@ const BusinessDeveloperRegister = (props) => {
                         </div>
                         <div className='state-field'>
                             <label>Password</label>
-                            <Input type='password'
+                            <Input.Password type='password'
                                 placeholder='Password'
                                 name="password"
                                 value={stateRegisterData.password}

@@ -9,8 +9,9 @@ import {
 import axios from "axios";
 import moment from "moment";
 import baseUrl from "../baseUrl";
+import { FaPenAlt } from "react-icons/fa";
 
-const apiurl = baseUrl.apiUrl
+const apiurl = baseUrl.apiUrl;
 
 const { Option } = Select;
 
@@ -32,13 +33,16 @@ const ProfileModal = ({ visible, onCancel }) => {
   useEffect(() => {
     async function fetchStateDetails() {
       try {
-        const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${stateAdmintoken}`,
-          },
-        });
+        const response = await fetch(
+          `${apiurl}` + "/state/get-own-state-details",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${stateAdmintoken}`,
+            },
+          }
+        );
         const data = await response.json();
         setFieldValue(data.data);
       } catch (error) {
@@ -49,13 +53,16 @@ const ProfileModal = ({ visible, onCancel }) => {
     // franchise details api
     async function fetchFranchiseDetails() {
       try {
-        const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${franchiseToken}`,
-          },
-        });
+        const response = await fetch(
+          `${apiurl}` + "/franchise/get-own-franchise-details",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${franchiseToken}`,
+            },
+          }
+        );
         const data = await response.json();
         setFieldValue(data.data);
       } catch (error) {
@@ -67,7 +74,7 @@ const ProfileModal = ({ visible, onCancel }) => {
     async function fetchBussinessDetails() {
       try {
         const response = await fetch(
-          `${apiurl}`+"/businessDeveloper/get-own-business-developer-details",
+          `${apiurl}` + "/businessDeveloper/get-own-business-developer-details",
           {
             method: "GET",
             headers: {
@@ -85,13 +92,16 @@ const ProfileModal = ({ visible, onCancel }) => {
 
     async function fetchSubAdminDetails() {
       try {
-        const response = await fetch(`${apiurl}`+"/subAdmin/get-own-sub-admin-details", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${isSubAdminToken}`,
-          },
-        });
+        const response = await fetch(
+          `${apiurl}` + "/subAdmin/get-own-sub-admin-details",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isSubAdminToken}`,
+            },
+          }
+        );
         const data = await response.json();
         setFieldValue(data.data);
       } catch (error) {
@@ -128,7 +138,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          `${apiurl}`+"/state/update-state-details",
+          `${apiurl}` + "/state/update-state-details",
           fieldValue,
           {
             headers: {
@@ -154,7 +164,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          `${apiurl}`+"/franchise/update-franchise-own-details",
+          `${apiurl}` + "/franchise/update-franchise-own-details",
           fieldValue,
           {
             headers: {
@@ -180,7 +190,8 @@ const ProfileModal = ({ visible, onCancel }) => {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          `${apiurl}`+"/businessDeveloper/update-own-business-developer-details",
+          `${apiurl}` +
+            "/businessDeveloper/update-own-business-developer-details",
           fieldValue,
           {
             headers: {
@@ -200,13 +211,13 @@ const ProfileModal = ({ visible, onCancel }) => {
       } catch (err) {
         console.error("Error", err.message);
       }
-    }else if (isSubAdminToken){
+    } else if (isSubAdminToken) {
       try {
         console.log("Sending Payload:", {
           [editingField]: fieldValue[editingField],
         });
         const response = await axios.put(
-          `${apiurl}`+"/subAdmin/update-own-sub-admin-details",
+          `${apiurl}` + "/subAdmin/update-own-sub-admin-details",
           fieldValue,
           {
             headers: {
@@ -253,14 +264,13 @@ const ProfileModal = ({ visible, onCancel }) => {
             onChange={(e) =>
               setFieldValue({ ...fieldValue, fname: e.target.value })
             }
+            style={{ width: "50%" }}
             disabled={editingField !== "username"} // Disable input if not in editing mode for this field
           />
-          <Button
-            icon={<EditOutlined />}
+          <FaPenAlt
             onClick={() => handleEditClick("username")} // Enable editing for this field
-          >
-            Edit
-          </Button>
+            style={{ marginLeft: "1rem" }}
+          />
         </Form.Item>
         <Form.Item label="Last name" initialValue={fieldValue.lname}>
           <Input
@@ -270,13 +280,12 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, lname: e.target.value })
             }
             disabled={editingField !== "lastname"} // Disable input if not in editing mode for this field
+            style={{ width: "50%" }}
           />
-          <Button
-            icon={<EditOutlined />}
+          <FaPenAlt
             onClick={() => handleEditClick("lastname")} // Enable editing for this field
-          >
-            Edit
-          </Button>
+            style={{ marginLeft: "1rem" }}
+          />
         </Form.Item>
         <Form.Item label="Mobile Phone" initialValue={fieldValue.phone}>
           <Input
@@ -286,13 +295,12 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, phone: e.target.value })
             }
             disabled={editingField !== "mobile"} // Disable input if not in editing mode for this field
+            style={{ width: "50%" }}
           />
-          <Button
-            icon={<EditOutlined />}
+          <FaPenAlt
             onClick={() => handleEditClick("mobile")} // Enable editing for this field
-          >
-            Edit
-          </Button>
+            style={{ marginLeft: "1rem" }}
+          />
         </Form.Item>
         <Form.Item label="Email" initialValue={fieldValue.email}>
           <Input
@@ -302,30 +310,28 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, email: e.target.value })
             }
             disabled={editingField !== "email"} // Disable input if not in editing mode for this field
+            style={{ width: "50%" }}
           />
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => handleEditClick("email")} // Enable editing for this field
-          >
-            Edit
-          </Button>
+          <FaPenAlt
+            onClick={() => handleEditClick("email")}
+            style={{ marginLeft: "1rem" }} // Enable editing for this field
+          />
         </Form.Item>
         <Form.Item label="Gender" initialValue={fieldValue.gender}>
           <Select
             value={fieldValue.gender}
             onChange={(value) => handleFieldEdit("gender", value)}
             disabled={editingField !== "gender"} // Disable select if not in editing mode for this field
+            style={{ width: "50%" }}
           >
             <Option value="male">Male</Option>
             <Option value="female">Female</Option>
             <Option value="other">Other</Option>
           </Select>
-          <Button
-            icon={<EditOutlined />}
+          <FaPenAlt
             onClick={() => handleEditClick("gender")} // Enable editing for this field
-          >
-            Edit
-          </Button>
+            style={{ marginLeft: "1rem" }}
+          />
         </Form.Item>
       </Form>
     </Modal>

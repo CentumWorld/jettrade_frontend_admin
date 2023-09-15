@@ -11,6 +11,7 @@ const { Option } = Select;
 
 const StateRegister = (props) => {
     // const navigate = useNavigate();
+    const {updateData} = props;
     
     const [selectedStates, setSelectedStates] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -80,6 +81,7 @@ const StateRegister = (props) => {
 
 
     const handleStateRegiSubmit = async (e) => {
+        const dataList = "update List"
         setLoading(true);
         e.preventDefault();
         console.log(stateRegisterData, selectedStates,aadharImage.file);
@@ -122,7 +124,7 @@ const StateRegister = (props) => {
                 setSelectedStates([]);
                 setAadharImage({ file: null });
                 setPanImage({ file: null });
-
+                updateData(dataList)
 
             })
             .catch(err=>{

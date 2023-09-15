@@ -8,6 +8,7 @@ import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import { MdVerified } from 'react-icons/md'
+import {ImCross} from 'react-icons/im'
 import baseUrl from "../baseUrl";
 
 const apiurl = baseUrl.apiUrl
@@ -20,6 +21,7 @@ const BussinessAdminLogin = (props) => {
   const navigate = useNavigate();
   const [city, setCity] = useState([]);
   const [correct, setCorrect] = useState(false)
+  const [incorrect, setIncorrect] = useState(false)
   const [bussinessAdmin, setBussinessAdmin] = useState({
     bussinessAdmin_id: "",
     bussinessAdmin_password: "",
@@ -97,13 +99,15 @@ const BussinessAdminLogin = (props) => {
     }
     axios.post(`${apiurl}` + '/admin/verify-buisness-developer-before-registration', data, config)
       .then((res) => {
-        message.success("Verify successfully");
         console.log(res.data)
         setCity(res.data.franchieUserCity);
         setCorrect(true);
+        setIncorrect(false)
       })
       .catch((err) => {
-        message.warning(err.response.data.message)
+        setIncorrect(true)
+        setCorrect(false);
+        setCity([]);
       })
 
   }
@@ -219,7 +223,13 @@ const BussinessAdminLogin = (props) => {
               >
                 <Input placeholder='Referal ID' onChange={(e) => setFranchiseRegisterData({ referredId: e.target.value })} />
               </Form.Item>
-              <Button type="primay" onClick={verifyReferrlID}>Verify</Button> &nbsp;&nbsp;{correct ? <MdVerified style={{ color: "green", fontSize: "20px" }} /> : ""}
+              {/* <Button type="primay" onClick={verifyReferrlID}>Verify</Button> &nbsp;&nbsp;{correct ? <MdVerified style={{ color: "green", fontSize: "20px" }} /> : ""} */}
+              <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferrlID}>Verify</Button>
+                  <div>
+                    {correct ? <small style={{color:"green"}}><MdVerified style={{ fontSize: "20px" }} />&nbsp; Verify successful</small> : ""}
+                    {incorrect ? <small style={{color:"red"}}><ImCross style={{ fontSize: "20px" }} />&nbsp; Invalid referral id</small> : ""}
+                  </div>
+                </div>
               <hr />
               <Form.Item
                 label="First name"
