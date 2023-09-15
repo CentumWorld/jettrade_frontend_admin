@@ -16,12 +16,12 @@
     padding: 10px;
     border: 1px solid #cccccc; 
 }
-.live-chat,.trading-chart,.trading-chart-view,.user-details,.user-details-view,.refferal-details,
+.live-chat,.centumo,.trading-chart,.trading-chart-view,.user-details,.user-details-view,.refferal-details,
 .refferal-details-view,.withdrawal-card,.withdrawal-card-view{
     display: flex;
     justify-content: center;
 }
-.push-notification-card,.push-notification-card-view,.subscription-card,.subscription-card-view,.refferal-payout{
+.push-notification-card,.push-notification-card-view,.centumo-link,.subscription-card,.subscription-card-view,.refferal-payout{
     display: flex;
     justify-content: center;
 }

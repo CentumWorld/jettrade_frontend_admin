@@ -6,17 +6,23 @@ import baseUrl from "../../../baseUrl";
 import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
-import { BsWallet2 } from 'react-icons/bs'
-import { Modal, Input, message, Button, Tabs, Radio, Dropdown, Menu } from 'antd'
-import { FaRupeeSign } from 'react-icons/fa';
-
-
+import { BsWallet2 } from "react-icons/bs";
+import {
+  Modal,
+  Input,
+  message,
+  Button,
+  Tabs,
+  Radio,
+  Dropdown,
+  Menu,
+} from "antd";
+import { FaRupeeSign } from "react-icons/fa";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
 
 const DisplayCard = () => {
-
   const navigate = useNavigate();
   const [adminDetails, setAdminDetails] = useState({
     adminid: "",
@@ -25,11 +31,19 @@ const DisplayCard = () => {
   const isAdmin = localStorage.getItem("adminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isBusinessHandler = localStorage.getItem("bussinessAdminToken");
-  const isFrenchise = localStorage.getItem('franchiseToken');
-  const isSubAdmin = localStorage.getItem('subAdminToken');
+  const isFrenchise = localStorage.getItem("franchiseToken");
+  const isSubAdmin = localStorage.getItem("subAdminToken");
 
-  const Id = localStorage.getItem('stateHandlerId') || localStorage.getItem('adminId') || localStorage.getItem('businessId') || localStorage.getItem('frenchiseId');
-  const ReferralId = localStorage.getItem('stateHandlerRefferalID') || localStorage.getItem('adminRefferalId') || localStorage.getItem('bussinessRefferalId') || localStorage.getItem('franchiseRefferal');
+  const Id =
+    localStorage.getItem("stateHandlerId") ||
+    localStorage.getItem("adminId") ||
+    localStorage.getItem("businessId") ||
+    localStorage.getItem("frenchiseId");
+  const ReferralId =
+    localStorage.getItem("stateHandlerRefferalID") ||
+    localStorage.getItem("adminRefferalId") ||
+    localStorage.getItem("bussinessRefferalId") ||
+    localStorage.getItem("franchiseRefferal");
 
   const [dayDifference, setDayDifference] = useState(0);
 
@@ -37,7 +51,7 @@ const DisplayCard = () => {
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
   const [stateUpiId, setStateUpiId] = useState([]);
   const [frenchiseUpiId, setFrenchiseUpiId] = useState([]);
-  const [selectStateUpiId, setSelectedUpiId] = useState('');
+  const [selectStateUpiId, setSelectedUpiId] = useState("");
   const [stateBankDetails, setStateBankDetails] = useState([]);
   const [paymentModal, setPaymentModal] = useState(false);
   const [verifyDate, setVerifyDate] = useState("");
@@ -52,7 +66,6 @@ const DisplayCard = () => {
   });
   const [withdrawalStateAmount, setWithdrawalAmount] = useState(0);
   const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false);
-
 
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -93,15 +106,14 @@ const DisplayCard = () => {
       navigate("/admindashboard/refferal-chat");
     }
     if (e.key === "chat-with-state-handlers") {
-      navigate("/admindashboard/state-chat")
+      navigate("/admindashboard/state-chat");
     }
     if (e.key === "chat-with-frenchise") {
-      navigate("/admindashboard/franchisee-chat")
+      navigate("/admindashboard/franchisee-chat");
     }
     if (e.key === "chat-with-business-developers") {
-      navigate("/admindashboard/business-developer-chat")
+      navigate("/admindashboard/business-developer-chat");
     }
-
   };
 
   //  tracker detais
@@ -117,7 +129,6 @@ const DisplayCard = () => {
     if (e.key === "business-developer-details") {
       navigate("/admindashboard/tracker/businness-developer");
     }
-
   };
 
   const handleBusinessChatMenuClick = (e) => {
@@ -129,22 +140,20 @@ const DisplayCard = () => {
     if (e.key === "chat-with-frenchise") {
       navigate("/admindashboard/chat/BD-chat-with-frenchise");
     }
-
   };
 
-
-  // Admin Chat menu 
+  // Admin Chat menu
   const AdminChatMenu = (
     <Menu onClick={handleAdminChatMenuClick}>
       <Menu.Item key="chat-with-traders"> Traders</Menu.Item>
       <Menu.Item key="chat-with-referrals">Referrals</Menu.Item>
       <Menu.Item key="chat-with-state-handlers">State Handlers</Menu.Item>
       <Menu.Item key="chat-with-frenchise">Frenchise</Menu.Item>
-      <Menu.Item key="chat-with-business-developers">Business Developers</Menu.Item>
-
+      <Menu.Item key="chat-with-business-developers">
+        Business Developers
+      </Menu.Item>
     </Menu>
   );
-
 
   // State handler  chat menu
   const stateMenu = (
@@ -172,7 +181,7 @@ const DisplayCard = () => {
     </Menu>
   );
 
-  // Business Chat menu 
+  // Business Chat menu
   const businessChatMenu = (
     <Menu onClick={handleBusinessChatMenuClick}>
       <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
@@ -244,12 +253,10 @@ const DisplayCard = () => {
     navigate("/admindashboard/createuser");
   };
 
-
   const closeStatePaymentModal = () => {
     setOpenStateHandlerModal(false);
-    setSelectedUpiId(null)
-  }
-
+    setSelectedUpiId(null);
+  };
 
   const callApiToSubscriptionCharge = () => {
     const token = localStorage.getItem("adminToken");
@@ -274,7 +281,6 @@ const DisplayCard = () => {
           console.log(err);
         });
     }
-
   };
   const callApiToTotalUserRunningTrialExpire = () => {
     const token = localStorage.getItem("adminToken");
@@ -283,7 +289,10 @@ const DisplayCard = () => {
     };
     if (isAdmin) {
       axios
-        .get(`${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User", config)
+        .get(
+          `${apiurl}` + "/admin/total_Count_Of_Payment_Status_Of_User",
+          config
+        )
         .then((res) => {
           setProgressigeBar({
             totalCount: res.data.totalCount,
@@ -299,63 +308,72 @@ const DisplayCard = () => {
           console.log(err.response.data);
         });
     }
-
   };
 
   const callApiToEligibaleWithdrawalForState = () => {
-    console.log('opne')
+    console.log("opne");
     const config = {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
     let data = {
-      stateHandlerId: localStorage.getItem("stateHandlerId")
-    }
-    axios.post(`${apiurl}` + "/state/eligible-for-withdrawal", data, config)
+      stateHandlerId: localStorage.getItem("stateHandlerId"),
+    };
+    axios
+      .post(`${apiurl}` + "/state/eligible-for-withdrawal", data, config)
       .then((res) => {
         setPaymentModal(res.data.updatedState.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message)
-      })
-  }
+        console.log(err.response.data.message);
+      });
+  };
 
   const callApiToEligibaleWithdrawalForFranchise = () => {
-    console.log('opne')
+    console.log("opne");
     const config = {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
     let data = {
-      franchiseId: localStorage.getItem("frenchiseId")
-    }
-    axios.post(`${apiurl}` + "/franchise/eligible-franchise-for-withdrawal", data, config)
+      franchiseId: localStorage.getItem("frenchiseId"),
+    };
+    axios
+      .post(
+        `${apiurl}` + "/franchise/eligible-franchise-for-withdrawal",
+        data,
+        config
+      )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setPaymentModal(res.data.updatedFranchise.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message)
-      })
-
-  }
+        console.log(err.response.data.message);
+      });
+  };
 
   const callApiToEligibaleWithdrawalForBD = () => {
-    console.log('opne')
+    console.log("opne");
     const config = {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
     let data = {
-      businessDeveloperId: localStorage.getItem("businessId")
-    }
-    axios.post(`${apiurl}` + "/businessDeveloper/eligible-business-developer-for-withdrawal", data, config)
+      businessDeveloperId: localStorage.getItem("businessId"),
+    };
+    axios
+      .post(
+        `${apiurl}` +
+          "/businessDeveloper/eligible-business-developer-for-withdrawal",
+        data,
+        config
+      )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message)
-      })
-  }
-
+        console.log(err.response.data.message);
+      });
+  };
 
   const openWithrawalModalFunction = () => {
     if (isStateHandler) {
@@ -370,22 +388,21 @@ const DisplayCard = () => {
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
           setVerifyDate(res.data.data.verifyDate);
 
-
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString)
+          console.log(convertedDateString);
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
-
           const differenceInMilliseconds = currentDate - date;
-          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-          setDayDifference(30 - differenceInDays)
+          const differenceInDays = Math.floor(
+            differenceInMilliseconds / (1000 * 60 * 60 * 24)
+          );
+          setDayDifference(30 - differenceInDays);
           console.log(`Difference in days: ${differenceInDays}`);
           if (differenceInDays > 30) {
-            callApiToEligibaleWithdrawalForState()
+            callApiToEligibaleWithdrawalForState();
           }
-
         })
         .catch((err) => {
           console.log(err.response.data.massage);
@@ -396,34 +413,37 @@ const DisplayCard = () => {
         headers: { Authorization: `Bearer ${isBusinessHandler}` },
       };
       axios
-        .get(`${apiurl}` + "/businessDeveloper/get-own-business-developer-details", config)
+        .get(
+          `${apiurl}` + "/businessDeveloper/get-own-business-developer-details",
+          config
+        )
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
-          console.log(res.data.data)
+          console.log(res.data.data);
           setPaymentModal(res.data.data.firstPayment);
           setVerifyDate(res.data.data.verifyDate);
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString)
+          console.log(convertedDateString);
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
-
           const differenceInMilliseconds = currentDate - date;
-          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-          setDayDifference(7 - differenceInDays)
+          const differenceInDays = Math.floor(
+            differenceInMilliseconds / (1000 * 60 * 60 * 24)
+          );
+          setDayDifference(7 - differenceInDays);
           console.log(`Difference in days: ${differenceInDays}`);
 
           if (differenceInDays > 7) {
-            callApiToEligibaleWithdrawalForBD()
+            callApiToEligibaleWithdrawalForBD();
           }
         })
         .catch((err) => {
           console.log(err.response.data.massage);
         });
-    }
-    else if (isFrenchise) {
+    } else if (isFrenchise) {
       setOpenStateHandlerModal(true);
       const config = {
         headers: { Authorization: `Bearer ${isFrenchise}` },
@@ -435,21 +455,21 @@ const DisplayCard = () => {
           setPaymentModal(res.data.data.firstPayment);
           setVerifyDate(res.data.data.verifyDate);
 
-
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString)
+          console.log(convertedDateString);
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
-
           const differenceInMilliseconds = currentDate - date;
-          const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-          setDayDifference(30 - differenceInDays)
+          const differenceInDays = Math.floor(
+            differenceInMilliseconds / (1000 * 60 * 60 * 24)
+          );
+          setDayDifference(30 - differenceInDays);
           console.log(`Difference in days: ${differenceInDays}`);
 
           if (differenceInDays > 30) {
-            callApiToEligibaleWithdrawalForFranchise()
+            callApiToEligibaleWithdrawalForFranchise();
           }
         })
         .catch((err) => {
@@ -466,7 +486,7 @@ const DisplayCard = () => {
       let data = {
         stateHandlerId: localStorage.getItem("stateHandlerId"),
         amount: amount,
-        paymentBy: selectStateUpiId
+        paymentBy: selectStateUpiId,
       };
 
       axios
@@ -490,12 +510,13 @@ const DisplayCard = () => {
       let data = {
         businessDeveloperId: localStorage.getItem("businessId"),
         amount: amount,
-        paymentBy: selectStateUpiId
+        paymentBy: selectStateUpiId,
       };
 
       axios
         .post(
-          `${apiurl}` + "/businessDeveloper/create-business-developer-payment-request",
+          `${apiurl}` +
+            "/businessDeveloper/create-business-developer-payment-request",
           data,
           config
         )
@@ -510,8 +531,7 @@ const DisplayCard = () => {
         .catch((err) => {
           message.warning(err.response.data.message);
         });
-    }
-    else if (isFrenchise) {
+    } else if (isFrenchise) {
       let amount = Number(withdrawalStateAmount);
       const config = {
         headers: { Authorization: `Bearer ${isFrenchise}` },
@@ -519,7 +539,7 @@ const DisplayCard = () => {
       let data = {
         franchiseId: localStorage.getItem("frenchiseId"),
         amount: amount,
-        paymentBy: selectStateUpiId  // using the same state
+        paymentBy: selectStateUpiId, // using the same state
       };
 
       axios
@@ -549,19 +569,19 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
     let data = {
-      userId: localStorage.getItem("stateHandlerId")
-    }
+      userId: localStorage.getItem("stateHandlerId"),
+    };
     if (isStateHandler) {
-      axios.post(`${apiurl}` + '/state/get-state-own-upi', data, config)
+      axios
+        .post(`${apiurl}` + "/state/get-state-own-upi", data, config)
         .then((res) => {
-          setStateUpiId(res.data.stateUpiId)
+          setStateUpiId(res.data.stateUpiId);
         })
         .catch((err) => {
-          message.error(err.response.data.message)
-        })
+          message.error(err.response.data.message);
+        });
     }
-
-  }
+  };
 
   // callApiToFrenchiseUpiDetails
   const callApiToFrenchiseUpiDetails = () => {
@@ -569,19 +589,19 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
     let data = {
-      userId: localStorage.getItem("frenchiseId")
-    }
+      userId: localStorage.getItem("frenchiseId"),
+    };
     if (isFrenchise) {
-      axios.post(`${apiurl}` + '/franchise/get-franchise-own-upi', data, config)
+      axios
+        .post(`${apiurl}` + "/franchise/get-franchise-own-upi", data, config)
         .then((res) => {
-          setStateUpiId(res.data.franchiseUpiId)
+          setStateUpiId(res.data.franchiseUpiId);
         })
         .catch((err) => {
-          message.error(err.response.data.message)
-        })
+          message.error(err.response.data.message);
+        });
     }
-
-  }
+  };
 
   // callApiToBuinsessDUpiDetails
   const callApiToBusinessDUpiDetails = () => {
@@ -589,24 +609,28 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
     let data = {
-      userId: localStorage.getItem("businessId")
-    }
+      userId: localStorage.getItem("businessId"),
+    };
     if (isBusinessHandler) {
-      axios.post(`${apiurl}` + '/businessDeveloper/get-business-developer-own-upi', data, config)
+      axios
+        .post(
+          `${apiurl}` + "/businessDeveloper/get-business-developer-own-upi",
+          data,
+          config
+        )
         .then((res) => {
-          setStateUpiId(res.data.businessDeveloperUpiId)
+          setStateUpiId(res.data.businessDeveloperUpiId);
         })
         .catch((err) => {
-          message.error(err.response.data.message)
-        })
-
+          message.error(err.response.data.message);
+        });
     }
-  }
+  };
 
   const handleRadioChangeStateValue = (e) => {
     setSelectedUpiId(e.target.value);
-    console.log(e.target.value)
-  }
+    console.log(e.target.value);
+  };
 
   // fetching state bank details
   const callApitoStateBankDetails = () => {
@@ -614,19 +638,20 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
     let data = {
-      userId: localStorage.getItem("stateHandlerId")
-    }
+      userId: localStorage.getItem("stateHandlerId"),
+    };
     if (isStateHandler) {
-      axios.post(`${apiurl}` + '/state/get-state-own-bank-details', data, config)
+      axios
+        .post(`${apiurl}` + "/state/get-state-own-bank-details", data, config)
         .then((res) => {
-          console.log(res.data)
-          setStateBankDetails(res.data.stateBankDetails)
+          console.log(res.data);
+          setStateBankDetails(res.data.stateBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message)
-        })
+          console.log(err.response.data.message);
+        });
     }
-  }
+  };
 
   // callApiToFrenchiseBankDetails
   const callApiToFrenchiseBankDetails = () => {
@@ -634,19 +659,24 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
     let data = {
-      userId: localStorage.getItem("frenchiseId")
-    }
+      userId: localStorage.getItem("frenchiseId"),
+    };
     if (isFrenchise) {
-      axios.post(`${apiurl}` + '/franchise/get-franchise-own-bank-details', data, config)
+      axios
+        .post(
+          `${apiurl}` + "/franchise/get-franchise-own-bank-details",
+          data,
+          config
+        )
         .then((res) => {
-          console.log(res.data)
-          setStateBankDetails(res.data.franchiseBankDetails)
+          console.log(res.data);
+          setStateBankDetails(res.data.franchiseBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message)
-        })
+          console.log(err.response.data.message);
+        });
     }
-  }
+  };
 
   // callApiToBusinessDBankDetails
   const callApiToBusinessDBankDetails = () => {
@@ -654,29 +684,38 @@ const DisplayCard = () => {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
     let data = {
-      userId: localStorage.getItem("businessId")
-    }
+      userId: localStorage.getItem("businessId"),
+    };
     if (isBusinessHandler) {
-      axios.post(`${apiurl}` + '/businessDeveloper/get-business-developer-own-bank-details', data, config)
+      axios
+        .post(
+          `${apiurl}` +
+            "/businessDeveloper/get-business-developer-own-bank-details",
+          data,
+          config
+        )
         .then((res) => {
-          console.log(res.data)
-          setStateBankDetails(res.data.businessDeveloperBankDetails)
+          console.log(res.data);
+          setStateBankDetails(res.data.businessDeveloperBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message)
-        })
+          console.log(err.response.data.message);
+        });
     }
-  }
+  };
 
   return (
     <>
       <div className="card1-container">
-
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
           <div className="card1">
             <div className="d-flex">
               <h6>UserID :</h6> &nbsp;&nbsp;{" "}
-              <span style={{ color: "yellow" }}>{isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? Id : null}</span>
+              <span style={{ color: "yellow" }}>
+                {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
+                  ? Id
+                  : null}
+              </span>
             </div>
             <div className="d-flex">
               <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
@@ -684,12 +723,35 @@ const DisplayCard = () => {
                 style={{ color: "yellow", cursor: "pointer" }}
                 onClick={isAdmin ? goToRegister : null}
               >
-                {isAdmin || isStateHandler || isFrenchise || isBusinessHandler ? ReferralId : null}
+                {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
+                  ? ReferralId
+                  : null}
               </span>
             </div>
           </div>
         )}
 
+        {(isAdmin ||
+          isSubAdmin ||
+          isStateHandler ||
+          isFrenchise ||
+          isBusinessHandler) && (
+          <div className="card1">
+            <div className="centumo">
+              <h6>CENTUMO Swap</h6>
+            </div>
+            <div className="centumo-link">
+              <a
+                href="https://centumo.centumworld.com/#/exchange/quick"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "yellow", cursor: "pointer" }}
+              >
+                Click me
+              </a>
+            </div>
+          </div>
+        )}
 
         {isAdmin && (
           <div className="card1">
@@ -779,20 +841,18 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        {
-          isAdmin && (
-            <div className="card1">
-              <div className="trading-chart">
-                <h6>Total Subscription Amount</h6>
-              </div>
-              <div className="trading-chart-view">
-                <span style={{ color: "yellow", cursor: "pointer" }}>
-                  {totalAmount}
-                </span>
-              </div>
+        {isAdmin && (
+          <div className="card1">
+            <div className="trading-chart">
+              <h6>Total Subscription Amount</h6>
             </div>
-          )
-        }
+            <div className="trading-chart-view">
+              <span style={{ color: "yellow", cursor: "pointer" }}>
+                {totalAmount}
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="card1">
           <div className="trading-chart">
@@ -835,24 +895,22 @@ const DisplayCard = () => {
           </div>
         </div>
 
-        {
-          isAdmin || isSubAdmin ? (
-            <div className="card1">
-              <div className="refferal-details">
-                <h6>Tracker</h6>
-              </div>
-              <div className="live-chat">
-                <Dropdown
-                  overlay={trackerMenu}
-                  trigger={["click"]}
-                  placement="topCenter"
-                >
-                  <span style={{ color: "yellow", cursor: "pointer" }}>View</span>
-                </Dropdown>
-              </div>
+        {isAdmin || isSubAdmin ? (
+          <div className="card1">
+            <div className="refferal-details">
+              <h6>Tracker</h6>
             </div>
-          ) : null
-        }
+            <div className="live-chat">
+              <Dropdown
+                overlay={trackerMenu}
+                trigger={["click"]}
+                placement="topCenter"
+              >
+                <span style={{ color: "yellow", cursor: "pointer" }}>View</span>
+              </Dropdown>
+            </div>
+          </div>
+        ) : null}
 
         <div className="card1">
           <div className="push-notification-card">
@@ -887,7 +945,8 @@ const DisplayCard = () => {
           </div>
 
           <div className="subscription-card">
-            <span style={{ color: "yellow", cursor: "pointer" }}
+            <span
+              style={{ color: "yellow", cursor: "pointer" }}
               onClick={refferalPayoutTrader}
             >
               view
@@ -912,87 +971,107 @@ const DisplayCard = () => {
             </span>
           </div> */}
         </div>
-
       </div>
 
       {/* open state handler modal for payment */}
-      {paymentModal ? <Modal
-        title="Request here"
-        open={openStateHandlerModal}
-        onCancel={closeStatePaymentModal}
-        onOk={withdrawalAmountSubmit}
-        okText="Proceed"
-        okButtonProps={{ disabled: !selectStateUpiId }}
-      >
-        <div className="state-available-balance">
-          <p style={{ fontWeight: '600' }}>Available Balance :<FaRupeeSign />{stateHandlerTotalWallet}</p>
-        </div>
-        <div className="bank-method">
-          <strong style={{ marginBottom: 0 }}>Select payment method</strong>
-          <Tabs defaultActiveKey="1">
-            <TabPane tab="BANK" key="1" style={{ marginBottom: 16 }}>
-              <Radio.Group onChange={handleRadioChangeStateValue} value={selectStateUpiId}>
-                {stateBankDetails.map((option) => (
-                  <Radio key={option.bankName} value={option.bankName}>
-                    {option.bankName}
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </TabPane>
-            <TabPane tab="UPI" key="2" style={{ marginBottom: 16 }} >
-              <Radio.Group onChange={handleRadioChangeStateValue} value={selectStateUpiId}>
-                {stateUpiId.map((option) => (
-                  <Radio key={option.upiId} value={option.upiId}>
-                    {option.upiId}
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </TabPane>
-          </Tabs>
-
-        </div>
-        <div className="payment-container">
-          <div className="payment-div" onClick={() => setWithdrawalAmount(500)}>
-            <FaRupeeSign />
-            500
+      {paymentModal ? (
+        <Modal
+          title="Request here"
+          open={openStateHandlerModal}
+          onCancel={closeStatePaymentModal}
+          onOk={withdrawalAmountSubmit}
+          okText="Proceed"
+          okButtonProps={{ disabled: !selectStateUpiId }}
+        >
+          <div className="state-available-balance">
+            <p style={{ fontWeight: "600" }}>
+              Available Balance :<FaRupeeSign />
+              {stateHandlerTotalWallet}
+            </p>
           </div>
-          <div
-            className="payment-div"
-            onClick={() => setWithdrawalAmount(1000)}
-          >
-            <FaRupeeSign />
-            1000
+          <div className="bank-method">
+            <strong style={{ marginBottom: 0 }}>Select payment method</strong>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="BANK" key="1" style={{ marginBottom: 16 }}>
+                <Radio.Group
+                  onChange={handleRadioChangeStateValue}
+                  value={selectStateUpiId}
+                >
+                  {stateBankDetails.map((option) => (
+                    <Radio key={option.bankName} value={option.bankName}>
+                      {option.bankName}
+                    </Radio>
+                  ))}
+                </Radio.Group>
+              </TabPane>
+              <TabPane tab="UPI" key="2" style={{ marginBottom: 16 }}>
+                <Radio.Group
+                  onChange={handleRadioChangeStateValue}
+                  value={selectStateUpiId}
+                >
+                  {stateUpiId.map((option) => (
+                    <Radio key={option.upiId} value={option.upiId}>
+                      {option.upiId}
+                    </Radio>
+                  ))}
+                </Radio.Group>
+              </TabPane>
+            </Tabs>
           </div>
-          <div
-            className="payment-div"
-            onClick={() => setWithdrawalAmount(5000)}
-          >
-            <FaRupeeSign />
-            5000
+          <div className="payment-container">
+            <div
+              className="payment-div"
+              onClick={() => setWithdrawalAmount(500)}
+            >
+              <FaRupeeSign />
+              500
+            </div>
+            <div
+              className="payment-div"
+              onClick={() => setWithdrawalAmount(1000)}
+            >
+              <FaRupeeSign />
+              1000
+            </div>
+            <div
+              className="payment-div"
+              onClick={() => setWithdrawalAmount(5000)}
+            >
+              <FaRupeeSign />
+              5000
+            </div>
           </div>
-        </div>
-        <div className="state-enter-amount">
-          <Input
-            type="number"
-            prefix={<FaRupeeSign />}
-            placeholder="Enter Amount"
-            value={withdrawalStateAmount}
-            onChange={(e) => setWithdrawalAmount(e.target.value)}
-          />
-        </div>
-        <small style={{ color: "red" }}>
-          Request payment will be credited within 48 hours.
-        </small>
-      </Modal> :
-
-        < Modal
+          <div className="state-enter-amount">
+            <Input
+              type="number"
+              prefix={<FaRupeeSign />}
+              placeholder="Enter Amount"
+              value={withdrawalStateAmount}
+              onChange={(e) => setWithdrawalAmount(e.target.value)}
+            />
+          </div>
+          <small style={{ color: "red" }}>
+            Request payment will be credited within 48 hours.
+          </small>
+        </Modal>
+      ) : (
+        <Modal
           title="Withdrawal request here"
           open={openStateHandlerModal}
           onCancel={closeStatePaymentModal}
           footer={null}
         >
-          {isBusinessHandler ? <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5> : <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>You can request for withdrawal after {dayDifference} days.</h5>}
-        </Modal >}
+          {isBusinessHandler ? (
+            <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
+              You can request for withdrawal after {dayDifference} days.
+            </h5>
+          ) : (
+            <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
+              You can request for withdrawal after {dayDifference} days.
+            </h5>
+          )}
+        </Modal>
+      )}
     </>
   );
 };
