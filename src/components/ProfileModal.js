@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Modal,
   Form,
@@ -254,34 +254,66 @@ const ProfileModal = ({ visible, onCancel }) => {
     }
   };
 
+  const defaultImageURL =
+    "https://via.placeholder.com/100x100.png?text=Default+Image";
+
   const [image, setImage] = useState({
-    placeholder: "",
+    placeholder: defaultImageURL,
     file: null,
   });
 
+  console.log("------------>",image);
+
+  // const handleProfileImageChange = (e) => {
+  //   //e.preventDefault();
+
+  //   document.getElementById("file-input").click();
+
+  //   if (
+  //     e.target.files[0].type === "image/png" ||
+  //     e.target.files[0].type === "image/jpeg"
+  //   ) {
+  //     //preview shoe
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setImage({
+  //         placeholder: reader.result,
+  //         file: e.target.files[0],
+  //       });
+  //     };
+  //     reader.readAsDataURL(e.target.files[0]);
+
+  //     //uploadProfile(e.target.files[0]);
+  //   } else {
+  //     toast.error("Invalid File !! ");
+  //     image.file = null;
+  //   }
+  // };
+
   const handleProfileImageChange = (e) => {
-    //e.preventDefault();
-
-    document.getElementById("file-input").click();
-
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      const reader = new FileReader();
-      reader.onloadend = () => {
+    if (e.target.files[0]) {
+      if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImage({
+            placeholder: reader.result.placeholder,
+            file: e.target.files[0],
+          });
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        toast.error('Invalid File !! ');
         setImage({
-          placeholder: reader.result,
-          file: e.target.files[0],
+          placeholder: defaultImageURL,
+          file: null,
         });
-      };
-      reader.readAsDataURL(e.target.files[0]);
-
-      //uploadProfile(e.target.files[0]);
+      }
     } else {
-      toast.error("Invalid File !! ");
-      image.file = null;
+      // Handle the case when the user clears the file input
+      setImage({
+        placeholder: defaultImageURL,
+        file: null,
+      });
     }
   };
 
@@ -316,7 +348,11 @@ const ProfileModal = ({ visible, onCancel }) => {
         },
       };
       axios
-        .post(`${apiurl}` + "/franchise/upload-franchise-profile-photo", formData, config)
+        .post(
+          `${apiurl}` + "/franchise/upload-franchise-profile-photo",
+          formData,
+          config
+        )
         .then((res) => message.success(res.data.message))
         .catch((err) => message.warning(err.response.data.message));
       setLoading(false);
@@ -332,18 +368,26 @@ const ProfileModal = ({ visible, onCancel }) => {
         },
       };
       axios
-        .post(`${apiurl}` + "/businessDeveloper/upload-bd-profile-photo", formData, config)
+        .post(
+          `${apiurl}` + "/businessDeveloper/upload-bd-profile-photo",
+          formData,
+          config
+        )
         .then((res) => message.success(res.data.message))
         .catch((err) => message.warning(err.response.data.message));
       setLoading(false);
-
     }
+  };
+
+  const fileInputRef = useRef();
+  const handleImageClick = () => {
+    fileInputRef.current.click();
   };
 
   return (
     <Modal
       visible={visible}
-      title="Profile Modal"
+      // title="Profile Modal"
       onCancel={onCancel}
       footer={[
         <Button key="back" onClick={onCancel}>
@@ -358,31 +402,39 @@ const ProfileModal = ({ visible, onCancel }) => {
     >
       <ToastContainer />
       <Form form={form} layout="vertical">
-        <Form.Item label="Avatar">
-          <div className="pic">
-            <form>
-              <input
-                id="file-input"
-                type="file"
-                name="file1"
-                onChange={handleProfileImageChange}
+        {/* <Form.Item label="Avatar"> */}
+        <div className="pic">
+          <form>
+            <input
+              id="file-input"
+              type="file"
+              name="file1"
+              onChange={handleProfileImageChange}
+              ref={fileInputRef}
+              style={{ display: "none" }}
+            />
+            <label htmlFor="file-input" onClick={handleImageClick}>
+              <img
+                src={image.placeholder}
+                alt=""
+                height={100}
+                width={100}
+                style={{ objectFit: "cover",cursor: 'pointer' }}
               />
-              <label htmlFor="file-input">
-                <img src={image.placeholder} alt="" height={100} width={100} style={{objectFit: "cover"}} />
-              </label>
+            </label>
 
-              <div className="upload_file d-grid mx-auto">
-                <button
-                  className="btn btn-primary"
-                  type="submit"
-                  onClick={uploadProfile}
-                >
-                  {loading ? <Spin /> : "Upload"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </Form.Item>
+            <div className="upload_file d-grid mx-auto">
+              <button
+                className="btn btn-primary"
+                type="submit"
+                onClick={uploadProfile}
+              >
+                {loading ? <Spin /> : "Upload"}
+              </button>
+            </div>
+          </form>
+        </div>
+        {/* </Form.Item> */}
         <Form.Item label="First name" initialValue={fieldValue.fname}>
           <Input
             prefix={<UserOutlined />}
