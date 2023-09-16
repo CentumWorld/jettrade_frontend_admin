@@ -18,6 +18,7 @@ import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 import baseUrl from "../baseUrl";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import adminAv from "../img/admin-av.png";
 
 const apiurl = baseUrl.apiUrl;
 
@@ -328,7 +329,7 @@ function Navbar() {
         <ToastContainer />
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <img
-              src={userAv || logo}
+              src={userAv || adminAv}
               height={50}
               width={50}
               style={{ marginRight: "1rem", borderRadius: "100%", objectFit: "cover" }}

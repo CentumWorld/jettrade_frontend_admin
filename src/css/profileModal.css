@@ -20,3 +20,26 @@
 .userEmail span{
     font-weight: normal;
 }
+
+.file-input-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #file-input {
+    display: none;
+  }
+
+  .custom-file-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* You can customize the button background color */
+    color: #fff; /* You can customize the button text color */
+    border-radius: 20px; /* Adjust the border-radius to make it rounded */
+    cursor: pointer;
+  }
+  
+  /* Style for the custom button when hovered */
+  .custom-file-button:hover {
+    background-color: #0056b3; /* You can customize the hover background color */
+  }

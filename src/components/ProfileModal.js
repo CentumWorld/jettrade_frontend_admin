@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import {
   Modal,
   Form,
   Input,
   Button,
   Select,
-  DatePicker,
-  Space,
-  Upload,
   message,
   Spin,
 } from "antd";
@@ -15,13 +12,11 @@ import {
   UserOutlined,
   MobileOutlined,
   MailOutlined,
-  EditOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import moment from "moment";
+import "../css/profileModal.css";
 import baseUrl from "../baseUrl";
 import { FaPenAlt } from "react-icons/fa";
-import profile from "../img/logo1.png";
 import { ToastContainer, toast } from "react-toastify";
 
 const apiurl = baseUrl.apiUrl;
@@ -255,67 +250,67 @@ const ProfileModal = ({ visible, onCancel }) => {
   };
 
   const defaultImageURL =
-    "https://via.placeholder.com/100x100.png?text=Default+Image";
+    "http://www.pngall.com/wp-content/uploads/2/Upload-PNG.png";
 
   const [image, setImage] = useState({
     placeholder: defaultImageURL,
     file: null,
   });
 
-  console.log("------------>",image);
-
-  // const handleProfileImageChange = (e) => {
-  //   //e.preventDefault();
-
-  //   document.getElementById("file-input").click();
-
-  //   if (
-  //     e.target.files[0].type === "image/png" ||
-  //     e.target.files[0].type === "image/jpeg"
-  //   ) {
-  //     //preview shoe
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImage({
-  //         placeholder: reader.result,
-  //         file: e.target.files[0],
-  //       });
-  //     };
-  //     reader.readAsDataURL(e.target.files[0]);
-
-  //     //uploadProfile(e.target.files[0]);
-  //   } else {
-  //     toast.error("Invalid File !! ");
-  //     image.file = null;
-  //   }
-  // };
+  console.log("iMAGE------------>", image);
 
   const handleProfileImageChange = (e) => {
-    if (e.target.files[0]) {
-      if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImage({
-            placeholder: reader.result.placeholder,
-            file: e.target.files[0],
-          });
-        };
-        reader.readAsDataURL(e.target.files[0]);
-      } else {
-        toast.error('Invalid File !! ');
+    //e.preventDefault();
+
+    document.getElementById("file-input").click();
+
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      //preview shoe
+      const reader = new FileReader();
+      reader.onloadend = () => {
         setImage({
-          placeholder: defaultImageURL,
-          file: null,
+          placeholder: reader.result,
+          file: e.target.files[0],
         });
-      }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+
+      //uploadProfile(e.target.files[0]);
     } else {
-      // Handle the case when the user clears the file input
-      setImage({
-        placeholder: defaultImageURL,
-        file: null,
-      });
+      toast.error("Invalid File !! ");
+      image.file = null;
     }
   };
+
+  // const handleProfileImageChange = (e) => {
+  //   if (e.target.files[0]) {
+  //     if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+  //       const reader = new FileReader();
+  //       reader.onloadend = () => {
+  //         setImage({
+  //           placeholder: reader.result.placeholder,
+  //           file: e.target.files[0],
+  //         });
+  //       };
+  //       reader.readAsDataURL(e.target.files[0]);
+  //     } else {
+  //       toast.error('Invalid File !! ');
+  //       setImage({
+  //         placeholder: defaultImageURL,
+  //         file: null,
+  //       });
+  //     }
+  //   } else {
+  //     // Handle the case when the user clears the file input
+  //     setImage({
+  //       placeholder: defaultImageURL,
+  //       file: null,
+  //     });
+  //   }
+  // };
 
   const uploadProfile = (event) => {
     event.preventDefault();
@@ -379,11 +374,6 @@ const ProfileModal = ({ visible, onCancel }) => {
     }
   };
 
-  const fileInputRef = useRef();
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
-
   return (
     <Modal
       visible={visible}
@@ -403,23 +393,22 @@ const ProfileModal = ({ visible, onCancel }) => {
       <ToastContainer />
       <Form form={form} layout="vertical">
         {/* <Form.Item label="Avatar"> */}
-        <div className="pic">
+        <div className="file-input-container" style={{display: "flex", justifyContent: "center"}}>
           <form>
             <input
               id="file-input"
               type="file"
               name="file1"
               onChange={handleProfileImageChange}
-              ref={fileInputRef}
               style={{ display: "none" }}
             />
-            <label htmlFor="file-input" onClick={handleImageClick}>
+            <label htmlFor="file-input">
               <img
                 src={image.placeholder}
                 alt=""
                 height={100}
                 width={100}
-                style={{ objectFit: "cover",cursor: 'pointer' }}
+                style={{ objectFit: "cover", cursor: "pointer", borderRadius: "50%" }}
               />
             </label>
 
@@ -442,9 +431,9 @@ const ProfileModal = ({ visible, onCancel }) => {
             onChange={(e) =>
               setFieldValue({ ...fieldValue, fname: e.target.value })
             }
-            style={{ width: "50%" }}
+            style={{ width: "70%" }}
             disabled={editingField !== "username"} // Disable input if not in editing mode for this field
-          />
+            />
           <FaPenAlt
             onClick={() => handleEditClick("username")} // Enable editing for this field
             style={{ marginLeft: "1rem" }}
@@ -458,7 +447,7 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, lname: e.target.value })
             }
             disabled={editingField !== "lastname"} // Disable input if not in editing mode for this field
-            style={{ width: "50%" }}
+            style={{ width: "70%" }}
           />
           <FaPenAlt
             onClick={() => handleEditClick("lastname")} // Enable editing for this field
@@ -473,7 +462,7 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, phone: e.target.value })
             }
             disabled={editingField !== "mobile"} // Disable input if not in editing mode for this field
-            style={{ width: "50%" }}
+            style={{ width: "70%" }}
           />
           <FaPenAlt
             onClick={() => handleEditClick("mobile")} // Enable editing for this field
@@ -488,7 +477,7 @@ const ProfileModal = ({ visible, onCancel }) => {
               setFieldValue({ ...fieldValue, email: e.target.value })
             }
             disabled={editingField !== "email"} // Disable input if not in editing mode for this field
-            style={{ width: "50%" }}
+            style={{ width: "70%" }}
           />
           <FaPenAlt
             onClick={() => handleEditClick("email")}
@@ -500,7 +489,7 @@ const ProfileModal = ({ visible, onCancel }) => {
             value={fieldValue.gender}
             onChange={(value) => handleFieldEdit("gender", value)}
             disabled={editingField !== "gender"} // Disable select if not in editing mode for this field
-            style={{ width: "50%" }}
+            style={{ width: "70%" }}
           >
             <Option value="male">Male</Option>
             <Option value="female">Female</Option>
