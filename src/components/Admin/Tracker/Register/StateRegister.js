@@ -289,7 +289,7 @@ const StateRegister = (props) => {
                         </div>
                         <div className='state-field'>
                             <label>Password</label>
-                            <Input type='password'
+                            <Input.Password
                                 placeholder='Password'
                                 name="password"
                                 value={stateRegisterData.password}
