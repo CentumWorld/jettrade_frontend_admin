@@ -1,19 +1,8 @@
-import React, { useEffect, useState} from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  Button,
-  Select,
-  message,
-  Spin,
-} from "antd";
-import {
-  UserOutlined,
-  MobileOutlined,
-  MailOutlined,
-} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Modal, Form, Input, Button, Select, message, Spin } from "antd";
+import { UserOutlined, MobileOutlined, MailOutlined } from "@ant-design/icons";
 import axios from "axios";
+import uploadImg from "../img/upload.png";
 import "../css/profileModal.css";
 import baseUrl from "../baseUrl";
 import { FaPenAlt } from "react-icons/fa";
@@ -249,8 +238,7 @@ const ProfileModal = ({ visible, onCancel }) => {
     }
   };
 
-  const defaultImageURL =
-    "http://www.pngall.com/wp-content/uploads/2/Upload-PNG.png";
+  const defaultImageURL = uploadImg;
 
   const [image, setImage] = useState({
     placeholder: defaultImageURL,
@@ -260,7 +248,6 @@ const ProfileModal = ({ visible, onCancel }) => {
   console.log("iMAGE------------>", image);
 
   const handleProfileImageChange = (e) => {
-    //e.preventDefault();
 
     document.getElementById("file-input").click();
 
@@ -268,7 +255,6 @@ const ProfileModal = ({ visible, onCancel }) => {
       e.target.files[0].type === "image/png" ||
       e.target.files[0].type === "image/jpeg"
     ) {
-      //preview shoe
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage({
@@ -277,40 +263,12 @@ const ProfileModal = ({ visible, onCancel }) => {
         });
       };
       reader.readAsDataURL(e.target.files[0]);
-
-      //uploadProfile(e.target.files[0]);
     } else {
       toast.error("Invalid File !! ");
       image.file = null;
     }
   };
 
-  // const handleProfileImageChange = (e) => {
-  //   if (e.target.files[0]) {
-  //     if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-  //       const reader = new FileReader();
-  //       reader.onloadend = () => {
-  //         setImage({
-  //           placeholder: reader.result.placeholder,
-  //           file: e.target.files[0],
-  //         });
-  //       };
-  //       reader.readAsDataURL(e.target.files[0]);
-  //     } else {
-  //       toast.error('Invalid File !! ');
-  //       setImage({
-  //         placeholder: defaultImageURL,
-  //         file: null,
-  //       });
-  //     }
-  //   } else {
-  //     // Handle the case when the user clears the file input
-  //     setImage({
-  //       placeholder: defaultImageURL,
-  //       file: null,
-  //     });
-  //   }
-  // };
 
   const uploadProfile = (event) => {
     event.preventDefault();
@@ -377,7 +335,6 @@ const ProfileModal = ({ visible, onCancel }) => {
   return (
     <Modal
       visible={visible}
-      // title="Profile Modal"
       onCancel={onCancel}
       footer={[
         <Button key="back" onClick={onCancel}>
@@ -392,8 +349,10 @@ const ProfileModal = ({ visible, onCancel }) => {
     >
       <ToastContainer />
       <Form form={form} layout="vertical">
-        {/* <Form.Item label="Avatar"> */}
-        <div className="file-input-container" style={{display: "flex", justifyContent: "center"}}>
+        <div
+          className="file-input-container"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <form>
             <input
               id="file-input"
@@ -408,7 +367,11 @@ const ProfileModal = ({ visible, onCancel }) => {
                 alt=""
                 height={100}
                 width={100}
-                style={{ objectFit: "cover", cursor: "pointer", borderRadius: "50%" }}
+                style={{
+                  objectFit: "cover",
+                  cursor: "pointer",
+                  borderRadius: "50%",
+                }}
               />
             </label>
 
@@ -423,7 +386,6 @@ const ProfileModal = ({ visible, onCancel }) => {
             </div>
           </form>
         </div>
-        {/* </Form.Item> */}
         <Form.Item label="First name" initialValue={fieldValue.fname}>
           <Input
             prefix={<UserOutlined />}
@@ -433,7 +395,7 @@ const ProfileModal = ({ visible, onCancel }) => {
             }
             style={{ width: "70%" }}
             disabled={editingField !== "username"} // Disable input if not in editing mode for this field
-            />
+          />
           <FaPenAlt
             onClick={() => handleEditClick("username")} // Enable editing for this field
             style={{ marginLeft: "1rem" }}
