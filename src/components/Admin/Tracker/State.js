@@ -131,6 +131,17 @@ const State = () => {
       title: "Refferal Id",
       dataIndex: "referralId",
       key: "referralId",
+      render: (text) => (
+        <span
+          style={{ cursor: 'pointer', userSelect: 'all' }}
+          onClick={() => {
+            navigator.clipboard.writeText(text);
+            message.success('Text copied to clipboard: ' + text);
+          }}
+        >
+          {text}
+        </span>
+      ),
     },
      {
       title: "reffered Id",

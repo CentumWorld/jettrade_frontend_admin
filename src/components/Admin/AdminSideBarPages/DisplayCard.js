@@ -7,6 +7,7 @@ import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
 import { BsWallet2 } from "react-icons/bs";
+import {FaCopy} from "react-icons/fa"
 import {
   Modal,
   Input,
@@ -703,6 +704,10 @@ const DisplayCard = () => {
         });
     }
   };
+  const copyToClipboard = ()=>{
+    navigator.clipboard.writeText(ReferralId);
+    message.success('Text copied to clipboard: ' + ReferralId);
+  };
 
   return (
     <>
@@ -718,14 +723,14 @@ const DisplayCard = () => {
               </span>
             </div>
             <div className="d-flex">
-              <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
+              <h6>Referral ID1 :</h6>&nbsp;&nbsp;{" "}
               <span
                 style={{ color: "yellow", cursor: "pointer" }}
-                onClick={isAdmin ? goToRegister : null}
+                onClick={isAdmin ? goToRegister : copyToClipboard}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? ReferralId
-                  : null}
+                  : null} <FaCopy/>
               </span>
             </div>
           </div>
