@@ -46,6 +46,7 @@ function Dashboard() {
     placeholder: aadharBackImage,
     file: null,
   });
+
   const [panImageSide, setPanImage] = useState({
     placeholder: panImage,
     file: null,
@@ -459,6 +460,7 @@ function Dashboard() {
     link.download = "image.jpg";
     link.click();
   };
+  
   const downloadPanImage = (panImage) => {
     const link = document.createElement("a");
     link.href = panImage;

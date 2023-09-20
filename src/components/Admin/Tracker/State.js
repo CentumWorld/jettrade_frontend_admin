@@ -14,6 +14,8 @@ const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
 const State = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
@@ -84,6 +86,7 @@ const State = () => {
       .get(`${apiurl}` + "/admin/fetch-all-state", config)
       .then((res) => {
         // console.log("State response -> ", res.data);
+        setLoading(true)
         setStateData(res.data.data);
         console.log("data coming",res.data.data);
       })
@@ -185,7 +188,7 @@ const State = () => {
         const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
         return (
           <span style={cellStyle}>
-            {isDeleted ? "Deleted" : "Not Delete"}
+            {isDeleted ? "Deleted" : "Not Deleted"}
           </span>
         );
       },
@@ -629,6 +632,21 @@ const State = () => {
     fetchStateDataApi();
   }
 
+  const downloadAadharCard = (adharCardImage) => {
+    const link = document.createElement("a");
+    link.href = adharCardImage;
+    link.download = "image.jpg";
+    link.click();
+  }
+
+  const downloadPanCard = (panCardImage) => {
+ 
+    const link = document.createElement("a");
+    link.href = panCardImage;
+    link.download = "image.jpg";
+    link.click();
+  }
+
 
   return (
     <>
@@ -686,6 +704,20 @@ const State = () => {
               <Button disabled={uploadButton} onClick={uploadAadhar}>
                 Upload
               </Button>
+
+              <Button
+                className="id-card"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharCard(aadharCard.placeholder)
+                }
+              >
+                Download
+              </Button>
+
+
+
             </div>
             <hr />
             <input
@@ -706,6 +738,17 @@ const State = () => {
               </label>
               <Button disabled={uploadButtonPan} onClick={uploadPan}>
                 Upload
+              </Button>
+
+              <Button
+                className="id-card"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadPanCard(panCard.placeholder)
+                }
+              >
+                Download
               </Button>
             </div>
           </Modal>

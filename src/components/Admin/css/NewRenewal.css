@@ -36,6 +36,12 @@
     background-color: #f8f9fa !important;
 }
 
+.id-card{
+    width: 90px; /* Adjust the width as needed */
+
+    margin-left: 4px;
+  }
+
 @media only screen and (max-width:518px) {
     .new-renewal-content {
         display: flex;

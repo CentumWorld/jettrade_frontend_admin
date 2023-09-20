@@ -28,6 +28,8 @@ const { Option } = Select;
 
 const Frenchie = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
   const [isBlocked, setIsBlock] = useState(true);
@@ -207,7 +209,9 @@ const Frenchie = () => {
       axios
         .get(`${apiurl}` + "/admin/fetch-all-frenchise", config)
         .then((res) => {
-          console.log("Frenchese Data -> ", res.data);
+
+          setLoading(true)
+
           setFrenchieData(res.data.data);
         })
         .catch((err) => {
@@ -636,6 +640,22 @@ const Frenchie = () => {
     fetchFrenchieseDataApi();
   }
 
+  const downloadAadharCard = (adharCardImage) => {
+    const link = document.createElement("a");
+    link.href = adharCardImage;
+    link.download = "image.jpg";
+    link.click();
+  }
+
+  const downloadPanCard = (panCardImage) => {
+ 
+    const link = document.createElement("a");
+    link.href = panCardImage;
+    link.download = "image.jpg";
+    link.click();
+  }
+  
+
   return (
     <>
       <FrenchieRegister
@@ -698,6 +718,18 @@ const Frenchie = () => {
             <Button disabled={uploadButton} onClick={uploadAadhar}>
               Upload
             </Button>
+
+            <Button
+                className="id-card"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadAadharCard(aadharCard.placeholder)
+                }
+              >
+                Download
+              </Button>
+
           </div>
           <hr />
           <input
@@ -719,6 +751,18 @@ const Frenchie = () => {
             <Button disabled={uploadButtonPan} onClick={uploadPan}>
               Upload
             </Button>
+
+            <Button
+                className="id-card"
+                disabled={!loading}
+                type="primary"
+                onClick={() =>
+                  downloadPanCard(panCard.placeholder)
+                }
+              >
+                Download
+              </Button>
+
           </div>
         </Modal>
       ) : (
