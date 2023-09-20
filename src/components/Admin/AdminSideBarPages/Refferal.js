@@ -110,7 +110,20 @@ const Refferal = () => {
     { title: "Email", dataIndex: "email", key: "email" },
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Address", dataIndex: "address", key: "address" },
-    { title: "Referral", dataIndex: "refferal_id", key: "refferal_id" },
+    {
+      title: "Referral", dataIndex: "refferal_id", key: "refferal_id",
+      render: (text) => (
+        <span
+          style={{ cursor: 'pointer', userSelect: 'all' }}
+          onClick={() => {
+            navigator.clipboard.writeText(text);
+            message.success('Text copied to clipboard: ' + text);
+          }}
+        >
+          {text}
+        </span>
+      ),
+    },
     { title: "Referred", dataIndex: "reffered_id", key: "reffered_id" },
     {
       title: "Status",
@@ -444,7 +457,7 @@ const Refferal = () => {
       axios
         .post(
           `${apiurl}` +
-            "/businessDeveloper/get-all-members-in-business-developer",
+          "/businessDeveloper/get-all-members-in-business-developer",
           requestData,
           config
         )
@@ -872,7 +885,7 @@ const Refferal = () => {
               Submit
             </Button>,
           ]}
-          //footer={null}
+        //footer={null}
         >
           <div className="edit-container">
             <div>

@@ -28,6 +28,7 @@ import { RxCountdownTimer } from "react-icons/rx";
 import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
 import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
 import { FcNeutralTrading } from 'react-icons/fc';
+import { FcUpRight } from 'react-icons/fc';
 
 
 const Adminroutes = [
@@ -40,6 +41,13 @@ const Adminroutes = [
     path: "https://centumo.centumworld.com/#/exchange/quick",
     name: "CENTUMO Swap",
     icon: <FcNeutralTrading />,
+    externalLink: true,
+    target: "_blank",
+  },
+  {
+    path: "https://centumworldrig.com/",
+    name: "CENTUMO RIG",
+    icon: <FcUpRight />,
     externalLink: true,
     target: "_blank",
   },
