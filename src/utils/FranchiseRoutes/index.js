@@ -5,6 +5,7 @@ import { MdBarChart } from "react-icons/md";
 import { BsFillChatTextFill } from "react-icons/bs";
 import { FaAmazonPay } from "react-icons/fa";
 import { FcNeutralTrading } from 'react-icons/fc';
+import { FcUpRight } from 'react-icons/fc';
 
 
 const franchiseAdminRoutes = [
@@ -17,6 +18,13 @@ const franchiseAdminRoutes = [
     path: "https://centumo.centumworld.com/#/exchange/quick",
     name: "CENTUMO Swap",
     icon: <FcNeutralTrading />,
+    externalLink: true,
+    target: "_blank",
+  },
+  {
+    path: "https://centumworldrig.com/",
+    name: "CENTUMO RIG",
+    icon: <FcUpRight />,
     externalLink: true,
     target: "_blank",
   },
