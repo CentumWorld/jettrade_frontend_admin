@@ -42,7 +42,7 @@ const State = () => {
     phone: "",
     email: "",
     gender: "",
-    selectedState: "",
+    selectedState:[],
     city: []
   });
 
@@ -565,7 +565,8 @@ const State = () => {
     axios.put(`${apiurl}`+"/admin/update-state-handler", data, config)
       .then((res) => {
         message.success(res.data.message)
-        fetchFrenchieseDataApi();
+        //fetchFrenchieseDataApi();
+        fetchStateDataApi()
         setEditModalVisible(false)
         setFranchiseData({ fname: "", lname: "", email: "", phone: "", selectedState: "",  gender: "" })
       })
@@ -593,15 +594,18 @@ const State = () => {
     genderChange('gender', value)
   };
 
-  const selectStateFromDeopDown = (selectedState) => {
-    const selectedStateData = allState.states.find(state => state.state === selectedState);
-    if (selectedStateData) {
-      setFranchiseData({
-        ...editFranchiseData,
-        state: selectedState,
-        city: [], // Use districts as cities for the selected state
-      });
-    }
+  // const selectStateFromDeopDown = (selectedState) => {
+  //   const selectedStateData = allState.states.find(state => state.state === selectedState);
+  //   if (selectedStateData) {
+  //     setFranchiseData({
+  //       ...editFranchiseData,
+  //       state: selectedState,
+  //       city: [], // Use districts as cities for the selected state
+  //     });
+  //   }
+  // };
+  const selectStateFromDeopDown = (selectedStates) => {
+    setFranchiseData({ ...editFranchiseData, state: selectedStates });
   };
 
   const callApiToVerifyState = (stateVerify)=>{
@@ -781,6 +785,7 @@ const State = () => {
             </Form.Item>
             <Form.Item label="State">
               <Select
+                mode="multiple"
                 style={{ width: 200 }}
                 value={editFranchiseData.state}
                 onChange={selectStateFromDeopDown}
@@ -792,25 +797,6 @@ const State = () => {
                 ))}
               </Select>
             </Form.Item>
-            {/* <Form.Item label="City">
-              {editFranchiseData.state && (
-                <Select
-                  placeholder="Select city"
-                  mode="multiple"
-                  style={{ width: 200 }}
-                  value={editFranchiseData.city}
-                  onChange={handleCitySelectChange}
-                >
-                  {allState.states
-                    .find((state) => state.state === editFranchiseData.state)
-                    ?.districts.map((city) => (
-                      <Option key={city} value={city}>
-                        {city}
-                      </Option>
-                    ))}
-                </Select>
-              )}
-            </Form.Item> */}
           </Modal>
         ) : (
           ""
