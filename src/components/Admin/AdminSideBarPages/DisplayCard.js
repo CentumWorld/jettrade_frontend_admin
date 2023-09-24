@@ -7,7 +7,7 @@ import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
 import { BsWallet2 } from "react-icons/bs";
-import {FaCopy} from "react-icons/fa"
+import { FaCopy } from "react-icons/fa";
 import {
   Modal,
   Input,
@@ -49,6 +49,7 @@ const DisplayCard = () => {
   const [dayDifference, setDayDifference] = useState(0);
 
   const [totalAmount, setTotalAmount] = useState(0);
+  const [walletAmount, setWalletAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
   const [stateUpiId, setStateUpiId] = useState([]);
   const [frenchiseUpiId, setFrenchiseUpiId] = useState([]);
@@ -200,6 +201,7 @@ const DisplayCard = () => {
     callApitoStateBankDetails();
     callApiToFrenchiseBankDetails();
     callApiToBusinessDBankDetails();
+    fetchAdminWalletDetails();
   }, []);
 
   // joinChat
@@ -250,9 +252,7 @@ const DisplayCard = () => {
     navigate("/admindashboard/manage/member-refferal-payout");
   };
 
-  const goToRegister = () => {
-    navigate("/admindashboard/createuser");
-  };
+
 
   const closeStatePaymentModal = () => {
     setOpenStateHandlerModal(false);
@@ -704,10 +704,38 @@ const DisplayCard = () => {
         });
     }
   };
-  const copyToClipboard = ()=>{
+  const copyToClipboard = () => {
     navigator.clipboard.writeText(ReferralId);
-    message.success('Text copied to clipboard: ' + ReferralId);
+    message.success("Text copied to clipboard: " + ReferralId);
   };
+
+  async function fetchAdminWalletDetails() {
+    try {
+      const response = await fetch(`${apiurl}` + "/admin/fetch-admin", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${isAdmin}`,
+        },
+      });
+      const data = await response.json();
+      function formatIndianRupees(adminWallet) {
+        const formatter = new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        });
+        return formatter.format(adminWallet);
+      }
+
+      const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
+      const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
+
+      console.log("Formatted admin wallet:", formattedAdminWallet); // Log the formatted wallet amount
+      setWalletAmount(formattedAdminWallet);
+    } catch (error) {
+      console.error("Error fetching state details", error);
+    }
+  }
 
   return (
     <>
@@ -725,12 +753,26 @@ const DisplayCard = () => {
             <div className="d-flex">
               <h6>Referral ID1 :</h6>&nbsp;&nbsp;{" "}
               <span
-                style={{ color: "yellow", cursor: "pointer" }}
-                onClick={isAdmin ? goToRegister : copyToClipboard}
+                style={{ color: "white", cursor: "pointer" }}
+                onClick={ copyToClipboard}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? ReferralId
-                  : null} <FaCopy/>
+                  : null}{" "}
+                <FaCopy />
+              </span>
+            </div>
+          </div>
+        )}
+
+        {isAdmin && (
+          <div className="card1">
+            <div className="trading-chart">
+              <h6>Total Wallet Amount</h6>
+            </div>
+            <div className="trading-chart-view">
+              <span style={{ color: "yellow", cursor: "pointer" }}>
+                {walletAmount}
               </span>
             </div>
           </div>
