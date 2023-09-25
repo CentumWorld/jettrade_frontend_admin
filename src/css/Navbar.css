@@ -49,7 +49,7 @@ form label {
 }
 
 @media only screen and (max-width: 365px) {
-    img{
+    .jtf-logo{
         display: none;
     }
     .navbar-brand{

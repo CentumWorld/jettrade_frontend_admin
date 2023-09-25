@@ -44,17 +44,16 @@ function Navbar() {
   const [userAv, setUserAv] = useState(null);
 
   useEffect(() => {
-    if(isStateHandlerToken){
+    if (isStateHandlerToken) {
       fetchSHOProfilePicture();
-    }
-    else if(isFrachiseToken){
+    } else if (isFrachiseToken) {
       fetchFranchProfilePicture();
-    }else{
+    } else {
       fetchBussinessProfilePicture();
     }
-  })
+  });
 
-  const fetchSHOProfilePicture =  async () => {
+  const fetchSHOProfilePicture = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${isStateHandlerToken}`,
@@ -64,14 +63,18 @@ function Navbar() {
       userid: localStorage.getItem("stateHandlerId"),
     };
     try {
-      const res = await axios.post("/state/get-sho-profile-photo", data, config );
+      const res = await axios.post(
+        "/state/get-sho-profile-photo",
+        data,
+        config
+      );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  const fetchFranchProfilePicture =  async () => {
+  const fetchFranchProfilePicture = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${isFrachiseToken}`,
@@ -81,14 +84,18 @@ function Navbar() {
       userid: localStorage.getItem("frenchiseId"),
     };
     try {
-      const res = await axios.post("/franchise/get-franchise-profile-photo", data, config );
+      const res = await axios.post(
+        "/franchise/get-franchise-profile-photo",
+        data,
+        config
+      );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
     }
   };
-  
-  const fetchBussinessProfilePicture =  async () => {
+
+  const fetchBussinessProfilePicture = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${isBussinessDeveloperToken}`,
@@ -98,7 +105,11 @@ function Navbar() {
       userid: localStorage.getItem("businessId"),
     };
     try {
-      const res = await axios.post("/businessDeveloper/get-bd-profile-photo", data, config );
+      const res = await axios.post(
+        "/businessDeveloper/get-bd-profile-photo",
+        data,
+        config
+      );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -326,13 +337,17 @@ function Navbar() {
     if (login) {
       return (
         <>
-        <ToastContainer />
+          <ToastContainer />
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <img
               src={userAv || adminAv}
               height={50}
               width={50}
-              style={{ marginRight: "1rem", borderRadius: "100%", objectFit: "cover" }}
+              style={{
+                marginRight: "1rem",
+                borderRadius: "100%",
+                objectFit: "cover",
+              }}
               // onClick={fetchSHOProfilePicture()}
             />
           </Dropdown>
@@ -367,15 +382,20 @@ function Navbar() {
             <h3>JETTRADE FX </h3>
           </div>
           <div>
-            <img src={logo} alt="" style={{ width: "100px", height: "35px" }} />
+            <img
+              src={logo}
+              alt=""
+              style={{ width: "100px", height: "35px" }}
+              className="jtf-logo"
+            />
           </div>
           <div>
             <button
               className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
+              data-bs-target="#navbarToggleExternalContent"
+              aria-controls="navbarToggleExternalContent"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -383,10 +403,10 @@ function Navbar() {
             </button>
           </div>
         </div>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <RenderMenu />
-          </ul>
+        <div className="collapse" id="navbarToggleExternalContent">
+          {/* <ul className="navbar-nav ms-auto mb-2 mb-lg-0"> */}
+              <RenderMenu />
+          {/* </ul> */}
         </div>
 
         {/* Admin Login */}
