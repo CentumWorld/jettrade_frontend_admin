@@ -237,9 +237,13 @@ const Refferal = () => {
 
   //call refferal details from api
   useEffect(() => {
+    
     callApiRefferalDetails();
     // fetchUserDetailsForEdit();
   }, []);
+
+
+  
 
   //Handle varify click
   const handleVerifyClick = (id) => {
@@ -375,6 +379,8 @@ const Refferal = () => {
           config
         );
         setRefferalData(response.data.result);
+        setFilteredDataSource(response.data.result);
+
         console.log(response);
         //setLength(response.data.result.length);
       } catch (error) {
@@ -708,7 +714,10 @@ const Refferal = () => {
         }
         return false;
       });
+    
     });
+
+    console.log(filteredData, "filtered data")
 
     setFilteredDataSource(filteredData);
   };
@@ -854,6 +863,9 @@ const Refferal = () => {
           </div>
           <div className="user-table">
             <Table
+            //  dataSource={refferalData}
+
+            dataSource = {filteredDataSource}
               style={{
                 width: "fit-content",
                 marginTop: "10px",
@@ -861,7 +873,7 @@ const Refferal = () => {
                 // overflow: "hidden",
                 whiteSpace: "nowrap",
               }}
-              dataSource={refferalData}
+             
               columns={columns}
               scroll={{ x: true, y: 320 }}
               pagination={{ pageSize: 7 }}
