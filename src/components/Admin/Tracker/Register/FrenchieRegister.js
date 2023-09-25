@@ -205,7 +205,7 @@ const FrenchieRegister = (props) => {
         <>
             <div>
                 <Modal
-                    title="Franchise Register"
+                    title="Frenchise Register"
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}

@@ -293,7 +293,7 @@ const FrenchiseAccountSection = () => {
         <>
             <div className='state-account-container'>
                 <div className='state-account-header'>
-                    <div>Franchise Account</div>
+                    <div>Frenchise Account</div>
                     <div className='state-account-wallet'><FaRupeeSign />{frenchiseTotalBalance}</div>
                 </div>
             </div>
