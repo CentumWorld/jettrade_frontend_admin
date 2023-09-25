@@ -36,7 +36,7 @@ const MemberAccountSection = () => {
     
     const columns = [
         {
-            title: 'Member Id',
+            title: 'Member ID',
             dataIndex: 'memberid',
             key: 'memberid',
         },
@@ -75,7 +75,7 @@ const MemberAccountSection = () => {
     //approveDate
     const columnsApproved = [
         {
-            title: 'Member Id',
+            title: 'Member ID',
             dataIndex: 'memberid',
             key: 'memberid',
         },
@@ -258,7 +258,7 @@ const MemberAccountSection = () => {
     // member upi id 
     const columnMemberUpi = [
         {
-            title: 'User ID',
+            title: 'Member ID',
             dataIndex: 'userId',
             key: 'userId',
         },
@@ -294,7 +294,7 @@ const MemberAccountSection = () => {
        <>
          <div className="state-account-container">
             <div className="state-account-header">
-                <div>Referral Account</div>
+                <div>Member Account</div>
                 <div className='state-account-wallet'><FaRupeeSign />{memberTotalBalance}</div>
             </div>
         </div>

@@ -276,7 +276,7 @@ function Dashboard() {
   };
 
   const columns = [
-    { title: "User ID", dataIndex: "userid", key: "userid" },
+    { title: "Trader ID", dataIndex: "userid", key: "userid" },
     { title: "First Name", dataIndex: "fname", key: "fname" },
     { title: "Last Name", dataIndex: "lname", key: "lname" },
     { title: "Email", dataIndex: "email", key: "email" },
@@ -295,7 +295,7 @@ function Dashboard() {
       },
     },
     {
-      title: "Block/Notblock",
+      title: "Block Status",
       dataIndex: "isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
@@ -872,7 +872,7 @@ function Dashboard() {
         <div className="admin-dashboard-card">
           <div className="profile-verification-heading">
             <div className="txt-btn">
-              <h5 style={{ fontFamily: "Calibri" }}>User Profile Details</h5>
+              <h5 style={{ fontFamily: "Calibri" }}>Trader Profile Details</h5>
               <NavLink
                 className="create-user"
                 to="/admindashboard/createuser"
@@ -880,7 +880,7 @@ function Dashboard() {
                 activeClassName="active"
                 activeStyle={activeStyle}
               >
-                + Create User
+                + Create Trader
               </NavLink>
             </div>
             <Search

@@ -332,7 +332,7 @@ function Navbar() {
               src={userAv || adminAv}
               height={50}
               width={50}
-              style={{ marginRight: "1rem", borderRadius: "100%", objectFit: "cover" }}
+              style={{ marginRight: "1rem", borderRadius: "100%", objectFit: "cover",cursor:'pointer' }}
               // onClick={fetchSHOProfilePicture()}
             />
           </Dropdown>

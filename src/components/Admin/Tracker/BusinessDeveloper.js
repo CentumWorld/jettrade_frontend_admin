@@ -81,7 +81,7 @@ const BusinessDeveloper = () => {
       key: "lname",
     },
     {
-      title: "BussinessId",
+      title: "Business ID",
       dataIndex: "businessDeveloperId",
       key: "businessDeveloperId",
     },
@@ -101,12 +101,12 @@ const BusinessDeveloper = () => {
       key: "gender",
     },
     {
-      title: "Reffered Id",
+      title: "Referred ID",
       dataIndex: "referredId",
       key: "referredId",
     },
     {
-      title: "Refferal Id",
+      title: "Referral ID",
       dataIndex: "referralId",
       key: "referralId",
       render: (text) => (
@@ -458,7 +458,7 @@ const BusinessDeveloper = () => {
   }
 
   const callApiToFetchDocument = () =>{
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||localStorage.getItem("franchiseToken")
     localStorage.getItem("subAdminToken")
     const config = {
       headers: {
@@ -726,7 +726,7 @@ const BusinessDeveloper = () => {
 
               <Button
                 className="id-card"
-                disabled={!loading}
+                // disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadAadharCard(aadharCard.placeholder)
@@ -752,7 +752,7 @@ const BusinessDeveloper = () => {
 
               <Button
                 className="id-card"
-                disabled={!loading}
+                // disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadPanCard(panCard.placeholder)

@@ -47,7 +47,7 @@ const NewRenewal = () => {
 
   const columns = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userid",
       key: "userid",
     },
@@ -75,7 +75,7 @@ const NewRenewal = () => {
 
   const columnsRenewal = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userid",
       key: "userid",
     },
@@ -187,7 +187,7 @@ const NewRenewal = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>New/Renewal Users</p>
+            <p>New/Renewal Traders</p>
             <div className="d-flex">
               <Input
                 placeholder="User ID"

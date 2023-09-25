@@ -176,8 +176,8 @@ const DisplayCard = () => {
   // Tracker menu
   const trackerMenu = (
     <Menu onClick={handleTrackerDetailsMenuClick}>
-      <Menu.Item key="state-details">State</Menu.Item>
-      <Menu.Item key="frenchise-details">Frenchise</Menu.Item>
+      <Menu.Item key="state-details">State Handler</Menu.Item>
+      <Menu.Item key="frenchise-details">Franchise</Menu.Item>
       <Menu.Item key="business-developer-details">Business Developer</Menu.Item>
     </Menu>
   );
@@ -874,7 +874,7 @@ const DisplayCard = () => {
         </div>
         <div className="card1">
           <div className="user-details">
-            <h6>User Details</h6>
+            <h6>Trader Details</h6>
           </div>
           <div className="user-details-view">
             <span
@@ -888,7 +888,7 @@ const DisplayCard = () => {
 
         <div className="card1">
           <div className="refferal-details">
-            <h6>Referral Details</h6>
+            <h6>Member Details</h6>
           </div>
           <div className="refferal-details-view">
             <span

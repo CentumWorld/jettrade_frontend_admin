@@ -54,7 +54,7 @@ const SubAdminDetails = () => {
             key: 'lname',
         },
         {
-            title: 'SubAdminId',
+            title: 'Sub-Admin ID',
             dataIndex: 'subAdminId',
             key: 'subAdminId',
         },
@@ -74,7 +74,7 @@ const SubAdminDetails = () => {
             key: 'gender',
         },
         {
-            title: "Block/Notblock",
+            title: "Block Status",
             dataIndex: "isBlocked",
             render: (isBlocked) => {
               const cellStyle = isBlocked ? { color: "red" } : { color: "green" };

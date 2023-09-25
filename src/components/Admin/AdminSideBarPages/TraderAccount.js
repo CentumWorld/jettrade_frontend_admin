@@ -163,7 +163,7 @@ const TraderAccount = () => {
 
   const columns = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userid",
       key: "userid",
     },
@@ -287,7 +287,7 @@ const TraderAccount = () => {
 
   const upiDetails = [
     {
-      title:"user Id",
+      title:"Trader ID",
       dataIndex:"userId",
       key:"userId"
     },

@@ -176,9 +176,9 @@ const ManageNotification = () => {
             <Select defaultValue="All" onChange={handleChange} style={{ width: '200px', marginBottom: '10px' }}>
               <Option value="all">All</Option>
               <Option value="allTraders">All Traders</Option>
-              <Option value="allReferrals">All Refferals</Option>
+              <Option value="allReferrals">All Members</Option>
               <Option value="particularTrader">Particular Trader</Option>
-              <Option value="particularReferral">Particular Refferal</Option>
+              <Option value="particularReferral">Particular Member</Option>
             </Select>
 
             {selectedOption === 'all' && (

@@ -35,7 +35,7 @@ const State = () => {
     placeholder: "",
     file: null,
   });
-  
+
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
   const [editFranchiseData, setFranchiseData] = useState({
@@ -669,9 +669,9 @@ const State = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>State</p>
+            <p>State Handlers</p>
             <Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add State
+              <AiFillPlusCircle /> &nbsp;&nbsp;Add State Handler
             </Button>
           </div>
         </div>
