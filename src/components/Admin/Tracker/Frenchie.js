@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { BiArrowBack } from "react-icons/bi"
 import {
   Button,
   Table,
@@ -665,6 +666,10 @@ const Frenchie = () => {
     link.download = "image.jpg";
     link.click();
   }
+
+  const gotoDashboard =()=>{
+    navigate('/admindashboard/dashboard')
+  }
   
 
   return (
@@ -677,10 +682,10 @@ const Frenchie = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>Franchise</p>
-            <Button type="primary" onClick={showModal}>
+            <span style={{color:"wheat"}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/> &nbsp;Franchise</span>
+            {stateToken?<Button type="primary" onClick={showModal}>
               <AiFillPlusCircle /> &nbsp;&nbsp;Add Franchise
-            </Button>
+            </Button>:""}
           </div>
         </div>
 

@@ -125,7 +125,7 @@ const CreateReferralInAdmin = () => {
   const submit = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(userData);
+    console.log(userData.invite_code);
     const formData = new FormData();
     formData.append("fname", userData.fname);
     formData.append("lname", userData.lname);
@@ -179,19 +179,28 @@ const CreateReferralInAdmin = () => {
   // -----------------
 
   const [selectedOption, setSelectedOption] = useState("referral");
-  const [referralId, setReferralId] = useState("");
+  //const [referralId, setReferralId] = useState(localStorage.getItem('bussinessRefferalI'));
   const officialId = "admin@123"; // Replace with your official ID
+  const referralId = localStorage.getItem('bussinessRefferalId')
+  console.log(referralId)
 
   const handleDropdownChange = (value) => {
     setSelectedOption(value);
-    setReferralId("");
-    setUserData({ ...userData, invite_code: officialId }); // Reset referral ID when changing options
+    console.log(value)
+    if(value === 'official'){
+      setUserData({ ...userData, invite_code: officialId });
+    }else{
+      console.log(referralId)
+      setUserData({ ...userData, invite_code: referralId });
+    }
+     
+    
   };
 
-  const hadleRefferalId = (value) => {
-    setReferralId(value);
-    setUserData({ ...userData, invite_code: value });
-  };
+  // const hadleRefferalId = (value) => {
+  //   //setReferralId(value);
+  //   setUserData({ ...userData, invite_code: value });
+  // };
 
   const handlePhoneChange = (value) => {
     setPhone(value);
@@ -242,9 +251,10 @@ const CreateReferralInAdmin = () => {
                       id="referral-id"
                       value={referralId}
                       name="invite_code"
-                      onChange={(e) => hadleRefferalId(e.target.value)}
+                      //onChange={(e) => hadleRefferalId(e.target.value)}
                       placeholder="Enter referral ID"
                       style={{ marginBottom: "10px" }}
+                      disabled
                     />
                   </div>
                 )}

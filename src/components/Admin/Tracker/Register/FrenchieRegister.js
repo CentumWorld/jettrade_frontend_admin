@@ -4,6 +4,7 @@ import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message, Spin } from 'antd';
 import baseUrl from '../../../../baseUrl';
+import { MdVerified } from 'react-icons/md'
 
 
 const apiurl = baseUrl.apiUrl
@@ -11,11 +12,12 @@ const { Option } = Select;
 
 const FrenchieRegister = (props) => {
     // const navigate = useNavigate();
-    const {dataUpdate} = props;
+    const { dataUpdate } = props;
     const [selectedStates, setSelectedStates] = useState([]);
     const [loading, setLoading] = useState(false);
     const [state, setState] = useState([]);
     const [selectedCities, setSelectedCities] = useState([]);
+    const [verifyReferralID, setVerifyReferralID] = useState(false)
 
     const [stateRegisterData, setStateRegisterData] = useState({
         fname: "",
@@ -24,13 +26,16 @@ const FrenchieRegister = (props) => {
         phone: "",
         gender: "",
         state: "",
-        stateRegisterId:"",
+        stateRegisterId: "",
         password: "",
         referralid: '',
-        city:[],
-        referredId:""
+        city: [],
+        referredId: localStorage.getItem('stateHandlerRefferalID')
     });
     const [aadharImage, setAadharImage] = useState({
+        file: null,
+    });
+    const [backaadharImage, setBackAadharImage] = useState({
         file: null,
     });
     const [panImage, setPanImage] = useState({
@@ -42,6 +47,7 @@ const FrenchieRegister = (props) => {
         const cities = allState.states.find(state => state.state === stateRegisterData.state)?.districts || [];
         setSelectedCities(cities);
     }, [stateRegisterData.state]);
+  
 
     const handleCheckboxChange = (state) => {
         if (selectedStates.includes(state)) {
@@ -84,6 +90,18 @@ const FrenchieRegister = (props) => {
         }
     }
 
+    // handle addhar back side
+    const handleClickBackAadharFrontImage = (e) => {
+
+        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+            //preview shoe
+            setBackAadharImage({ file: e.target.files[0] })
+        } else {
+            message.error("Invalid File !! ");
+            panImage.file = null;
+        }
+    }
+
     //hadle pan card image function
     const handleClickPanCardImage = (e) => {
 
@@ -101,9 +119,9 @@ const FrenchieRegister = (props) => {
         const frenchData = "update";
         setLoading(true);
         e.preventDefault();
-        console.log(stateRegisterData, selectedStates);
+        console.log(stateRegisterData, selectedStates, backaadharImage.file);
         const formData = new FormData();
-        formData.append("referredId", stateRegisterData.referredId)
+        formData.append("referredId", localStorage.getItem('stateHandlerRefferalID'))
         formData.append("fname", stateRegisterData.fname);
         formData.append("lname", stateRegisterData.lname);
         formData.append("email", stateRegisterData.email);
@@ -111,12 +129,11 @@ const FrenchieRegister = (props) => {
         formData.append("gender", stateRegisterData.gender);
         formData.append("password", stateRegisterData.password);
         formData.append("frenchiseId", stateRegisterData.stateRegisterId);
-        formData.append("adharCard", aadharImage.file);
+        formData.append("adhar_front_side", aadharImage.file);
+        formData.append("adhar_back_side", backaadharImage.file);
         formData.append("panCard", panImage.file);
         formData.append("franchiseState", stateRegisterData.state);
         formData.append("franchiseCity", stateRegisterData.city);
-
-
         console.log(formData, "44");
 
         const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
@@ -125,7 +142,7 @@ const FrenchieRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post(`${apiurl}`+"/admin/create-frenchise", formData, config)
+        axios.post(`${apiurl}` + "/admin/create-frenchise", formData, config)
             .then((res) => {
                 message.success(res.data.message)
                 setStateRegisterData({
@@ -135,9 +152,8 @@ const FrenchieRegister = (props) => {
                     phone: "",
                     gender: "",
                     state: '',
-                    stateRegisterId: "",
                     password: "",
-                    state:""
+                    state: ""
                 });
                 setLoading(false);
                 setAadharImage({ file: null });
@@ -146,11 +162,11 @@ const FrenchieRegister = (props) => {
             })
             .catch(err => {
                 setLoading(false);
-                console.log(err.response.data.message);
+                message.warning(err.response.data.message);
             })
 
     };
-    
+
 
 
     const menu = (
@@ -181,23 +197,32 @@ const FrenchieRegister = (props) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-        axios.post(`${apiurl}`+'/admin/verify-franchie-before-registration', data)
+        axios.post(`${apiurl}` + '/admin/verify-franchie-before-registration', data)
             .then((res) => {
                 message.success("Verify successfully");
                 console.log(res.data)
                 setState(res.data.stateUserState);
+                setVerifyReferralID(true)
             })
             .catch((err) => {
                 message.warning(err.response.data.message)
             })
 
     }
-    const stataChange = (value) => {
+    // const stataChange = (value) => {
+    //     setStateRegisterData((prevData) => ({
+    //         ...prevData,
+    //         state: value,
+    //     }))
+    //     console.log(value)
+    // }
+    const handleState = (value) => {
+        setStateRegisterData({city:[]})
+        console.log(value)
         setStateRegisterData((prevData) => ({
             ...prevData,
             state: value,
         }))
-        console.log(value)
     }
 
     return (
@@ -218,12 +243,19 @@ const FrenchieRegister = (props) => {
                             <Input
                                 placeholder='Enter referral ID'
                                 name="referredId"
-                                value={stateRegisterData.referredId}
+                                value={localStorage.getItem('stateHandlerRefferalID')}
                                 onChange={stateRegiInputs}
+                                disabled
                             />
-                            <Button onClick={verifyReferrlID}>Verify</Button>
+                            {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Button onClick={verifyReferrlID}>Verify</Button>
+                                <div>{!verifyReferralID ?
+                                    <small style={{ color: 'red' }}>*Please verify referral ID.</small>
+                                    : <small style={{ color: 'green' }}>Verified successfull <MdVerified /></small>}
+                                </div>
+                            </div> */}
+
                         </div>
-                        <hr />
                         <div className='state-field'>
                             <label>First Name</label>
                             <Input
@@ -260,7 +292,7 @@ const FrenchieRegister = (props) => {
                                 onChange={stateRegiInputs}
                             />
                         </div>
-                        <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}>
+                        <div className='d-flex justify-content-between' style={{ display: 'flex', flexDirection: 'column' }}>
                             <div className='state-field'>
                                 <label>Gender</label><br />
                                 <Select placeholder="Select Gender"
@@ -273,7 +305,7 @@ const FrenchieRegister = (props) => {
                                         }))
                                     }
 
-                                    style={{ width: 150 }}>
+                                    style={{ width: '100%' }}>
                                     <Option value="">Gender</Option>
                                     <Option value='Male'>Male</Option>
                                     <Option value='Female'>Female</Option>
@@ -282,7 +314,7 @@ const FrenchieRegister = (props) => {
                             </div>
                             <div className='state-field'>
                                 <label>State</label><br />
-                                <Select
+                                {/* <Select
                                     placeholder="Select State"
                                     name="state"
                                     value={stateRegisterData.state}
@@ -294,6 +326,20 @@ const FrenchieRegister = (props) => {
                                             {stateItem}
                                         </Option>
                                     ))}
+                                </Select> */}
+                                <Select
+                                    placeholder="Select state"
+                                    name="state"
+                                    value={stateRegisterData.state}
+                                    onChange={handleState}
+                                    style={{ width: '100%' }}
+                                >
+                                    <Option value=''>Select state</Option>
+                                    {allState.states.map(state => (
+                                        <Option key={state.state} value={state.state}>
+                                            {state.state}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </div>
                             <div className='state-field'>
@@ -303,27 +349,34 @@ const FrenchieRegister = (props) => {
                                     value={stateRegisterData.city}
                                     onChange={stateRegiInputs}
                                     trigger={['click']}
-
+                                    style={{ width: '100%' }}
                                 >
-                                    <Button>Select City</Button>
+                                    <Button style={{width:'100%'}}>Select city</Button>
                                 </Dropdown>
                                 <div>
-                                    <strong>Selected City:</strong>
                                     <ul>
-                                    {stateRegisterData.city && stateRegisterData.city.map(city => (
-                                        <li key={city}>{city}</li>
-                                    ))}
+                                        {stateRegisterData.city && stateRegisterData.city.map(city => (
+                                            <li key={city}>{city}</li>
+                                        ))}
 
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <div className='state-field'>
-                            <label>Aadhar</label>
+                            <label>Front side aadhar</label>
                             <Input type='file'
-                                placeholder='Aadhar'
+                                placeholder='Front side aadhar'
                                 name="aadhar"
                                 onChange={handleClickAadharFrontImage}
+                            />
+                        </div>
+                        <div className='state-field'>
+                            <label>Back side aadhar</label>
+                            <Input type='file'
+                                placeholder='Back side aadhar'
+                                name="backaadhar"
+                                onChange={handleClickBackAadharFrontImage}
                             />
                         </div>
                         <div className='state-field'>

@@ -27,10 +27,13 @@ const BusinessDeveloperRegister = (props) => {
         stateRegisterId:"",
         password: "",
         referralid: '',
-        city:[],
-        referredId:""
+        city:"",
+        referredId:localStorage.getItem('franchiseRefferal')
     });
     const [aadharImage, setAadharImage] = useState({
+        file: null,
+    });
+    const [backaadharImage, setBackAadharImage] = useState({
         file: null,
     });
     const [panImage, setPanImage] = useState({
@@ -84,6 +87,16 @@ const BusinessDeveloperRegister = (props) => {
         }
     }
 
+    const handleClickBackAadharFrontImage = (e)=>{
+        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+            //preview shoe
+            setBackAadharImage({ file: e.target.files[0] })
+        } else {
+            message.error("Invalid File !! ");
+            panImage.file = null;
+        }
+    }
+
     //hadle pan card image function
     const handleClickPanCardImage = (e) => {
 
@@ -101,9 +114,9 @@ const BusinessDeveloperRegister = (props) => {
         const updateList = "updateData"
         setLoading(true);
         e.preventDefault();
-        console.log(stateRegisterData, panImage.file, aadharImage.file);
+        console.log(stateRegisterData, panImage.file, aadharImage.file, backaadharImage.file);
         const formData = new FormData();
-        formData.append("referredId", stateRegisterData.referredId)
+        formData.append("referredId", localStorage.getItem('franchiseRefferal'))
         formData.append("fname", stateRegisterData.fname);
         formData.append("lname", stateRegisterData.lname);
         formData.append("email", stateRegisterData.email);
@@ -111,7 +124,8 @@ const BusinessDeveloperRegister = (props) => {
         formData.append("gender", stateRegisterData.gender);
         formData.append("password", stateRegisterData.password);
         formData.append("businessDeveloperId", stateRegisterData.stateRegisterId);
-        formData.append("adharCard", aadharImage.file);
+        formData.append("adhar_front_side", aadharImage.file);
+        formData.append("adhar_back_side", backaadharImage.file)
         formData.append("panCard", panImage.file);
         formData.append("buisnessCity", stateRegisterData.city);
 
@@ -191,12 +205,26 @@ const BusinessDeveloperRegister = (props) => {
             })
 
     }
-    const stataChange = (value) => {
+    // const stataChange = (value) => {
+    //     setStateRegisterData((prevData) => ({
+    //         ...prevData,
+    //         state: value,
+    //     }))
+    //     console.log(value)
+    // }
+
+    useEffect(() => {
+        // Set initial cities based on the selected state
+        const cities = allState.states.find(state => state.state === stateRegisterData.state)?.districts || [];
+        setCity(cities);
+    }, [stateRegisterData.state]);
+
+
+    const handleState = (value) => {
         setStateRegisterData((prevData) => ({
             ...prevData,
             state: value,
         }))
-        console.log(value)
     }
 
     return (
@@ -217,12 +245,12 @@ const BusinessDeveloperRegister = (props) => {
                             <Input
                                 placeholder='Enter referral ID'
                                 name="referredId"
-                                value={stateRegisterData.referredId}
+                                value={localStorage.getItem('franchiseRefferal')}
                                 onChange={stateRegiInputs}
+                                disabled
                             />
-                            <Button onClick={verifyReferrlID}>Verify</Button>
+                            {/* <Button onClick={verifyReferrlID}>Verify</Button> */}
                         </div>
-                        <hr />
                         <div className='state-field'>
                             <label>First Name</label>
                             <Input
@@ -272,11 +300,27 @@ const BusinessDeveloperRegister = (props) => {
                                         }))
                                     }
 
-                                    style={{ width: 150 }}>
-                                    <Option value="">Gender</Option>
+                                    style={{ width: "100%"}}>
                                     <Option value='Male'>Male</Option>
                                     <Option value='Female'>Female</Option>
                                     <Option value='Other'>Other</Option>
+                                </Select>
+                            </div>
+                            <div className='state-field'>
+                                <label>State</label>
+                                <Select
+                                    placeholder="Select state"
+                                    name="state"
+                                    value={stateRegisterData.state}
+                                    onChange={handleState}
+                                    style={{ width: '100%' }}
+                                >
+                                    <Option value=''>Select state</Option>
+                                    {allState.states.map(state => (
+                                        <Option key={state.state} value={state.state}>
+                                            {state.state}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </div>
                             <div className='state-field'>
@@ -291,7 +335,7 @@ const BusinessDeveloperRegister = (props) => {
                                             city: value,
                                         }))
                                     }
-                                    style={{ width: 150 }}
+                                    style={{ width: "100%"}}
                                 >
                                     {city.map(city => (
                                         <Option key={city} value={city}>
@@ -302,11 +346,19 @@ const BusinessDeveloperRegister = (props) => {
                             </div>
                         </div>
                         <div className='state-field'>
-                            <label>Aadhar</label>
+                            <label>Front aadhar card</label>
                             <Input type='file'
-                                placeholder='Aadhar'
+                                placeholder='Front aadhar card'
                                 name="aadhar"
                                 onChange={handleClickAadharFrontImage}
+                            />
+                        </div>
+                        <div className='state-field'>
+                            <label>Back aadhar card</label>
+                            <Input type='file'
+                                placeholder='Back aadhar card'
+                                name="backaadhar"
+                                onChange={handleClickBackAadharFrontImage}
                             />
                         </div>
                         <div className='state-field'>
@@ -315,7 +367,6 @@ const BusinessDeveloperRegister = (props) => {
                                 placeholder='Pan'
                                 name="pan"
                                 onChange={handleClickPanCardImage}
-
                             />
                         </div>
                         <div className='state-field'>

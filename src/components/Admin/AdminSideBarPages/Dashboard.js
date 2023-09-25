@@ -20,6 +20,7 @@ import aadharImage from "../../../img/aadhar.jpg";
 import aadharBackImage from "../../../img/Aadhaar-back.jpg";
 import panImage from "../../../img/pan.jpg";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import {BiArrowBack} from 'react-icons/bi';
 import { NavLink, useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
 
@@ -759,6 +760,10 @@ function Dashboard() {
     console.log(myID);
   };
 
+  const gotoDashboard = ()=>{
+    navigate('/admindashboard/dashboard');
+  }
+
   return (
     <>
       {/* <div>
@@ -873,7 +878,7 @@ function Dashboard() {
           <div className="profile-verification-heading">
             <div className="txt-btn">
               <h5 style={{ fontFamily: "Calibri" }}>Trader Profile Details</h5>
-              <NavLink
+              {token || subadminToken?<NavLink
                 className="create-user"
                 to="/admindashboard/createuser"
                 exact
@@ -881,7 +886,7 @@ function Dashboard() {
                 activeStyle={activeStyle}
               >
                 + Create Trader
-              </NavLink>
+              </NavLink>:""}
             </div>
             <Search
               placeholder="Enter search text"

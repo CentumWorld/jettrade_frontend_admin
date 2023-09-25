@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../css/Navbar.css";
 import AdminLogin from "./AdminLogin";
 import Button from "react-bootstrap/Button";
@@ -15,12 +15,9 @@ import { useNavigate } from "react-router-dom";
 import ProfileModal from "./ProfileModal";
 import AccountModal from "./AccountModal";
 import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
-import baseUrl from "../baseUrl";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import adminAv from "../img/admin-av.png";
-
-const apiurl = baseUrl.apiUrl;
+import { ToastContainer } from "react-toastify";
+import adminAv from "../img/admin-av.png"
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -35,7 +32,7 @@ function Navbar() {
   const [videoCreatorShow, setVideoCreatorShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
-  const [walletamount, setWalletAmount] = useState("");
+  const [walletamount, setWalletAmount] = useState(0);
   const isFrachiseToken = localStorage.getItem("franchiseToken");
   const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
@@ -120,16 +117,13 @@ function Navbar() {
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch(
-            `${apiurl}` + "/state/get-own-state-details",
-            {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${isStateHandlerToken}`,
-              },
-            }
-          );
+          const response = await fetch("/state/get-own-state-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isStateHandlerToken}`,
+            },
+          });
           const data = await response.json();
           setWalletAmount(data.data.stateHandlerWallet);
         } catch (error) {
@@ -140,16 +134,13 @@ function Navbar() {
     } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch(
-            `${apiurl}` + "/franchise/get-own-franchise-details",
-            {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${isFrachiseToken}`,
-              },
-            }
-          );
+          const response = await fetch("/franchise/get-own-franchise-details", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isFrachiseToken}`,
+            },
+          });
           const data = await response.json();
           setWalletAmount(data.data.frenchiseWallet);
         } catch (error) {
@@ -161,8 +152,7 @@ function Navbar() {
       async function fetchBussinessDetails() {
         try {
           const response = await fetch(
-            `${apiurl}` +
-              "/businessDeveloper/get-own-business-developer-details",
+            "/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
               headers: {
@@ -178,22 +168,26 @@ function Navbar() {
         }
       }
 
+
       fetchBussinessDetails();
     } else if (isAdminToken) {
       async function fetchAdminDetails() {
         try {
-          const response = await fetch(`${apiurl}` + "/admin/fetch-admin", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isAdminToken}`,
-            },
-          });
+          const response = await fetch(
+            "/admin/fetch-admin",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isAdminToken}`,
+              },
+            }
+          );
           const data = await response.json();
           function formatIndianRupees(adminWallet) {
-            const formatter = new Intl.NumberFormat("en-IN", {
-              style: "currency",
-              currency: "INR",
+            const formatter = new Intl.NumberFormat('en-IN', {
+              style: 'currency',
+              currency: 'INR'
             });
             return formatter.format(adminWallet);
           }
@@ -201,20 +195,16 @@ function Navbar() {
           const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
           const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
 
-          console.log("Formatted admin wallet:", formattedAdminWallet); // Log the formatted wallet amount
+          console.log('Formatted admin wallet:', formattedAdminWallet); // Log the formatted wallet amount
           setWalletAmount(formattedAdminWallet);
+
         } catch (error) {
           console.error("Error fetching state details", error);
         }
       }
-      fetchAdminDetails();
+      fetchAdminDetails()
     }
-  }, [
-    isStateHandlerToken,
-    isBussinessDeveloperToken,
-    isFrachiseToken,
-    isAdminToken,
-  ]);
+  }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken, isAdminToken]);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -260,7 +250,7 @@ function Navbar() {
     ); 
 
     const handleLogout = () => {
-      fetch(`${apiurl}` + "/admin/logout", {
+      fetch("/admin/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -301,12 +291,12 @@ function Navbar() {
             Profile
           </Menu.Item>
         )}
-        {!isAdminToken && !isSubAdminToken && (
+        {(!isAdminToken && !isSubAdminToken) && (
           <Menu.Item key="account" onClick={handleAccountModalOpen}>
             Add Account Details
           </Menu.Item>
         )}
-        {!isSubAdminToken && (
+        {(!isSubAdminToken) && (
           <Menu.Item key="wallet">
             Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
           </Menu.Item>
@@ -405,9 +395,9 @@ function Navbar() {
         )}
         {videoCreatorShow ? (
           <VideoCreatorLogin VideoCreatorLoginFunc={pullVideoCreator} />
-        ) : (
-          ""
-        )}
+        ) : ("")
+
+        }
       </nav>
     </>
   );
