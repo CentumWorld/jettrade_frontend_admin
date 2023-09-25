@@ -257,7 +257,7 @@ function Navbar() {
         <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
         <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
-    );
+    ); 
 
     const handleLogout = () => {
       fetch(`${apiurl}` + "/admin/logout", {
