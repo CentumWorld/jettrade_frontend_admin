@@ -357,7 +357,7 @@ function Navbar() {
             <h3>JETTRADE FX </h3>
           </div>
           <div>
-            <img src={logo} alt="" style={{ width: "100px", height: "35px" }} />
+            <img src={logo} alt="" style={{ width: "100px", height: "35px" }} className="jtf-logo" />
           </div>
           <div>
             <button

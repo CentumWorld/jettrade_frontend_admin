@@ -45,10 +45,6 @@ form label {
     width: 100px;
 }
 
-.navbar-toggler{
-    border: 1px solid black !important;
-}
-
 @media only screen and (max-width: 365px) {
     .jtf-logo{
         display: none;
@@ -56,12 +52,5 @@ form label {
     .navbar-brand{
         display: flex;
         align-items: center;
-    }
-}
-
-/* tablet Screen */
-@media only screen and (max-width: 980px) {
-    .navbar{
-        /* height: max-content; */
     }
 }
