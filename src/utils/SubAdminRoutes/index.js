@@ -27,7 +27,7 @@ import { MdBarChart } from "react-icons/md";
 import { RxCountdownTimer } from "react-icons/rx";
 import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
 import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
-import { BiStar } from "react-icons/bi";
+import { BiLogOutCircle, BiStar } from "react-icons/bi";
 import { FcNeutralTrading } from 'react-icons/fc';
 
 
@@ -138,6 +138,11 @@ const subAdminRoutes = [
       path: "/admindashboard/allvideo",
       name: "Video",
       icon: <AiFillVideoCamera />,
+    },
+    {
+      path: "/logout",
+      name: "Logout",
+      icon: <BiLogOutCircle />,
     },
   ]
 
