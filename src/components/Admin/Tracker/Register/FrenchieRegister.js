@@ -205,7 +205,7 @@ const FrenchieRegister = (props) => {
         <>
             <div>
                 <Modal
-                    title="Franchise Register"
+                    title="Frenchise Register"
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}
@@ -260,7 +260,7 @@ const FrenchieRegister = (props) => {
                                 onChange={stateRegiInputs}
                             />
                         </div>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}>
                             <div className='state-field'>
                                 <label>Gender</label><br />
                                 <Select placeholder="Select Gender"
