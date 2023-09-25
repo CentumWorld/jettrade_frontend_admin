@@ -45,7 +45,7 @@ const Adminroutes = [
     target: "_blank",
   },
   {
-    path: "https://centumworldrig.com/",
+    path: "http://centumworldrig.com/",
     name: "CENTUMO RIG",
     icon: <FcUpRight />,
     externalLink: true,
@@ -58,17 +58,17 @@ const Adminroutes = [
   },
   {
     path: "/admindashboard/user",
-    name: "User",
+    name: "Trader",
     icon: <FaUserTie />,
   },
   {
     path: "/admindashboard/refferal",
-    name: "Referral",
+    name: "Member",
     icon: <FaSlideshare />,
   },
   {
     path: "/admindashboard/new-renewal",
-    name: "New/Renewal Users",
+    name: "New/Renewal Traders",
     icon: <MdAutorenew />,
   },
   {

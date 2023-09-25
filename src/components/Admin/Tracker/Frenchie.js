@@ -97,7 +97,7 @@ const Frenchie = () => {
       key: "lname",
     },
     {
-      title: "Franchise Id",
+      title: "Franchise ID",
       dataIndex: "frenchiseId",
       key: "frenchiseId",
     },
@@ -117,7 +117,7 @@ const Frenchie = () => {
       key: "gender",
     },
     {
-      title: "Referal Id",
+      title: "Referral ID",
       dataIndex: "referralId",
       key: "referralId",
       render: (text) => (
@@ -133,7 +133,7 @@ const Frenchie = () => {
       ),
     },
     {
-      title: "Reffered Id",
+      title: "Referred ID",
       dataIndex: "referredId",
       key: "referredId",
     },

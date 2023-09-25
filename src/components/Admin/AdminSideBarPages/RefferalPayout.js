@@ -250,7 +250,7 @@ const RefferalPayout = () => {
 
   const memberDataInState = [
     {
-      title: "Member Id",
+      title: "Member ID",
       dataIndex: "memberId",
       key: "userid",
       onFilter: (value, record) =>
@@ -445,7 +445,7 @@ const RefferalPayout = () => {
 
   const traderColumnInState = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userid",
       key: "userid",
       onFilter: (value, record) =>
@@ -487,7 +487,7 @@ const RefferalPayout = () => {
   // user details here
   const columns = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userId",
       key: "refferUserID",
       onFilter: (value, record) =>
@@ -515,7 +515,7 @@ const RefferalPayout = () => {
       key: "userType",
     },
     {
-      title: "Referral User",
+      title: "Referral Trader",
       dataIndex: "refferUserId",
       key: "userid",
     },
@@ -582,7 +582,7 @@ const RefferalPayout = () => {
 
   const columnsMember = [
     {
-      title: "User ID",
+      title: "Member ID",
       dataIndex: "memberId",
       key: "refferUserID",
       onFilter: (value, record) =>
@@ -610,7 +610,7 @@ const RefferalPayout = () => {
       key: "userType",
     },
     {
-      title: "Referral User",
+      title: "Referral Trader",
       dataIndex: "refferUserId",
       key: "userid",
     },
@@ -618,7 +618,7 @@ const RefferalPayout = () => {
 
   const columnsMemberBusiness = [
     {
-      title: "User ID",
+      title: "Member ID",
       dataIndex: "memberId",
       key: "refferUserID",
       onFilter: (value, record) =>
@@ -646,7 +646,7 @@ const RefferalPayout = () => {
       key: "userType",
     },
     {
-      title: "Referral User",
+      title: "Referral Trader",
       dataIndex: "refferUserId",
       key: "userid",
     },
@@ -654,7 +654,7 @@ const RefferalPayout = () => {
 
   const columnsState = [
     {
-      title: "State Developer ID",
+      title: "State Handler ID",
       dataIndex: "stateHandlerId",
       key: "stateHandlerId",
       onFilter: (value, record) =>
@@ -682,7 +682,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Reffer UserID",
+      title: "Reffer Franchise ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -690,7 +690,7 @@ const RefferalPayout = () => {
 
   const columnsFranch = [
     {
-      title: "Franchise Developer ID",
+      title: "Franchise ID",
       dataIndex: "frenchiseId",
       key: "frenchiseId",
       onFilter: (value, record) =>
@@ -718,7 +718,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Referral Business Id",
+      title: "Reffer Business ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -726,7 +726,7 @@ const RefferalPayout = () => {
 
   const bussinessColumnInStateRefferal = [
     {
-      title: "Bussiness Developer ID",
+      title: "Business Dev ID",
       dataIndex: "businessDeveloperId",
       key: "userid",
       onFilter: (value, record) =>
@@ -762,7 +762,7 @@ const RefferalPayout = () => {
 
   const columnsBussinessDeveloper = [
     {
-      title: "Bussiness Developer ID",
+      title: "Business Dev ID",
       dataIndex: "businessDeveloperId",
       key: "businessDeveloperId",
       onFilter: (value, record) =>
@@ -790,7 +790,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Referral User Id",
+      title: "Referral Member ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -1022,11 +1022,11 @@ const RefferalPayout = () => {
   ];
 
   const adminColumnDetails = [
-    { title: "Admin Id", dataIndex: "admin_id", key: "admin_id" },
+    { title: "Admin ID", dataIndex: "admin_id", key: "admin_id" },
     { title: "Credit Amount", dataIndex: "creditAmount", key: "creditAmount" },
     { title: "Type", dataIndex: "Type", key: "Type" },
-    { title: "Reffer User Id", dataIndex: "refferUserId", key: "refferUserId" },
-    { title: "Date", dataIndex: "Date", key: "Date" },
+    { title: "Reffer SHO ID", dataIndex: "refferUserId", key: "refferUserId" },
+    { title: "Date", dataIndex: "Date", key: "Date", render: (text) => moment(text).format("DD/MM/YY HH:mm:ss") },
   ];
 
   const handleRoleChange = (value) => {

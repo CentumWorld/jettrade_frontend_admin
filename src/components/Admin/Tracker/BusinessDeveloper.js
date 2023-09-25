@@ -81,7 +81,7 @@ const BusinessDeveloper = () => {
       key: "lname",
     },
     {
-      title: "BussinessId",
+      title: "Business ID",
       dataIndex: "businessDeveloperId",
       key: "businessDeveloperId",
     },
@@ -101,12 +101,12 @@ const BusinessDeveloper = () => {
       key: "gender",
     },
     {
-      title: "Reffered Id",
+      title: "Referred ID",
       dataIndex: "referredId",
       key: "referredId",
     },
     {
-      title: "Refferal Id",
+      title: "Referral ID",
       dataIndex: "referralId",
       key: "referralId",
       render: (text) => (

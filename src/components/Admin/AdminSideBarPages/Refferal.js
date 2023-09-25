@@ -111,7 +111,7 @@ const Refferal = () => {
     { title: "Phone", dataIndex: "phone", key: "phone" },
     { title: "Address", dataIndex: "address", key: "address" },
     {
-      title: "Referral", dataIndex: "refferal_id", key: "refferal_id",
+      title: "Referral ID", dataIndex: "refferal_id", key: "refferal_id",
       render: (text) => (
         <span
           style={{ cursor: 'pointer', userSelect: 'all' }}
@@ -124,7 +124,7 @@ const Refferal = () => {
         </span>
       ),
     },
-    { title: "Referred", dataIndex: "reffered_id", key: "reffered_id" },
+    { title: "Referred ID", dataIndex: "reffered_id", key: "reffered_id" },
     {
       title: "Status",
       dataIndex: "status",
@@ -136,7 +136,7 @@ const Refferal = () => {
       },
     },
     {
-      title: "Block/Notblock",
+      title: "Block Status",
       dataIndex: "isBlocked",
       render: (isBlocked) => {
         const cellStyle = isBlocked ? { color: "red" } : { color: "green" };
@@ -829,7 +829,7 @@ const Refferal = () => {
           <div className="refferal-profile-verification-heading">
             <div className="txt-btn"></div>
             <h5 style={{ fontFamily: "Calibri", display: "inline-block" }}>
-              Referral Profile Details
+              Member Profile Details
             </h5>
             <NavLink
               className="create-referral"
@@ -839,7 +839,7 @@ const Refferal = () => {
               activeStyle={activeStyle}
               style={{ float: "right" }}
             >
-              + Create Referral
+              + Create Member
             </NavLink>
           </div>
 

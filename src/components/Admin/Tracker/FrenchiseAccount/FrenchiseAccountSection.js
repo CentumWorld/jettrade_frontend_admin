@@ -31,7 +31,7 @@ const FrenchiseAccountSection = () => {
 
     const columns = [
         {
-            title: 'Id',
+            title: 'Franchise ID',
             dataIndex: 'franchiseId',
             key: 'franchiseId',
         },
@@ -65,7 +65,7 @@ const FrenchiseAccountSection = () => {
       //approveDate
       const columnsApproved = [
         {
-            title: 'Id',
+            title: 'Franchise ID',
             dataIndex: 'franchiseId',
             key: 'franchiseId',
         },
@@ -278,7 +278,7 @@ const FrenchiseAccountSection = () => {
     // state upi id 
     const columnStateUpi = [
         {
-            title: 'User ID',
+            title: 'Franchise ID',
             dataIndex: 'userId',
             key: 'userId',
         },

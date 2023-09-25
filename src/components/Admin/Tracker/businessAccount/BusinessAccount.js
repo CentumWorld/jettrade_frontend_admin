@@ -35,7 +35,7 @@ const BusinessAccount = () => {
 
   const columns = [
     {
-      title: "Id",
+      title: "Business ID",
       dataIndex: "businessDeveloperId",
       key: "stateHandlerId",
     },
@@ -70,7 +70,7 @@ const BusinessAccount = () => {
   //approveDate
   const columnsApproved = [
     {
-      title: "Id",
+      title: "Business ID",
       dataIndex: "businessDeveloperId",
       key: "stateHandlerId",
     },
@@ -267,7 +267,7 @@ const BusinessAccount = () => {
   // state upi id
   const columnStateUpi = [
     {
-      title: "User ID",
+      title: "Business ID",
       dataIndex: "userId",
       key: "userId",
     },
@@ -303,7 +303,7 @@ const BusinessAccount = () => {
     <>
       <div className="state-account-container">
         <div className="state-account-header">
-          <div>Business Handler Account</div>
+          <div>Business Developer Account</div>
           <div className="state-account-wallet">
             <FaRupeeSign />
             {stateTotalBalance}

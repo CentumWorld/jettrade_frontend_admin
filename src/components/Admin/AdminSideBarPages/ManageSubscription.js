@@ -70,9 +70,9 @@ const ManageSubscription = () => {
   };
 
   const columns = [
-    { title: "User ID", dataIndex: "userid", key: "userid" },
-    { title: "First Name", dataIndex: "fname", key: "fname" },
-    { title: "Last Name", dataIndex: "lname", key: "lname" },
+    { title: "Trader ID", dataIndex: "userid", key: "userid" },
+    { title: "FName", dataIndex: "fname", key: "fname" },
+    { title: "LName", dataIndex: "lname", key: "lname" },
     { title: "Email", dataIndex: "email", key: "email" },
     {
       title: "DOJ(mm/dd/yy)",

@@ -39,7 +39,7 @@ const StateAccountSection = () => {
 
     const columns = [
         {
-            title: 'Id',
+            title: 'State ID',
             dataIndex: 'stateHandlerId',
             key: 'stateHandlerId',
         },
@@ -78,7 +78,7 @@ const StateAccountSection = () => {
     //approveDate
     const columnsApproved = [
         {
-            title: 'Id',
+            title: 'State ID',
             dataIndex: 'stateHandlerId',
             key: 'stateHandlerId',
         },
@@ -251,7 +251,7 @@ const StateAccountSection = () => {
     // state upi id 
     const columnStateUpi = [
         {
-            title: 'User ID',
+            title: 'State ID',
             dataIndex: 'userId',
             key: 'userId',
         },

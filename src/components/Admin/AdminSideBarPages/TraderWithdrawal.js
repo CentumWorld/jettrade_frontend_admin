@@ -153,7 +153,7 @@ const TraderWithdrawal = () => {
 
   const columns = [
     {
-      title: "User ID",
+      title: "Trader ID",
       dataIndex: "userid",
       key: "userid",
     },
@@ -290,7 +290,7 @@ const TraderWithdrawal = () => {
              columns={[
               ...columns,
               {
-                title: 'withdwal Date',
+                title: 'Withdrawal Date',
                 dataIndex: 'date',
                 key: 'date',
                 render: (date) => {
