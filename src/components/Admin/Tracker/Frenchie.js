@@ -732,13 +732,12 @@ const Frenchie = () => {
 
             <Button
                 className="id-card"
-                disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadAadharCard(aadharCard.placeholder)
                 }
               >
-                Download
+                download
               </Button>
 
           </div>
@@ -765,13 +764,12 @@ const Frenchie = () => {
 
             <Button
                 className="id-card"
-                disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadPanCard(panCard.placeholder)
                 }
               >
-                Download
+                download
               </Button>
 
           </div>

@@ -458,7 +458,7 @@ const BusinessDeveloper = () => {
   }
 
   const callApiToFetchDocument = () =>{
-    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||
+    const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") ||localStorage.getItem("franchiseToken")
     localStorage.getItem("subAdminToken")
     const config = {
       headers: {
@@ -726,7 +726,7 @@ const BusinessDeveloper = () => {
 
               <Button
                 className="id-card"
-                disabled={!loading}
+                // disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadAadharCard(aadharCard.placeholder)
@@ -752,7 +752,7 @@ const BusinessDeveloper = () => {
 
               <Button
                 className="id-card"
-                disabled={!loading}
+                // disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadPanCard(panCard.placeholder)

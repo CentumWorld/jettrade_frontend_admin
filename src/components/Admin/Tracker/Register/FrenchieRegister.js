@@ -146,7 +146,7 @@ const FrenchieRegister = (props) => {
             })
             .catch(err => {
                 setLoading(false);
-                console.log(err.response.data.message);
+                message.warning(err.response.data.message);
             })
 
     };
