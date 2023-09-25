@@ -319,7 +319,7 @@ const BusinessDeveloperRegister = (props) => {
                             />
                         </div>
                         <div className='state-field'>
-                            <label> User ID</label>
+                            <label>Business Developer ID</label>
                             <Input type='text'
                                 placeholder='Businesss Developer Id'
                                 name="stateRegisterId"

@@ -50,7 +50,7 @@ const franchiseAdminRoutes = [
       },
       {
         path: "tracker/members",
-        name: "Referral",
+        name: "Members",
       },
       {
         path: "tracker/traders",

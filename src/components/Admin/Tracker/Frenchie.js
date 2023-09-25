@@ -87,6 +87,11 @@ const Frenchie = () => {
 
   const columns = [
     {
+      title: "Franchise ID",
+      dataIndex: "frenchiseId",
+      key: "frenchiseId",
+    },
+    {
       title: "Fname",
       dataIndex: "fname",
       key: "fname",
@@ -95,11 +100,6 @@ const Frenchie = () => {
       title: "Lname",
       dataIndex: "lname",
       key: "lname",
-    },
-    {
-      title: "Franchise ID",
-      dataIndex: "frenchiseId",
-      key: "frenchiseId",
     },
     {
       title: "Phone",

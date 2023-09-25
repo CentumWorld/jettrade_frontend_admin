@@ -279,7 +279,7 @@ const StateRegister = (props) => {
                             />
                         </div>
                         <div className='state-field'>
-                            <label> User ID</label>
+                            <label>State Handler ID</label>
                             <Input type='text'
                                 placeholder='State Handler Id'
                                 name="stateRegisterId"

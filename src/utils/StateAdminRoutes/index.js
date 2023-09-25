@@ -49,7 +49,7 @@ const stateAdminRoutes = [
       subRoutes:[
         {
           path:'tracker/frenchie',
-          name :'Frenchies'
+          name :'Franchise'
         },
         {
           path:'tracker/businness-developer',

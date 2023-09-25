@@ -160,7 +160,7 @@ const CreateReferralInAdmin = () => {
       .then((res) => {
         setLoading(false);
         message.success("Registration successful");
-        navigate("/admindashboard/user");
+        navigate("/admindashboard/refferal");
       })
       .catch((error) => {
         //console.log(error.response.data)
@@ -210,7 +210,7 @@ const CreateReferralInAdmin = () => {
     <>
       <div className="registration-page">
         <div className="registration-body">
-          <p>Create referral with credentials</p>
+          <p>Create Member with credentials</p>
           <div className="form-content">
             <form>
               {/* Dropdown and input box for referral */}

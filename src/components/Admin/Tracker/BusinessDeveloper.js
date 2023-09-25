@@ -71,6 +71,11 @@ const BusinessDeveloper = () => {
 
   const columns = [
     {
+      title: "Business ID",
+      dataIndex: "businessDeveloperId",
+      key: "businessDeveloperId",
+    },
+    {
       title: "First Name",
       dataIndex: "fname",
       key: "fname",
@@ -80,11 +85,7 @@ const BusinessDeveloper = () => {
       dataIndex: "lname",
       key: "lname",
     },
-    {
-      title: "Business ID",
-      dataIndex: "businessDeveloperId",
-      key: "businessDeveloperId",
-    },
+    
     {
       title: "Phone",
       dataIndex: "phone",
