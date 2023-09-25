@@ -199,7 +199,7 @@ const CreateUserInAdmin = () => {
         <>
             <div className='registration-page'>
                 <div className='registration-body'>
-                    <p>Create user with credentials</p>
+                    <p>Create Trader with credentials</p>
                     <div className='form-content'>
                         <form>
                             {/* dorpdown and input box for refferal */}
@@ -412,7 +412,7 @@ const CreateUserInAdmin = () => {
                             </div>
                             {checked ?
                                 <div className='password-input'>
-                                    <p>User ID</p>
+                                    <p>Trader ID</p>
                                     <Input
                                         className='custom-placeholder-input'
                                         placeholder="Enter your user ID"

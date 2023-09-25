@@ -9,6 +9,7 @@ import { SiManageiq } from "react-icons/si";
 import { MdBarChart } from "react-icons/md";
 import { FcNeutralTrading } from 'react-icons/fc';
 import { FcUpRight } from 'react-icons/fc';
+import { BiLogOutCircle } from "react-icons/bi";
 
 
 const BussinessDeveloperRoutes = [
@@ -38,7 +39,7 @@ const BussinessDeveloperRoutes = [
   },
   {
     path: "/admindashboard/refferal",
-    name: "Referral",
+    name: "Members",
     icon: <FaSlideshare />,
   },
   {
@@ -48,7 +49,7 @@ const BussinessDeveloperRoutes = [
     subRoutes:[
       {
         path:'tracker/members',
-        name:'Referrals'
+        name:'Members'
       },
       {
         path:'tracker/traders',
@@ -80,6 +81,11 @@ const BussinessDeveloperRoutes = [
     path: "manage/investor-refferal-payout",
     name: "Referral Payout",
     icon: <FaAmazonPay />
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: <BiLogOutCircle />,
   },
 ];
 

@@ -88,6 +88,11 @@ const Frenchie = () => {
 
   const columns = [
     {
+      title: "Franchise ID",
+      dataIndex: "frenchiseId",
+      key: "frenchiseId",
+    },
+    {
       title: "Fname",
       dataIndex: "fname",
       key: "fname",
@@ -96,11 +101,6 @@ const Frenchie = () => {
       title: "Lname",
       dataIndex: "lname",
       key: "lname",
-    },
-    {
-      title: "Franchise ID",
-      dataIndex: "frenchiseId",
-      key: "frenchiseId",
     },
     {
       title: "Phone",
@@ -737,13 +737,12 @@ const Frenchie = () => {
 
             <Button
                 className="id-card"
-                disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadAadharCard(aadharCard.placeholder)
                 }
               >
-                Download
+                download
               </Button>
 
           </div>
@@ -770,13 +769,12 @@ const Frenchie = () => {
 
             <Button
                 className="id-card"
-                disabled={!loading}
                 type="primary"
                 onClick={() =>
                   downloadPanCard(panCard.placeholder)
                 }
               >
-                Download
+                download
               </Button>
 
           </div>

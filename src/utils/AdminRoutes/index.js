@@ -29,6 +29,7 @@ import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
 import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
 import { FcNeutralTrading } from 'react-icons/fc';
 import { FcUpRight } from 'react-icons/fc';
+import { BiLogOutCircle } from "react-icons/bi";
 
 
 const Adminroutes = [
@@ -157,6 +158,11 @@ const Adminroutes = [
     path: "/admindashboard/allvideo",
     name: "Video",
     icon: <AiFillVideoCamera />,
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: <BiLogOutCircle />,
   },
 ];
 

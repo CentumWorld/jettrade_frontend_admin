@@ -28,7 +28,7 @@ import {
   import { RxCountdownTimer } from "react-icons/rx";
   import { TfiMenuAlt, TfiGift } from "react-icons/tfi";
   import { IoNotificationsSharp, IoTrophy } from "react-icons/io5";
-  import { BiStar } from "react-icons/bi";
+  import { BiLogOutCircle, BiStar } from "react-icons/bi";
   
   
   const  VideoCreatorRoutes =  [
@@ -42,7 +42,11 @@ import {
         name: "Video",
         icon: <AiFillVideoCamera />,
       },
-      
+      {
+        path: "/logout",
+        name: "Logout",
+        icon: <BiLogOutCircle />,
+      },
     ];
   
     export default VideoCreatorRoutes;

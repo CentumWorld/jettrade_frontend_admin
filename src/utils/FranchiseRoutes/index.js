@@ -6,6 +6,7 @@ import { BsFillChatTextFill } from "react-icons/bs";
 import { FaAmazonPay } from "react-icons/fa";
 import { FcNeutralTrading } from 'react-icons/fc';
 import { FcUpRight } from 'react-icons/fc';
+import { BiLogOutCircle } from "react-icons/bi";
 
 
 const franchiseAdminRoutes = [
@@ -49,7 +50,7 @@ const franchiseAdminRoutes = [
       },
       {
         path: "tracker/members",
-        name: "Referral",
+        name: "Members",
       },
       {
         path: "tracker/traders",
@@ -85,6 +86,11 @@ const franchiseAdminRoutes = [
     path: "manage/investor-refferal-payout",
     name: "Referral Payout",
     icon: <FaAmazonPay />,
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: <BiLogOutCircle />,
   },
 ];
 

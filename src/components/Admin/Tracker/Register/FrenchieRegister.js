@@ -389,7 +389,7 @@ const FrenchieRegister = (props) => {
                             />
                         </div>
                         <div className='state-field'>
-                            <label> User ID</label>
+                            <label>Franchise ID</label>
                             <Input type='text'
                                 placeholder='Frenchise Id'
                                 name="stateRegisterId"

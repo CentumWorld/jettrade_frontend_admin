@@ -35,7 +35,7 @@ const State = () => {
     placeholder: "",
     file: null,
   });
-  
+
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [frenchieData, setFrenchieData] = useState([]);
   const [editFranchiseData, setFranchiseData] = useState({

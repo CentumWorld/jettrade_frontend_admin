@@ -7,7 +7,7 @@ import RunningProgressiveBar from "./RunningProgressiveBar";
 import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
 import { BsWallet2 } from "react-icons/bs";
-import {FaCopy} from "react-icons/fa"
+import { FaCopy } from "react-icons/fa";
 import {
   Modal,
   Input,
@@ -49,6 +49,7 @@ const DisplayCard = () => {
   const [dayDifference, setDayDifference] = useState(0);
 
   const [totalAmount, setTotalAmount] = useState(0);
+  const [totalWalletAmount, setWalletAmount] = useState(0);
   const [stateHandlerTotalWallet, setStateHandlerTotalWallet] = useState(0);
   const [stateUpiId, setStateUpiId] = useState([]);
   const [frenchiseUpiId, setFrenchiseUpiId] = useState([]);
@@ -704,10 +705,106 @@ const DisplayCard = () => {
         });
     }
   };
-  const copyToClipboard = ()=>{
+  const copyToClipboard = () => {
     navigator.clipboard.writeText(ReferralId);
-    message.success('Text copied to clipboard: ' + ReferralId);
+    message.success("Text copied to clipboard: " + ReferralId);
   };
+
+  useEffect(() => {
+    if (isStateHandler) {
+      async function fetchStateDetails() {
+        try {
+          const response = await fetch(
+            `${apiurl}` + "/state/get-own-state-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isStateHandler}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setWalletAmount(data.data.stateHandlerWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchStateDetails();
+    } else if (isFrenchise) {
+      async function fetchFracnhiseDetails() {
+        try {
+          const response = await fetch(
+            `${apiurl}` + "/franchise/get-own-franchise-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isFrenchise}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setWalletAmount(data.data.frenchiseWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchFracnhiseDetails();
+    } else if (isBusinessHandler) {
+      async function fetchBussinessDetails() {
+        try {
+          const response = await fetch(
+            `${apiurl}` +
+              "/businessDeveloper/get-own-business-developer-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isBusinessHandler}`,
+              },
+            }
+          );
+          const data = await response.json();
+          setWalletAmount(data.data.businessDeveloperWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+
+      fetchBussinessDetails();
+    } else if (isAdmin) {
+      async function fetchAdminDetails() {
+        try {
+          const response = await fetch(`${apiurl}` + "/admin/fetch-admin", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isAdmin}`,
+            },
+          });
+          const data = await response.json();
+          function formatIndianRupees(adminWallet) {
+            const formatter = new Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "INR",
+            });
+            return formatter.format(adminWallet);
+          }
+
+          const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
+          const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
+
+          console.log("Formatted admin wallet:", formattedAdminWallet); // Log the formatted wallet amount
+          setWalletAmount(formattedAdminWallet);
+        } catch (error) {
+          console.error("Error fetching state details", error);
+        }
+      }
+      fetchAdminDetails();
+    }
+  }, [
+  ]);
 
   return (
     <>
@@ -730,7 +827,21 @@ const DisplayCard = () => {
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? ReferralId
-                  : null} <FaCopy/>
+                  : null}{" "}
+                <FaCopy />
+              </span>
+            </div>
+          </div>
+        )}
+
+        {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
+          <div className="card1">
+            <div className="trading-chart">
+              <h6>Total Wallet Amount</h6>
+            </div>
+            <div className="trading-chart-view">
+              <span style={{ color: "yellow", cursor: "pointer" }}>
+                {totalWalletAmount}
               </span>
             </div>
           </div>
