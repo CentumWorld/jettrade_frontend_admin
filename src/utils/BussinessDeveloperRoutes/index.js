@@ -38,7 +38,7 @@ const BussinessDeveloperRoutes = [
   },
   {
     path: "/admindashboard/refferal",
-    name: "Referral",
+    name: "Members",
     icon: <FaSlideshare />,
   },
   {
@@ -48,7 +48,7 @@ const BussinessDeveloperRoutes = [
     subRoutes:[
       {
         path:'tracker/members',
-        name:'Referrals'
+        name:'Members'
       },
       {
         path:'tracker/traders',
