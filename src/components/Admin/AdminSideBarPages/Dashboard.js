@@ -20,7 +20,6 @@ import aadharImage from "../../../img/aadhar.jpg";
 import aadharBackImage from "../../../img/Aadhaar-back.jpg";
 import panImage from "../../../img/pan.jpg";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import {BiArrowBack} from 'react-icons/bi';
 import { NavLink, useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
 
@@ -139,6 +138,7 @@ function Dashboard() {
         console.error("Error fetching data:", error);
       }
     } else if (stateToken && stateHandlerRefferalID) {
+      // console.log(stateToken, "statte token is coming")
       try {
         const config = {
           headers: { Authorization: `Bearer ${stateToken}` },
@@ -154,10 +154,13 @@ function Dashboard() {
           config
         );
 
-        setData(response.data.result);
+        console.log(response.data, "user is on way")
+
+        setData(response.data.data);
         //console.log(typeof(response.data.result[0].phone));
+
         setFilteredDataSource(response.data.data);
-        setLength(response.data.result.length);
+        setLength(response.data.data.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -176,7 +179,9 @@ function Dashboard() {
           config
         )
         .then((res) => {
-          console.log("Bussiness responebhejo -> ", res.data);
+
+          setData(res.data.data);
+
           setFilteredDataSource(res.data.data);
         })
         .catch((err) => {
@@ -199,6 +204,8 @@ function Dashboard() {
         )
         .then((res) => {
           console.log("Bussiness responebhejo-> ", res.data);
+          setData(res.data.users);
+
           setFilteredDataSource(res.data.users);
         })
         .catch((err) => {
@@ -760,10 +767,6 @@ function Dashboard() {
     console.log(myID);
   };
 
-  const gotoDashboard = ()=>{
-    navigate('/admindashboard/dashboard');
-  }
-
   return (
     <>
       {/* <div>
@@ -878,7 +881,7 @@ function Dashboard() {
           <div className="profile-verification-heading">
             <div className="txt-btn">
               <h5 style={{ fontFamily: "Calibri" }}>Trader Profile Details</h5>
-              {token || subadminToken?<NavLink
+              <NavLink
                 className="create-user"
                 to="/admindashboard/createuser"
                 exact
@@ -886,9 +889,8 @@ function Dashboard() {
                 activeStyle={activeStyle}
               >
                 + Create Trader
-              </NavLink>:""}
+              </NavLink>
             </div>
-            
             <Search
               placeholder="Enter search text"
               allowClear
