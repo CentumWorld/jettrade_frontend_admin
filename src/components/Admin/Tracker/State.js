@@ -739,7 +739,7 @@ const State = () => {
               enterButton="Search"
               size="large"
               onSearch={searchUser}
-              style={{ width: "40%"}}
+              style={style}
             />
            
 

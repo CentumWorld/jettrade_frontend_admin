@@ -708,6 +708,12 @@ const Frenchie = () => {
     navigate('/admindashboard/dashboard')
   }
 
+  const isScreenLessThan768px = window.innerWidth < 768;
+
+  const style = {
+    width: isScreenLessThan768px ? "100%" : "40%",
+  };
+
   return (
     <>
       <FrenchieRegister
@@ -726,7 +732,7 @@ const Frenchie = () => {
               enterButton="Search"
               size="large"
               onSearch={searchUser}
-              style={{ width: "40%"}}
+              style={style}
             />
 
 
