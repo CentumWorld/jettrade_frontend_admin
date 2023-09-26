@@ -301,7 +301,7 @@ function AdminSideBar() {
                     rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
+                    <motion.div className="admin_link_text" onClick={toggle}>
                       {route.name}
                     </motion.div>
                   </a>
@@ -316,7 +316,7 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <motion.div className="admin_link_text" onClick={toggle}>
                     {route.name}
                   </motion.div>
                 </NavLink>
@@ -343,7 +343,7 @@ function AdminSideBar() {
                     rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
+                    <motion.div className="admin_link_text" onClick={toggle}>
                       {route.name}
                     </motion.div>
                   </a>
@@ -358,7 +358,7 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <motion.div className="admin_link_text" onClick={toggle}>
                     {route.name}
                   </motion.div>
                 </NavLink>
@@ -381,7 +381,7 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <motion.div className="admin_link_text" onClick={toggle}>
                     {route.name}
                   </motion.div>
                 </NavLink>
