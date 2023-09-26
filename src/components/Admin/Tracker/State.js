@@ -94,7 +94,6 @@ const State = () => {
         setLoading(true);
         setStateData(res.data.data);
         setFilteredDataSource(res.data.data);
-        console.log("data coming", res.data.data);
       })
       .catch((err) => {
         console.log("error", err);
@@ -116,7 +115,7 @@ const State = () => {
       key: "lname",
     },
     {
-      title: "StateHandler Id",
+      title: "SHO Id",
       dataIndex: "stateHandlerId",
       key: "stateHandlerId",
     },
@@ -136,7 +135,7 @@ const State = () => {
       key: "gender",
     },
     {
-      title: "Refferal Id",
+      title: "Referral ID",
       dataIndex: "referralId",
       key: "referralId",
       render: (text) => (
@@ -151,8 +150,8 @@ const State = () => {
         </span>
       ),
     },
-    {
-      title: "reffered Id",
+     {
+      title: "Referred ID",
       dataIndex: "referredId",
       key: "reffered_id",
     },

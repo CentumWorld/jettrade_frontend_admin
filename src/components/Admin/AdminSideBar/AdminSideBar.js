@@ -117,14 +117,34 @@ function AdminSideBar() {
     updateUser();
   }, []);
 
-  const toggle = () => setIsOpen(!isOpen);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  let width;
+
+  if (isOpen && windowWidth < 768) {
+    width = "100vw";
+  } else if ((!isOpen && windowWidth > 768) || (!isOpen && windowWidth < 768)) {
+    width = "50px";
+  } else {
+    width = "350px";
+  }
+
+  const toggle = () => setIsOpen(prev => (!prev));
   const userid = localStorage.getItem("userid");
   return (
-    <div className="admin-sidebar-main-container">
-      <div
-        style={{ width: isOpen ? "350px" : "50px" }}
-        className="admin-sidebar"
-      >
+    <div className="admin-sidebar-main-container" style={{ width: width }}>
+      <div className="admin-sidebar"  style={{ width: width }}>
         <div className="admin-top-section">
           {isOpen && <h5 className="admin_logo">{name || user}</h5>}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}

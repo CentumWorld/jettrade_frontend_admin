@@ -20,9 +20,9 @@ import aadharImage from "../../../img/aadhar.jpg";
 import aadharBackImage from "../../../img/Aadhaar-back.jpg";
 import panImage from "../../../img/pan.jpg";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import {BiArrowBack} from 'react-icons/bi';
 import { NavLink, useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
+import { BiArrowBack } from "react-icons/bi";
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
@@ -154,10 +154,13 @@ function Dashboard() {
           config
         );
 
-        setData(response.data.result);
+        console.log(response.data, "user is on way")
+
+        setData(response.data.data);
         //console.log(typeof(response.data.result[0].phone));
+
         setFilteredDataSource(response.data.data);
-        setLength(response.data.result.length);
+        setLength(response.data.data.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -176,7 +179,9 @@ function Dashboard() {
           config
         )
         .then((res) => {
-          console.log("Bussiness responebhejo -> ", res.data);
+
+          setData(res.data.data);
+
           setFilteredDataSource(res.data.data);
         })
         .catch((err) => {
@@ -199,6 +204,8 @@ function Dashboard() {
         )
         .then((res) => {
           console.log("Bussiness responebhejo-> ", res.data);
+          setData(res.data.users);
+
           setFilteredDataSource(res.data.users);
         })
         .catch((err) => {
@@ -888,7 +895,6 @@ function Dashboard() {
                 + Create Trader
               </NavLink>:""}
             </div>
-            
             <Search
               placeholder="Enter search text"
               allowClear
