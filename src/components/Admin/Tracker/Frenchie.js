@@ -27,6 +27,8 @@ const apiurl = baseUrl.apiUrl;
 
 const { Option } = Select;
 
+const{Search} = Input
+
 const Frenchie = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -58,6 +60,9 @@ const Frenchie = () => {
     city: [],
   });
   const [frenchiseId, setFrenchiseId] = useState("");
+  const [filteredDataSource,setFilteredDataSource] = useState([])
+  const [searchText, setSearchText] = useState("");
+
 
   const closeEditModal = () => {
     setEditModalVisible(false);
@@ -225,6 +230,7 @@ const Frenchie = () => {
           setLoading(true)
 
           setFrenchieData(res.data.data);
+          setFilteredDataSource(res.data.data)
         })
         .catch((err) => {
           console.log(err.message);
@@ -248,6 +254,8 @@ const Frenchie = () => {
             res.data.data[0].adharCard
           );
           setFrenchieData(res.data.data);
+          setFilteredDataSource(res.data.data)
+
         })
         .catch((err) => {
           console.log("error", err);
@@ -666,11 +674,39 @@ const Frenchie = () => {
     link.download = "image.jpg";
     link.click();
   }
+  
 
+
+  const searchUser = (value) => {
+    console.log(value, "value");
+
+    setSearchText(value);
+
+    const searchNumber = Number(value); // Convert search value to a Number
+
+    console.log(frenchieData, "franchise data is coming");
+
+    const filteredData = frenchieData.filter((record) => {
+      // Search by number field
+      if (record.phone === searchNumber) {
+        // Replace "numberField" with your actual field name
+        return true;
+      }
+
+      // Search by other fields
+      return Object.values(record).some((recordValue) => {
+        if (typeof recordValue === "string") {
+          const lowercaseRecordValue = recordValue.toLowerCase();
+          return lowercaseRecordValue.includes(value.toLowerCase());
+        }
+        return false;
+      });
+    });
+    setFilteredDataSource(filteredData);
+  };
   const gotoDashboard =()=>{
     navigate('/admindashboard/dashboard')
   }
-  
 
   return (
     <>
@@ -683,6 +719,17 @@ const Frenchie = () => {
         <div className="new-renewal-header">
           <div className="new-renewal-content">
             <span style={{color:"wheat"}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/> &nbsp;Franchise</span>
+
+            <Search
+              placeholder="Enter search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onSearch={searchUser}
+              style={{ width: "40%"}}
+            />
+
+
             {stateToken?<Button type="primary" onClick={showModal}>
               <AiFillPlusCircle /> &nbsp;&nbsp;Add Franchise
             </Button>:""}
@@ -691,7 +738,9 @@ const Frenchie = () => {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Table
-            dataSource={frenchieData}
+            // dataSource={frenchieData}
+            dataSource={filteredDataSource}
+
             columns={columns}
             pagination={{ pageSize: 7 }}
             scroll={{ x: true, y: true }}

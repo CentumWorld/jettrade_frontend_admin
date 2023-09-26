@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
+const {Search} = Input
 
 const BusinessDeveloper = () => {
   const navigate = useNavigate()
@@ -47,7 +48,8 @@ const BusinessDeveloper = () => {
   })
 
   const [reffralid, setRefferedID] = useState('');
-
+  const [filteredDataSource,setFilteredDataSource] = useState([])
+  const [searchText, setSearchText] = useState("")
   useEffect(() => {
     fetchBussinesDeveloperDataApi();
   }, []);
@@ -193,6 +195,7 @@ const BusinessDeveloper = () => {
         .then((res) => {
           setLoading(true)
           setbussinessData(res.data.data);
+          setFilteredDataSource(res.data.data)
         })
         .catch((err) => {
           console.log("error", err);
@@ -210,6 +213,7 @@ const BusinessDeveloper = () => {
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setbussinessData(res.data.data);
+          setFilteredDataSource(res.data.data)
         })
         .catch((err) => {
           console.log("error", err);
@@ -228,6 +232,7 @@ const BusinessDeveloper = () => {
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setbussinessData(res.data.data);
+          setFilteredDataSource(res.data.data)
         })
         .catch((err) => {
           console.log("error", err);
@@ -628,6 +633,34 @@ const BusinessDeveloper = () => {
     link.click();
   }
 
+  const searchUser = (value) => {
+    console.log(value, "value");
+
+    setSearchText(value);
+
+    const searchNumber = Number(value); // Convert search value to a Number
+
+    console.log(bussinessData, "bd data is coming");
+
+    const filteredData = bussinessData.filter((record) => {
+      // Search by number field
+      if (record.phone === searchNumber) {
+        // Replace "numberField" with your actual field name
+        return true;
+      }
+
+      // Search by other fields
+      return Object.values(record).some((recordValue) => {
+        if (typeof recordValue === "string") {
+          const lowercaseRecordValue = recordValue.toLowerCase();
+          return lowercaseRecordValue.includes(value.toLowerCase());
+        }
+        return false;
+      });
+    });
+    setFilteredDataSource(filteredData);
+  };
+
   const gotoDashboard =()=>{
     navigate('/admindashboard/dashboard')
   }
@@ -643,6 +676,19 @@ const BusinessDeveloper = () => {
         <div className="new-renewal-header">
           <div className="new-renewal-content">
             <span style={{color:"wheat"}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/>&nbsp;Business Developer</span>
+
+            
+            <Search
+              placeholder="Enter search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onSearch={searchUser}
+              style={{ width: "40%"}}
+            />
+
+
+
             {frenchiseToken? <Button type="primary" onClick={showModal}>
               <AiFillPlusCircle /> &nbsp;&nbsp;Add Business Developer
             </Button>:""}
@@ -651,7 +697,7 @@ const BusinessDeveloper = () => {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
             <Table
-              dataSource={bussinessData}
+              dataSource={filteredDataSource}
               columns={columns}
               pagination={{ pageSize: 7 }}
               scroll={{ x: true, y: true }}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { Button, Table, message,Form, Input,Select } from "antd";
+import { Button, Table, message, Form, Input, Select } from "antd";
 import StateRegister from "./Register/StateRegister";
 import axios from "axios";
 import { Menu, Dropdown, Modal } from "antd";
@@ -12,6 +12,8 @@ import allState from "./AllStateAndDistrict";
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
+const { Search } = Input;
+
 const State = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ const State = () => {
   const [visible, setVisible] = useState(false);
   const [uploadButton, setUploadButton] = useState(true);
   const [uploadButtonPan, setUploadButtonPan] = useState(true);
-  const [stateVerify , setIsVerify] = useState(false);
+  const [stateVerify, setIsVerify] = useState(false);
   const [aadharCard, setAadharCard] = useState({
     placeholder: "",
     file: null,
@@ -44,14 +46,16 @@ const State = () => {
     phone: "",
     email: "",
     gender: "",
-    selectedState:[],
-    city: []
+    selectedState: [],
+    city: [],
   });
 
-  const closeEditModal = () => {
-    setEditModalVisible(false)
-  }
+  const [searchText, setSearchText] = useState("");
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
 
+  const closeEditModal = () => {
+    setEditModalVisible(false);
+  };
 
   useEffect(() => {
     fetchStateDataApi();
@@ -86,9 +90,10 @@ const State = () => {
       .get(`${apiurl}` + "/admin/fetch-all-state", config)
       .then((res) => {
         // console.log("State response -> ", res.data);
-        setLoading(true)
+        setLoading(true);
         setStateData(res.data.data);
-        console.log("data coming",res.data.data);
+        setFilteredDataSource(res.data.data);
+        console.log("data coming", res.data.data);
       })
       .catch((err) => {
         console.log("error", err);
@@ -97,7 +102,6 @@ const State = () => {
 
   const adminToken = localStorage.getItem("adminToken");
   const subAdminToken = localStorage.getItem("subAdminToken");
-
 
   const columns = [
     {
@@ -136,17 +140,17 @@ const State = () => {
       key: "referralId",
       render: (text) => (
         <span
-          style={{ cursor: 'pointer', userSelect: 'all' }}
+          style={{ cursor: "pointer", userSelect: "all" }}
           onClick={() => {
             navigator.clipboard.writeText(text);
-            message.success('Text copied to clipboard: ' + text);
+            message.success("Text copied to clipboard: " + text);
           }}
         >
           {text}
         </span>
       ),
     },
-     {
+    {
       title: "reffered Id",
       dataIndex: "referredId",
       key: "reffered_id",
@@ -166,7 +170,7 @@ const State = () => {
       title: "State",
       dataIndex: "selectedState",
       key: "selectedState",
-      render: (selectedState) => selectedState.join(', '),
+      render: (selectedState) => selectedState.join(", "),
     },
     {
       title: "Status",
@@ -186,9 +190,7 @@ const State = () => {
       render: (isVerify) => {
         const cellStyle = isVerify ? { color: "green" } : { color: "red" };
         return (
-          <span style={cellStyle}>
-            {isVerify ? "Verified" : "Not Verify "}
-          </span>
+          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verify "}</span>
         );
       },
     },
@@ -198,9 +200,7 @@ const State = () => {
       render: (isDeleted) => {
         const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
         return (
-          <span style={cellStyle}>
-            {isDeleted ? "Deleted" : "Not Deleted"}
-          </span>
+          <span style={cellStyle}>{isDeleted ? "Deleted" : "Not Deleted"}</span>
         );
       },
     },
@@ -213,7 +213,11 @@ const State = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
+        <Dropdown
+          overlay={adminToken ? menu : subMenu}
+          placement="bottomLeft"
+          trigger={["click"]}
+        >
           <BsThreeDotsVertical
             size={24}
             onClick={() =>
@@ -232,13 +236,11 @@ const State = () => {
     },
   ];
 
-
-  const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+  const token =
+    localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken");
 
   const stateToken = localStorage.getItem("stateHandlerToken");
-  const stateHandlerRefferalID = localStorage.getItem(
-    "stateHandlerRefferalID"
-  );
+  const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
   console.log("===============>", stateToken, stateHandlerRefferalID);
 
   const fetchFrenchieseDataApi = () => {
@@ -247,7 +249,7 @@ const State = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios
-        .get(`${apiurl}`+"/admin/fetch-all-frenchise", config)
+        .get(`${apiurl}` + "/admin/fetch-all-frenchise", config)
         .then((res) => {
           console.log("Frenchese Data -> ", res.data);
           setFrenchieData(res.data.data);
@@ -263,11 +265,17 @@ const State = () => {
         headers: { Authorization: `Bearer ${stateToken}` },
       };
       axios
-        .post(`${apiurl}`+"/state/fetch-all-franchise-in-state", requestData, config)
+        .post(
+          `${apiurl}` + "/state/fetch-all-franchise-in-state",
+          requestData,
+          config
+        )
         .then((res) => {
-          console.log("Franchise in state response -----> ", res.data.data[0].adharCard);
-          setFrenchieData(res.data.data)
-
+          console.log(
+            "Franchise in state response -----> ",
+            res.data.data[0].adharCard
+          );
+          setFrenchieData(res.data.data);
         })
         .catch((err) => {
           console.log("error", err);
@@ -281,7 +289,7 @@ const State = () => {
     setIsBlock(block);
     setIsDeleted(stateDelete);
     setStateHandlerID(stateHandlerid);
-    setIsVerify(verify)
+    setIsVerify(verify);
   };
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -291,21 +299,23 @@ const State = () => {
     } else if (e.key === "view") {
       setVisible(true);
       openViewModal(myID);
-    }else if (e.key === 'edit') {
+    } else if (e.key === "edit") {
       setEditModalVisible(true);
       editFranchiseDataFunction(myID);
     } else if (e.key === "delete") {
       deleteAndRecoverState(myID);
     } else if (e.key === "account") {
       navigate(`/admindashboard/tracker/state-account/${stateHandlerID}`);
-    }else if(e.key === "verify"){
-      callApiToVerifyState(stateVerify)
+    } else if (e.key === "verify") {
+      callApiToVerifyState(stateVerify);
     }
   };
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify" disabled={stateVerify}>Verify</Menu.Item>
+      <Menu.Item key="verify" disabled={stateVerify}>
+        Verify
+      </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
       <Menu.Item key="edit">Edit</Menu.Item>
       <Menu.Item key="block">{isBlocked ? "Unblock" : "Block"}</Menu.Item>
@@ -316,7 +326,9 @@ const State = () => {
 
   const subMenu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="verify" disabled={stateVerify}>Verify</Menu.Item>
+      <Menu.Item key="verify" disabled={stateVerify}>
+        Verify
+      </Menu.Item>
       <Menu.Item key="view">View</Menu.Item>
     </Menu>
   );
@@ -356,7 +368,7 @@ const State = () => {
     const token =
       localStorage.getItem("adminToken") ||
       localStorage.getItem("stateHandlerToken") ||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -407,8 +419,8 @@ const State = () => {
     console.log(aadharCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -459,8 +471,8 @@ const State = () => {
     console.log(panCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -517,22 +529,25 @@ const State = () => {
       ...editFranchiseData,
       city: selectedCities,
     });
-
   };
 
   const editFranchiseDataFunction = (id) => {
-    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken") || localStorage.getItem("subAdminToken")
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
     let data = {
-      id: id
-    }
-    axios.post(`${apiurl}`+"/admin/get-one-state-details", data, config)
+      id: id,
+    };
+    axios
+      .post(`${apiurl}` + "/admin/get-one-state-details", data, config)
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setFranchiseData({
           fname: res.data.data.fname,
           lname: res.data.data.lname,
@@ -540,22 +555,23 @@ const State = () => {
           email: res.data.data.email,
           gender: res.data.data.gender,
           state: res.data.data.selectedState,
-        })
+        });
       })
-      .catch((err => {
-        console.log(err.response.data.messsage)
-      }))
-  }
+      .catch((err) => {
+        console.log(err.response.data.messsage);
+      });
+  };
 
   const submitEditForm = () => {
-
-    const token = localStorage.getItem('adminToken') || localStorage.getItem("stateHandlerToken")
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken");
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-    console.log(myID,'508')
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(myID, "508");
     let data = {
       fname: editFranchiseData.fname,
       lname: editFranchiseData.lname,
@@ -564,19 +580,27 @@ const State = () => {
       selectedState: editFranchiseData.state,
       gender: editFranchiseData.gender,
       id: myID,
-    }
-    axios.put(`${apiurl}`+"/admin/update-state-handler", data, config)
+    };
+    axios
+      .put(`${apiurl}` + "/admin/update-state-handler", data, config)
       .then((res) => {
-        message.success(res.data.message)
+        message.success(res.data.message);
         //fetchFrenchieseDataApi();
-        fetchStateDataApi()
-        setEditModalVisible(false)
-        setFranchiseData({ fname: "", lname: "", email: "", phone: "", selectedState: "",  gender: "" })
+        fetchStateDataApi();
+        setEditModalVisible(false);
+        setFranchiseData({
+          fname: "",
+          lname: "",
+          email: "",
+          phone: "",
+          selectedState: "",
+          gender: "",
+        });
       })
       .catch((err) => {
-        message.error(err.response.data.message)
-      })
-    console.log(editFranchiseData)
+        message.error(err.response.data.message);
+      });
+    console.log(editFranchiseData);
   };
 
   const inputChangeValue = (event) => {
@@ -587,14 +611,14 @@ const State = () => {
     }));
   };
 
-  const genderChange = (name, value) =>{
+  const genderChange = (name, value) => {
     setFranchiseData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  }
-  const genderChangeValue = (value) =>{
-    genderChange('gender', value)
+  };
+  const genderChangeValue = (value) => {
+    genderChange("gender", value);
   };
 
   // const selectStateFromDeopDown = (selectedState) => {
@@ -611,12 +635,14 @@ const State = () => {
     setFranchiseData({ ...editFranchiseData, state: selectedStates });
   };
 
-  const callApiToVerifyState = (stateVerify)=>{
+  const callApiToVerifyState = (stateVerify) => {
     Modal.confirm({
       title: "Verify SHO",
       content: `Are you sure you want to  verify SHO?`,
       onOk() {
-        const token = localStorage.getItem("adminToken") || localStorage.getItem("subAdminToken")
+        const token =
+          localStorage.getItem("adminToken") ||
+          localStorage.getItem("subAdminToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -640,44 +666,90 @@ const State = () => {
         console.log("verify cancelled");
       },
     });
-  }
+  };
 
-  const updateList = (data)=>{
-    console.log('hiiiiiiiiiiiiii')
+  const updateList = (data) => {
+    console.log("hiiiiiiiiiiiiii");
     fetchStateDataApi();
-  }
+  };
 
   const downloadAadharCard = (adharCardImage) => {
     const link = document.createElement("a");
     link.href = adharCardImage;
     link.download = "image.jpg";
     link.click();
-  }
+  };
 
   const downloadPanCard = (panCardImage) => {
- 
     const link = document.createElement("a");
     link.href = panCardImage;
     link.download = "image.jpg";
     link.click();
-  }
+  };
 
+  const searchUser = (value) => {
+    console.log(value, "value");
+
+    setSearchText(value);
+
+    const searchNumber = Number(value); // Convert search value to a Number
+
+    console.log(stateData, "state daat is coming");
+
+    const filteredData = stateData.filter((record) => {
+      // Search by number field
+      if (record.phone === searchNumber) {
+        // Replace "numberField" with your actual field name
+        return true;
+      }
+
+      // Search by other fields
+      return Object.values(record).some((recordValue) => {
+        if (typeof recordValue === "string") {
+          const lowercaseRecordValue = recordValue.toLowerCase();
+          return lowercaseRecordValue.includes(value.toLowerCase());
+        }
+        return false;
+      });
+    });
+    console.log(filteredData, "this is filtered data");
+    setFilteredDataSource(filteredData);
+  };
 
   return (
     <>
-      <StateRegister isModalVisible={isModalVisible} closeModal={closeModal} updateData={updateList} />
+      <StateRegister
+        isModalVisible={isModalVisible}
+        closeModal={closeModal}
+        updateData={updateList}
+      />
       <div className="new-renewal-container">
-        <div className="new-renewal-header">
+        <div
+          className="new-renewal-header"
+        
+        >
           <div className="new-renewal-content">
-            <p>State Handlers</p>
+            <p>State Head Officer</p>
+            <Search
+              placeholder="Enter search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onSearch={searchUser}
+              style={{ width: "40%"}}
+            />
+           
+
             <Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add State Handler
+              <AiFillPlusCircle /> &nbsp;&nbsp;Add S.H.O
             </Button>
           </div>
         </div>
+
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Table
-            dataSource={stateData}
+            // dataSource={stateData}
+            dataSource={filteredDataSource}
             columns={columns}
             pagination={{ pageSize: 7 }}
             scroll={{ x: true, y: true }}
@@ -724,15 +796,10 @@ const State = () => {
                 className="id-card"
                 disabled={!loading}
                 type="primary"
-                onClick={() =>
-                  downloadAadharCard(aadharCard.placeholder)
-                }
+                onClick={() => downloadAadharCard(aadharCard.placeholder)}
               >
                 Download
               </Button>
-
-
-
             </div>
             <hr />
             <input
@@ -759,9 +826,7 @@ const State = () => {
                 className="id-card"
                 disabled={!loading}
                 type="primary"
-                onClick={() =>
-                  downloadPanCard(panCard.placeholder)
-                }
+                onClick={() => downloadPanCard(panCard.placeholder)}
               >
                 Download
               </Button>
