@@ -366,12 +366,11 @@ const Refferal = () => {
   const bussinessToken = localStorage.getItem("bussinessAdminToken");
   const bussinessRefferalId = localStorage.getItem("bussinessRefferalId");
 
-  console.log("==============>", bussinessRefferalId, bussinessToken);
   const callApiRefferalDetails = async () => {
     if (token) {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+          Authorization: `Bearer ${token}`, 
         },
       };
       try {
