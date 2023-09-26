@@ -820,7 +820,7 @@ const DisplayCard = () => {
               </span>
             </div>
             <div className="d-flex">
-              <h6>Referral ID1 :</h6>&nbsp;&nbsp;{" "}
+              <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
               <span
                 style={{ color: "yellow", cursor: "pointer" }}
                 onClick={isAdmin ? goToRegister : copyToClipboard}

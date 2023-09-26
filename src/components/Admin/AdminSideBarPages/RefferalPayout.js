@@ -4,6 +4,8 @@ import axios from "axios";
 import { Select, Table, Button, Modal, message, Tabs, Input } from "antd";
 import moment from "moment";
 import baseUrl from "../../../baseUrl";
+import { BiArrowBack } from "react-icons/bi"
+import { useNavigate } from "react-router-dom";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
@@ -29,6 +31,7 @@ const RefferalPayout = () => {
   const stateHandlerId = localStorage.getItem("stateHandlerId");
   const franchiseId = localStorage.getItem("frenchiseId");
   const isSubAdmin = localStorage.getItem('subAdminToken');
+  const navigate = useNavigate();
 
   const fetchStateCreditWalletTransaction = () => {
 
@@ -1063,12 +1066,16 @@ const RefferalPayout = () => {
     console.log(" API call");
   };
 
+  const gotoDashboard = ()=>{
+    navigate('/admindashboard/dashboard')
+  }
+
   return (
     <div className="reffer-container">
       <div className="refferal-container-header">
         <div className="refferal-header-content">
           <div className="payout-text">
-            <p>Referral Payout</p>
+            <spna style={{color:'wheat'}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/>&nbsp;Referral Payout</spna>
           </div>
           <div className="search-box">
             {adminToken && (

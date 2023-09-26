@@ -7,12 +7,12 @@ import {
 import { AiTwotoneLike } from "react-icons/ai";
 import { BiChevronDown, BiComment } from "react-icons/bi";
 import "../css/videoplayer.css";
-import { toast } from "react-toastify";
-import { FaShare } from "react-icons/fa";
+import { BiArrowBack } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
 import { message } from "antd";
 import baseUrl from "../../../baseUrl";
+import { useNavigate } from "react-router-dom";
 
 
 const apiurl = baseUrl.apiUrl;
@@ -38,6 +38,7 @@ const VideoPlayer = ({
   const [replyText, setReplyText] = useState("");
   const [activeReplyIndex, setActiveReplyIndex] = useState(null);
   const [views, setViews] = useState(0);
+  const navigate = useNavigate();
   
   const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") || localStorage.getItem("bussinessAdminToken")
                 || localStorage.getItem("videoCreatorToken");
@@ -299,9 +300,15 @@ const VideoPlayer = ({
     event.preventDefault();
     setNewComment("");
   }
+  const gotoDashboard = ()=>{
+    navigate('/admindashboard/dashboard')
+  }
 
   return (
     <>
+      <div className="video-tutorial">
+        <BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/>&nbsp; Our tutorial
+      </div>
       <div style={videoPlayerStyle} className="video-container">
         <video style={videoStyle} src={videoUrl} controls />
         <div className="subtitle">

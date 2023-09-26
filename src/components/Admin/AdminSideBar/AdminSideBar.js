@@ -9,9 +9,8 @@ import subAdminRoutes from "../../../utils/SubAdminRoutes";
 import franchiseAdminRoutes from "../../../utils/FranchiseRoutes";
 import { FaBars } from "react-icons/fa";
 import BussinessDeveloperRoutes from "../../../utils/BussinessDeveloperRoutes";
-import VideoCreatorRoutes from "../../../utils/VideoCreator"
+import VideoCreatorRoutes from "../../../utils/VideoCreator";
 import baseUrl from "../../../baseUrl";
-
 
 const apiurl = baseUrl.apiUrl;
 
@@ -19,7 +18,7 @@ function AdminSideBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
-  console.log("name ===> ", name)
+  console.log("name ===> ", name);
 
   const isSubAdmin = localStorage.getItem("subAdminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
@@ -36,13 +35,16 @@ function AdminSideBar() {
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch(`${apiurl}`+"/state/get-own-state-details", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isStateHandlerToken}`,
-            },
-          });
+          const response = await fetch(
+            `${apiurl}` + "/state/get-own-state-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isStateHandlerToken}`,
+              },
+            }
+          );
           const data = await response.json();
           setName(data.data.fname);
         } catch (error) {
@@ -53,13 +55,16 @@ function AdminSideBar() {
     } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch(`${apiurl}`+"/franchise/get-own-franchise-details", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isFrachiseToken}`,
-            },
-          });
+          const response = await fetch(
+            `${apiurl}` + "/franchise/get-own-franchise-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isFrachiseToken}`,
+              },
+            }
+          );
           const data = await response.json();
           setName(data.data.fname);
         } catch (error) {
@@ -71,7 +76,8 @@ function AdminSideBar() {
       async function fetchBussinessDetails() {
         try {
           const response = await fetch(
-            `${apiurl}`+ "/businessDeveloper/get-own-business-developer-details",
+            `${apiurl}` +
+              "/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
               headers: {
@@ -87,7 +93,6 @@ function AdminSideBar() {
         }
       }
 
-
       fetchBussinessDetails();
     }
   }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken]);
@@ -102,9 +107,9 @@ function AdminSideBar() {
     } else if (isBussinessDeveloper) {
       setUser(name);
     } else if (isFranchise) {
-      setUser(name)
-    } else if(isCreatorVideo){
-      setUser(name)
+      setUser(name);
+    } else if (isCreatorVideo) {
+      setUser(name);
     }
   };
 
@@ -116,14 +121,12 @@ function AdminSideBar() {
   const userid = localStorage.getItem("userid");
   return (
     <div className="admin-sidebar-main-container">
-      <motion.div
-        animate={{ width: isOpen ? "350px" : "50px" }}
+      <div
+        style={{ width: isOpen ? "350px" : "50px" }}
         className="admin-sidebar"
       >
         <div className="admin-top-section">
-          {isOpen && (
-            <h5 className="admin_logo">{name || user}</h5>
-          )}
+          {isOpen && <h5 className="admin_logo">{name || user}</h5>}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}
 
           {/* <h1 className="">Badal</h1> */}
@@ -141,6 +144,7 @@ function AdminSideBar() {
                 // For the "CENTUMO Swap" link, open in a new tab
                 return (
                   <a
+                    onClick={toggle}
                     href={route.path}
                     key={route.name}
                     className={
@@ -150,9 +154,9 @@ function AdminSideBar() {
                     rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
+                    <div className="admin_link_text" onClick={toggle}>
                       {route.name}
-                    </motion.div>
+                    </div>
                   </a>
                 );
               }
@@ -166,9 +170,9 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <div className="admin_link_text" onClick={toggle}>
                     {route.name}
-                  </motion.div>
+                  </div>
                 </NavLink>
               );
             })}
@@ -193,7 +197,7 @@ function AdminSideBar() {
                     rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
+                    <motion.div className="admin_link_text" onClick={toggle}>
                       {route.name}
                     </motion.div>
                   </a>
@@ -208,7 +212,7 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <motion.div className="admin_link_text" onClick={toggle}>
                     {route.name}
                   </motion.div>
                 </NavLink>
@@ -235,7 +239,7 @@ function AdminSideBar() {
                     rel="noopener noreferrer" // Recommended for security
                   >
                     <div className="admin-icon">{route.icon}</div>
-                    <motion.div className="admin_link_text">
+                    <motion.div className="admin_link_text" onClick={toggle}>
                       {route.name}
                     </motion.div>
                   </a>
@@ -250,7 +254,7 @@ function AdminSideBar() {
                   }
                 >
                   <div className="admin-icon">{route.icon}</div>
-                  <motion.div className="admin_link_text">
+                  <motion.div className="admin_link_text" onClick={toggle}>
                     {route.name}
                   </motion.div>
                 </NavLink>
@@ -365,7 +369,7 @@ function AdminSideBar() {
             })}
           </section>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }

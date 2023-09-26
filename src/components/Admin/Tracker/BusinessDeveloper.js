@@ -5,6 +5,7 @@ import { Button, Table, Menu, Dropdown, Modal, message, Select, Form, Input } fr
 import BusinessDeveloperRegister from "./Register/BusinessDeveloperRegister";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { BiArrowBack } from "react-icons/bi"
 import baseUrl from "../../../baseUrl";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -660,6 +661,10 @@ const BusinessDeveloper = () => {
     setFilteredDataSource(filteredData);
   };
 
+  const gotoDashboard =()=>{
+    navigate('/admindashboard/dashboard')
+  }
+
   return (
     <>
       <BusinessDeveloperRegister
@@ -670,7 +675,7 @@ const BusinessDeveloper = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>Business Developer</p>
+            <span style={{color:"wheat"}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/>&nbsp;Business Developer</span>
 
             
             <Search
@@ -684,9 +689,9 @@ const BusinessDeveloper = () => {
 
 
 
-            <Button type="primary" onClick={showModal}>
+            {frenchiseToken? <Button type="primary" onClick={showModal}>
               <AiFillPlusCircle /> &nbsp;&nbsp;Add Business Developer
-            </Button>
+            </Button>:""}
           </div>
         </div>
 
