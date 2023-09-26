@@ -8,7 +8,7 @@ import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import { MdVerified } from 'react-icons/md'
-import {ImCross} from 'react-icons/im'
+import { ImCross } from 'react-icons/im'
 import baseUrl from "../baseUrl";
 import allState from "./Admin/Tracker/AllStateAndDistrict";
 
@@ -34,6 +34,9 @@ const BussinessAdminLogin = (props) => {
   const mobileNumberRegex = /^[6789]\d{9}$/;
 
   const [aadharImage, setAadharImage] = useState({
+    file: null,
+  });
+  const [backAadharImage, setBackAadharImage] = useState({
     file: null,
   });
   const [panImage, setPanImage] = useState({
@@ -122,6 +125,16 @@ const BussinessAdminLogin = (props) => {
       aadharImage.file = null;
     }
   }
+
+  const handleClickBackAadharFrontImage = (e)=>{
+    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+      //preview shoe
+      setBackAadharImage({ file: e.target.files[0] })
+    } else {
+      message.error("Invalid File !! ");
+      aadharImage.file = null;
+    }
+  }
   const handleClickPanCardImage = (e) => {
 
     if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
@@ -132,31 +145,44 @@ const BussinessAdminLogin = (props) => {
       panImage.file = null;
     }
   }
-  const submitBusinessSignUpData = (value)=>{
-    console.log( value,registerFranchiseData.referredId, panImage.file, aadharImage.file);
-        const formData = new FormData();
-        formData.append("referredId", registerFranchiseData.referredId)
-        formData.append("fname", value.fname);
-        formData.append("lname", value.lname);
-        formData.append("email", value.email);
-        formData.append("phone", value.mobile);
-        formData.append("gender", value.gender);
-        formData.append("password", value.password);
-        formData.append("businessDeveloperId", value.userId);
-        formData.append("adharCard", aadharImage.file);
-        formData.append("panCard", panImage.file);
-        formData.append("buisnessCity", value.city);
+  const submitBusinessSignUpData = (value, event) => {
+    if (event) {
+      event.preventDefault();  // Prevent the default form submission behavior
+    }
+    console.log(value, registerFranchiseData.referredId, panImage.file, aadharImage.file);
+    const formData = new FormData();
+    formData.append("referredId", registerFranchiseData.referredId)
+    formData.append("fname", value.fname);
+    formData.append("lname", value.lname);
+    formData.append("email", value.email);
+    formData.append("phone", value.mobile);
+    formData.append("gender", value.gender);
+    formData.append("password", value.password);
+    formData.append("businessDeveloperId", value.userId);
+    formData.append("adhar_front_side", aadharImage.file);
+    formData.append("adhar_back_side", backAadharImage.file)
+    formData.append("panCard", panImage.file);
+    formData.append("buisnessCity", value.city);
 
-        axios.post(`${apiurl}`+"/admin/create-business-developer", formData)
-        .then((res)=>{
-          setShow(false)
-          message.success(res.data.message)
-        })
-        .catch((err)=>{
-          setShow(false)
-          message.error(err.response.data.message)
-        })
+    axios.post(`${apiurl}` + "/admin/create-business-developer", formData)
+      .then((res) => {
+        setShow(false)
+        message.success(res.data.message)
+      })
+      .catch((err) => {
+        setShow(false)
+        message.error(err.response.data.message)
+      })
   }
+
+  const selectState = (value)=>{
+    console.log(value)
+    const cities = allState.states.find(state => state.state === value)?.districts || [];
+    console.log(cities)
+    setCity(cities)
+  }
+
+  
 
   return <>
     <Modal show={show} onHide={handleClose}>
@@ -211,7 +237,7 @@ const BussinessAdminLogin = (props) => {
             </div>
           </TabPane>
           <TabPane tab="Sign Up" key="2">
-            <Form name="basic" onFinish={submitBusinessSignUpData}>
+            <Form name="basic" onFinish={(values, event) => submitBusinessSignUpData(values, event)}>
               <Form.Item
                 label="Referral Id"
                 name="referralId"
@@ -322,10 +348,38 @@ const BussinessAdminLogin = (props) => {
                   placeholder="Select state"
                   name="state"
                   getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                  onChange={selectState}
                 >
-                 
+                  {allState.states.map((stateObj, index) => (
+                    <Option key={index} value={stateObj.state}>
+                      {stateObj.state}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
+
+              {/* <Form.Item
+                label="Select city"
+                name="city"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select city',
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Select City"
+                  name="city"
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                >
+                  {city.map(city => (
+                    <Option key={city} value={city}>
+                      {city}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item> */}
 
               <Form.Item
                 label="Select city"
@@ -349,63 +403,80 @@ const BussinessAdminLogin = (props) => {
                   ))}
                 </Select>
               </Form.Item>
-              <Form.Item
-                  label="Upload aadhar Image (JPG/PNG)"
-                  name="aadhar"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please upload aadhar an image',
-                    },
-                  ]}
-                >
-                  <Input type='file'
-                    placeholder='Aadhar'
-                    name="aadhar"
-                    onChange={handleClickAadharFrontImage}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Upload Pan Image (JPG/PNG)"
-                  name="pan"
-                >
-                  <Input type='file'
-                    placeholder='Pan'
-                    name="pan"
-                    onChange={handleClickPanCardImage}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="User ID"
-                  name="userId"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your user ID',
-                    },
-                  ]}
-                >
-                  <Input placeholder="User ID" />
-                </Form.Item>
 
-                {/* Password */}
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter your password',
-                    },
-                  ]}
-                >
-                  <Input.Password placeholder="Password" />
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-                    Submit
-                  </Button>
-                </Form.Item>
+              <Form.Item
+                label="Front aadhar image (JPG/PNG)"
+                name="aadhar"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please upload front aadhar an image',
+                  },
+                ]}
+              >
+                <Input type='file'
+                  placeholder='Front aadhar'
+                  name="aadhar"
+                  onChange={handleClickAadharFrontImage}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Back aadhar Image (JPG/PNG)"
+                name="backaadhar"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please upload aadhar an image',
+                  },
+                ]}
+              >
+                <Input type='file'
+                  placeholder='Back aadhar'
+                  name="backaadhar"
+                  onChange={handleClickBackAadharFrontImage}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Upload Pan Image (JPG/PNG)"
+                name="pan"
+              >
+                <Input type='file'
+                  placeholder='Pan'
+                  name="pan"
+                  onChange={handleClickPanCardImage}
+                />
+              </Form.Item>
+              <Form.Item
+                label="User ID"
+                name="userId"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your user ID',
+                  },
+                ]}
+              >
+                <Input placeholder="User ID" />
+              </Form.Item>
+
+              {/* Password */}
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please enter your password',
+                  },
+                ]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+                  Submit
+                </Button>
+              </Form.Item>
             </Form>
           </TabPane>
         </Tabs>

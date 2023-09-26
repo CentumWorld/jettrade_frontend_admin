@@ -6,6 +6,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from '../../../baseUrl';
+import { BiArrowBack } from 'react-icons/bi';
 
 const apiurl = baseUrl.apiUrl
 
@@ -176,13 +177,17 @@ const SubAdminDetails = () => {
     </Menu>
   );
 
+  const gotoHome = ()=>{
+    navigate("/admindashboard/dashboard")
+  }
+
     return (
         <>
             <div className="new-renewal-container">
                 <div className="new-renewal-header">
                     <div className="new-renewal-content">
-                        <p>Sub-Admin</p>
-                        <Button type="primary " onClick={createSubAdmin} ><AiFillPlusCircle /> &nbsp;&nbsp;Add sub-admin</Button>
+                        <p><BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/>&nbsp;Sub-Admin</p>
+                        <Button type="primary " onClick={createSubAdmin} style={{cursor:'pointer'}}><AiFillPlusCircle /> &nbsp;&nbsp;Add sub-admin</Button>
                     </div>
                 </div>
 

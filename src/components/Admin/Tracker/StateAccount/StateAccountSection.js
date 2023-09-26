@@ -6,12 +6,15 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FaRupeeSign } from 'react-icons/fa'
 import baseUrl from '../../../../baseUrl';
+import { BiArrowBack } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 
 const StateAccountSection = () => {
+    const navigate = useNavigate();
     const { stateid } = useParams();
     const [stateTotalBalance, setStateTotalBalance] = useState(0);
     const [requestDetails, setRequestDetails] = useState([])
@@ -292,12 +295,15 @@ const StateAccountSection = () => {
             callApiToGetStateUpiDetails();
         }
     })
+    const gotoHome = ()=>{
+        navigate("/admindashboard/tracker/state-tracer")
+    }
 
     return (
         <>
             <div className='state-account-container'>
                 <div className='state-account-header'>
-                    <div>State Handler Account</div>
+                    <div> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/>&nbsp;State Handler Account</div>
                     <div className='state-account-wallet'><FaRupeeSign />{stateTotalBalance}</div>
                 </div>
             </div>

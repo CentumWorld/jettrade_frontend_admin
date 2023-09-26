@@ -5,12 +5,15 @@ import { Table, Modal, Row, Col, Select, Input, Menu, Dropdown, message, Button 
 import { ToastContainer, toast } from "react-toastify";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from "../../../baseUrl";
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
 const apiurl = baseUrl.apiUrl;
 
 const ManageSubscription = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [myID, setMyID] = useState("");
   const [userStatus, setUserStatus] = useState(false);
@@ -295,13 +298,16 @@ const ManageSubscription = () => {
     }))
   }
 
+  const gotoHome = ()=>{
+    navigate("/admindashboard/dashboard")
+  }
   return (
     <>
       {/* <div className="manage-subscription-page"> */}
       {/* <div className="manage-subscription-card"> */}
       <div className="manage-subscription-heading">
         <div className="manage-subscription-navbar">
-          <p> Manage Subscription</p>
+          <p style={{color:'wheat'}}> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Manage Subscription</p>
           <div className="searcing-Box">
             <Input
               placeholder="Search by userid"

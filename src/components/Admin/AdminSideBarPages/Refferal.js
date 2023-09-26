@@ -848,9 +848,8 @@ const Refferal = () => {
       <div className="refferral-dashboard">
         <div className="refferal-dashboard-card">
           <div className="refferal-profile-verification-heading">
-            <div className="txt-btn"></div>
             <h5 style={{ fontFamily: "Calibri", display: "inline-block" }}>
-              Member Profile Details
+              <BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;Member Profile Details
             </h5>
             {adminToken||isBusiness || subadminToken?<NavLink
               className="create-referral"

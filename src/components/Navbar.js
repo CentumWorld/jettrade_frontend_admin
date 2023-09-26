@@ -22,7 +22,7 @@ import adminAv from "../img/admin-av.png"
 function Navbar() {
   const login = localStorage.getItem("login");
   const navigate = useNavigate();
-
+  const [isExpanded, setIsExpanded] = useState(false);
   const [userShow, setUserShow] = useState(false);
   const [adminShow, setAdminShow] = useState(false);
   const [subAdminShow, setSubAdminShow] = useState(false);
@@ -240,8 +240,8 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        {/* <Menu.Item key="admin">Admin</Menu.Item>
-        <Menu.Item key="subadmin">Back Office</Menu.Item> */}
+        <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="subadmin">Back Office</Menu.Item>
         <Menu.Item key="sho">State Head Officer</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
         <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
@@ -349,6 +349,12 @@ function Navbar() {
     }
   };
 
+
+  
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
   return (
     <>
       <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
@@ -366,14 +372,20 @@ function Navbar() {
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
-              aria-expanded="false"
+              onClick={handleToggle}
+              aria-expanded={isExpanded ? 'true' : 'false'}
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon" />
             </button>
           </div>
         </div>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        
+        <div  className={`collapse navbar-collapse ${
+            isExpanded ? "show" : ""
+          }`}
+          id="navbarSupportedContent"
+        >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <RenderMenu />
           </ul>

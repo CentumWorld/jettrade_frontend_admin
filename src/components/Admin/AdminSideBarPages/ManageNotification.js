@@ -4,12 +4,15 @@ import { Select, Input, Button, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import axios from 'axios';
 import baseUrl from '../../../baseUrl';
+import { BiArrowBack } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const apiurl = baseUrl.apiUrl
 const { Option } = Select;
 
-const ManageNotification = () => {
+const ManageNotification = () => {  
 
+  const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('all');
   const [allNotification, setAllNotification] = useState('');
   const [allTraderNotification, setAllTraderNotification] = useState('')
@@ -164,13 +167,16 @@ const ManageNotification = () => {
 
 
   }
+  const gotoHome =()=>{
+    navigate("/admindashboard/dashboard")
+  }
 
   return (
     <>
       <div className='manage-notification-page'>
         <div className='manage-notification-card'>
           <div className='manage-notification-heading'>
-            <p>Manage Notificaion</p>
+            <p><BiArrowBack onClick={gotoHome} style={{cursor:"pointer"}}/> &nbsp;Manage Notificaion</p>
           </div>
           <div>
             <Select defaultValue="All" onChange={handleChange} style={{ width: '200px', marginBottom: '10px' }}>

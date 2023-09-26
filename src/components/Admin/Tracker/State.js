@@ -9,6 +9,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import baseUrl from "../../../baseUrl";
 import { useNavigate } from "react-router-dom";
 import allState from "./AllStateAndDistrict";
+import { BiArrowBack } from "react-icons/bi";
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
@@ -716,6 +717,9 @@ const State = () => {
     setFilteredDataSource(filteredData);
   };
 
+  const gotoDashboard = ()=>{
+    navigate("/admindashboard/dashboard")
+  }
   return (
     <>
       <StateRegister
@@ -729,7 +733,7 @@ const State = () => {
         
         >
           <div className="new-renewal-content">
-            <p>State Head Officer</p>
+            <p> <BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;State Head Officer</p>
             <Search
               placeholder="Enter search text"
               allowClear

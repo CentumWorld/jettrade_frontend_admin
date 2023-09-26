@@ -4,10 +4,13 @@ import { FiUploadCloud } from "react-icons/fi";
 
 import baseUrl from "../../baseUrl";
 import "../../css/Uservideo.css"; // Import the CSS file for styling
+import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const apiurl = baseUrl.apiUrl;
 
 const Uservideo = () => {
+  const navigate = useNavigate();
   const [videoTitle, setVideoTitle] = useState("");
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
@@ -75,9 +78,12 @@ const Uservideo = () => {
     }
   };
 
+  const gotoHome =()=>{
+    navigate("/admindashboard/dashboard")
+  }
   return (
     <div className="upload-container">
-      <h1 className="upload-heading">Video Upload</h1>
+      <h5 className="upload-heading"><BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Video Upload</h5>
 
       {uploadError && (
         <div className="upload-error">

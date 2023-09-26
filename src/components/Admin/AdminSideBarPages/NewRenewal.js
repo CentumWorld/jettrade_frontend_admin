@@ -5,11 +5,14 @@ import { Menu, Tabs, Table, Input, Button, message } from "antd";
 import axios from "axios";
 import moment from 'moment';
 import baseUrl from "../../../baseUrl";
+import {BiArrowBack} from  'react-icons/bi';
+import { useNavigate } from "react-router-dom";
 
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 const NewRenewal = () => {
+  const navigate = useNavigate();
   const [newsUser, setNewuser] = useState([]);
   const [renewalUser, setRenewalUser] = useState([]);
   const [divChange, setDivChange] = useState(true);
@@ -181,13 +184,16 @@ const NewRenewal = () => {
         message.warning(err.response.data.message)
       })
   }
+  const gotoHomePage = ()=>{
+    navigate("/admindashboard/dashboard")
+  }
 
   return (
     <>
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p>New/Renewal Traders</p>
+            <p><BiArrowBack onClick={gotoHomePage} style={{cursor:'pointer'}}/>&nbsp;New/Renewal Traders</p>
             <div className="d-flex">
               <Input
                 placeholder="User ID"

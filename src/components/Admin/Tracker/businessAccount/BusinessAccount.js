@@ -6,11 +6,14 @@ import axios from "axios";
 import { FaRupeeSign } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import baseUrl from "../../../../baseUrl";
+import { useNavigate } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
 
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 
 const BusinessAccount = () => {
+  const navigate = useNavigate();
   const { businessId } = useParams();
   console.log(businessId);
   const [stateTotalBalance, setStateTotalBalance] = useState(0);
@@ -299,11 +302,14 @@ const BusinessAccount = () => {
       });
   };
 
+  const gotoHome = ()=>{
+    navigate("/admindashboard/tracker/businness-developer")
+  }
   return (
     <>
       <div className="state-account-container">
         <div className="state-account-header">
-          <div>Business Developer Account</div>
+          <div> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Business Developer Account</div>
           <div className="state-account-wallet">
             <FaRupeeSign />
             {stateTotalBalance}

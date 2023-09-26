@@ -877,7 +877,7 @@ function Dashboard() {
         <div className="admin-dashboard-card">
           <div className="profile-verification-heading">
             <div className="txt-btn">
-              <h5 style={{ fontFamily: "Calibri" }}>Trader Profile Details</h5>
+              <h5 style={{ fontFamily: "Calibri" }}><BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;Trader Profile Details</h5>
               {token || subadminToken?<NavLink
                 className="create-user"
                 to="/admindashboard/createuser"
