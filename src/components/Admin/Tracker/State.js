@@ -93,7 +93,6 @@ const State = () => {
         setLoading(true);
         setStateData(res.data.data);
         setFilteredDataSource(res.data.data);
-        console.log("data coming", res.data.data);
       })
       .catch((err) => {
         console.log("error", err);
