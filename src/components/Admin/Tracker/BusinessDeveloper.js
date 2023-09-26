@@ -761,7 +761,7 @@ const BusinessDeveloper = () => {
 
   const style = {
     width: isScreenLessThan768px ? "100%" : "40%",
-  };
+  }; 
 
   return (
     <>
