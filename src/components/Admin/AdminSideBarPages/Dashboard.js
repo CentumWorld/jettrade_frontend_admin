@@ -883,6 +883,7 @@ function Dashboard() {
                 + Create Trader
               </NavLink>
             </div>
+            
             <Search
               placeholder="Enter search text"
               allowClear

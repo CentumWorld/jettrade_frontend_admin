@@ -403,6 +403,8 @@ const Refferal = () => {
           config
         );
         setRefferalData(response.data.data);
+        setFilteredDataSource(response.data.data);
+
         console.log(response);
         //setLength(response.data.result.length);
       } catch (error) {
@@ -425,6 +427,8 @@ const Refferal = () => {
         .then((res) => {
           console.log("Bussiness responebhejo -> ", res.data);
           setRefferalData(res.data.data);
+          setFilteredDataSource(res.data.data);
+
         })
         .catch((err) => {
           console.log("error", err);
@@ -446,6 +450,8 @@ const Refferal = () => {
           config
         );
         setRefferalData(response.data.data);
+        setFilteredDataSource(response.data.data);
+
         console.log(response);
         //setLength(response.data.result.length);
       } catch (error) {
@@ -470,6 +476,8 @@ const Refferal = () => {
         .then((res) => {
           console.log("Bussiness response-----------> ", res.data);
           setRefferalData(res.data.members);
+          setFilteredDataSource(res.data.members);
+
         })
         .catch((err) => {
           console.log("error", err);
@@ -861,6 +869,7 @@ const Refferal = () => {
               onSearch={searchUser}
             />
           </div>
+
           <div className="user-table">
             <Table
             //  dataSource={refferalData}
