@@ -251,9 +251,9 @@ const DisplayCard = () => {
     navigate("/admindashboard/manage/member-refferal-payout");
   };
 
-  const goToRegister = () => {
-    navigate("/admindashboard/createuser");
-  };
+  // const goToRegister = () => {
+  //   navigate("/admindashboard/createuser");
+  // };
 
   const closeStatePaymentModal = () => {
     setOpenStateHandlerModal(false);
@@ -822,8 +822,8 @@ const DisplayCard = () => {
             <div className="d-flex">
               <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
               <span
-                style={{ color: "yellow", cursor: "pointer" }}
-                onClick={isAdmin ? goToRegister : copyToClipboard}
+                style={{ color: "white", cursor: "pointer" }}
+                onClick={ copyToClipboard}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? ReferralId
