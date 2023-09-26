@@ -719,7 +719,14 @@ const State = () => {
   const gotoDashboard = ()=>{
     navigate("/admindashboard/dashboard")
   }
+
+  const isScreenLessThan768px = window.innerWidth < 768;
+
+  const style = {
+    width: isScreenLessThan768px ? "100%" : "40%",
+  };
   return (
+
     <>
       <StateRegister
         isModalVisible={isModalVisible}
