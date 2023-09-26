@@ -23,7 +23,11 @@ const CreateReferralInAdmin = () => {
 
   const [phone, setPhone] = useState("");
   const [checked, setChecked] = useState(false);
+  const officialId = "admin@123"; // Replace with your official ID
+  const [referralId, setReferralId] = useState("")
 
+
+  
   const [userData, setUserData] = useState({
     fname: "",
     lname: "",
@@ -38,6 +42,11 @@ const CreateReferralInAdmin = () => {
     memberid: "",
     password: "",
   });
+
+  useEffect(()=>{
+    setUserData({...userData, invite_code: localStorage.getItem('bussinessRefferalId')})
+    setReferralId(localStorage.getItem('bussinessRefferalId'))
+  },[])
 
   const [panError, setPanError] = useState(false);
   const [aadharError, setAadharError] = useState(false);
@@ -139,7 +148,6 @@ const CreateReferralInAdmin = () => {
     formData.append("aadhar_back_side", aadharBackImage.file);
     formData.append("pan_card", panImage.file);
     formData.append("pan", userData.pan_no);
-
     formData.append("reffered_id", userData.invite_code);
     console.log(formData.memberid, "44");
     if (userData.memberid === undefined && userData.password === undefined) {
@@ -180,18 +188,18 @@ const CreateReferralInAdmin = () => {
 
   const [selectedOption, setSelectedOption] = useState("referral");
   //const [referralId, setReferralId] = useState(localStorage.getItem('bussinessRefferalI'));
-  const officialId = "admin@123"; // Replace with your official ID
-  const referralId = localStorage.getItem('bussinessRefferalId')
+  
   console.log(referralId)
 
   const handleDropdownChange = (value) => {
     setSelectedOption(value);
-    console.log(value)
     if(value === 'official'){
       setUserData({ ...userData, invite_code: officialId });
+      console.log(officialId)
     }else{
       console.log(referralId)
       setUserData({ ...userData, invite_code: referralId });
+      console.log(referralId)
     }
      
     
@@ -219,7 +227,7 @@ const CreateReferralInAdmin = () => {
     <>
       <div className="registration-page">
         <div className="registration-body">
-          <p>Create Member with credentials</p>
+          <p>Create Member with credentials{userData.invite_code}</p>
           <div className="form-content">
             <form>
               {/* Dropdown and input box for referral */}

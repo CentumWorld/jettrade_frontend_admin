@@ -13,6 +13,7 @@ import allState from "./Admin/Tracker/AllStateAndDistrict";
 import { MdVerified } from 'react-icons/md'
 import {ImCross} from 'react-icons/im'
 
+
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -42,6 +43,9 @@ const FranchiseAdminLogin = (props) => {
     referredId: ""
   });
   const [aadharImage, setAadharImage] = useState({
+    file: null,
+  });
+  const [aadharBackImage, setBackAadharImage] = useState({
     file: null,
   });
   const [panImage, setPanImage] = useState({
@@ -136,6 +140,16 @@ const FranchiseAdminLogin = (props) => {
       aadharImage.file = null;
     }
   }
+
+  const handleClickBackAadharFrontImage = (e)=>{
+    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+      //preview shoe
+      setBackAadharImage({ file: e.target.files[0] })
+    } else {
+      message.error("Invalid File !! ");
+      aadharImage.file = null;
+    }
+  }
   const handleClickPanCardImage = (e) => {
 
     if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
@@ -158,7 +172,8 @@ const FranchiseAdminLogin = (props) => {
     formData.append("gender", value.gender);
     formData.append("password", value.password);
     formData.append("frenchiseId", value.userId);
-    formData.append("adharCard", aadharImage.file);
+    formData.append("adhar_front_side", aadharImage.file);
+    formData.append("adhar_back_side", aadharBackImage.file);
     formData.append("panCard", panImage.file);
     formData.append("franchiseState", value.state);
     formData.append("franchiseCity", value.city);
@@ -244,13 +259,13 @@ const FranchiseAdminLogin = (props) => {
                 >
                   <Input placeholder='Referal ID' onChange={(e) => setStateRegisterData({ referredId: e.target.value })} />
                 </Form.Item>
-                <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferralID}>Verify</Button>
+                {/* <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferralID}>Verify</Button>
                   <div>
                     {correct ? <small style={{color:"green"}}><MdVerified style={{ fontSize: "20px" }} />&nbsp; Verify successful</small> : ""}
                     {incorrect ? <small style={{color:"red"}}><ImCross style={{ fontSize: "20px" }} />&nbsp; Invalid referral id</small> : ""}
                   </div>
-                </div>
-                <hr />
+                </div> */}
+                
                 <Form.Item
                   label="First name"
                   name="fname"
@@ -326,7 +341,7 @@ const FranchiseAdminLogin = (props) => {
                     <Option value="Other">Other</Option>
                   </Select>
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                   label="Select a State"
                   name="state"
                   rules={[
@@ -348,7 +363,31 @@ const FranchiseAdminLogin = (props) => {
                       </Option>
                     ))}
                   </Select>
+                </Form.Item> */}
+                <Form.Item
+                  label="Select a State"
+                  name="state"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select a state',
+                    },
+                  ]}
+                >
+                  <Select
+                    placeholder="Select State"
+                    value={stateRegisterData.state}
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                    onChange={handleStateChange}
+                  >
+                    {allState.states.map((stateObj, index) => (
+                        <Option key={index} value={stateObj.state}>
+                          {stateObj.state}
+                        </Option>
+                      ))}
+                  </Select>
                 </Form.Item>
+
                 <Form.Item
                   label="Select City"
                   name="city"
@@ -372,19 +411,35 @@ const FranchiseAdminLogin = (props) => {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  label="Upload aadhar Image (JPG/PNG)"
+                  label="Front aadhar image (JPG/PNG)"
                   name="aadhar"
                   rules={[
                     {
                       required: true,
-                      message: 'Please upload aadhar an image',
+                      message: 'Please upload front aadhar an image',
                     },
                   ]}
                 >
                   <Input type='file'
-                    placeholder='Aadhar'
+                    placeholder='Front aadhar'
                     name="aadhar"
                     onChange={handleClickAadharFrontImage}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Back aadhar image (JPG/PNG)"
+                  name="backaadhar"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please upload back aadhar an image',
+                    },
+                  ]}
+                >
+                  <Input type='file'
+                    placeholder='Back aadhar'
+                    name="backaadhar"
+                    onChange={handleClickBackAadharFrontImage}
                   />
                 </Form.Item>
                 <Form.Item

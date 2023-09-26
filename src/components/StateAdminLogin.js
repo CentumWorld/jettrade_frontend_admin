@@ -38,6 +38,9 @@ const StateAdminLogin = (props) => {
   const [aadharImage, setAadharImage] = useState({
     file: null,
   });
+  const [backAadharImage, setBackAadharImage] = useState({
+    file: null,
+  });
   const [panImage, setPanImage] = useState({
     file: null,
   });
@@ -96,6 +99,16 @@ const StateAdminLogin = (props) => {
       panImage.file = null;
     }
   }
+
+  const handleClickBackAadharFrontImage = (e)=>{
+    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+      //preview shoe
+      setBackAadharImage({ file: e.target.files[0] })
+    } else {
+      message.error("Invalid File !! ");
+      panImage.file = null;
+    }
+  }
   const handleClickPanCardImage = (e) => {
 
     if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
@@ -117,7 +130,8 @@ const StateAdminLogin = (props) => {
     formData.append("gender", value.gender);
     formData.append("password", value.password);
     formData.append("stateHandlerId", value.userId);
-    formData.append("adharCard", aadharImage.file);
+    formData.append("adhar_front_side", aadharImage.file);
+    formData.append("adhar_back_side", backAadharImage.file)
     formData.append("panCard",panImage.file);
     formData.append("selectedState", value.state);
     formData.append("referredId", "admin@123");
@@ -288,24 +302,46 @@ const StateAdminLogin = (props) => {
                     </Select>
                   </Form.Item>
                   <Form.Item
-                    label="Upload aadhar Image (JPG/PNG)"
+                    label="Front aadhar Image (JPG/PNG)"
                     name="aadhar"
                     rules={[
                       {
                         required: true,
-                        message: 'Please upload aadhar an image',
+                        message: 'Please upload front aadhar an image',
                       },
                     ]}
                   >
                     <Input type='file'
-                      placeholder='Aadhar'
+                      placeholder='Front aadhar'
                       name="aadhar"
                       onChange={handleClickAadharFrontImage}
                     />
                   </Form.Item>
                   <Form.Item
+                    label="Back aadhar Image (JPG/PNG)"
+                    name="backaadhar"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please upload back aadhar an image',
+                      },
+                    ]}
+                  >
+                    <Input type='file'
+                      placeholder='Aadhar'
+                      name="Back aadhar"
+                      onChange={handleClickBackAadharFrontImage}
+                    />
+                  </Form.Item>
+                  <Form.Item
                     label="Upload Pan Image (JPG/PNG)"
                     name="pan"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please upload pan image',
+                      },
+                    ]}
                   >
                     <Input type='file'
                       placeholder='Pan'
