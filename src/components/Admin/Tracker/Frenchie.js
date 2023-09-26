@@ -704,6 +704,9 @@ const Frenchie = () => {
     });
     setFilteredDataSource(filteredData);
   };
+  const gotoDashboard =()=>{
+    navigate('/admindashboard/dashboard')
+  }
 
   return (
     <>
