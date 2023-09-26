@@ -474,7 +474,7 @@ const Refferal = () => {
           config
         )
         .then((res) => {
-          console.log("Bussiness response-----------> ", res.data);
+          console.log("Bussiness response-----------> ", res.data.members);
           setRefferalData(res.data.members);
           setFilteredDataSource(res.data.members);
 
@@ -875,9 +875,8 @@ const Refferal = () => {
 
           <div className="user-table">
             <Table
-            //  dataSource={refferalData}
-
-            dataSource = {filteredDataSource}
+              dataSource={refferalData}
+            //dataSource = {filteredDataSource}
               style={{
                 width: "fit-content",
                 marginTop: "10px",

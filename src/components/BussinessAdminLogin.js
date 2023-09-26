@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { MdVerified } from 'react-icons/md'
 import {ImCross} from 'react-icons/im'
 import baseUrl from "../baseUrl";
+import allState from "./Admin/Tracker/AllStateAndDistrict";
 
 const apiurl = baseUrl.apiUrl
 const { TabPane } = Tabs;
@@ -224,13 +225,13 @@ const BussinessAdminLogin = (props) => {
                 <Input placeholder='Referal ID' onChange={(e) => setFranchiseRegisterData({ referredId: e.target.value })} />
               </Form.Item>
               {/* <Button type="primay" onClick={verifyReferrlID}>Verify</Button> &nbsp;&nbsp;{correct ? <MdVerified style={{ color: "green", fontSize: "20px" }} /> : ""} */}
-              <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferrlID}>Verify</Button>
+              {/* <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferrlID}>Verify</Button>
                   <div>
                     {correct ? <small style={{color:"green"}}><MdVerified style={{ fontSize: "20px" }} />&nbsp; Verify successful</small> : ""}
                     {incorrect ? <small style={{color:"red"}}><ImCross style={{ fontSize: "20px" }} />&nbsp; Invalid referral id</small> : ""}
                   </div>
                 </div>
-              <hr />
+              <hr /> */}
               <Form.Item
                 label="First name"
                 name="fname"
@@ -304,6 +305,25 @@ const BussinessAdminLogin = (props) => {
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                   <Option value="Other">Other</Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Select state"
+                name="state"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select state',
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Select state"
+                  name="state"
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                >
+                 
                 </Select>
               </Form.Item>
 
