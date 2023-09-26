@@ -135,7 +135,7 @@ const State = () => {
       key: "gender",
     },
     {
-      title: "Referral Id",
+      title: "Referral ID",
       dataIndex: "referralId",
       key: "referralId",
       render: (text) => (
@@ -151,7 +151,7 @@ const State = () => {
       ),
     },
      {
-      title: "referred Id",
+      title: "Referred ID",
       dataIndex: "referredId",
       key: "reffered_id",
     },
