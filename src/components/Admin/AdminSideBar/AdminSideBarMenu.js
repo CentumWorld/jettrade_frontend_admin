@@ -3,9 +3,16 @@ import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-function AdminSideBarMenu({ route, isOpen }) {
+function AdminSideBarMenu({ route, isOpen, toggleSidebar }) {
+  console.log("Sidebar Toggle", toggleSidebar);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const toggleMenuClick = () => {
+    toggleSidebar();
+    toggleMenu();
+  };
   return (
     <>
       <div className="admin_menu" onClick={toggleMenu}>
@@ -30,9 +37,14 @@ function AdminSideBarMenu({ route, isOpen }) {
                 key={subRoutes.name}
                 className="admin_sidebar_link"
               >
-                <div className="admin-icon">{subRoutes.icon}</div>
+                <div className="admin-icon" onClick={toggleMenuClick}>
+                  {subRoutes.icon}
+                </div>
                 {isOpen && (
-                  <motion.div className="admin_link_text">
+                  <motion.div
+                    className="admin_link_text"
+                    onClick={toggleMenuClick}
+                  >
                     {subRoutes.name}
                   </motion.div>
                 )}

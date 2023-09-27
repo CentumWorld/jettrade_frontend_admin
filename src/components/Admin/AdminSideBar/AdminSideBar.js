@@ -162,7 +162,7 @@ function AdminSideBar() {
                   <AdminSideBarMenu
                     isOpen={isOpen}
                     route={route}
-                    onClick={toggle}
+                    toggleSidebar={toggle}
                   />
                 );
               }
