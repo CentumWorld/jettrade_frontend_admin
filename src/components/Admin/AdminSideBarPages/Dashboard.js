@@ -198,7 +198,7 @@ function Dashboard() {
       axios
         .post(
           `${apiurl}` +
-            "/businessDeveloper/get-all-users-in-business-developer",
+          "/businessDeveloper/get-all-users-in-business-developer",
           requestData,
           config
         )
@@ -468,7 +468,7 @@ function Dashboard() {
     link.download = "image.jpg";
     link.click();
   };
-  
+
   const downloadPanImage = (panImage) => {
     const link = document.createElement("a");
     link.href = panImage;
@@ -762,7 +762,7 @@ function Dashboard() {
             console.log(err.response.data.message);
           });
       },
-      onCancel() {},
+      onCancel() { },
     });
     console.log(myID);
   };
@@ -940,7 +940,7 @@ function Dashboard() {
               Submit
             </Button>,
           ]}
-          //footer={null}
+        //footer={null}
         >
           <div className="edit-container">
             <div>

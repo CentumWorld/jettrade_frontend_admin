@@ -84,7 +84,7 @@ const Adminroutes = [
     subRoutes: [
       {
         path: "tracker/state-tracer",
-        name: "State Tracker",
+        name: "State Handler(SHO)",
       },
       {
         path: "tracker/frenchie",

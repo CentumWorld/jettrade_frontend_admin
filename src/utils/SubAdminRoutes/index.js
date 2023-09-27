@@ -51,17 +51,17 @@ const subAdminRoutes = [
     },
     {
       path: "/admindashboard/user",
-      name: "User",
+      name: "Trader",
       icon: <FaUserTie />,
     },
     {
       path: "/admindashboard/refferal",
-      name: "Referral",
+      name: "Member",
       icon: <FaSlideshare />,
     },
     {
       path: "/admindashboard/new-renewal",
-      name: "New/Renewal Users",
+      name: "New/Renewal Traders",
       icon: <MdAutorenew />,
     },
     // {
@@ -76,11 +76,11 @@ const subAdminRoutes = [
       subRoutes:[
         {
           path:'tracker/state-tracer',
-          name : 'State Traker'
+          name : 'State Handler(SHO)'
         },
         {
           path:'tracker/frenchie',
-          name :'Frenchies'
+          name :'Franchise'
         },
         {
           path:'tracker/businness-developer',
