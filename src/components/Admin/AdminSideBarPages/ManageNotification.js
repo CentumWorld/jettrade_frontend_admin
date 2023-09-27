@@ -350,6 +350,9 @@ const ManageNotification = () => {
   
     }
 
+    const gotoHome = () => {
+      navigate('/admindashboard')
+    }
   return (
     <>
       <div className='manage-notification-page'>
