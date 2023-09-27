@@ -19,6 +19,7 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import adminAv from "../img/admin-av.png"
 import baseUrl from "../baseUrl";
+const apiurl = baseUrl.apiUrl;
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -33,13 +34,16 @@ function Navbar() {
   const [videoCreatorShow, setVideoCreatorShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const isStateHandlerToken = localStorage.getItem("stateHandlerToken");
-  const [walletamount, setWalletAmount] = useState(0);
+  const [totalWalletAmount, setWalletAmount] = useState(0);
   const isFrachiseToken = localStorage.getItem("franchiseToken");
   const [isAccountModalVisible, setAccountModalVisible] = useState(false);
+  const [userAv, setUserAv] = useState(null);
+  
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
+  const isFrenchise = localStorage.getItem("franchiseToken");
+  const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isSubAdminToken = localStorage.getItem("subAdminToken");
   const isAdminToken = localStorage.getItem("adminToken");
-  const [userAv, setUserAv] = useState(null);
 
   useEffect(() => {
     if(isStateHandlerToken){
@@ -114,17 +118,21 @@ function Navbar() {
     setModalVisible(false);
   };
 
+ 
   useEffect(() => {
-    if (isStateHandlerToken) {
+    if (isStateHandler) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch(`${baseUrl}`+"/state/get-own-state-details", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isStateHandlerToken}`,
-            },
-          });
+          const response = await fetch(
+            `${apiurl}` + "/state/get-own-state-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isStateHandler}`,
+              },
+            }
+          );
           const data = await response.json();
           setWalletAmount(data.data.stateHandlerWallet);
         } catch (error) {
@@ -132,16 +140,19 @@ function Navbar() {
         }
       }
       fetchStateDetails();
-    } else if (isFrachiseToken) {
+    } else if (isFrenchise) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch(`${baseUrl}`+"/franchise/get-own-franchise-details", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${isFrachiseToken}`,
-            },
-          });
+          const response = await fetch(
+            `${apiurl}` + "/franchise/get-own-franchise-details",
+            {
+              method: "GET",
+              headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${isFrenchise}`,
+              },
+            }
+          );
           const data = await response.json();
           setWalletAmount(data.data.frenchiseWallet);
         } catch (error) {
@@ -152,8 +163,9 @@ function Navbar() {
     } else if (isBussinessDeveloperToken) {
       async function fetchBussinessDetails() {
         try {
-          const response = await fetch(`${baseUrl}`+
-            "/businessDeveloper/get-own-business-developer-details",
+          const response = await fetch(
+            `${apiurl}` +
+              "/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
               headers: {
@@ -169,26 +181,22 @@ function Navbar() {
         }
       }
 
-
       fetchBussinessDetails();
     } else if (isAdminToken) {
       async function fetchAdminDetails() {
         try {
-          const response = await fetch(`${baseUrl}`+
-            "/admin/fetch-admin",
-            {
-              method: "GET",
-              headers: {
-                Accept: "application/json",
-                Authorization: `Bearer ${isAdminToken}`,
-              },
-            }
-          );
+          const response = await fetch(`${apiurl}` + "/admin/fetch-admin", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${isAdminToken}`,
+            },
+          });
           const data = await response.json();
           function formatIndianRupees(adminWallet) {
-            const formatter = new Intl.NumberFormat('en-IN', {
-              style: 'currency',
-              currency: 'INR'
+            const formatter = new Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "INR",
             });
             return formatter.format(adminWallet);
           }
@@ -196,16 +204,16 @@ function Navbar() {
           const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
           const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
 
-          console.log('Formatted admin wallet:', formattedAdminWallet); // Log the formatted wallet amount
+          console.log("Formatted admin wallet:", formattedAdminWallet); // Log the formatted wallet amount
           setWalletAmount(formattedAdminWallet);
-
         } catch (error) {
           console.error("Error fetching state details", error);
         }
       }
-      fetchAdminDetails()
+      fetchAdminDetails();
     }
-  }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken, isAdminToken]);
+  }, [
+  ]);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -299,7 +307,7 @@ function Navbar() {
         )}
         {(!isSubAdminToken) && (
           <Menu.Item key="wallet">
-            Wallet <span className="wallet-ammount">Rs.{walletamount}</span>{" "}
+            Wallet <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
           </Menu.Item>
         )}
         {(isStateHandlerToken || isFrachiseToken) && (
