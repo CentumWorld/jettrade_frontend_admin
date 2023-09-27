@@ -140,11 +140,11 @@ function AdminSideBar() {
     width = "350px";
   }
 
-  const toggle = () => setIsOpen(prev => (!prev));
+  const toggle = () => setIsOpen((prev) => !prev);
   const userid = localStorage.getItem("userid");
   return (
     <div className="admin-sidebar-main-container" style={{ width: width }}>
-      <div className="admin-sidebar"  style={{ width: width }}>
+      <div className="admin-sidebar" style={{ width: width }}>
         <div className="admin-top-section">
           {isOpen && <h5 className="admin_logo">{name || user}</h5>}
           {isOpen && <div>{isSubAdmin ? <small>{userid}</small> : ""}</div>}
@@ -158,10 +158,15 @@ function AdminSideBar() {
           <section className="admin_routes">
             {Adminroutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               if (route.externalLink) {
-                // For the "CENTUMO Swap" link, open in a new tab
                 return (
                   <a
                     onClick={toggle}
@@ -170,8 +175,8 @@ function AdminSideBar() {
                     className={
                       isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                     }
-                    target="_blank" // This will open "CENTUMO Swap" in a new tab
-                    rel="noopener noreferrer" // Recommended for security
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <div className="admin-icon">{route.icon}</div>
                     <div className="admin_link_text" onClick={toggle}>
@@ -188,6 +193,7 @@ function AdminSideBar() {
                   className={
                     isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                   }
+                  onClick={toggle}
                 >
                   <div className="admin-icon">{route.icon}</div>
                   <div className="admin_link_text" onClick={toggle}>
@@ -202,7 +208,13 @@ function AdminSideBar() {
           <section className="admin_routes">
             {stateAdminRoutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               if (route.externalLink) {
                 // For the "CENTUMO Swap" link, open in a new tab
@@ -244,7 +256,13 @@ function AdminSideBar() {
           <section className="admin_routes">
             {subAdminRoutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               if (route.externalLink) {
                 // For the "CENTUMO Swap" link, open in a new tab
@@ -286,7 +304,13 @@ function AdminSideBar() {
           <section className="admin_routes">
             {franchiseAdminRoutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               if (route.externalLink) {
                 // For the "CENTUMO Swap" link, open in a new tab
@@ -328,7 +352,13 @@ function AdminSideBar() {
           <section className="admin_routes">
             {BussinessDeveloperRoutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               if (route.externalLink) {
                 // For the "CENTUMO Swap" link, open in a new tab
@@ -370,7 +400,13 @@ function AdminSideBar() {
           <section className="admin_routes">
             {VideoCreatorRoutes.map((route) => {
               if (route.subRoutes) {
-                return <AdminSideBarMenu isOpen={isOpen} route={route} />;
+                return (
+                  <AdminSideBarMenu
+                    isOpen={isOpen}
+                    route={route}
+                    onClick={toggle}
+                  />
+                );
               }
               return (
                 <NavLink

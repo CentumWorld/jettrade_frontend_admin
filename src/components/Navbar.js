@@ -18,6 +18,7 @@ import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import adminAv from "../img/admin-av.png"
+import baseUrl from "../baseUrl";
 
 function Navbar() {
   const login = localStorage.getItem("login");
@@ -61,7 +62,7 @@ function Navbar() {
       userid: localStorage.getItem("stateHandlerId"),
     };
     try {
-      const res = await axios.post("/state/get-sho-profile-photo", data, config );
+      const res = await axios.post(`${baseUrl}`+"/state/get-sho-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -78,7 +79,7 @@ function Navbar() {
       userid: localStorage.getItem("frenchiseId"),
     };
     try {
-      const res = await axios.post("/franchise/get-franchise-profile-photo", data, config );
+      const res = await axios.post(`${baseUrl}`+"/franchise/get-franchise-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -95,7 +96,7 @@ function Navbar() {
       userid: localStorage.getItem("businessId"),
     };
     try {
-      const res = await axios.post("/businessDeveloper/get-bd-profile-photo", data, config );
+      const res = await axios.post(`${baseUrl}`+"/businessDeveloper/get-bd-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -117,7 +118,7 @@ function Navbar() {
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
         try {
-          const response = await fetch("/state/get-own-state-details", {
+          const response = await fetch(`${baseUrl}`+"/state/get-own-state-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -134,7 +135,7 @@ function Navbar() {
     } else if (isFrachiseToken) {
       async function fetchFracnhiseDetails() {
         try {
-          const response = await fetch("/franchise/get-own-franchise-details", {
+          const response = await fetch(`${baseUrl}`+"/franchise/get-own-franchise-details", {
             method: "GET",
             headers: {
               Accept: "application/json",
@@ -151,7 +152,7 @@ function Navbar() {
     } else if (isBussinessDeveloperToken) {
       async function fetchBussinessDetails() {
         try {
-          const response = await fetch(
+          const response = await fetch(`${baseUrl}`+
             "/businessDeveloper/get-own-business-developer-details",
             {
               method: "GET",
@@ -173,7 +174,7 @@ function Navbar() {
     } else if (isAdminToken) {
       async function fetchAdminDetails() {
         try {
-          const response = await fetch(
+          const response = await fetch(`${baseUrl}`+
             "/admin/fetch-admin",
             {
               method: "GET",
