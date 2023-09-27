@@ -3,7 +3,6 @@
   "homepage": "http://admin.jettradefx.in",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:4000",
   "proxy":"http://localhost:4000",
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
