@@ -44,6 +44,10 @@ const BusinessDeveloper = () => {
     placeholder: "",
     file: null,
   });
+  const [aadharCardBackSide, setAadharCardBackSide] = useState({
+    placeholder: "",
+    file: null,
+  });
   const [panCard, setPanCard] = useState({
     placeholder: "",
     file: null,
@@ -554,13 +558,16 @@ const BusinessDeveloper = () => {
       )
       .then((res) => {
         console.log(res.data);
-        setAadharCard({ placeholder: res.data.data.adharCard });
+        setAadharCard({ placeholder: res.data.data.adhar_front_side });
+        setAadharCardBackSide({ placeholder: res.data.data.adhar_back_side });
         setPanCard({ placeholder: res.data.data.panCard });
       })
       .catch((err) => {
         message.error(err.response.data.message);
       });
   };
+
+
   const handleImageChange = (e) => {
     e.preventDefault();
     document.getElementById("adhar-image").click();
@@ -587,6 +594,35 @@ const BusinessDeveloper = () => {
       }
     }
   };
+
+  const handleAdharBackImageChange = (e) => {
+    e.preventDefault();
+    document.getElementById("adhar-back-image").click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/jpeg"
+      ) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setAadharCardBackSide({
+            placeholder: reader.result,
+            file: selectedFile,
+          });
+          setUploadButton(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  };
+
+
   const handleImageChangePan = (e) => {
     e.preventDefault();
     document.getElementById("pan-image").click();
@@ -631,6 +667,36 @@ const BusinessDeveloper = () => {
     axios
       .put(
         `${apiurl}` + "/admin/update-adhar-card-front-side-business-developer",
+        data,
+        config
+      )
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButton(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+  const uploadAadharBackSide = () => {
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken") ||
+      localStorage.getItem("franchiseToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const data = new FormData();
+    data.append("id", myID);
+    data.append("adhar_back_side", aadharCardBackSide.file);
+    axios
+      .put(
+        `${apiurl}` + "/admin/update-adhar-card-back-side-business-developer",
         data,
         config
       )
@@ -718,6 +784,13 @@ const BusinessDeveloper = () => {
     link.click();
   };
 
+  const downloadAadharCardBackSide = (adharCardImage) => {
+    const link = document.createElement("a");
+    link.href = adharCardImage;
+    link.download = "image.jpg";
+    link.click();
+  };
+
   const downloadPanCard = (panCardImage) => {
     const link = document.createElement("a");
     link.href = panCardImage;
@@ -761,7 +834,7 @@ const BusinessDeveloper = () => {
 
   const style = {
     width: isScreenLessThan768px ? "100%" : "40%",
-  }; 
+  };
 
   return (
     <>
@@ -819,13 +892,24 @@ const BusinessDeveloper = () => {
       </div>
       {/* edit business developer data */}
       <Modal
-       title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px'  }}>Edit Details</h6>}
+        title={
+          <h6
+            style={{
+              color: "#007BFF",
+              fontWeight: 700,
+              fontFamily: "Calibri",
+              fontSize: "18px",
+            }}
+          >
+            Edit Details
+          </h6>
+        }
         open={closeEditModalPopup}
         onOk={submitData}
         onCancel={closeEditModal}
         okText="Submit"
       >
-        <Form.Item label="Fname:" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="Fname:" style={{ color: "black", fontWeight: 700 }}>
           <Input
             placeholder="First name.."
             name="fname"
@@ -834,7 +918,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.fname}
           />
         </Form.Item>
-        <Form.Item label="Lname:" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="Lname:" style={{ color: "black", fontWeight: 700 }}>
           <Input
             placeholder="Last name"
             name="lname"
@@ -843,7 +927,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.lname}
           />
         </Form.Item>
-        <Form.Item label="Email:" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="Email:" style={{ color: "black", fontWeight: 700 }}>
           <Input
             placeholder="Email"
             name="email"
@@ -852,7 +936,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.email}
           />
         </Form.Item>
-        <Form.Item label="Phone:" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="Phone:" style={{ color: "black", fontWeight: 700 }}>
           <Input
             placeholder="Phone"
             name="phone"
@@ -861,7 +945,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.phone}
           />
         </Form.Item>
-        <Form.Item label="Gender" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="Gender" style={{ color: "black", fontWeight: 700 }}>
           <Select
             value={editBusinessDeveloperData.gender}
             style={{ width: 120 }}
@@ -872,7 +956,7 @@ const BusinessDeveloper = () => {
             <Option value="other">Other</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="City" style={{ color: 'black',fontWeight:700 }}>
+        <Form.Item label="City" style={{ color: "black", fontWeight: 700 }}>
           <Select
             style={{ width: 200 }}
             value={editBusinessDeveloperData.city}
@@ -889,7 +973,18 @@ const BusinessDeveloper = () => {
       </Modal>
       {/* view modal */}
       <Modal
-        title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px' }}>View Documents</h6>}
+        title={
+          <h6
+            style={{
+              color: "#007BFF",
+              fontWeight: 700,
+              fontFamily: "Calibri",
+              fontSize: "18px",
+            }}
+          >
+            View Documents
+          </h6>
+        }
         open={openViewModal}
         onOk={closeViewModal}
         onCancel={closeViewModal}
@@ -925,6 +1020,36 @@ const BusinessDeveloper = () => {
         </div>
         <hr />
 
+        <input
+          id="adhar-back-image"
+          type="file"
+          style={{ display: "none" }}
+          onChange={handleAdharBackImageChange}
+        />
+        <div className="d-flex">
+          <label htmlFor="adhar-back-image">
+            <img
+              src={aadharCardBackSide.placeholder}
+              height={200}
+              width={300}
+              alt="Selected Image"
+              style={{ cursor: "pointer" }}
+            />
+          </label>
+          <Button disabled={uploadButton} onClick={uploadAadharBackSide}>
+            Upload
+          </Button>
+
+          <Button
+            className="id-card"
+            // disabled={!loading}
+            type="primary"
+            onClick={() => downloadAadharCardBackSide(aadharCardBackSide.placeholder)}
+          >
+            Download
+          </Button>
+        </div>
+        <hr />
         <input
           id="pan-image"
           type="file"

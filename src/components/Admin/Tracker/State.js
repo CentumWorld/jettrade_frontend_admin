@@ -887,7 +887,7 @@ const State = () => {
                 Download
               </Button>
             </div>
-
+            <hr />
 
             <input
               id="adhar-back-image"

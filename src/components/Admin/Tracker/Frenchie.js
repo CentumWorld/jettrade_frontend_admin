@@ -864,7 +864,7 @@ const Frenchie = () => {
               </Button>
 
           </div>
-
+          <hr />
           <input
             id="adhar-back-image"
             type="file"
