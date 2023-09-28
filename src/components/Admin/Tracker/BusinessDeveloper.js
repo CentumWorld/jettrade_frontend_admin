@@ -627,10 +627,10 @@ const BusinessDeveloper = () => {
     };
     const data = new FormData();
     data.append("id", myID);
-    data.append("adharCard", aadharCard.file);
+    data.append("adhar_front_side", aadharCard.file);
     axios
       .put(
-        `${apiurl}` + "/admin/update-adhar-card-business-developer",
+        `${apiurl}` + "/admin/update-adhar-card-front-side-business-developer",
         data,
         config
       )

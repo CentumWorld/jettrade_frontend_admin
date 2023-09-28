@@ -45,6 +45,10 @@ const Frenchie = () => {
     placeholder: aadharFront,
     file: null,
   });
+  const [aadharCardBackSide, setAadharCardBackSide] = useState({
+    placeholder: "",
+    file: null,
+  });
   const [panCard, setPanCard] = useState({
     placeholder: "",
     file: null,
@@ -363,7 +367,8 @@ const Frenchie = () => {
     axios
       .post(`${apiurl}` + "/admin/get-one-franchise-details", data, config)
       .then((res) => {
-        setAadharCard({ placeholder: res.data.data.adharCard });
+        setAadharCard({ placeholder: res.data.data.adhar_front_side });
+        setAadharCardBackSide({ placeholder: res.data.data.adhar_back_side})
         setPanCard({ placeholder: res.data.data.panCard });
       })
       .catch((err) => {
@@ -398,6 +403,34 @@ const Frenchie = () => {
     }
   };
 
+
+  const handleAdharBackSideImageChange = (e) => {
+    e.preventDefault();
+    document.getElementById("adhar-back-image").click();
+    if (e.target.files && e.target.files.length > 0) {
+      const selectedFile = e.target.files[0];
+
+      if (
+        selectedFile.type === "image/png" ||
+        selectedFile.type === "image/jpeg"
+      ) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          setAadharCardBackSide({
+            placeholder: reader.result,
+            file: selectedFile,
+          });
+          setUploadButton(false);
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        message.error("Invalid File !!");
+      }
+    }
+  };
+
   const uploadAadhar = () => {
     console.log(aadharCard.file);
     const token =
@@ -411,9 +444,9 @@ const Frenchie = () => {
     };
     const data = new FormData();
     data.append("id", myID);
-    data.append("adharCard", aadharCard.file);
+    data.append("adhar_front_side", aadharCard.file);
     axios
-      .put(`${apiurl}` + "/admin/update-adhar-card-franchise", data, config)
+      .put(`${apiurl}` + "/admin/update-adhar-card-front-side-franchise", data, config)
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
@@ -422,6 +455,33 @@ const Frenchie = () => {
         console.log(err.response.data.message);
       });
   };
+
+  const uploadAadharBackSide = () => {
+    console.log(aadharCardBackSide.file);
+    const token =
+      localStorage.getItem("adminToken") ||
+      localStorage.getItem("stateHandlerToken")||
+      localStorage.getItem("subAdminToken")
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const data = new FormData();
+    data.append("id", myID);
+    data.append("adhar_back_side", aadharCardBackSide.file);
+    axios
+      .put(`${apiurl}` + "/admin/update-adhar-card-back-side-franchise", data, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setUploadButton(true);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
+
+
 
   const handleImageChangePan = (e) => {
     e.preventDefault();
@@ -667,6 +727,13 @@ const Frenchie = () => {
     link.click();
   }
 
+  const downloadAadharCardBackSide = (adharCardBackSideImage) => {
+    const link = document.createElement("a");
+    link.href = adharCardBackSideImage;
+    link.download = "image.jpg";
+    link.click();
+  }
+
   const downloadPanCard = (panCardImage) => {
  
     const link = document.createElement("a");
@@ -791,6 +858,38 @@ const Frenchie = () => {
                 type="primary"
                 onClick={() =>
                   downloadAadharCard(aadharCard.placeholder)
+                }
+              >
+                download
+              </Button>
+
+          </div>
+
+          <input
+            id="adhar-back-image"
+            type="file"
+            style={{ display: "none" }}
+            onChange={handleAdharBackSideImageChange}
+          />
+          <div className="d-flex">
+            <label htmlFor="adhar-back-image">
+              <img
+                src={aadharCardBackSide.placeholder}
+                height={200}
+                width={300}
+                alt="Selected Image"
+                style={{ cursor: "pointer" }}
+              />
+            </label>
+            <Button disabled={uploadButton} onClick={uploadAadharBackSide}>
+              Upload
+            </Button>
+
+            <Button
+                className="id-card"
+                type="primary"
+                onClick={() =>
+                  downloadAadharCardBackSide(aadharCardBackSide.placeholder)
                 }
               >
                 download
