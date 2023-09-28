@@ -196,7 +196,7 @@ const FranchiseAdminLogin = (props) => {
       <ToastContainer />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Franchise Login</Modal.Title>
+          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Franchise Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Tabs defaultActiveKey="1" onChange={switchTab}>

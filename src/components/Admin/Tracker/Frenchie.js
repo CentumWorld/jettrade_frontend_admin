@@ -761,7 +761,7 @@ const Frenchie = () => {
       {/* -----view modal ----- */}
       {visible ? (
         <Modal
-          title="View Document Details"
+           title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px' }}>View Documents</h6>}
           open={visible}
           onOk={handleOk}
           onCancel={handleCancel}
@@ -836,12 +836,13 @@ const Frenchie = () => {
       {/* edit modal */}
       {editModalVisible ? (
         <Modal
-          title="Edit Details"
+           title={<h6 style={{ color: '#007BFF',fontWeight:700 }}>Edit Details</h6>}
           open={editModalVisible}
           onOk={submitEditForm}
           onCancel={closeEditModal}
+          okText="Submit"
         >
-          <Form.Item label="Fname:">
+          <Form.Item label="Fname:" style={{ color: 'black',fontWeight:700 }}>
             <Input
               placeholder="First name.."
               name="fname"
@@ -850,7 +851,7 @@ const Frenchie = () => {
               value={editFranchiseData.fname}
             />
           </Form.Item>
-          <Form.Item label="Lname:">
+          <Form.Item label="Lname:" style={{ color: 'black',fontWeight:700 }}>
             <Input
               placeholder="Last name"
               name="lname"
@@ -859,7 +860,7 @@ const Frenchie = () => {
               value={editFranchiseData.lname}
             />
           </Form.Item>
-          <Form.Item label="Email:">
+          <Form.Item label="Email:" style={{ color: 'black',fontWeight:700 }}>
             <Input
               placeholder="Email"
               name="email"
@@ -868,7 +869,7 @@ const Frenchie = () => {
               value={editFranchiseData.email}
             />
           </Form.Item>
-          <Form.Item label="Phone:">
+          <Form.Item label="Phone:" style={{ color: 'black',fontWeight:700 }}>
             <Input
               placeholder="Phone"
               name="phone"
@@ -877,7 +878,7 @@ const Frenchie = () => {
               value={editFranchiseData.phone}
             />
           </Form.Item>
-          <Form.Item label="Gender">
+          <Form.Item label="Gender" style={{ color: 'black',fontWeight:700 }}>
             <Select
               value={editFranchiseData.gender}
               style={{ width: 120 }}
@@ -888,7 +889,7 @@ const Frenchie = () => {
               <Option value="other">Other</Option>
             </Select>
           </Form.Item>
-          <Form.Item label="State">
+          <Form.Item label="State" style={{ color: 'black',fontWeight:700 }}>
             <Select
               style={{ width: 200 }}
               value={editFranchiseData.state}
@@ -901,7 +902,7 @@ const Frenchie = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item label="City">
+          <Form.Item label="City" style={{ color: 'black',fontWeight:700 }}>
             {editFranchiseData.state && (
               <Select
                 placeholder="Select city"
