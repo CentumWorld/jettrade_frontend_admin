@@ -187,7 +187,7 @@ const BussinessAdminLogin = (props) => {
   return <>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Bussiness Login</Modal.Title>
+        <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Bussiness Login</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Tabs defaultActiveKey="1">

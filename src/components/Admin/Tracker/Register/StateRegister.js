@@ -4,6 +4,7 @@ import allState from '../AllStateAndDistrict';
 import axios from 'axios';
 import { message,Spin } from 'antd';
 import baseUrl from '../../../../baseUrl';
+import './css/StateRegister.css'
 
 const apiurl = baseUrl.apiUrl
 
@@ -174,7 +175,7 @@ const StateRegister = (props) => {
         <>  
             <div>
                 <Modal
-                    title="State Register"
+                    title={<h6 style={{ color: '#007BFF' }}>State Register</h6>}
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleStateRegiSubmit}
@@ -182,7 +183,7 @@ const StateRegister = (props) => {
                 >
                     <div className='form-container'>
                         <div className='state-field'>
-                            <label>Referred ID</label>
+                            <label >Referred ID</label>
                             <Input
                                 placeholder='Referred ID'
                                 name="referredId"

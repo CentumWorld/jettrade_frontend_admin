@@ -23,9 +23,8 @@ function SubAdmin(props) {
     };
 
     axios
-      .post(`${apiurl}`+"/admin/sub-admin-login", data)
+      .post(`${apiurl}` + "/admin/sub-admin-login", data)
       .then((res) => {
-        // console.log(res.data, "\\\\\\\\\\\\\\\\\\");
         localStorage.setItem("login", true);
         localStorage.setItem("subAdminToken", res.data.subAdmintoken);
 
@@ -43,13 +42,17 @@ function SubAdmin(props) {
 
   // -------------
   const titleStyles = {
-    color: "#5e72e4", // Change this to your desired title color
+    color: "#800080",
+    fontSize: '20px',
+    fontFamily: 'Calibri',
+
   };
+ 
   return (
     <>
       <Modal
         title={
-          <span style={titleStyles}>Back Office</span> 
+          <span style={titleStyles}>Back Office</span>
         }
         open={modalVisible}
         onCancel={handleClose}
@@ -58,6 +61,8 @@ function SubAdmin(props) {
         <Form name="myForm" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             label="User ID"
+            labelCol={{ span: 24 }} // Set label column to span the full width
+            wrapperCol={{ span: 20 }}
             name="name"
             rules={[
               {
@@ -66,13 +71,15 @@ function SubAdmin(props) {
               },
             ]}
           >
-            <Input placeholder="Enter subadmin Id" />
+            <Input placeholder="Enter subadmin Id"
+               />
           </Form.Item>
 
           <Form.Item
             label="Password"
             name="password"
-           
+            labelCol={{ span: 24 }} // Set label column to span the full width
+            wrapperCol={{ span: 20 }}
             rules={[
               {
                 required: true,
@@ -80,10 +87,10 @@ function SubAdmin(props) {
               },
             ]}
           >
-            <Input.Password  placeholder="Enter Password" />
+            <Input.Password placeholder="Enter Password" />
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>

@@ -819,12 +819,13 @@ const BusinessDeveloper = () => {
       </div>
       {/* edit business developer data */}
       <Modal
-        title="Edit Details"
+       title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px'  }}>Edit Details</h6>}
         open={closeEditModalPopup}
         onOk={submitData}
         onCancel={closeEditModal}
+        okText="Submit"
       >
-        <Form.Item label="Fname:">
+        <Form.Item label="Fname:" style={{ color: 'black',fontWeight:700 }}>
           <Input
             placeholder="First name.."
             name="fname"
@@ -833,7 +834,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.fname}
           />
         </Form.Item>
-        <Form.Item label="Lname:">
+        <Form.Item label="Lname:" style={{ color: 'black',fontWeight:700 }}>
           <Input
             placeholder="Last name"
             name="lname"
@@ -842,7 +843,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.lname}
           />
         </Form.Item>
-        <Form.Item label="Email:">
+        <Form.Item label="Email:" style={{ color: 'black',fontWeight:700 }}>
           <Input
             placeholder="Email"
             name="email"
@@ -851,7 +852,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.email}
           />
         </Form.Item>
-        <Form.Item label="Phone:">
+        <Form.Item label="Phone:" style={{ color: 'black',fontWeight:700 }}>
           <Input
             placeholder="Phone"
             name="phone"
@@ -860,7 +861,7 @@ const BusinessDeveloper = () => {
             value={editBusinessDeveloperData.phone}
           />
         </Form.Item>
-        <Form.Item label="Gender">
+        <Form.Item label="Gender" style={{ color: 'black',fontWeight:700 }}>
           <Select
             value={editBusinessDeveloperData.gender}
             style={{ width: 120 }}
@@ -871,7 +872,7 @@ const BusinessDeveloper = () => {
             <Option value="other">Other</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="City">
+        <Form.Item label="City" style={{ color: 'black',fontWeight:700 }}>
           <Select
             style={{ width: 200 }}
             value={editBusinessDeveloperData.city}
@@ -888,7 +889,7 @@ const BusinessDeveloper = () => {
       </Modal>
       {/* view modal */}
       <Modal
-        title="View Documents"
+        title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px' }}>View Documents</h6>}
         open={openViewModal}
         onOk={closeViewModal}
         onCancel={closeViewModal}

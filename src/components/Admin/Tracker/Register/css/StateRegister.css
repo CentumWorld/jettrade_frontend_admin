@@ -9,4 +9,11 @@
     flex-direction: column; 
     gap: 1px; 
   }
+  .state-field label {
+    color: black;
+    font-weight: 600;
+  }
+  .ant-input::-webkit-input-placeholder {
+    color: #acabab; /* Replace with your desired color code or name */
+}
  
