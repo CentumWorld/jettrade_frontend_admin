@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
-import { BiArrowBack } from "react-icons/bi"
+import { BiArrowBack } from "react-icons/bi";
 import {
   Button,
   Table,
@@ -27,7 +27,7 @@ const apiurl = baseUrl.apiUrl;
 
 const { Option } = Select;
 
-const{Search} = Input
+const { Search } = Input;
 
 const Frenchie = () => {
   const navigate = useNavigate();
@@ -64,9 +64,8 @@ const Frenchie = () => {
     city: [],
   });
   const [frenchiseId, setFrenchiseId] = useState("");
-  const [filteredDataSource,setFilteredDataSource] = useState([])
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [searchText, setSearchText] = useState("");
-
 
   const closeEditModal = () => {
     setEditModalVisible(false);
@@ -132,10 +131,10 @@ const Frenchie = () => {
       key: "referralId",
       render: (text) => (
         <span
-          style={{ cursor: 'pointer', userSelect: 'all' }}
+          style={{ cursor: "pointer", userSelect: "all" }}
           onClick={() => {
             navigator.clipboard.writeText(text);
-            message.success('Text copied to clipboard: ' + text);
+            message.success("Text copied to clipboard: " + text);
           }}
         >
           {text}
@@ -151,7 +150,7 @@ const Frenchie = () => {
       title: "City",
       dataIndex: "franchiseCity",
       key: "franchiseCity",
-      render: (franchiseCity) => franchiseCity.join(', '),
+      render: (franchiseCity) => franchiseCity.join(", "),
     },
     {
       title: "Status",
@@ -196,7 +195,11 @@ const Frenchie = () => {
       title: "Action",
       dataIndex: "action",
       render: (_, record) => (
-        <Dropdown overlay={adminToken ? menu : subMenu} placement="bottomLeft" trigger={["click"]}>
+        <Dropdown
+          overlay={adminToken ? menu : subMenu}
+          placement="bottomLeft"
+          trigger={["click"]}
+        >
           <BsThreeDotsVertical
             size={24}
             onClick={() =>
@@ -230,11 +233,10 @@ const Frenchie = () => {
       axios
         .get(`${apiurl}` + "/admin/fetch-all-frenchise", config)
         .then((res) => {
-
-          setLoading(true)
+          setLoading(true);
 
           setFrenchieData(res.data.data);
-          setFilteredDataSource(res.data.data)
+          setFilteredDataSource(res.data.data);
         })
         .catch((err) => {
           console.log(err.message);
@@ -258,8 +260,7 @@ const Frenchie = () => {
             res.data.data[0].adharCard
           );
           setFrenchieData(res.data.data);
-          setFilteredDataSource(res.data.data)
-
+          setFilteredDataSource(res.data.data);
         })
         .catch((err) => {
           console.log("error", err);
@@ -354,8 +355,8 @@ const Frenchie = () => {
   const openViewModal = (id) => {
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -368,7 +369,7 @@ const Frenchie = () => {
       .post(`${apiurl}` + "/admin/get-one-franchise-details", data, config)
       .then((res) => {
         setAadharCard({ placeholder: res.data.data.adhar_front_side });
-        setAadharCardBackSide({ placeholder: res.data.data.adhar_back_side})
+        setAadharCardBackSide({ placeholder: res.data.data.adhar_back_side });
         setPanCard({ placeholder: res.data.data.panCard });
       })
       .catch((err) => {
@@ -403,7 +404,6 @@ const Frenchie = () => {
     }
   };
 
-
   const handleAdharBackSideImageChange = (e) => {
     e.preventDefault();
     document.getElementById("adhar-back-image").click();
@@ -435,8 +435,8 @@ const Frenchie = () => {
     console.log(aadharCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -446,13 +446,17 @@ const Frenchie = () => {
     data.append("id", myID);
     data.append("adhar_front_side", aadharCard.file);
     axios
-      .put(`${apiurl}` + "/admin/update-adhar-card-front-side-franchise", data, config)
+      .put(
+        `${apiurl}` + "/admin/update-adhar-card-front-side-franchise",
+        data,
+        config
+      )
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -460,8 +464,8 @@ const Frenchie = () => {
     console.log(aadharCardBackSide.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -471,17 +475,19 @@ const Frenchie = () => {
     data.append("id", myID);
     data.append("adhar_back_side", aadharCardBackSide.file);
     axios
-      .put(`${apiurl}` + "/admin/update-adhar-card-back-side-franchise", data, config)
+      .put(
+        `${apiurl}` + "/admin/update-adhar-card-back-side-franchise",
+        data,
+        config
+      )
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
-
-
 
   const handleImageChangePan = (e) => {
     e.preventDefault();
@@ -514,8 +520,8 @@ const Frenchie = () => {
     console.log(panCard.file);
     const token =
       localStorage.getItem("adminToken") ||
-      localStorage.getItem("stateHandlerToken")||
-      localStorage.getItem("subAdminToken")
+      localStorage.getItem("stateHandlerToken") ||
+      localStorage.getItem("subAdminToken");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -531,7 +537,7 @@ const Frenchie = () => {
         setUploadButtonPan(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -690,7 +696,7 @@ const Frenchie = () => {
         const token =
           localStorage.getItem("adminToken") ||
           localStorage.getItem("subAdminToken") ||
-           localStorage.getItem('stateHandlerToken');
+          localStorage.getItem("stateHandlerToken");
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -716,33 +722,30 @@ const Frenchie = () => {
     });
   };
 
-  const getChildUpdate = (childData)=>{
+  const getChildUpdate = (childData) => {
     fetchFrenchieseDataApi();
-  }
+  };
 
   const downloadAadharCard = (adharCardImage) => {
     const link = document.createElement("a");
     link.href = adharCardImage;
     link.download = "image.jpg";
     link.click();
-  }
+  };
 
   const downloadAadharCardBackSide = (adharCardBackSideImage) => {
     const link = document.createElement("a");
     link.href = adharCardBackSideImage;
     link.download = "image.jpg";
     link.click();
-  }
+  };
 
   const downloadPanCard = (panCardImage) => {
- 
     const link = document.createElement("a");
     link.href = panCardImage;
     link.download = "image.jpg";
     link.click();
-  }
-  
-
+  };
 
   const searchUser = (value) => {
     console.log(value, "value");
@@ -771,9 +774,9 @@ const Frenchie = () => {
     });
     setFilteredDataSource(filteredData);
   };
-  const gotoDashboard =()=>{
-    navigate('/admindashboard/dashboard')
-  }
+  const gotoDashboard = () => {
+    navigate("/admindashboard/dashboard");
+  };
 
   const isScreenLessThan768px = window.innerWidth < 768;
 
@@ -787,7 +790,13 @@ const Frenchie = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <span style={{color:"wheat"}}><BiArrowBack style={{cursor:'pointer'}} onClick={gotoDashboard}/> &nbsp;Franchise</span>
+            <span style={{ color: "wheat" }}>
+              <BiArrowBack
+                style={{ cursor: "pointer" }}
+                onClick={gotoDashboard}
+              />{" "}
+              &nbsp;Franchise
+            </span>
 
             <Search
               placeholder="Enter search text"
@@ -795,13 +804,16 @@ const Frenchie = () => {
               enterButton="Search"
               size="large"
               onSearch={searchUser}
-              style={{ width: isScreenLessThan768px ? "100%" : "40%",}}
+              style={{ width: isScreenLessThan768px ? "100%" : "40%" }}
             />
 
-
-            {stateToken?<Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add Franchise
-            </Button>:""}
+            {stateToken ? (
+              <Button type="primary" onClick={showModal}>
+                <AiFillPlusCircle /> &nbsp;&nbsp;Add Franchise
+              </Button>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -809,7 +821,6 @@ const Frenchie = () => {
           <Table
             // dataSource={frenchieData}
             dataSource={filteredDataSource}
-
             columns={columns}
             pagination={{ pageSize: 7 }}
             scroll={{ x: true, y: true }}
@@ -828,64 +839,85 @@ const Frenchie = () => {
       {/* -----view modal ----- */}
       {visible ? (
         <Modal
-           title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px' }}>View Documents</h6>}
+          title={
+            <h6
+              style={{
+                color: "#007BFF",
+                fontWeight: 700,
+                fontFamily: "Calibri",
+                fontSize: "18px",
+              }}
+            >
+                View Document Details:
+            </h6>
+          }
           open={visible}
           onOk={handleOk}
           onCancel={handleCancel}
         >
-          <input
-            id="adhar-image"
-            type="file"
-            style={{ display: "none" }}
-            onChange={handleImageChange}
-          />
           <div className="d-flex">
-            <label htmlFor="adhar-image">
-              <img
-                src={aadharCard.placeholder}
-                height={200}
-                width={300}
-                alt="Selected Image"
-                style={{ cursor: "pointer" }}
+            <div>
+              <label htmlFor="adhar-front-image">Adhar Front Side</label>
+              <input
+                id="adhar-image"
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
               />
-            </label>
-            <Button disabled={uploadButton} onClick={uploadAadhar}>
-              Upload
-            </Button>
 
-            <Button
+              <label htmlFor="adhar-image">
+                <img
+                  src={aadharCard.placeholder}
+                  height={200}
+                  width={300}
+                  alt="Selected Image"
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <Button
+                //  disabled={uploadButton}
+                onClick={uploadAadhar}
+              >
+                Upload
+              </Button>
+
+              <Button
                 className="id-card"
                 type="primary"
-                onClick={() =>
-                  downloadAadharCard(aadharCard.placeholder)
-                }
+                onClick={() => downloadAadharCard(aadharCard.placeholder)}
               >
                 download
               </Button>
-
+            </div>
           </div>
           <hr />
-          <input
-            id="adhar-back-image"
-            type="file"
-            style={{ display: "none" }}
-            onChange={handleAdharBackSideImageChange}
-          />
           <div className="d-flex">
-            <label htmlFor="adhar-back-image">
-              <img
-                src={aadharCardBackSide.placeholder}
-                height={200}
-                width={300}
-                alt="Selected Image"
-                style={{ cursor: "pointer" }}
+            <div>
+              <label htmlFor="adhar-back-image">Adhar Back Side</label>
+              <input
+                id="adhar-back-image"
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleAdharBackSideImageChange}
               />
-            </label>
-            <Button disabled={uploadButton} onClick={uploadAadharBackSide}>
-              Upload
-            </Button>
 
-            <Button
+              <label htmlFor="adhar-back-image">
+                <img
+                  src={aadharCardBackSide.placeholder}
+                  height={200}
+                  width={300}
+                  alt="Selected Image"
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <Button
+                // disabled={uploadButton}
+                onClick={uploadAadharBackSide}
+              >
+                Upload
+              </Button>
+
+              <Button
                 className="id-card"
                 type="primary"
                 onClick={() =>
@@ -894,39 +926,42 @@ const Frenchie = () => {
               >
                 download
               </Button>
-
+            </div>
           </div>
           <hr />
-          <input
-            id="pan-image"
-            type="file"
-            style={{ display: "none" }}
-            onChange={handleImageChangePan}
-          />
           <div className="d-flex">
-            <label htmlFor="pan-image">
-              <img
-                src={panCard.placeholder}
-                height={200}
-                width={300}
-                alt="Selected Image"
-                style={{ cursor: "pointer" }}
+            <div>
+              <label htmlFor="pan-image">Pan Card</label>
+              <input
+                id="pan-image"
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleImageChangePan}
               />
-            </label>
-            <Button disabled={uploadButtonPan} onClick={uploadPan}>
-              Upload
-            </Button>
+              <label htmlFor="pan-image">
+                <img
+                  src={panCard.placeholder}
+                  height={200}
+                  width={300}
+                  alt="Selected Image"
+                  style={{ cursor: "pointer" }}
+                />
+              </label>
+              <Button
+                // disabled={uploadButtonPan}
+                onClick={uploadPan}
+              >
+                Upload
+              </Button>
 
-            <Button
+              <Button
                 className="id-card"
                 type="primary"
-                onClick={() =>
-                  downloadPanCard(panCard.placeholder)
-                }
+                onClick={() => downloadPanCard(panCard.placeholder)}
               >
                 download
               </Button>
-
+            </div>
           </div>
         </Modal>
       ) : (
@@ -935,13 +970,15 @@ const Frenchie = () => {
       {/* edit modal */}
       {editModalVisible ? (
         <Modal
-           title={<h6 style={{ color: '#007BFF',fontWeight:700 }}>Edit Details</h6>}
+          title={
+            <h6 style={{ color: "#007BFF", fontWeight: 700 }}>Edit Details</h6>
+          }
           open={editModalVisible}
           onOk={submitEditForm}
           onCancel={closeEditModal}
           okText="Submit"
         >
-          <Form.Item label="Fname:" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="Fname:" style={{ color: "black", fontWeight: 700 }}>
             <Input
               placeholder="First name.."
               name="fname"
@@ -950,7 +987,7 @@ const Frenchie = () => {
               value={editFranchiseData.fname}
             />
           </Form.Item>
-          <Form.Item label="Lname:" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="Lname:" style={{ color: "black", fontWeight: 700 }}>
             <Input
               placeholder="Last name"
               name="lname"
@@ -959,7 +996,7 @@ const Frenchie = () => {
               value={editFranchiseData.lname}
             />
           </Form.Item>
-          <Form.Item label="Email:" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="Email:" style={{ color: "black", fontWeight: 700 }}>
             <Input
               placeholder="Email"
               name="email"
@@ -968,7 +1005,7 @@ const Frenchie = () => {
               value={editFranchiseData.email}
             />
           </Form.Item>
-          <Form.Item label="Phone:" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="Phone:" style={{ color: "black", fontWeight: 700 }}>
             <Input
               placeholder="Phone"
               name="phone"
@@ -977,7 +1014,7 @@ const Frenchie = () => {
               value={editFranchiseData.phone}
             />
           </Form.Item>
-          <Form.Item label="Gender" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="Gender" style={{ color: "black", fontWeight: 700 }}>
             <Select
               value={editFranchiseData.gender}
               style={{ width: 120 }}
@@ -988,7 +1025,7 @@ const Frenchie = () => {
               <Option value="other">Other</Option>
             </Select>
           </Form.Item>
-          <Form.Item label="State" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="State" style={{ color: "black", fontWeight: 700 }}>
             <Select
               style={{ width: 200 }}
               value={editFranchiseData.state}
@@ -1001,7 +1038,7 @@ const Frenchie = () => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item label="City" style={{ color: 'black',fontWeight:700 }}>
+          <Form.Item label="City" style={{ color: "black", fontWeight: 700 }}>
             {editFranchiseData.state && (
               <Select
                 placeholder="Select city"

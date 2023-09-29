@@ -1,51 +1,84 @@
 .new-renewal-container {
-    width: 100%;
-    border-radius: 5px;
-    position: sticky;
+  width: 100%;
+  border-radius: 5px;
+  position: sticky;
 }
 
 .new-renewal-header {
-    width: 100%;
-    height: max-content;
-    z-index: 10;
-    padding: 15px;
-    background: #01015d;
-    border-radius: 5px;
-    box-shadow: 2px 10px 10px #717171;
+  width: 100%;
+  height: max-content;
+  z-index: 10;
+  padding: 15px;
+  background: #01015d;
+  border-radius: 5px;
+  box-shadow: 2px 10px 10px #717171;
 }
 
 .new-renewal-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 /* testing  */
 .new-renewal-content p {
-    color: wheat;
-    font-size: 1.2rem;
-    font-family: Calibri;
+  color: wheat;
+  font-size: 1.2rem;
+  font-family: Calibri;
 }
 
 .d-flex {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
-
 
 .ant-table-thead .ant-table-cell {
-    background-color: #f8f9fa !important;
+  background-color: #f8f9fa !important;
 }
 
-.id-card{
-    width: 90px; /* Adjust the width as needed */
+.id-card {
+  width: 90px; /* Adjust the width as needed */
 
-    margin-left: 4px;
+  margin-left: 4px;
+}
+
+@media only screen and (max-width: 518px) {
+  .new-renewal-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 0 10px;
   }
+}
 
-@media only screen and (max-width:518px) {
-    .new-renewal-content {
-        display: flex;
-        flex-direction: column;
-        padding: 0 10px 0 10px;
-    }
+.d-flex {
+  display: flex;
+  align-items: center; /* Vertically center items */
+}
+
+.d-flex > div {
+  flex: 1; /* Equal width for each section */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+  margin-right: 20px; /* Add spacing between sections */
+}
+
+.d-flex label {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px; 
+  margin-bottom: 10px;
+}
+
+/* Adjustments for buttons and labels */
+.d-flex Button {
+  margin-top: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+/* Style the horizontal line */
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
 }

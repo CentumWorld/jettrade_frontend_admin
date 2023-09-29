@@ -160,7 +160,7 @@ const State = () => {
         </span>
       ),
     },
-     {
+    {
       title: "Referred ID",
       dataIndex: "referredId",
       key: "reffered_id",
@@ -392,8 +392,8 @@ const State = () => {
       .then((res) => {
         // setAadharCard({ placeholder: res.data.data.adharCard });
 
-        setAadharCardFront({ placeholder: res.data.data.adhar_front_side })
-        setAadharCardBack({ placeholder: res.data.data.adhar_back_side })
+        setAadharCardFront({ placeholder: res.data.data.adhar_front_side });
+        setAadharCardBack({ placeholder: res.data.data.adhar_back_side });
 
         setPanCard({ placeholder: res.data.data.panCard });
       })
@@ -470,13 +470,17 @@ const State = () => {
     data.append("id", myID);
     data.append("adhar_front_side", aadharCardFront.file);
     axios
-      .put(`${apiurl}` + "/admin/update-adhar-card-front-side-state-handler", data, config)
+      .put(
+        `${apiurl}` + "/admin/update-adhar-card-front-side-state-handler",
+        data,
+        config
+      )
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -494,17 +498,19 @@ const State = () => {
     data.append("id", myID);
     data.append("adhar_back_side", aadharCardBack.file);
     axios
-      .put(`${apiurl}` + "/admin/update-adhar-card-back-side-state-handler", data, config)
+      .put(
+        `${apiurl}` + "/admin/update-adhar-card-back-side-state-handler",
+        data,
+        config
+      )
       .then((res) => {
         message.success(res.data.message);
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
-
-
 
   const handleImageChangePan = (e) => {
     e.preventDefault();
@@ -554,7 +560,7 @@ const State = () => {
         setUploadButtonPan(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -746,13 +752,11 @@ const State = () => {
   };
 
   function downloadAadharCardBackSide(imageUrl) {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = imageUrl;
-    link.download = 'aadhar-card-back.png';
+    link.download = "aadhar-card-back.png";
     link.click();
   }
-  
-
 
   const downloadPanCard = (panCardImage) => {
     const link = document.createElement("a");
@@ -790,9 +794,9 @@ const State = () => {
     setFilteredDataSource(filteredData);
   };
 
-  const gotoDashboard = ()=>{
-    navigate("/admindashboard/dashboard")
-  }
+  const gotoDashboard = () => {
+    navigate("/admindashboard/dashboard");
+  };
 
   const isScreenLessThan768px = window.innerWidth < 768;
 
@@ -800,7 +804,6 @@ const State = () => {
     width: isScreenLessThan768px ? "100%" : "40%",
   };
   return (
-
     <>
       <StateRegister
         isModalVisible={isModalVisible}
@@ -808,12 +811,16 @@ const State = () => {
         updateData={updateList}
       />
       <div className="new-renewal-container">
-        <div
-          className="new-renewal-header"
-        
-        >
+        <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <p> <BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;State Head Officer</p>
+            <p>
+              {" "}
+              <BiArrowBack
+                onClick={gotoDashboard}
+                style={{ cursor: "pointer" }}
+              />
+              &nbsp;State Head Officer
+            </p>
             <Search
               placeholder="Enter search text"
               allowClear
@@ -822,7 +829,6 @@ const State = () => {
               onSearch={searchUser}
               style={style}
             />
-           
 
             <Button type="primary" onClick={showModal}>
               <AiFillPlusCircle /> &nbsp;&nbsp;Add S.H.O
@@ -851,107 +857,139 @@ const State = () => {
 
         {visible ? (
           <Modal
-             title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px' }}>View Document Details</h6>}
+            title={
+              <h6
+                style={{
+                  color: "#007BFF",
+                  fontWeight: 700,
+                  fontFamily: "Calibri",
+                  fontSize: "18px",
+                }}
+              >
+                View Document Details:
+              </h6>
+            }
             open={visible}
             onOk={handleOk}
             onCancel={handleCancel}
           >
+            <div className="d-flex">
+              <div>
+                <label htmlFor="adhar-front-image">Adhar Front Side</label>
+                <input
+                  id="adhar-front-image"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleAdharFrontImageChange}
+                  title="Adhar Front Side"
+                />
+                <label htmlFor="adhar-front-image">
+                  <img
+                    src={aadharCardFront.placeholder}
+                    height={200}
+                    width={300}
+                    alt="Selected Image"
+                    style={{ cursor: "pointer" }}
+                  />
+                </label>
+                <Button
+                  // disabled={uploadButton}
+                  onClick={uploadAadharCardFrontSide}
+                >
+                  Upload
+                </Button>
+                <Button
+                  className="id-card"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() =>
+                    downloadAadharCardFrontSide(aadharCardFront.placeholder)
+                  }
+                >
+                  Download
+                </Button>
+              </div>
+            </div>
 
-            <input
-              id="adhar-front-image"
-              type="file"
-              style={{ display: "none" }}
-              onChange={handleAdharFrontImageChange}
-            />
+            <hr />
 
             <div className="d-flex">
-              <label htmlFor="adhar-front-image">
-                <img
-                  src={aadharCardFront.placeholder}
-                  height={200}
-                  width={300}
-                  alt="Selected Image"
-                  style={{ cursor: "pointer" }}
+              <div>
+                <label htmlFor="adhar-back-image">Adhar Back Side</label>
+                <input
+                  id="adhar-back-image"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleAdharBackImageChange}
+                  title="Adhar Back Side"
                 />
-              </label>
-              <Button disabled={uploadButton} onClick={uploadAadharCardFrontSide}>
-                Upload
-              </Button>
 
-              <Button
-                className="id-card"
-                disabled={!loading}
-                type="primary"
-                onClick={() => downloadAadharCardFrontSide(aadharCardFront.placeholder)}
-              >
-                Download
-              </Button>
+                <label htmlFor="adhar-back-image">
+                  <img
+                    src={aadharCardBack.placeholder}
+                    height={200}
+                    width={300}
+                    alt="Selected Image"
+                    style={{ cursor: "pointer" }}
+                  />
+                </label>
+                <Button
+                  // disabled={uploadButton}
+                  onClick={uploadAadharCardBackSide}
+                >
+                  Upload
+                </Button>
+                <Button
+                  className="id-card"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() =>
+                    downloadAadharCardBackSide(aadharCardBack.placeholder)
+                  }
+                >
+                  Download
+                </Button>
+              </div>
             </div>
             <hr />
 
-            <input
-              id="adhar-back-image"
-              type="file"
-              style={{ display: "none" }}
-              onChange={handleAdharBackImageChange}
-            />
-
             <div className="d-flex">
-              <label htmlFor="adhar-back-image">
-                <img
-                  src={aadharCardBack.placeholder}
-                  height={200}
-                  width={300}
-                  alt="Selected Image"
-                  style={{ cursor: "pointer" }}
+              <div>
+                <label htmlFor="pan-image">Pan Card</label>
+                <input
+                  id="pan-image"
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleImageChangePan}
+                  title="Pan Card"
                 />
-              </label>
-              <Button disabled={uploadButton} onClick={uploadAadharCardBackSide}>
-                Upload
-              </Button>
 
-              <Button
-                className="id-card"
-                disabled={!loading}
-                type="primary"
-                onClick={() => {
-                  console.log(aadharCardBack.placeholder); // Add this line
-                  downloadAadharCardBackSide(aadharCardBack.placeholder);
-                }}
-              >
-                Download
-              </Button>
+                <label htmlFor="pan-image">
+                  <img
+                    src={panCard.placeholder}
+                    height={200}
+                    width={300}
+                    alt="Selected Image"
+                    style={{ cursor: "pointer" }}
+                  />
+                </label>
+                <Button
+                  //  disabled={uploadButtonPan}
+                  onClick={uploadPan}
+                >
+                  Upload
+                </Button>
+                <Button
+                  className="id-card"
+                  disabled={!loading}
+                  type="primary"
+                  onClick={() => downloadPanCard(panCard.placeholder)}
+                >
+                  Download
+                </Button>
+              </div>
             </div>
             <hr />
-            <input
-              id="pan-image"
-              type="file"
-              style={{ display: "none" }}
-              onChange={handleImageChangePan}
-            />
-            <div className="d-flex">
-              <label htmlFor="pan-image">
-                <img
-                  src={panCard.placeholder}
-                  height={200}
-                  width={300}
-                  alt="Selected Image"
-                  style={{ cursor: "pointer" }}
-                />
-              </label>
-              <Button disabled={uploadButtonPan} onClick={uploadPan}>
-                Upload
-              </Button>
-
-              <Button
-                className="id-card"
-                disabled={!loading}
-                type="primary"
-                onClick={() => downloadPanCard(panCard.placeholder)}
-              >
-                Download
-              </Button>
-            </div>
           </Modal>
         ) : (
           ""
@@ -960,13 +998,27 @@ const State = () => {
         {/* edit model   */}
         {editModalVisible ? (
           <Modal
-            title={<h6 style={{ color: '#007BFF',fontWeight:700,fontFamily:'Calibri',fontSize:'18px'  }}>Edit Details</h6>}
+            title={
+              <h6
+                style={{
+                  color: "#007BFF",
+                  fontWeight: 700,
+                  fontFamily: "Calibri",
+                  fontSize: "18px",
+                }}
+              >
+                Edit Details
+              </h6>
+            }
             open={editModalVisible}
             onOk={submitEditForm}
             onCancel={closeEditModal}
             okText="Submit"
           >
-            <Form.Item label="Fname:" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="Fname:"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Input
                 placeholder="First name.."
                 name="fname"
@@ -975,7 +1027,10 @@ const State = () => {
                 value={editFranchiseData.fname}
               />
             </Form.Item>
-            <Form.Item label="Lname:" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="Lname:"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Input
                 placeholder="Last name"
                 name="lname"
@@ -984,7 +1039,10 @@ const State = () => {
                 value={editFranchiseData.lname}
               />
             </Form.Item>
-            <Form.Item label="Email:" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="Email:"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Input
                 placeholder="Email"
                 name="email"
@@ -993,7 +1051,10 @@ const State = () => {
                 value={editFranchiseData.email}
               />
             </Form.Item>
-            <Form.Item label="Phone:" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="Phone:"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Input
                 placeholder="Phone"
                 name="phone"
@@ -1002,7 +1063,10 @@ const State = () => {
                 value={editFranchiseData.phone}
               />
             </Form.Item>
-            <Form.Item label="Gender" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="Gender"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Select
                 value={editFranchiseData.gender}
                 style={{ width: 120 }}
@@ -1013,7 +1077,10 @@ const State = () => {
                 <Option value="other">Other</Option>
               </Select>
             </Form.Item>
-            <Form.Item label="State" style={{ color: 'black',fontWeight:700 }}>
+            <Form.Item
+              label="State"
+              style={{ color: "black", fontWeight: 700 }}
+            >
               <Select
                 mode="multiple"
                 style={{ width: 200 }}

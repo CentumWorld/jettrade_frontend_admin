@@ -27,6 +27,61 @@ const ProfileModal = ({ visible, onCancel }) => {
     email: "",
     gender: "",
   });
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+
+  const getUserIdForToken = (token) => {
+    if (token === stateAdmintoken) {
+      return localStorage.getItem("stateHandlerId");
+    } else if (token === franchiseToken) {
+      return localStorage.getItem("franchiseId");
+    } else if (token === bussinessToken) {
+      return localStorage.getItem("businessId");
+    } else if (token === isSubAdminToken) {
+      return localStorage.getItem("subAdminId");
+    }
+    return "";
+  };
+
+  const fetchProfilePicture = async (token) => {
+    const userId = getUserIdForToken(token);
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const data = {
+      userid: userId,
+    };
+
+    try {
+      let endpoint = "";
+      if (token === stateAdmintoken) {
+        endpoint = "/state/get-sho-profile-photo";
+      } else if (token === franchiseToken) {
+        endpoint = "/state/get-franchise-profile-photo";
+      } else if (token === bussinessToken) {
+        endpoint = "/businessDeveloper/get-bd-profile-photo";
+      }
+      const res = await axios.post(`${apiurl}` + endpoint, data, config);
+      setProfilePictureUrl(res.data.data.imageUrl);
+    } catch (err) {
+      message.warning(err.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    if (visible) {
+      if (stateAdmintoken) {
+        fetchProfilePicture(stateAdmintoken);
+      } else if (franchiseToken) {
+        fetchProfilePicture(franchiseToken);
+      } else if (bussinessToken) {
+        fetchProfilePicture(bussinessToken);
+      }
+    }
+  }, [visible, stateAdmintoken, franchiseToken, bussinessToken]);
 
   useEffect(() => {
     async function fetchStateDetails() {
@@ -42,6 +97,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           }
         );
         const data = await response.json();
+        console.log(data, "oooo");
         setFieldValue(data.data);
       } catch (error) {
         console.error("Error fetching state details", error);
@@ -62,6 +118,7 @@ const ProfileModal = ({ visible, onCancel }) => {
           }
         );
         const data = await response.json();
+
         setFieldValue(data.data);
       } catch (error) {
         console.error("Error fetching state details", error);
@@ -248,7 +305,6 @@ const ProfileModal = ({ visible, onCancel }) => {
   console.log("iMAGE------------>", image);
 
   const handleProfileImageChange = (e) => {
-
     document.getElementById("file-input").click();
 
     if (
@@ -268,7 +324,6 @@ const ProfileModal = ({ visible, onCancel }) => {
       image.file = null;
     }
   };
-
 
   const uploadProfile = (event) => {
     event.preventDefault();
@@ -363,7 +418,11 @@ const ProfileModal = ({ visible, onCancel }) => {
             />
             <label htmlFor="file-input">
               <img
-                src={image.placeholder}
+                src={
+                  image.file
+                    ? image.placeholder
+                    : profilePictureUrl || uploadImg
+                }
                 alt=""
                 height={100}
                 width={100}
@@ -380,6 +439,7 @@ const ProfileModal = ({ visible, onCancel }) => {
                 className="btn btn-primary"
                 type="submit"
                 onClick={uploadProfile}
+                disabled={loading}
               >
                 {loading ? <Spin /> : "Upload"}
               </button>

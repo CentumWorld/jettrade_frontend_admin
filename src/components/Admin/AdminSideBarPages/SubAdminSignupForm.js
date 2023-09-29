@@ -486,7 +486,7 @@ const SubAdminSignUpForm = () => {
                 </div>
               </div>
 
-              <div className="input_label">
+              {/* <div className="input_label">
                 <Checkbox
                   name="isVideoCreator"
                   checked={subadminData.isVideoCreator}
@@ -500,7 +500,8 @@ const SubAdminSignUpForm = () => {
                   Is VideoCreator
                 </Checkbox>
                 <br />
-              </div>
+              </div> */}
+
               {checked ? (
                 <div className="password-input">
                   <p>Sub-Admin ID</p>

@@ -66,7 +66,7 @@ function Navbar() {
       userid: localStorage.getItem("stateHandlerId"),
     };
     try {
-      const res = await axios.post(`${baseUrl}`+"/state/get-sho-profile-photo", data, config );
+      const res = await axios.post(`${apiurl}`+"/state/get-sho-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -83,7 +83,7 @@ function Navbar() {
       userid: localStorage.getItem("frenchiseId"),
     };
     try {
-      const res = await axios.post(`${baseUrl}`+"/franchise/get-franchise-profile-photo", data, config );
+      const res = await axios.post(`${apiurl}`+"/franchise/get-franchise-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
@@ -100,7 +100,7 @@ function Navbar() {
       userid: localStorage.getItem("businessId"),
     };
     try {
-      const res = await axios.post(`${baseUrl}`+"/businessDeveloper/get-bd-profile-photo", data, config );
+      const res = await axios.post(`${apiurl}`+"/businessDeveloper/get-bd-profile-photo", data, config );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);

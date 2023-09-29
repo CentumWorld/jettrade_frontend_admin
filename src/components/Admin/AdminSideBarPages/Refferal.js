@@ -298,8 +298,8 @@ const Refferal = () => {
       )
       .then((res) => {
         console.log(res.data.result, "hii");
-        //setAadhar(res.data.result.aadhar);
-        //setPan(res.data.result.pan);
+        setAadhar(res.data.result.aadhar);
+        setPan(res.data.result.pan);
         fetchMemberDocuments(res.data.result._id);
       })
       .catch((error) => {

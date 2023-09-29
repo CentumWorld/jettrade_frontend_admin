@@ -69,24 +69,26 @@ const BussinessAdminLogin = (props) => {
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
-        console.log("Not login");
-        if (error.response.status === 422) {
-          toast.warning(
-            "Please Fill all Details!",
-            {
-              autoClose: 2000,
-              theme: "dark",
-            },
-            1000
-          );
-          setBussinessAdmin({ bussinessAdmin_id: "", bussinessAdmin_password: "" }); // Use setAdmin to reset the state
-        }
-        if (error.response.status === 404) {
-          toast.warning("Invalid Credential!", {
-            autoClose: 2000,
-            theme: "dark",
-          });
-        }
+        // console.log("Not login");
+        // if (error.response.status === 422) {
+        //   toast.warning(
+        //     "Please Fill all Details!",
+        //     {
+        //       autoClose: 2000,
+        //       theme: "dark",
+        //     },
+        //     1000
+        //   );
+        //   setBussinessAdmin({ bussinessAdmin_id: "", bussinessAdmin_password: "" }); // Use setAdmin to reset the state
+        // }
+        // if (error.response.status === 404) {
+        //   toast.warning("Invalid Credential!", {
+        //     autoClose: 2000,
+        //     theme: "dark",
+        //   });
+        // }
+
+        message.warning(error.response.data.message)
       });
     setShow(false);
   };
@@ -187,7 +189,7 @@ const BussinessAdminLogin = (props) => {
   return <>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Bussiness Login</Modal.Title>
+        <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Bussiness Developer Login</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Tabs defaultActiveKey="1">

@@ -567,7 +567,6 @@ const BusinessDeveloper = () => {
       });
   };
 
-
   const handleImageChange = (e) => {
     e.preventDefault();
     document.getElementById("adhar-image").click();
@@ -622,7 +621,6 @@ const BusinessDeveloper = () => {
     }
   };
 
-
   const handleImageChangePan = (e) => {
     e.preventDefault();
     document.getElementById("pan-image").click();
@@ -675,7 +673,7 @@ const BusinessDeveloper = () => {
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -705,7 +703,7 @@ const BusinessDeveloper = () => {
         setUploadButton(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -734,7 +732,7 @@ const BusinessDeveloper = () => {
         setUploadButtonPan(true);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        message.warning(err.response.data.message);
       });
   };
 
@@ -982,102 +980,125 @@ const BusinessDeveloper = () => {
               fontSize: "18px",
             }}
           >
-            View Documents
+                View Document Details:
           </h6>
         }
         open={openViewModal}
         onOk={closeViewModal}
         onCancel={closeViewModal}
       >
-        <input
-          id="adhar-image"
-          type="file"
-          style={{ display: "none" }}
-          onChange={handleImageChange}
-        />
         <div className="d-flex">
-          <label htmlFor="adhar-image">
-            <img
-              src={aadharCard.placeholder}
-              height={200}
-              width={300}
-              alt="Selected Image"
-              style={{ cursor: "pointer" }}
+          <div>
+            <label htmlFor="adhar-front-image">Adhar Front Side</label>
+            <input
+              id="adhar-image"
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
             />
-          </label>
-          <Button disabled={uploadButton} onClick={uploadAadhar}>
-            Upload
-          </Button>
 
-          <Button
-            className="id-card"
-            // disabled={!loading}
-            type="primary"
-            onClick={() => downloadAadharCard(aadharCard.placeholder)}
-          >
-            Download
-          </Button>
+            <label htmlFor="adhar-image">
+              <img
+                src={aadharCard.placeholder}
+                height={200}
+                width={300}
+                alt="Selected Image"
+                style={{ cursor: "pointer" }}
+              />
+            </label>
+            <Button
+              // disabled={uploadButton}
+              onClick={uploadAadhar}
+            >
+              Upload
+            </Button>
+
+            <Button
+              className="id-card"
+              // disabled={!loading}
+              type="primary"
+              onClick={() => downloadAadharCard(aadharCard.placeholder)}
+            >
+              Download
+            </Button>
+          </div>
         </div>
         <hr />
-
-        <input
-          id="adhar-back-image"
-          type="file"
-          style={{ display: "none" }}
-          onChange={handleAdharBackImageChange}
-        />
         <div className="d-flex">
-          <label htmlFor="adhar-back-image">
-            <img
-              src={aadharCardBackSide.placeholder}
-              height={200}
-              width={300}
-              alt="Selected Image"
-              style={{ cursor: "pointer" }}
+          <div>
+            <label htmlFor="adhar-back-image">Adhar Back Side</label>
+            <input
+              id="adhar-back-image"
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleAdharBackImageChange}
             />
-          </label>
-          <Button disabled={uploadButton} onClick={uploadAadharBackSide}>
-            Upload
-          </Button>
 
-          <Button
-            className="id-card"
-            // disabled={!loading}
-            type="primary"
-            onClick={() => downloadAadharCardBackSide(aadharCardBackSide.placeholder)}
-          >
-            Download
-          </Button>
+            <label htmlFor="adhar-back-image">
+              <img
+                src={aadharCardBackSide.placeholder}
+                height={200}
+                width={300}
+                alt="Selected Image"
+                style={{ cursor: "pointer" }}
+              />
+            </label>
+            <Button
+              //  disabled={uploadButton}
+              onClick={uploadAadharBackSide}
+            >
+              Upload
+            </Button>
+
+            <Button
+              className="id-card"
+              // disabled={!loading}
+              type="primary"
+              onClick={() =>
+                downloadAadharCardBackSide(aadharCardBackSide.placeholder)
+              }
+            >
+              Download
+            </Button>
+          </div>
         </div>
         <hr />
-        <input
-          id="pan-image"
-          type="file"
-          style={{ display: "none" }}
-          onChange={handleImageChangePan}
-        />
         <div className="d-flex">
-          <label htmlFor="pan-image">
-            <img
-              src={panCard.placeholder}
-              height={200}
-              width={300}
-              alt="Selected Image"
-              style={{ cursor: "pointer" }}
-            />
-          </label>
-          <Button disabled={uploadButtonPan} onClick={uploadPan}>
-            Upload
-          </Button>
+          <div>
+            <label htmlFor="pan-image">Pan Card</label>
 
-          <Button
-            className="id-card"
-            // disabled={!loading}
-            type="primary"
-            onClick={() => downloadPanCard(panCard.placeholder)}
-          >
-            Download
-          </Button>
+            <input
+              id="pan-image"
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleImageChangePan}
+            />
+
+            <label htmlFor="pan-image">
+              <img
+                src={panCard.placeholder}
+                height={200}
+                width={300}
+                alt="Selected Image"
+                style={{ cursor: "pointer" }}
+              />
+            </label>
+            <Button
+              // disabled={uploadButtonPan}
+              onClick={uploadPan}
+            >
+              Upload
+            </Button>
+
+            <Button
+              className="id-card"
+              // disabled={!loading}
+              type="primary"
+              onClick={() => downloadPanCard(panCard.placeholder)}
+            >
+              Download
+            </Button>
+          </div>
         </div>
       </Modal>
     </>
