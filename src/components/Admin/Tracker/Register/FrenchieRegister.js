@@ -292,7 +292,7 @@ const FrenchieRegister = (props) => {
                                 onChange={stateRegiInputs}
                             />
                         </div>
-                        <div className='d-flex justify-content-between' style={{ display: 'flex', flexDirection: 'column' }}>
+                        {/* <div className='d-flex justify-content-between' style={{ display: 'flex', flexDirection: 'column' }}> */}
                             <div className='state-field'>
                                 <label>Gender</label><br />
                                 <Select placeholder="Select Gender"
@@ -304,7 +304,6 @@ const FrenchieRegister = (props) => {
                                             gender: value
                                         }))
                                     }
-
                                     style={{ width: '100%' }}>
                                     <Option value="">Gender</Option>
                                     <Option value='Male'>Male</Option>
@@ -362,7 +361,7 @@ const FrenchieRegister = (props) => {
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        {/* </div> */}
                         <div className='state-field'>
                             <label>Front side aadhar</label>
                             <Input type='file'
