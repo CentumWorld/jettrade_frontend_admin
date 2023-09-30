@@ -55,7 +55,6 @@ const AccountModal = ({ isVisible, onClose }) => {
   const businessId = localStorage.getItem("businessId");
   const frenchiseId = localStorage.getItem("frenchiseId");
 
-  console.log("=========>", frenchiseId, businessId, stateHandlerId);
 
   const handleSave = () => {
     let data = {
@@ -87,7 +86,7 @@ const AccountModal = ({ isVisible, onClose }) => {
           message.success(res.data.message);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+          message.warning(err.response.data.message)
         });
     } else if (businessId) {
       axios
@@ -97,21 +96,21 @@ const AccountModal = ({ isVisible, onClose }) => {
           config
         )
         .then((res) => {
-          console.log(res.data);
           message.success(res.data.message);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+          message.warning(err.response.data.message)
+
         });
     } else if (frenchiseId) {
       axios
         .post(`${apiurl}` +"/franchise/create-franchise-bank-account-holder", data, config)
         .then((res) => {
-          console.log(res.data);
           message.success(res.data.message);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+          message.warning(err.response.data.message)
+
         });
     }
   };
@@ -218,6 +217,11 @@ const AccountModal = ({ isVisible, onClose }) => {
                 value={selectedBank}
                 onChange={handleBankSelect}
                 style={{ width: "100%" }}
+                showSearch
+                filterOption = {(input, option)=>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+
+                 }
               >
                 <Option value="" disabled>
                   -- Select a bank --

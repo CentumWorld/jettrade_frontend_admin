@@ -175,7 +175,7 @@ const StateRegister = (props) => {
         <>  
             <div>
                 <Modal
-                    title={<h6 style={{ color: '#007BFF' }}>State Register</h6>}
+                    title={<h6 style={{ color: '#007BFF' }}>S.H.O Register Page</h6>}
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleStateRegiSubmit}
@@ -237,7 +237,9 @@ const StateRegister = (props) => {
                       
 
 
-                        <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}>
+                        {/* <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}> */}
+
+
                             <div className='state-field'>
                                 <label>Gender</label><br />
                                 <Select placeholder="Select Gender"
@@ -277,7 +279,7 @@ const StateRegister = (props) => {
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                      
                         <div className='state-field'>
                             <label>Front side aadhar</label>
                             <Input type='file'

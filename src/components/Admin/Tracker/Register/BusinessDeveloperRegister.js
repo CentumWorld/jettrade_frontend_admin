@@ -232,7 +232,7 @@ const BusinessDeveloperRegister = (props) => {
         <>
             <div>
                 <Modal
-                    title="Business Developar"
+                    title="Business Developar Register page"
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}
@@ -287,7 +287,7 @@ const BusinessDeveloperRegister = (props) => {
                                 onChange={stateRegiInputs}
                             />
                         </div>
-                        <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}>
+                        {/* <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}> */}
                             <div className='state-field'>
                                 <label>Gender</label><br />
                                 <Select placeholder="Select Gender"
@@ -344,7 +344,6 @@ const BusinessDeveloperRegister = (props) => {
                                     ))}
                                 </Select>
                             </div>
-                        </div>
                         <div className='state-field'>
                             <label>Front aadhar card</label>
                             <Input type='file'

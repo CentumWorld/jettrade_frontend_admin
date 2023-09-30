@@ -162,7 +162,7 @@ const BusinessDeveloper = () => {
       render: (isVerify) => {
         const cellStyle = isVerify ? { color: "green" } : { color: "red" };
         return (
-          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verify "}</span>
+          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verified "}</span>
         );
       },
     },
@@ -172,7 +172,7 @@ const BusinessDeveloper = () => {
       render: (isDeleted) => {
         const cellStyle = isDeleted ? { color: "red" } : { color: "green" };
         return (
-          <span style={cellStyle}>{isDeleted ? "Deleted" : "Not Delete"}</span>
+          <span style={cellStyle}>{isDeleted ? "Deleted" : "Not Deleted"}</span>
         );
       },
     },
@@ -386,7 +386,7 @@ const BusinessDeveloper = () => {
     const actionText = isBlocked ? "Unblock" : "Block";
     Modal.confirm({
       title: `${actionText} Business Developer`,
-      content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this business developer?`,
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
@@ -739,7 +739,7 @@ const BusinessDeveloper = () => {
   const callApiToVerifyBD = (bdVerify) => {
     Modal.confirm({
       title: "Verify Business Developer",
-      content: `Are you sure you want to  verify Business Developer?`,
+      content: `Are you sure you want to verify this Business Developer?`,
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||

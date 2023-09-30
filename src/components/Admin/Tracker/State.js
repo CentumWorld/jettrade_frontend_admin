@@ -172,7 +172,6 @@ const State = () => {
       render: (amount) => (
         <span>
           ₹ {amount.toFixed(2)}{" "}
-          {/* Indian Rupee symbol + amount with 2 decimal places */}
         </span>
       ),
     },
@@ -200,7 +199,7 @@ const State = () => {
       render: (isVerify) => {
         const cellStyle = isVerify ? { color: "green" } : { color: "red" };
         return (
-          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verify "}</span>
+          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verified "}</span>
         );
       },
     },
@@ -345,8 +344,8 @@ const State = () => {
   const blockUnblock = (id) => {
     const actionText = isBlocked ? "Unblock" : "Block";
     Modal.confirm({
-      title: `${actionText} State handler`,
-      content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+      title: `${actionText} S.H.O`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this S.H.O?`,
       onOk() {
         const token = localStorage.getItem("adminToken");
         const config = {
@@ -567,8 +566,8 @@ const State = () => {
   const deleteAndRecoverState = (id) => {
     const actionText = isDeleted ? "Recover" : "Delete";
     Modal.confirm({
-      title: `${actionText} State handler`,
-      content: `Are you sure you want to  ${actionText.toLowerCase()} this state?`,
+      title: `${actionText} S.H.O`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this S.H.O?`,
       onOk() {
         const token = localStorage.getItem("adminToken");
         const config = {

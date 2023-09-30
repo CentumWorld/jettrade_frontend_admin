@@ -458,16 +458,17 @@ const ProfileModal = ({ visible, onCancel }) => {
           />
           <FaPenAlt
             onClick={() => handleEditClick("username")} // Enable editing for this field
-            style={{ marginLeft: "1rem" ,
-            cursor: "pointer",
-            transition: "color 0.3s"
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.color = "blue"; // Change the button color on hover
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.color = "initial"; // Reset the button color when mouse leaves
-          }}
+            style={{
+              marginLeft: "1rem",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = "blue"; // Change the button color on hover
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = "initial"; // Reset the button color when mouse leaves
+            }}
           />
         </Form.Item>
         <Form.Item label="Last name" initialValue={fieldValue.lname}>
@@ -482,9 +483,11 @@ const ProfileModal = ({ visible, onCancel }) => {
           />
           <FaPenAlt
             onClick={() => handleEditClick("lastname")} // Enable editing for this field
-            style={{ marginLeft: "1rem" ,  cursor: "pointer",
-            transition: "color 0.3s",}}
-
+            style={{
+              marginLeft: "1rem",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
             onMouseEnter={(e) => {
               e.target.style.color = "blue"; // Change the button color on hover
             }}
@@ -505,8 +508,11 @@ const ProfileModal = ({ visible, onCancel }) => {
           />
           <FaPenAlt
             onClick={() => handleEditClick("mobile")} // Enable editing for this field
-            style={{ marginLeft: "1rem"   ,  cursor: "pointer",
-            transition: "color 0.3s",}}
+            style={{
+              marginLeft: "1rem",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
             onMouseEnter={(e) => {
               e.target.style.color = "blue"; // Change the button color on hover
             }}
@@ -527,15 +533,17 @@ const ProfileModal = ({ visible, onCancel }) => {
           />
           <FaPenAlt
             onClick={() => handleEditClick("email")}
-            style={{ marginLeft: "1rem"  ,  cursor: "pointer", // Add a pointer cursor on hover
-            transition: "color 0.3s", }} // Enable editing for this field
+            style={{
+              marginLeft: "1rem",
+              cursor: "pointer", // Add a pointer cursor on hover
+              transition: "color 0.3s",
+            }} // Enable editing for this field
             onMouseEnter={(e) => {
               e.target.style.color = "blue"; // Change the button color on hover
             }}
             onMouseLeave={(e) => {
               e.target.style.color = "initial"; // Reset the button color when mouse leaves
             }}
-            
           />
         </Form.Item>
         <Form.Item label="Gender" initialValue={fieldValue.gender}>
@@ -551,7 +559,17 @@ const ProfileModal = ({ visible, onCancel }) => {
           </Select>
           <FaPenAlt
             onClick={() => handleEditClick("gender")} // Enable editing for this field
-            style={{ marginLeft: "1rem" }}
+            style={{
+              marginLeft: "1rem",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.color = "blue"; // Change the button color on hover
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = "initial"; // Reset the button color when mouse leaves
+            }}
           />
         </Form.Item>
       </Form>

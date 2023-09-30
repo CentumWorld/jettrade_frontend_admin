@@ -223,7 +223,6 @@ const Frenchie = () => {
 
   const stateToken = localStorage.getItem("stateHandlerToken");
   const stateHandlerRefferalID = localStorage.getItem("stateHandlerRefferalID");
-  console.log("===============>", stateToken, stateHandlerRefferalID);
 
   const fetchFrenchieseDataApi = () => {
     if (token) {
@@ -255,10 +254,6 @@ const Frenchie = () => {
           config
         )
         .then((res) => {
-          console.log(
-            "Franchise in state response -----> ",
-            res.data.data[0].adharCard
-          );
           setFrenchieData(res.data.data);
           setFilteredDataSource(res.data.data);
         })
@@ -277,8 +272,6 @@ const Frenchie = () => {
     setFrenchiseVerify(verify);
   };
   const handleMenuClick = (e) => {
-    console.log(e.key);
-
     if (e.key === "block") {
       blockUnblock(myID);
     } else if (e.key === "view") {
@@ -322,7 +315,7 @@ const Frenchie = () => {
     const actionText = isBlocked ? "Unblock" : "Block";
     Modal.confirm({
       title: `${actionText} Franchise`,
-      content: `Are you sure you want to  ${actionText.toLowerCase()} this member?`,
+      content: `Are you sure you want to  ${actionText.toLowerCase()} this franchise?`,
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
@@ -461,7 +454,6 @@ const Frenchie = () => {
   };
 
   const uploadAadharBackSide = () => {
-    console.log(aadharCardBackSide.file);
     const token =
       localStorage.getItem("adminToken") ||
       localStorage.getItem("stateHandlerToken") ||
@@ -517,7 +509,6 @@ const Frenchie = () => {
   };
 
   const uploadPan = () => {
-    console.log(panCard.file);
     const token =
       localStorage.getItem("adminToken") ||
       localStorage.getItem("stateHandlerToken") ||
@@ -556,7 +547,6 @@ const Frenchie = () => {
     axios
       .post(`${apiurl}` + "/admin/get-one-franchise-details", data, config)
       .then((res) => {
-        console.log(res.data);
         setFranchiseData({
           fname: res.data.data.fname,
           lname: res.data.data.lname,
@@ -634,7 +624,6 @@ const Frenchie = () => {
 
   const deleteAndRecoverFranchise = (id) => {
     const actionText = isDeleted ? "Recover" : "Delete";
-    console.log(!isDeleted);
     Modal.confirm({
       title: `${actionText} Franchise`,
       content: `Are you sure you want to ${actionText.toLowerCase()} this franchise?`,
@@ -688,10 +677,9 @@ const Frenchie = () => {
   };
 
   const callApiToVerifyFrenchise = (frenchiseVerify) => {
-    console.log(frenchiseVerify);
     Modal.confirm({
       title: "Verify Franchise",
-      content: `Are you sure you want to  verify Franchise?`,
+      content: `Are you sure you want to verify this Franchise?`,
       onOk() {
         const token =
           localStorage.getItem("adminToken") ||
@@ -748,13 +736,9 @@ const Frenchie = () => {
   };
 
   const searchUser = (value) => {
-    console.log(value, "value");
-
     setSearchText(value);
 
     const searchNumber = Number(value); // Convert search value to a Number
-
-    console.log(frenchieData, "franchise data is coming");
 
     const filteredData = frenchieData.filter((record) => {
       // Search by number field
@@ -848,7 +832,7 @@ const Frenchie = () => {
                 fontSize: "18px",
               }}
             >
-                View Document Details:
+              View Document Details:
             </h6>
           }
           open={visible}
