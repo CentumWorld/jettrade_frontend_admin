@@ -3,7 +3,7 @@ import axios from "axios";
 import { FiUploadCloud } from "react-icons/fi";
 
 import baseUrl from "../../baseUrl";
-import "../../css/Uservideo.css"; // Import the CSS file for styling
+import "../../css/Uservideo.css"; 
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 

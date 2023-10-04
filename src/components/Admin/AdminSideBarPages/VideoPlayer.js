@@ -123,8 +123,10 @@ const VideoPlayer = ({
       videoId: id,
     };
     axios
-      .post(`${apiurl}`+"/user/fetch_one_video", data, config)
+      .post(`${apiurl}`+"/admin/fetch-one-video", data, config)
       .then((res) => {
+        console.log(res.data, "128"); // Log the response data
+
         setComments(res.data.video.comments);
       })
       .catch((err) => console.log(err.message));
@@ -192,7 +194,7 @@ const VideoPlayer = ({
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/user/fetch-user-one-video-like", data, config)
+      .post(`${apiurl}`+"/admin/admin-fetch-user-one-video-like", data, config)
       .then((res) => {
         setLikeBackGroundColor(res.data.like.likeType);
       })
@@ -210,7 +212,7 @@ const VideoPlayer = ({
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .post(`${apiurl}`+"/user/fetch-user-one-video-dislike", data, config)
+      .post(`${apiurl}`+"/admin/admin-fetch-user-one-video-dislike", data, config)
       .then((res) => {
         console.log(res.data.dislike.disLikeType);
         setDislikeBackGroundColor(res.data.dislike.disLikeType);
@@ -376,10 +378,13 @@ const VideoPlayer = ({
                   className="comment-text"
                   style={{ color: "black", marginBottom: "0px" }}
                 >
-                  {comment.text}
+                 <strong>{comment.userName}</strong>: {comment.text}
                 </p>
                 {activeReplyIndex === parentIndex ? (
                   <div className="reply-input">
+                      <p className="reply-to">
+                      Replying to: <strong>{comment.userName}</strong>
+                    </p>
                     <input
                       type="text"
                       className="comment-input"
@@ -415,7 +420,7 @@ const VideoPlayer = ({
                   <div className="replies-list">
                     {comment.replies.map((reply, replyIndex) => (
                       <div className="reply" key={replyIndex}>
-                        {reply.text}
+                        <strong>{reply.userName}</strong>: {reply.text}
                       </div>
                     ))}
                   </div>

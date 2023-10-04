@@ -201,7 +201,7 @@ const NewRenewal = () => {
                 value={searchByUserId}
               />
               {
-                buttonDisable ? <Button type="primary" onClick={filterData} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>
+                buttonDisable ? <Button type="primary" onClick={filterData} style={{ background: 'white', color: 'black' ,marginBottom: "10px"}} disabled={!searchByUserId}>Search</Button>
                 
                 : <Button type="primary" onClick={filterDataRenewal} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>}
             </div>

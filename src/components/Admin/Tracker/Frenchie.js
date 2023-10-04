@@ -170,7 +170,7 @@ const Frenchie = () => {
       render: (isVerify) => {
         const cellStyle = isVerify ? { color: "green" } : { color: "red" };
         return (
-          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verify "}</span>
+          <span style={cellStyle}>{isVerify ? "Verified" : "Not Verified "}</span>
         );
       },
     },
