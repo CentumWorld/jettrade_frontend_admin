@@ -174,7 +174,7 @@ const TraderAccount = () => {
       render: (amount) => {
         // Format the amount with two decimal places
         const formattedAmount = parseFloat(amount).toFixed(2);
-        return <span>₹{formattedAmount}</span>;
+        return <span style={{ fontWeight: 'bold' }}>₹{formattedAmount}</span>;
       },
     },
 

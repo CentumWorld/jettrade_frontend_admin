@@ -115,6 +115,11 @@ const State = () => {
 
   const columns = [
     {
+      title: "BMM ID",
+      dataIndex: "stateHandlerId",
+      key: "stateHandlerId",
+    },
+    {
       title: "Fname",
       dataIndex: "fname",
       key: "fname",
@@ -124,11 +129,7 @@ const State = () => {
       dataIndex: "lname",
       key: "lname",
     },
-    {
-      title: "SHO Id",
-      dataIndex: "stateHandlerId",
-      key: "stateHandlerId",
-    },
+    
     {
       title: "Phone",
       dataIndex: "phone",
@@ -170,7 +171,7 @@ const State = () => {
       dataIndex: "stateHandlerWallet",
       key: "stateHandlerWallet",
       render: (amount) => (
-        <span>
+        <span style={{fontWeight:'bold'}} >
           ₹ {amount.toFixed(2)}{" "}
         </span>
       ),
@@ -818,7 +819,7 @@ const State = () => {
                 onClick={gotoDashboard}
                 style={{ cursor: "pointer" }}
               />
-              &nbsp;State Head Officer
+              &nbsp;BMM
             </p>
             <Search
               placeholder="Enter search text"
@@ -830,7 +831,7 @@ const State = () => {
             />
 
             <Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add S.H.O
+              <AiFillPlusCircle /> &nbsp;&nbsp;Add BMM
             </Button>
           </div>
         </div>

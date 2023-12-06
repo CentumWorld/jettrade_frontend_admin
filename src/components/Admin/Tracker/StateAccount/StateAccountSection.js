@@ -42,7 +42,7 @@ const StateAccountSection = () => {
 
     const columns = [
         {
-            title: 'State ID',
+            title: 'BMM ID',
             dataIndex: 'stateHandlerId',
             key: 'stateHandlerId',
         },
@@ -81,7 +81,7 @@ const StateAccountSection = () => {
     //approveDate
     const columnsApproved = [
         {
-            title: 'State ID',
+            title: 'BMM ID',
             dataIndex: 'stateHandlerId',
             key: 'stateHandlerId',
         },
@@ -226,7 +226,7 @@ const StateAccountSection = () => {
             key: 'ifscCode',
         },
         {
-            title: 'Account no.',
+            title: 'Account No.',
             dataIndex: 'accountNumber',
             key: 'accountNumber',
         },
@@ -254,7 +254,7 @@ const StateAccountSection = () => {
     // state upi id 
     const columnStateUpi = [
         {
-            title: 'State ID',
+            title: 'BMM ID',
             dataIndex: 'userId',
             key: 'userId',
         },
@@ -303,7 +303,7 @@ const StateAccountSection = () => {
         <>
             <div className='state-account-container'>
                 <div className='state-account-header'>
-                    <div> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/>&nbsp;State Handler Account</div>
+                    <div> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/>&nbsp;BMM Account</div>
                     <div className='state-account-wallet'><FaRupeeSign />{stateTotalBalance}</div>
                 </div>
             </div>
