@@ -52,7 +52,7 @@ function Navbar() {
     else if(isFrachiseToken){
       fetchFranchProfilePicture();
     }else{
-      fetchBussinessProfilePicture();
+      // fetchBussinessProfilePicture();
     }
   })
 
@@ -90,22 +90,22 @@ function Navbar() {
     }
   };
   
-  const fetchBussinessProfilePicture =  async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${isBussinessDeveloperToken}`,
-      },
-    };
-    const data = {
-      userid: localStorage.getItem("businessId"),
-    };
-    try {
-      const res = await axios.post(`${apiurl}`+"/businessDeveloper/get-bd-profile-photo", data, config );
-      setUserAv(res.data.data.imageUrl);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  // const fetchBussinessProfilePicture =  async () => {
+  //   const config = {
+  //     headers: {
+  //       Authorization: `Bearer ${isBussinessDeveloperToken}`,
+  //     },
+  //   };
+  //   const data = {
+  //     userid: localStorage.getItem("businessId"),
+  //   };
+  //   try {
+  //     const res = await axios.post(`${apiurl}`+"/businessDeveloper/get-bd-profile-photo", data, config );
+  //     setUserAv(res.data.data.imageUrl);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
   const handleAccountModalOpen = () => {
     setAccountModalVisible(true);
   };
@@ -253,9 +253,8 @@ function Navbar() {
         {/* <Menu.Item key="subadmin">Back Office</Menu.Item> */}
         <Menu.Item key="sho">BMM</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-        
-        {/* <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
-        {/* <Menu.Item key="video">Video Creator</Menu.Item> */}
+        <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item>
+        <Menu.Item key="video">Video Creator</Menu.Item>
       </Menu>
     );  
 

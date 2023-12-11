@@ -61,7 +61,7 @@ const NewRenewal = () => {
       render: (activationAmount) => {
         // Format the amount with two decimal places
         const formattedAmount = parseFloat(activationAmount).toFixed(2);
-        return <span>₹{formattedAmount}</span>;
+        return <span style={{ fontWeight: 'bold' }}>₹{formattedAmount}</span>;
       },
     },
     {
@@ -89,7 +89,7 @@ const NewRenewal = () => {
       render: (renewalAmount) => {
         // Format the amount with two decimal places
         const formattedAmount = parseFloat(renewalAmount).toFixed(2);
-        return <span>₹{formattedAmount}</span>;
+        return <span style={{ fontWeight: 'bold' }}>₹{formattedAmount}</span>;
       },
     },
     {

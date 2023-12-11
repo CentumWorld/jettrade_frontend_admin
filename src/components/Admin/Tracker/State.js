@@ -115,6 +115,11 @@ const State = () => {
 
   const columns = [
     {
+      title: "BMM ID",
+      dataIndex: "stateHandlerId",
+      key: "stateHandlerId",
+    },
+    {
       title: "Fname",
       dataIndex: "fname",
       key: "fname",
@@ -170,7 +175,7 @@ const State = () => {
       dataIndex: "stateHandlerWallet",
       key: "stateHandlerWallet",
       render: (amount) => (
-        <span>
+        <span style={{fontWeight:'bold'}} >
           ₹ {amount.toFixed(2)}{" "}
         </span>
       ),
@@ -830,7 +835,7 @@ const State = () => {
             />
 
             <Button type="primary" onClick={showModal}>
-              <AiFillPlusCircle /> &nbsp;&nbsp;Add S.H.O
+              <AiFillPlusCircle /> &nbsp;&nbsp;Add BMM
             </Button>
           </div>
         </div>

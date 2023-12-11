@@ -175,7 +175,7 @@ const StateRegister = (props) => {
         <>  
             <div>
                 <Modal
-                    title={<h6 style={{ color: '#007BFF' }}>S.H.O Register Page</h6>}
+                    title={<h6 style={{ color: '#007BFF' }}>BMM Register</h6>}
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleStateRegiSubmit}
@@ -306,9 +306,9 @@ const StateRegister = (props) => {
                             />
                         </div>
                         <div className='state-field'>
-                            <label>State Handler ID</label>
+                            <label>BMM ID</label>
                             <Input type='text'
-                                placeholder='State Handler Id'
+                                placeholder='BMM Id'
                                 name="stateRegisterId"
                                 value={stateRegisterData.stateRegisterId}
                                 onChange={stateRegiInputs}
