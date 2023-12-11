@@ -1028,7 +1028,7 @@ const RefferalPayout = () => {
     { title: "Admin ID", dataIndex: "admin_id", key: "admin_id" },
     { title: "Credit Amount", dataIndex: "creditAmount", key: "creditAmount" },
     { title: "Type", dataIndex: "Type", key: "Type" },
-    { title: "Reffer SHO ID", dataIndex: "refferUserId", key: "refferUserId" },
+    { title: "Refer BMM ID", dataIndex: "refferUserId", key: "refferUserId" },
     { title: "Date", dataIndex: "Date", key: "Date", render: (text) => moment(text).format("DD/MM/YY HH:mm:ss") },
   ];
 
@@ -1086,12 +1086,9 @@ const RefferalPayout = () => {
               >
                 <Select.Option value="trader">User</Select.Option>
                 <Select.Option value="member">Member</Select.Option>
-                <Select.Option value="businessdeveloper">
-                  Business Developer
-                </Select.Option>
                 <Select.Option value="franchise">Franchise</Select.Option>
                 <Select.Option value="statehandler">
-                  State Handler
+                  BMM
                 </Select.Option>
               </Select>
             )}
@@ -1104,12 +1101,9 @@ const RefferalPayout = () => {
                 onChange={handleRoleChange}
               >
                 <Select.Option value="member">Member</Select.Option>
-                <Select.Option value="businessdeveloper">
-                  Business Developer
-                </Select.Option>
                 <Select.Option value="franchise">Franchise</Select.Option>
                 <Select.Option value="statehandler">
-                  State Handler
+                  BMM
                 </Select.Option>
               </Select>
             )}
@@ -1121,9 +1115,6 @@ const RefferalPayout = () => {
                 onChange={handleRoleChange}
               >
                 <Select.Option value="member">Member</Select.Option>
-                <Select.Option value="businessdeveloper">
-                  Business Developer
-                </Select.Option>
                 <Select.Option value="franchise">Franchise</Select.Option>
               </Select>
             )}

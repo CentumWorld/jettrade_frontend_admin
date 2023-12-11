@@ -841,7 +841,7 @@ const DisplayCard = () => {
             </div>
             <div className="trading-chart-view">
               <span style={{ color: "yellow", cursor: "pointer" }}>
-                {totalWalletAmount}
+              ₹{totalWalletAmount}
               </span>
             </div>
           </div>

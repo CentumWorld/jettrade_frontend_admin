@@ -125,7 +125,7 @@ const State = () => {
       key: "lname",
     },
     {
-      title: "SHO Id",
+      title: "BMM Id",
       dataIndex: "stateHandlerId",
       key: "stateHandlerId",
     },
@@ -818,7 +818,7 @@ const State = () => {
                 onClick={gotoDashboard}
                 style={{ cursor: "pointer" }}
               />
-              &nbsp;State Head Officer
+              &nbsp;BMM
             </p>
             <Search
               placeholder="Enter search text"

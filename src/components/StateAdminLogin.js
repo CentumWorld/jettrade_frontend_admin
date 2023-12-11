@@ -152,7 +152,7 @@ const StateAdminLogin = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>State Login and Registration</Modal.Title>
+          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>BMM Login and Registration</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Tabs defaultActiveKey="1">
