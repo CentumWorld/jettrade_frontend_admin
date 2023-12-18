@@ -68,7 +68,7 @@ const DisplayCard = () => {
   });
   const [withdrawalStateAmount, setWithdrawalAmount] = useState(0);
   const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false);
-
+  const [referralId, setReferralId] = useState("");
   const handleMenuClick = (e) => {
     console.log(e.key);
     if (e.key === "chat-with-admin") {
@@ -705,9 +705,50 @@ const DisplayCard = () => {
         });
     }
   };
+  // const copyToClipboard = () => {
+  //   navigator.clipboard.writeText(ReferralId);
+  //   message.success("Text copied to clipboard: " + ReferralId);
+  // };
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(ReferralId);
-    message.success("Text copied to clipboard: " + ReferralId);
+    const textField = document.createElement("textarea");
+    textField.innerText = referralId;
+    document.body.appendChild(textField);
+    textField.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      if (successful) {
+        message.success("Text copied to clipboard: " + referralId);
+      } else {
+        fallbackCopyTextToClipboard();
+      }
+    } catch (err) {
+      fallbackCopyTextToClipboard();
+    }
+
+    document.body.removeChild(textField);
+  };
+
+  const fallbackCopyTextToClipboard = () => {
+    const textArea = document.createElement("textarea");
+    textArea.value = referralId;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      if (successful) {
+        message.success("Text copied to clipboard: " + referralId);
+      } else {
+        message.error("Copy to clipboard failed. Please try manually.");
+      }
+    } catch (err) {
+      message.error("Copy to clipboard failed. Please try manually.");
+    }
+
+    document.body.removeChild(textArea);
   };
 
   useEffect(() => {

@@ -1,0 +1,9 @@
+/* Add this CSS to your stylesheet or component */
+.error-message {
+    padding: 10px;
+    background-color: #ffcccc;
+    color: #ff0000; /* Red color for error text */
+    border: 1px solid #ff0000;
+    margin-bottom: 15px;
+  }
+  
