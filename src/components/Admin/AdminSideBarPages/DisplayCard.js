@@ -177,9 +177,9 @@ const DisplayCard = () => {
   // Tracker menu
   const trackerMenu = (
     <Menu onClick={handleTrackerDetailsMenuClick}>
-      <Menu.Item key="state-details">State Handler</Menu.Item>
+      <Menu.Item key="state-details">BMM</Menu.Item>
       <Menu.Item key="frenchise-details">Franchise</Menu.Item>
-      <Menu.Item key="business-developer-details">Business Developer</Menu.Item>
+      {/* <Menu.Item key="business-developer-details">Business Developer</Menu.Item> */}
     </Menu>
   );
 
@@ -711,45 +711,24 @@ const DisplayCard = () => {
   // };
 
   const copyToClipboard = () => {
-    const textField = document.createElement("textarea");
-    textField.innerText = referralId;
-    document.body.appendChild(textField);
-    textField.select();
-
+    const input = document.createElement('input');
+    input.value = ReferralId;
+    document.body.appendChild(input);
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
+  
     try {
-      const successful = document.execCommand("copy");
-      if (successful) {
-        message.success("Text copied to clipboard: " + referralId);
-      } else {
-        fallbackCopyTextToClipboard();
-      }
-    } catch (err) {
-      fallbackCopyTextToClipboard();
-    }
-
-    document.body.removeChild(textField);
-  };
-
-  const fallbackCopyTextToClipboard = () => {
-    const textArea = document.createElement("textarea");
-    textArea.value = referralId;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    try {
-      const successful = document.execCommand("copy");
-      if (successful) {
-        message.success("Text copied to clipboard: " + referralId);
-      } else {
-        message.error("Copy to clipboard failed. Please try manually.");
-      }
-    } catch (err) {
+      document.execCommand('copy');
+      message.success("Text copied to clipboard: " + ReferralId);
+    } catch (error) {
+      console.error("Unable to copy to clipboard:", error);
       message.error("Copy to clipboard failed. Please try manually.");
     }
-
-    document.body.removeChild(textArea);
+  
+    document.body.removeChild(input);
   };
+  
+  
 
   useEffect(() => {
     if (isStateHandler) {
