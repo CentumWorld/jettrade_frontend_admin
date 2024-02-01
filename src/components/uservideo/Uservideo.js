@@ -48,7 +48,7 @@ const Uservideo = () => {
       setIsUploading(true);
       setUploadProgress(0); // Reset progress before starting the upload
 
-      await axios.post(`${apiurl}`+"/admin/createvideo", formData, {
+      await axios.post("/admin/createvideo", formData, {
         headers: {
           Authorization: `Bearer ${
             localStorage.getItem("adminToken") ||
