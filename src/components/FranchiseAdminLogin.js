@@ -54,6 +54,16 @@ const FranchiseAdminLogin = (props) => {
   const [selectedCities, setSelectedCities] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [show, setShow] = useState(true);
+
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+  const [errorMessage, setErrorMessage] = useState("");
+
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
+
   const handleClose = () => setShow((prev) => !prev);
   props.franchiseLoginFunc(show);
 
@@ -162,6 +172,7 @@ const FranchiseAdminLogin = (props) => {
   }
 
   const franchiseRegister = (value) => {
+    setLoading(true);
     console.log(value, aadharImage.file, panImage.file, stateRegisterData.referredId)
     const formData = new FormData();
     formData.append("referredId", stateRegisterData.referredId)
@@ -182,10 +193,13 @@ const FranchiseAdminLogin = (props) => {
       .then((res) => {
         setShow(false)
         message.success(res.data.message);
+        setLoading(false);
       })
       .catch((err) => {
-        setShow(false)
-        message.warning(err.response.data.message);
+        // setShow(false)
+        setErrorMessage(err.response.data.message);
+        setLoading(false);
+        // message.warning(err.response.data.message);
       })
   }
 
@@ -196,10 +210,13 @@ const FranchiseAdminLogin = (props) => {
       <ToastContainer />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Franchise Login</Modal.Title>
+          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>{activeTab === "1" ? "Franchise Login" : "Registration"}</Modal.Title>
         </Modal.Header>
+        {errorMessage && ( // Conditionally render error message
+    <div className="error-message">{errorMessage}</div>
+  )}
         <Modal.Body>
-          <Tabs defaultActiveKey="1" onChange={switchTab}>
+          <Tabs defaultActiveKey="1"  activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="Sign In" key="1">
               <div className="form-content">
                 <form onSubmit={adminLogin} autoComplete="off">
@@ -480,7 +497,7 @@ const FranchiseAdminLogin = (props) => {
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-                    Submit
+                  {loading ? "Submitting..." : "Submit"}
                   </Button>
                 </Form.Item>
               </Form>

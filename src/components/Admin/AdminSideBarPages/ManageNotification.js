@@ -365,14 +365,12 @@ const ManageNotification = () => {
               <Option value="all">All</Option>
               <Option value="allTraders">All Traders</Option>
               <Option value="allReferrals">All Members</Option>
-              <Option value="allSho">All SHO</Option>
+              <Option value="allSho">All BMM</Option>
               <Option value="allFranchise">All Franchise</Option>
-              <Option value="allBusinessDev">All Business Dev</Option>
               <Option value="particularTrader">Particular Trader</Option>
               <Option value="particularReferral">Particular Member</Option>
-              <Option value="particularSho">Particular SHO</Option>
+              <Option value="particularSho">Particular BMM</Option>
               <Option value="particularFranchise">Particular Franchise</Option>
-              <Option value="particularBusinessDev">Particular Business Dev</Option>
             </Select>
 
             {selectedOption === 'all' && (

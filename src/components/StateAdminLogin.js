@@ -9,6 +9,7 @@ import { UserContext } from "../App";
 import baseUrl from "../baseUrl";
 
 import allState from "./Admin/Tracker/AllStateAndDistrict";
+import "../css/BmmLoginSingup.css";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
@@ -44,6 +45,15 @@ const StateAdminLogin = (props) => {
   const [panImage, setPanImage] = useState({
     file: null,
   });
+
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+  const [errorMessage, setErrorMessage] = useState("");
+
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
 
   const adminLogin = (e) => {
     e.preventDefault();
@@ -121,6 +131,7 @@ const StateAdminLogin = (props) => {
   }
 
   const stateRegister = (value) => {
+    setLoading(true);
     console.log(value, aadharImage.file)
     const formData = new FormData();
     formData.append("fname", value.fname);
@@ -141,10 +152,13 @@ const StateAdminLogin = (props) => {
         console.log(res.data)
         handleClose()
         message.success(res.data.message)
+        setLoading(false);
         
       })
       .catch((err) => {
-        message.warning(err.response.data.message)
+        // message.warning(err.response.data.message)
+        setErrorMessage(err.response.data.message);
+        setLoading(false);
       })
   }
 
@@ -152,10 +166,13 @@ const StateAdminLogin = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>BMM Login and Registration</Modal.Title>
+          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}> {activeTab === "1" ? "BMM Login" : "Registration"}</Modal.Title>
         </Modal.Header>
+        {errorMessage && ( // Conditionally render error message
+    <div className="error-message">{errorMessage}</div>
+  )}
         <Modal.Body>
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="1" activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="Sign In" key="1">
               <div className="form-content">
                 <form onSubmit={adminLogin} autoComplete="off">
@@ -376,8 +393,8 @@ const StateAdminLogin = (props) => {
                     <Input.Password placeholder="Password" />
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-                      Submit
+                    <Button type="primary" htmlType="submit"  loading={loading}style={{ float: "right" }}>
+                    {loading ? "Submitting..." : "Submit"}
                     </Button>
                   </Form.Item>
                 </Form>

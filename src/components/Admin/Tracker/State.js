@@ -129,7 +129,11 @@ const State = () => {
       dataIndex: "lname",
       key: "lname",
     },
-    
+    {
+      title: "BMM Id",
+      dataIndex: "stateHandlerId",
+      key: "stateHandlerId",
+    },
     {
       title: "Phone",
       dataIndex: "phone",
