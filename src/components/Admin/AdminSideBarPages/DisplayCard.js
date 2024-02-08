@@ -8,6 +8,7 @@ import TrialProgressiveBar from "./TrialProgressiveBar";
 import ExpireProgressiveBar from "./ExpireProgressiveBar";
 import { BsWallet2 } from "react-icons/bs";
 import { FaCopy } from "react-icons/fa";
+import { IoShareSocialSharp } from "react-icons/io5";
 import {
   Modal,
   Input,
@@ -19,6 +20,7 @@ import {
   Menu,
 } from "antd";
 import { FaRupeeSign } from "react-icons/fa";
+import ShareModal from "../../../common/ShareModal";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
@@ -68,6 +70,7 @@ const DisplayCard = () => {
   });
   const [withdrawalStateAmount, setWithdrawalAmount] = useState(0);
   const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false);
+  const [openSharModal, setOpenShareModal] = useState(false);
 
   const handleMenuClick = (e) => {
     console.log(e.key);
@@ -386,13 +389,14 @@ const DisplayCard = () => {
       axios
         .get(`${apiurl}` + "/state/get-own-state-details", config)
         .then((res) => {
+
           setPaymentModal(res.data.data.firstPayment);
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
           setVerifyDate(res.data.data.verifyDate);
+          console.log(res.data.data.firstPayment,res.data.data.stateHandlerWallet, res.data.data.verifyDate, "396");
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString);
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
@@ -803,16 +807,28 @@ const DisplayCard = () => {
       }
       fetchAdminDetails();
     }
-  }, [
-  ]);
+  }, []);
+
+  const openModal = () => {
+    setOpenShareModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenShareModal(false);
+  };
 
   return (
     <>
+      <ShareModal
+        openSharModal={openSharModal}
+        handleClose={handleClose}
+        referralID={ReferralId}
+      />
       <div className="card1-container">
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
           <div className="card1">
             <div className="d-flex">
-              <h6>UserID :</h6> &nbsp;&nbsp;{" "}
+              <h6 style={{ textAlign: "start" }}>UserID :</h6>{" "}
               <span style={{ color: "yellow" }}>
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? Id
@@ -820,10 +836,10 @@ const DisplayCard = () => {
               </span>
             </div>
             <div className="d-flex">
-              <h6>Referral ID :</h6>&nbsp;&nbsp;{" "}
+              <h6>Referral ID :</h6>{" "}
               <span
                 style={{ color: "white", cursor: "pointer" }}
-                onClick={ copyToClipboard}
+                onClick={copyToClipboard}
               >
                 {isAdmin || isStateHandler || isFrenchise || isBusinessHandler
                   ? ReferralId
@@ -837,11 +853,24 @@ const DisplayCard = () => {
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
           <div className="card1">
             <div className="trading-chart">
+              <h6>Share and Earn</h6>
+            </div>
+            <div className="trading-chart-view">
+              <span style={{ color: "yellow", cursor: "pointer" }}>
+                <IoShareSocialSharp onClick={openModal} />
+              </span>
+            </div>
+          </div>
+        )}
+
+        {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
+          <div className="card1">
+            <div className="trading-chart">
               <h6>Total Wallet Amount</h6>
             </div>
             <div className="trading-chart-view">
               <span style={{ color: "yellow", cursor: "pointer" }}>
-              ₹{totalWalletAmount}
+                ₹{totalWalletAmount}
               </span>
             </div>
           </div>
@@ -885,61 +914,6 @@ const DisplayCard = () => {
           </div>
         )}
 
-        {/* <div className="card1">
-          <div className="live-chat">
-            <h6>Live Chat</h6>
-          </div>
-          {isAdmin || isSubAdmin ? (
-            <>
-
-              <div className="live-chat">
-                <Dropdown
-                  overlay={AdminChatMenu}
-                  trigger={["click"]}
-                  placement="topCenter"
-                >
-                  <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
-                </Dropdown>
-              </div>
-            </>
-          ) : null}
-
-          {isStateHandler && (
-            <>
-              <div className="live-chat">
-                <Dropdown
-                  overlay={stateMenu}
-                  trigger={["click"]}
-                  placement="bottomCenter"
-                >
-                  <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
-                </Dropdown>
-              </div>
-            </>
-          )}
-          {isFrenchise && (
-            <div className="live-chat">
-              <Dropdown
-                overlay={menu}
-                trigger={["click"]}
-                placement="bottomCenter"
-              >
-                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
-              </Dropdown>
-            </div>
-          )}
-          {isBusinessHandler && (
-            <div className="live-chat">
-              <Dropdown
-                overlay={businessChatMenu}
-                trigger={["click"]}
-                placement="bottomCenter"
-              >
-                <span style={{ color: "yellow", cursor: "pointer" }}>Chat with</span>
-              </Dropdown>
-            </div>
-          )}
-        </div> */}
         {isStateHandler || isBusinessHandler || isFrenchise ? (
           <div className="card1">
             <div className="live-chat">
@@ -1041,19 +1015,21 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
-        <div className="card1">
-          <div className="subscription-card">
-            <h6>Subscription</h6>
+        {isAdmin || isSubAdmin ? (
+          <div className="card1">
+            <div className="subscription-card">
+              <h6>Subscription</h6>
+            </div>
+            <div className="subscription-card-view">
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={viewSubscription}
+              >
+                View
+              </span>
+            </div>
           </div>
-          <div className="subscription-card-view">
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={viewSubscription}
-            >
-              View
-            </span>
-          </div>
-        </div>
+        ) : null}
 
         <div className="card1">
           <div className="refferal-payout">
@@ -1068,24 +1044,6 @@ const DisplayCard = () => {
               view
             </span>
           </div>
-          {/* <div className="d-flex">
-            <h6>Trader:</h6>&nbsp;&nbsp;{" "}
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={refferalPayoutTrader}
-            >
-              View
-            </span>
-          </div>
-          <div className="d-flex">
-            <h6>Referral:</h6>&nbsp;&nbsp;{" "}
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={refferalPayoutRefferal}
-            >
-              View
-            </span>
-          </div> */}
         </div>
       </div>
 
@@ -1177,15 +1135,11 @@ const DisplayCard = () => {
           onCancel={closeStatePaymentModal}
           footer={null}
         >
-          {isBusinessHandler ? (
+          {isStateHandler || isFrenchise ? (
             <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
-              You can request for withdrawal after {dayDifference} days.
+               {verifyDate === undefined? "You are not veriyfy yet!": `You can request for withdrawal after  ${dayDifference} days` }
             </h5>
-          ) : (
-            <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
-              You can request for withdrawal after {dayDifference} days.
-            </h5>
-          )}
+          ) : ""}
         </Modal>
       )}
     </>
