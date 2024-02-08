@@ -307,7 +307,7 @@ const ManageSubscription = () => {
       {/* <div className="manage-subscription-card"> */}
       <div className="manage-subscription-heading">
         <div className="manage-subscription-navbar">
-          <p style={{color:'wheat'}}> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Manage Subscription</p>
+          <p style={{color:'#000'}}> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Manage Subscription</p>
           <div className="searcing-Box">
             <Input
               placeholder="Search by userid"

@@ -71,7 +71,7 @@ const DisplayCard = () => {
   const [withdrawalStateAmount, setWithdrawalAmount] = useState(0);
   const [openStateHandlerModal, setOpenStateHandlerModal] = useState(false);
   const [openSharModal, setOpenShareModal] = useState(false);
-
+  const [referralId, setReferralId] = useState("");
   const handleMenuClick = (e) => {
     console.log(e.key);
     if (e.key === "chat-with-admin") {
@@ -180,9 +180,9 @@ const DisplayCard = () => {
   // Tracker menu
   const trackerMenu = (
     <Menu onClick={handleTrackerDetailsMenuClick}>
-      <Menu.Item key="state-details">State Handler</Menu.Item>
+      <Menu.Item key="state-details">BMM</Menu.Item>
       <Menu.Item key="frenchise-details">Franchise</Menu.Item>
-      <Menu.Item key="business-developer-details">Business Developer</Menu.Item>
+      {/* <Menu.Item key="business-developer-details">Business Developer</Menu.Item> */}
     </Menu>
   );
 
@@ -709,10 +709,30 @@ const DisplayCard = () => {
         });
     }
   };
+  // const copyToClipboard = () => {
+  //   navigator.clipboard.writeText(ReferralId);
+  //   message.success("Text copied to clipboard: " + ReferralId);
+  // };
+
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(ReferralId);
-    message.success("Text copied to clipboard: " + ReferralId);
+    const input = document.createElement('input');
+    input.value = ReferralId;
+    document.body.appendChild(input);
+    input.select();
+    input.setSelectionRange(0, 99999); // For mobile devices
+  
+    try {
+      document.execCommand('copy');
+      message.success("Text copied to clipboard: " + ReferralId);
+    } catch (error) {
+      console.error("Unable to copy to clipboard:", error);
+      message.error("Copy to clipboard failed. Please try manually.");
+    }
+  
+    document.body.removeChild(input);
   };
+  
+  
 
   useEffect(() => {
     if (isStateHandler) {

@@ -259,7 +259,7 @@ function Navbar() {
     );  
 
     const handleLogout = () => {
-      fetch("/admin/logout", {
+      fetch(`${apiurl}`+"/admin/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",
