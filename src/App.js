@@ -128,7 +128,7 @@ function App() {
     localStorage.removeItem("adminToken");
     localStorage.removeItem("adminId");
     localStorage.removeItem("login");
-
+    localStorage.clear();
     // Redirect to logout page
     navigate("/logout");
   };

@@ -249,7 +249,7 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        {/* <Menu.Item key="admin">Admin</Menu.Item> */}
+        <Menu.Item key="admin">Admin</Menu.Item>
         {/* <Menu.Item key="subadmin">Back Office</Menu.Item> */}
         <Menu.Item key="sho">BMM</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
@@ -310,11 +310,11 @@ function Navbar() {
             Wallet <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
           </Menu.Item>
         )}
-        {(isStateHandlerToken || isFrachiseToken) && (
+        {/* {(isStateHandlerToken || isFrachiseToken) && (
           <Menu.Item key="brochure" onClick={handleMenuClick}>
             Download brochure
           </Menu.Item>
-        )}
+        )} */}
         <Menu.Divider />
         <Menu.Item key="logout" onClick={handleLogout}>
           Logout
