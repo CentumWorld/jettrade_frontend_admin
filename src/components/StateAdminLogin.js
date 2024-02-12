@@ -7,13 +7,16 @@ import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
 import baseUrl from "../baseUrl";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 import allState from "./Admin/Tracker/AllStateAndDistrict";
 import "../css/BmmLoginSingup.css";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
-const mobileNumberRegex = /^[6789]\d{9}$/;
+// const mobileNumberRegex = /^[6789]\d{9}$/;
+const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
 const { Option } = Select;
 
 
@@ -137,6 +140,7 @@ const StateAdminLogin = (props) => {
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
+    // formData.append("phone",'+' + value.mobile);
     formData.append("phone", value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
@@ -275,7 +279,7 @@ const StateAdminLogin = (props) => {
                       },
                     ]}
                   >
-                    <Input placeholder="Mobile no" />
+                    <PhoneInput  country={'in'}  placeholder="Mobile no" />
                   </Form.Item>
                   <Form.Item
                     label="Gender"
