@@ -145,7 +145,7 @@ function UserSidebar() {
         className="userSidebar"
       >
         <div className="top_section">
-          {isOpen && <h1 className="logo">Badal</h1>}
+          {/* {isOpen && <h1 className="logo">Badal</h1>} */}
 
           {isOpen && (
             <div className="setting">

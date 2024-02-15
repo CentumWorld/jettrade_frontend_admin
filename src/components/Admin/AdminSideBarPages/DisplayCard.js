@@ -21,6 +21,7 @@ import {
 } from "antd";
 import { FaRupeeSign } from "react-icons/fa";
 import ShareModal from "../../../common/ShareModal";
+import card from '../../../img/JTF.gif'
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
@@ -846,7 +847,16 @@ const DisplayCard = () => {
       />
       <div className="card1-container">
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="d-flex">
               <h6 style={{ textAlign: "start" }}>UserID :</h6>{" "}
               <span style={{ color: "yellow" }}>
@@ -871,7 +881,16 @@ const DisplayCard = () => {
         )}
 
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="trading-chart">
               <h6>Share and Earn</h6>
             </div>
@@ -884,7 +903,15 @@ const DisplayCard = () => {
         )}
 
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}>
             <div className="trading-chart">
               <h6>Total Wallet Amount</h6>
             </div>
@@ -901,7 +928,16 @@ const DisplayCard = () => {
           isStateHandler ||
           isFrenchise ||
           isBusinessHandler) && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="centumo">
               <h6>CENTUMO Swap</h6>
             </div>
@@ -919,23 +955,59 @@ const DisplayCard = () => {
         )}
 
         {isAdmin && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <RunningProgressiveBar percent={progressiveBar} />
           </div>
         )}
         {isAdmin && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <TrialProgressiveBar percent={progressiveBar} />
           </div>
         )}
         {isAdmin && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <ExpireProgressiveBar percent={progressiveBar} />
           </div>
         )}
 
         {isStateHandler || isBusinessHandler || isFrenchise ? (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="live-chat">
               <h6>Withdrawal</h6>
             </div>
@@ -952,7 +1024,16 @@ const DisplayCard = () => {
         ) : null}
 
         {isAdmin && (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="trading-chart">
               <h6>Total Subscription Amount</h6>
             </div>
@@ -964,7 +1045,16 @@ const DisplayCard = () => {
           </div>
         )}
 
-        <div className="card1">
+        <div className="card1"
+         style={{
+          backgroundImage: `url(${card})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center"
+        }}
+        >
           <div className="trading-chart">
             <h6>Trading Chart</h6>
           </div>
@@ -977,7 +1067,16 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
-        <div className="card1">
+        <div className="card1"
+         style={{
+          backgroundImage: `url(${card})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center"
+        }}
+        >
           <div className="user-details">
             <h6>Trader Details</h6>
           </div>
@@ -991,7 +1090,16 @@ const DisplayCard = () => {
           </div>
         </div>
 
-        <div className="card1">
+        <div className="card1"
+         style={{
+          backgroundImage: `url(${card})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center"
+        }}
+        >
           <div className="refferal-details">
             <h6>Member Details</h6>
           </div>
@@ -1006,7 +1114,16 @@ const DisplayCard = () => {
         </div>
 
         {isAdmin || isSubAdmin ? (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="refferal-details">
               <h6>Tracker</h6>
             </div>
@@ -1022,7 +1139,16 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        <div className="card1">
+        <div className="card1"
+         style={{
+          backgroundImage: `url(${card})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center"
+        }}
+        >
           <div className="push-notification-card">
             <h6>Push Notification</h6>
           </div>
@@ -1036,7 +1162,16 @@ const DisplayCard = () => {
           </div>
         </div>
         {isAdmin || isSubAdmin ? (
-          <div className="card1">
+          <div className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center"
+          }}
+          >
             <div className="subscription-card">
               <h6>Subscription</h6>
             </div>
@@ -1051,7 +1186,16 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        <div className="card1">
+        <div className="card1"
+         style={{
+          backgroundImage: `url(${card})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center bottom",
+          display:"flex",
+          flexDirection:"column",
+          alignItems:"center"
+        }}
+        >
           <div className="refferal-payout">
             <h6>Referral Payout</h6>
           </div>
