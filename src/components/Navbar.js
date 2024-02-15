@@ -310,11 +310,11 @@ function Navbar() {
             Wallet <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
           </Menu.Item>
         )}
-        {(isStateHandlerToken || isFrachiseToken) && (
+        {/* {(isStateHandlerToken || isFrachiseToken) && (
           <Menu.Item key="brochure" onClick={handleMenuClick}>
             Download brochure
           </Menu.Item>
-        )}
+        )} */}
         <Menu.Divider />
         <Menu.Item key="logout" onClick={handleLogout}>
           Logout

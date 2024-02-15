@@ -12,6 +12,8 @@ import FrenchieRegister from "./Admin/Tracker/Register/FrenchieRegister";
 import allState from "./Admin/Tracker/AllStateAndDistrict";
 import { MdVerified } from 'react-icons/md'
 import {ImCross} from 'react-icons/im'
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 
 const apiurl = baseUrl.apiUrl
@@ -27,7 +29,7 @@ const FranchiseAdminLogin = (props) => {
     franchiseAdmin_id: "",
     franchiseAdmin_password: "",
   });
-  const mobileNumberRegex = /^[6789]\d{9}$/;
+  const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
   const [stateFrenchise, setStateFrenchise] = useState([]);
   const [stateRegisterData, setStateRegisterData] = useState({
     fname: "",
@@ -179,6 +181,7 @@ const FranchiseAdminLogin = (props) => {
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
+    // formData.append("phone",'+' + value.mobile);
     formData.append("phone", value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
@@ -337,7 +340,7 @@ const FranchiseAdminLogin = (props) => {
                     },
                   ]}
                 >
-                  <Input placeholder="Mobile no" />
+                  <PhoneInput country={'in'} placeholder="Mobile no" />
                 </Form.Item>
                 <Form.Item
                   label="Gender"
