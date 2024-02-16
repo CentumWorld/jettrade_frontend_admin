@@ -28,11 +28,8 @@ function AdminSideBar() {
     useState([]);
   const [notification, setNotification] = useState(0);
   const openModal = () => {
-    // setShowModal(true);
+    
   };
-
-
-  console.log("name ===> ", name);
 
   const isSubAdmin = localStorage.getItem("subAdminToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
@@ -46,7 +43,6 @@ function AdminSideBar() {
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
 
   useEffect(() => {
-    // callApiToFetchNotificationStatus();
 
     if (isStateHandlerToken) {
       async function fetchStateDetails() {
@@ -62,11 +58,10 @@ function AdminSideBar() {
             }
           );
           const data = await response.json();
-          console.log(data, '64')
           setName(data.data.fname);
           setNotification(data.data.notification);
         } catch (error) {
-          console.error("Error fetching state details", error);
+        
         }
       }
       fetchStateDetails();
@@ -86,9 +81,9 @@ function AdminSideBar() {
           const data = await response.json();
           setName(data.data.fname);
           setNotification(data.data.notification);
-          console.log(data.data.notification,'89')
+      
         } catch (error) {
-          console.error("Error fetching state details", error);
+         
         }
       }
       fetchFracnhiseDetails();
@@ -110,58 +105,13 @@ function AdminSideBar() {
           setName(data.data.fname);
           setNotification(data.data.notification);
         } catch (error) {
-          console.error("Error fetching state details", error);
+          
         }
       }
 
       fetchBussinessDetails();
     }
   }, [isStateHandlerToken, isBussinessDeveloperToken, isFrachiseToken]);
-
-
-  // callApiToFetchNotificationStatus
-  // const callApiToFetchNotificationStatus = () => {
-  //   const token = localStorage.getItem("stateHandlerToken");
-
-  //   const stateHandlerId = localStorage.getItem("stateHandlerId");
-
-  //   const data = { stateHandlerId  };
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   };
-  //   if (isStateHandler) {
-  //     axios
-  //       .post(`${apiurl}` + "/state/state/fetch-state-notification", data, config)
-  //       .then((result) => {
-  //         console.log(result.data.allNotitfication);
-  //         setAllNotification(result.data.allNotitfication);
-  //         setAllStateNotification(result.data.allShoNotification);
-  //         setParticularStateNotification(result.data.particularState);
-  //         console.log(result.data.allShoNotification);
-  //         console.log(result.data.particularState);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   if(isFrachiseToken){
-  //       axios
-  //         .post(`${apiurl}` + "/franchise/frenchise/fetch-franchise-notification", data, config)
-  //         .then((result) => {
-  //           console.log(result.data.allNotitfication);
-  //           setAllNotification(result.data.allNotitfication);
-  //           setAllStateNotification(result.data.allFranchiseNotification);
-  //           setParticularStateNotification(result.data.particularFranchise);
-  //           console.log(result.data.allFranchiseNotification);
-  //           console.log(result.data.particularFranchise);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //   }
-  // }
 
   // callApiToFetchAllNotification
   const callApiToFetchAllNotification = () => {
@@ -181,30 +131,24 @@ function AdminSideBar() {
       axios
         .post(`${apiurl}` + "/state/state/fetch-state-notification", data, config)
         .then((result) => {
-          console.log(result.data.allNotitfication);
           setAllNotification(result.data.allNotitfication);
           setAllStateNotification(result.data.allShoNotification);
           setParticularStateNotification(result.data.particularState);
-          console.log(result.data.allShoNotification);
-          console.log(result.data.particularState);
         })
         .catch((err) => {
-          console.log(err);
+         
         });
     }
     if(isFrachiseToken){
       axios
         .post(`${apiurl}` + "/franchise/frenchise/fetch-franchise-notification", data1, config)
         .then((result) => {
-          console.log(result.data.allNotitfication);
           setAllNotification(result.data.allNotitfication);
           setAllStateNotification(result.data.allFranchiseNotification);
           setParticularStateNotification(result.data.particularFranchise);
-          console.log(result.data.allFranchiseNotification);
-          console.log(result.data.particularFranchise);
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     }
   };
@@ -235,7 +179,6 @@ function AdminSideBar() {
       )
       .then((res) => {
         setNotification(data.data.notification);
-        // callApiToFetchNotificationStatus();
       })
       .catch((error) => {
         console.log(error);
@@ -250,7 +193,6 @@ function AdminSideBar() {
       )
       .then((res) => {
         setNotification(data.data.notification);
-        // callApiToFetchNotificationStatus();
       })
       .catch((error) => {
         console.log(error);
@@ -491,7 +433,7 @@ function AdminSideBar() {
                   );
                 }
                 if (route.externalLink) {
-                  // For the "CENTUMO Swap" link, open in a new tab
+                
                   return (
                     <a
                       href={route.path}
@@ -499,8 +441,8 @@ function AdminSideBar() {
                       className={
                         isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                       }
-                      target="_blank" // This will open "CENTUMO Swap" in a new tab
-                      rel="noopener noreferrer" // Recommended for security
+                      target="_blank" 
+                      rel="noopener noreferrer" 
                     >
                       <div className="admin-icon">{route.icon}</div>
                       <motion.div className="admin_link_text" onClick={toggle}>
@@ -539,7 +481,7 @@ function AdminSideBar() {
                   );
                 }
                 if (route.externalLink) {
-                  // For the "CENTUMO Swap" link, open in a new tab
+                  
                   return (
                     <a
                       href={route.path}
@@ -547,8 +489,8 @@ function AdminSideBar() {
                       className={
                         isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                       }
-                      target="_blank" // This will open "CENTUMO Swap" in a new tab
-                      rel="noopener noreferrer" // Recommended for security
+                      target="_blank" 
+                      rel="noopener noreferrer" 
                     >
                       <div className="admin-icon">{route.icon}</div>
                       <motion.div className="admin_link_text" onClick={toggle}>
@@ -587,7 +529,7 @@ function AdminSideBar() {
                   );
                 }
                 if (route.externalLink) {
-                  // For the "CENTUMO Swap" link, open in a new tab
+                  
                   return (
                     <a
                       href={route.path}
@@ -595,8 +537,8 @@ function AdminSideBar() {
                       className={
                         isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                       }
-                      target="_blank" // This will open "CENTUMO Swap" in a new tab
-                      rel="noopener noreferrer" // Recommended for security
+                      target="_blank" 
+                      rel="noopener noreferrer" 
                     >
                       <div className="admin-icon">{route.icon}</div>
                       <motion.div className="admin_link_text" onClick={toggle}>
@@ -635,7 +577,7 @@ function AdminSideBar() {
                   );
                 }
                 if (route.externalLink) {
-                  // For the "CENTUMO Swap" link, open in a new tab
+                 
                   return (
                     <a
                       href={route.path}
@@ -643,8 +585,8 @@ function AdminSideBar() {
                       className={
                         isOpen ? "admin_sidebar_link" : "admin_sidebar_link_small"
                       }
-                      target="_blank" // This will open "CENTUMO Swap" in a new tab
-                      rel="noopener noreferrer" // Recommended for security
+                      target="_blank" 
+                      rel="noopener noreferrer" 
                     >
                       <div className="admin-icon">{route.icon}</div>
                       <motion.div className="admin_link_text" onClick={toggle}>

@@ -73,14 +73,13 @@ const DisplayCard = () => {
   const [openSharModal, setOpenShareModal] = useState(false);
   const [referralId, setReferralId] = useState("");
   const handleMenuClick = (e) => {
-    console.log(e.key);
+    
     if (e.key === "chat-with-admin") {
-      //openUserLoginFuction();
+      
       navigate("/admindashboard/chat/frenchisee-handler-chat");
     }
     if (e.key === "chat-with-sho") {
-      //console.log("hii");
-      // <NavLink to="/user-registration">Sign Up</NavLink>
+      
       navigate("/admindashboard/chat/frenchise-chat-with-SHO");
     }
     if (e.key === "chat-with-bd") {
@@ -89,9 +88,9 @@ const DisplayCard = () => {
   };
 
   const handleStateMenuClick = (e) => {
-    console.log(e.key);
+    
     if (e.key === "chat-with-admin") {
-      //openUserLoginFuction();
+      
       navigate("/admindashboard/chat/state-handler-chat");
     }
     if (e.key === "chat-with-frenchise") {
@@ -100,14 +99,13 @@ const DisplayCard = () => {
   };
 
   const handleAdminChatMenuClick = (e) => {
-    console.log(e.key);
+   
     if (e.key === "chat-with-traders") {
-      //openUserLoginFuction();
+   ;
       navigate("/admindashboard/trader-chat");
     }
     if (e.key === "chat-with-referrals") {
-      //console.log("hii");
-      // <NavLink to="/user-registration">Sign Up</NavLink>
+      
       navigate("/admindashboard/refferal-chat");
     }
     if (e.key === "chat-with-state-handlers") {
@@ -125,7 +123,7 @@ const DisplayCard = () => {
   const handleTrackerDetailsMenuClick = (e) => {
     console.log(e.key);
     if (e.key === "state-details") {
-      //openUserLoginFuction();
+   
       navigate("/admindashboard/tracker/state-tracer");
     }
     if (e.key === "frenchise-details") {
@@ -137,9 +135,9 @@ const DisplayCard = () => {
   };
 
   const handleBusinessChatMenuClick = (e) => {
-    console.log(e.key);
+    
     if (e.key === "chat-with-admin") {
-      //openUserLoginFuction();
+     
       navigate("/admindashboard/chat/businessD-chat");
     }
     if (e.key === "chat-with-frenchise") {
@@ -182,11 +180,10 @@ const DisplayCard = () => {
     <Menu onClick={handleTrackerDetailsMenuClick}>
       <Menu.Item key="state-details">BMM</Menu.Item>
       <Menu.Item key="frenchise-details">Franchise</Menu.Item>
-      {/* <Menu.Item key="business-developer-details">Business Developer</Menu.Item> */}
     </Menu>
   );
 
-  // Business Chat menu
+  
   const businessChatMenu = (
     <Menu onClick={handleBusinessChatMenuClick}>
       <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
@@ -195,7 +192,6 @@ const DisplayCard = () => {
   );
 
   useEffect(() => {
-    // setAdminDetails({ adminid: localStorage.getItem("adminId") });
     callApiToSubscriptionCharge();
     callApiToTotalUserRunningTrialExpire();
     callApiToStateUpiDetails();
@@ -254,10 +250,6 @@ const DisplayCard = () => {
     navigate("/admindashboard/manage/member-refferal-payout");
   };
 
-  // const goToRegister = () => {
-  //   navigate("/admindashboard/createuser");
-  // };
-
   const closeStatePaymentModal = () => {
     setOpenStateHandlerModal(false);
     setSelectedUpiId(null);
@@ -275,7 +267,6 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          console.log(res.data.totalSubscriptionAmount);
           const formattedRupees = new Intl.NumberFormat("en-IN", {
             style: "currency",
             currency: "INR",
@@ -283,7 +274,7 @@ const DisplayCard = () => {
           setTotalAmount(formattedRupees);
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     }
   };
@@ -310,13 +301,13 @@ const DisplayCard = () => {
           });
         })
         .catch((err) => {
-          console.log(err.response.data);
+
         });
     }
   };
 
   const callApiToEligibaleWithdrawalForState = () => {
-    console.log("opne");
+    
     const config = {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
@@ -329,12 +320,12 @@ const DisplayCard = () => {
         setPaymentModal(res.data.updatedState.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+       
       });
   };
 
   const callApiToEligibaleWithdrawalForFranchise = () => {
-    console.log("opne");
+    
     const config = {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
@@ -348,16 +339,16 @@ const DisplayCard = () => {
         config
       )
       .then((res) => {
-        console.log(res.data);
+       
         setPaymentModal(res.data.updatedFranchise.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+      
       });
   };
 
   const callApiToEligibaleWithdrawalForBD = () => {
-    console.log("opne");
+    
     const config = {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
@@ -372,11 +363,11 @@ const DisplayCard = () => {
         config
       )
       .then((res) => {
-        console.log(res.data);
+       
         setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        
       });
   };
 
@@ -393,7 +384,7 @@ const DisplayCard = () => {
           setPaymentModal(res.data.data.firstPayment);
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
           setVerifyDate(res.data.data.verifyDate);
-          console.log(res.data.data.firstPayment,res.data.data.stateHandlerWallet, res.data.data.verifyDate, "396");
+          
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
@@ -405,13 +396,13 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(30 - differenceInDays);
-          console.log(`Difference in days: ${differenceInDays}`);
+          
           if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForState();
           }
         })
         .catch((err) => {
-          console.log(err.response.data.massage);
+          
         });
     } else if (isBusinessHandler) {
       setOpenStateHandlerModal(true);
@@ -425,13 +416,13 @@ const DisplayCard = () => {
         )
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
-          console.log(res.data.data);
+          
           setPaymentModal(res.data.data.firstPayment);
           setVerifyDate(res.data.data.verifyDate);
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString);
+          
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
@@ -440,14 +431,14 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(7 - differenceInDays);
-          console.log(`Difference in days: ${differenceInDays}`);
+         
 
           if (differenceInDays > 7) {
             callApiToEligibaleWithdrawalForBD();
           }
         })
         .catch((err) => {
-          console.log(err.response.data.massage);
+          
         });
     } else if (isFrenchise) {
       setOpenStateHandlerModal(true);
@@ -463,7 +454,7 @@ const DisplayCard = () => {
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          console.log(convertedDateString);
+          
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
@@ -472,14 +463,14 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(30 - differenceInDays);
-          console.log(`Difference in days: ${differenceInDays}`);
+          
 
           if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForFranchise();
           }
         })
         .catch((err) => {
-          console.log(err.response.data.massage);
+        
         });
     }
   };
@@ -498,7 +489,7 @@ const DisplayCard = () => {
       axios
         .post(`${apiurl}` + "/state/create-state-payment-request", data, config)
         .then((res) => {
-          console.log(res.data);
+          
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -527,7 +518,7 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          console.log(res.data);
+          
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -545,7 +536,7 @@ const DisplayCard = () => {
       let data = {
         franchiseId: localStorage.getItem("frenchiseId"),
         amount: amount,
-        paymentBy: selectStateUpiId, // using the same state
+        paymentBy: selectStateUpiId,
       };
 
       axios
@@ -555,7 +546,7 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          console.log(res.data);
+       
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -568,7 +559,7 @@ const DisplayCard = () => {
     }
   };
 
-  // fetching upi  details
+ 
 
   const callApiToStateUpiDetails = () => {
     const config = {
@@ -635,7 +626,6 @@ const DisplayCard = () => {
 
   const handleRadioChangeStateValue = (e) => {
     setSelectedUpiId(e.target.value);
-    console.log(e.target.value);
   };
 
   // fetching state bank details
@@ -650,11 +640,11 @@ const DisplayCard = () => {
       axios
         .post(`${apiurl}` + "/state/get-state-own-bank-details", data, config)
         .then((res) => {
-          console.log(res.data);
+      
           setStateBankDetails(res.data.stateBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+       
         });
     }
   };
@@ -675,11 +665,11 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          console.log(res.data);
+          
           setStateBankDetails(res.data.franchiseBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+         
         });
     }
   };
@@ -701,31 +691,28 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          console.log(res.data);
+          
           setStateBankDetails(res.data.businessDeveloperBankDetails);
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+         
         });
     }
   };
-  // const copyToClipboard = () => {
-  //   navigator.clipboard.writeText(ReferralId);
-  //   message.success("Text copied to clipboard: " + ReferralId);
-  // };
+ 
 
   const copyToClipboard = () => {
     const input = document.createElement('input');
     input.value = ReferralId;
     document.body.appendChild(input);
     input.select();
-    input.setSelectionRange(0, 99999); // For mobile devices
+    input.setSelectionRange(0, 99999); 
   
     try {
       document.execCommand('copy');
       message.success("Text copied to clipboard: " + ReferralId);
     } catch (error) {
-      console.error("Unable to copy to clipboard:", error);
+      
       message.error("Copy to clipboard failed. Please try manually.");
     }
   
@@ -751,7 +738,7 @@ const DisplayCard = () => {
           const data = await response.json();
           setWalletAmount(data.data.stateHandlerWallet);
         } catch (error) {
-          console.error("Error fetching state details", error);
+          
         }
       }
       fetchStateDetails();
@@ -771,7 +758,7 @@ const DisplayCard = () => {
           const data = await response.json();
           setWalletAmount(data.data.frenchiseWallet);
         } catch (error) {
-          console.error("Error fetching state details", error);
+          
         }
       }
       fetchFracnhiseDetails();
@@ -792,7 +779,7 @@ const DisplayCard = () => {
           const data = await response.json();
           setWalletAmount(data.data.businessDeveloperWallet);
         } catch (error) {
-          console.error("Error fetching state details", error);
+          
         }
       }
 
@@ -816,13 +803,11 @@ const DisplayCard = () => {
             return formatter.format(adminWallet);
           }
 
-          const adminWallet = data.data.adminWallet; // Get the adminWallet value from the response
-          const formattedAdminWallet = formatIndianRupees(adminWallet); // Convert to Indian Rupees format
-
-          console.log("Formatted admin wallet:", formattedAdminWallet); // Log the formatted wallet amount
+          const adminWallet = data.data.adminWallet; 
+          const formattedAdminWallet = formatIndianRupees(adminWallet); 
           setWalletAmount(formattedAdminWallet);
         } catch (error) {
-          console.error("Error fetching state details", error);
+         
         }
       }
       fetchAdminDetails();
@@ -1067,7 +1052,6 @@ const DisplayCard = () => {
         </div>
       </div>
 
-      {/* open state handler modal for payment */}
       {paymentModal ? (
         <Modal
           title="Request here"

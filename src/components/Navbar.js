@@ -249,7 +249,7 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-        <Menu.Item key="admin">Admin</Menu.Item>
+        {/* <Menu.Item key="admin">Admin</Menu.Item> */}
         {/* <Menu.Item key="subadmin">Back Office</Menu.Item> */}
         <Menu.Item key="sho">BMM</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>

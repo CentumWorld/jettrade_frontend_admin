@@ -23,7 +23,7 @@ const CreateReferralInAdmin = () => {
 
   const [phone, setPhone] = useState("");
   const [checked, setChecked] = useState(false);
-  const officialId = "admin@123"; // Replace with your official ID
+  const officialId = "admin@123"; 
   const [referralId, setReferralId] = useState("")
 
 
@@ -74,7 +74,7 @@ const CreateReferralInAdmin = () => {
       e.target.files[0].type === "image/png" ||
       e.target.files[0].type === "image/jpeg"
     ) {
-      //preview shoe
+      
       setAadharImage({ file: e.target.files[0] });
     } else {
       message.error("Invalid File !! ");
@@ -100,7 +100,7 @@ const CreateReferralInAdmin = () => {
       e.target.files[0].type === "image/png" ||
       e.target.files[0].type === "image/jpeg"
     ) {
-      //preview shoe
+      
       setPanImage({ file: e.target.files[0] });
     } else {
       message.error("Invalid File !! ");
@@ -112,7 +112,6 @@ const CreateReferralInAdmin = () => {
     e.preventDefault();
     setUserData({ ...userData, pan_no: e.target.value });
     let panLength = e.target.value;
-    console.log(userData.pan_no);
     if (panLength.length === 10) {
       setPanError(false);
     } else {
@@ -134,7 +133,6 @@ const CreateReferralInAdmin = () => {
   const submit = (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(userData.invite_code);
     const formData = new FormData();
     formData.append("fname", userData.fname);
     formData.append("lname", userData.lname);
@@ -149,7 +147,6 @@ const CreateReferralInAdmin = () => {
     formData.append("pan_card", panImage.file);
     formData.append("pan", userData.pan_no);
     formData.append("reffered_id", userData.invite_code);
-    console.log(formData.memberid, "44");
     if (userData.memberid === undefined && userData.password === undefined) {
       formData.append("password", "");
       formData.append("memberid", "");
@@ -160,7 +157,7 @@ const CreateReferralInAdmin = () => {
     const token = localStorage.getItem("adminToken");
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
@@ -171,7 +168,6 @@ const CreateReferralInAdmin = () => {
         navigate("/admindashboard/refferal");
       })
       .catch((error) => {
-        //console.log(error.response.data)
         setLoading(false);
         message.warning(error.response.data.message);
       });
@@ -187,28 +183,16 @@ const CreateReferralInAdmin = () => {
   // -----------------
 
   const [selectedOption, setSelectedOption] = useState("referral");
-  //const [referralId, setReferralId] = useState(localStorage.getItem('bussinessRefferalI'));
-  
-  console.log(referralId)
 
   const handleDropdownChange = (value) => {
     setSelectedOption(value);
     if(value === 'official'){
       setUserData({ ...userData, invite_code: officialId });
-      console.log(officialId)
     }else{
-      console.log(referralId)
       setUserData({ ...userData, invite_code: referralId });
-      console.log(referralId)
     }
-     
-    
   };
 
-  // const hadleRefferalId = (value) => {
-  //   //setReferralId(value);
-  //   setUserData({ ...userData, invite_code: value });
-  // };
 
   const handlePhoneChange = (value) => {
     setPhone(value);
@@ -219,7 +203,6 @@ const CreateReferralInAdmin = () => {
     setChecked(checked);
     if (checked === false) {
       setUserData({ ...userData, memberid: "", password: "" });
-      //setUserData({...userData, password:''})
     }
   };
 
@@ -230,7 +213,6 @@ const CreateReferralInAdmin = () => {
           <p>Create Member with credentials{userData.invite_code}</p>
           <div className="form-content">
             <form>
-              {/* Dropdown and input box for referral */}
               <div className="d-flex">
                 <Select value={selectedOption} onChange={handleDropdownChange}>
                   <Select.Option value="official">Official ID</Select.Option>
@@ -259,7 +241,6 @@ const CreateReferralInAdmin = () => {
                       id="referral-id"
                       value={referralId}
                       name="invite_code"
-                      //onChange={(e) => hadleRefferalId(e.target.value)}
                       placeholder="Enter referral ID"
                       style={{ marginBottom: "10px" }}
                       disabled

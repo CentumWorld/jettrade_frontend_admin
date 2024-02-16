@@ -21,7 +21,7 @@ const NewRenewal = () => {
   const [buttonDisable, setButtonDisable] = useState(true);
 
   const handleMenuSelect = (item) => {
-    console.log("Selected menu item:", item.key);
+   
     if (item.key === "newaccount") {
       setDivChange(true);
 
@@ -59,7 +59,6 @@ const NewRenewal = () => {
       dataIndex: 'activationAmount',
       key: 'activationAmount',
       render: (activationAmount) => {
-        // Format the amount with two decimal places
         const formattedAmount = parseFloat(activationAmount).toFixed(2);
         return <span style={{ fontWeight: 'bold' }}>₹{formattedAmount}</span>;
       },
@@ -69,7 +68,6 @@ const NewRenewal = () => {
       dataIndex: 'activationDate',
       key: 'activationDate',
       render: (activationDate) => {
-        // Format the date using moment.js
         const formattedDate = moment(activationDate).format('YYYY-MM-DD HH:mm');
         return <span>{formattedDate}</span>;
       },
@@ -87,7 +85,6 @@ const NewRenewal = () => {
       dataIndex: 'renewalAmount',
       key: 'renewalAmount',
       render: (renewalAmount) => {
-        // Format the amount with two decimal places
         const formattedAmount = parseFloat(renewalAmount).toFixed(2);
         return <span style={{ fontWeight: 'bold' }}>₹{formattedAmount}</span>;
       },
@@ -97,7 +94,6 @@ const NewRenewal = () => {
       dataIndex: 'renewalDate',
       key: 'renewalDate',
       render: (renewalDate) => {
-        // Format the date using moment.js
         const formattedDate = moment(renewalDate).format('YYYY-MM-DD HH:mm');
         return <span>{formattedDate}</span>;
       },
@@ -116,11 +112,9 @@ const NewRenewal = () => {
         config
       )
       .then((res) => {
-        console.log(res.data.data);
         setNewuser(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
       });
 
   };
@@ -133,11 +127,10 @@ const NewRenewal = () => {
     axios
       .post(`${apiurl}`+"/admin/admin-fetch-all-renewal-user", {}, config)
       .then((res) => {
-        console.log(res);
         setRenewalUser(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        
       });
   };
 
@@ -150,7 +143,7 @@ const NewRenewal = () => {
     }
   }
   const filterData = () => {
-    console.log(searchByUserId);
+   
     let data = {
       userid: searchByUserId
     }
@@ -160,7 +153,7 @@ const NewRenewal = () => {
     };
     axios.post(`${apiurl}`+"/admin/search-new-users", data, config)
       .then((res) => {
-        console.log(res.data.newSearchUser)
+        
         setNewuser(res.data.newSearchUser)
       })
       .catch((err) => {

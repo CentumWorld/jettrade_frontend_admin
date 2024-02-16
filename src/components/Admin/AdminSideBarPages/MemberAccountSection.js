@@ -21,7 +21,6 @@ const MemberAccountSection = () => {
     const [memberUpiDetails, setMemberUpiDetails] = useState([]);
     const handleRadioChange = (e) => {
         setSelectedValue(e.target.value);
-        console.log(e.target.value)
     };
 
     useEffect(() => {
@@ -112,7 +111,6 @@ const MemberAccountSection = () => {
 
 
     const callApiToGetMemberToalBalance = () => {
-        console.log(memberid);
         let data = {
             memberId: memberid
         }
@@ -124,16 +122,15 @@ const MemberAccountSection = () => {
         }
         axios.post(`${apiurl}` +"/admin/fetch-particular-member-details-using-memberid", data, config)
             .then((res) => {
-                console.log(res.data.particularMemberDetails.wallet,'49')
                 setMemberTotalBalance(res.data.particularMemberDetails.wallet)
             })
             .catch((err) => {
-                console.log(err.response.data.message)
+                
             })
     }
 
     const callApiToGetRequestHistory = () => {
-        console.log(memberid);
+        
         let data = {
             memberid: memberid
         }
@@ -145,7 +142,6 @@ const MemberAccountSection = () => {
         }
         axios.post(`${apiurl}` +'/admin/fetch-refferal-payout-withdrawal-request', data, config)
             .then((res) => {
-                // console.log(res.data.memberWithdrawalRequest)
                 setRequestDetails(res.data.memberWithdrawalRequest)
             })
             .catch((err) => {
@@ -179,11 +175,11 @@ const MemberAccountSection = () => {
                         callApiToGetApprovedHistory();
                     })
                     .catch((err) => {
-                        console.log(err.response.data.message);
+                        
                     });
             },
             onCancel() {
-                console.log('User clicked Cancel');
+                
             },
         });
     };
@@ -203,11 +199,11 @@ const MemberAccountSection = () => {
                 setApprovedMemberDetails(res.data.memberApproveWithdrawal)
             })
             .catch((err) => {
-                console.log(err.response.data.message)
+              
             })
     }
 
-    // bank details-----------------------------------------
+  
     const columnForBankDetails = [
         {
             title: 'Holder name',
@@ -248,14 +244,14 @@ const MemberAccountSection = () => {
 
         axios.post(`${apiurl}` +'/admin/get-member-bak-and-upi-details', data, config)
             .then((res) => {
-                console.log(res.data)
+                
                 setMemberBankDetails(res.data.memberBankDetails)
             })
             .catch((err) => {
-                console.log(err.response.data.message)
+               
             })
     }
-    // member upi id 
+  
     const columnMemberUpi = [
         {
             title: 'Member ID',
@@ -270,7 +266,6 @@ const MemberAccountSection = () => {
     ]
 
     const callApiToGetMemberUpiDetails = () => {
-        console.log('---------------')
         let data = {
             userId: memberid
         }
@@ -282,11 +277,10 @@ const MemberAccountSection = () => {
         }
         axios.post(`${apiurl}` +'/admin/get-member-bak-and-upi-details', data, config)
             .then((res) => {
-                console.log(res.data)
                 setMemberUpiDetails(res.data.memberUpiId)
             })
             .catch((err) => {
-                console.log(err.response.data.message)
+                
             })
     }
 

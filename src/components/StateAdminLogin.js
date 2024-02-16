@@ -140,8 +140,8 @@ const StateAdminLogin = (props) => {
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
-    // formData.append("phone",'+' + value.mobile);
-    formData.append("phone", value.mobile);
+    formData.append("phone",'+' + value.mobile);
+    // formData.append("phone", value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
     formData.append("stateHandlerId", value.userId);

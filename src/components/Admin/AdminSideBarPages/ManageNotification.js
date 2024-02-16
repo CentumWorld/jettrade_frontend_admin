@@ -50,7 +50,7 @@ const ManageNotification = () => {
     setAllNotification(e.target.value);
   }
   const allNotificationSubmit = () => {
-    console.log(allNotification)
+   
     const data = {
       message: allNotification,
     }
@@ -251,7 +251,6 @@ const ManageNotification = () => {
         message.success(result.data.message);
         setParticularRefferalNotification("");
 
-        console.log(result.data.message);
       })
       .catch(err => {
         message.warning(err.response.data.message);

@@ -83,8 +83,6 @@ function Dashboard() {
   const notAllow = localStorage.getItem("isSubAdmin");
   const handleSearch = (value) => {
     setSearchText(value);
-    // Perform search or other operations based on the search text
-    console.log("Performing search for:", value);
   };
   // -------------
 
@@ -101,7 +99,6 @@ function Dashboard() {
 
   useEffect(() => {
     fetchData();
-    //fetchUserDetailsForEdit();
   }, []);
 
   const token = localStorage.getItem("adminToken");
@@ -115,11 +112,6 @@ function Dashboard() {
     "bussinessRefferalId"
   );
 
-  console.log(
-    "=========>",
-    bussinessDeveloperReferralId,
-    bussinessDeveloperToken
-  );
   const fetchData = async () => {
     if (token || subadminToken) {
       try {
@@ -131,12 +123,9 @@ function Dashboard() {
           config
         );
         setData(response.data.result);
-        //console.log(typeof(response.data.result[0].phone));
         setFilteredDataSource(response.data.result);
-        console.log("data fetching", response.data.result);
         setLength(response.data.result.length);
       } catch (error) {
-        console.error("Error fetching data:", error);
       }
     } else if (stateToken && stateHandlerRefferalID) {
       try {
@@ -154,15 +143,12 @@ function Dashboard() {
           config
         );
 
-        console.log(response.data, "user is on way")
-
         setData(response.data.data);
-        //console.log(typeof(response.data.result[0].phone));
 
         setFilteredDataSource(response.data.data);
         setLength(response.data.data.length);
       } catch (error) {
-        console.error("Error fetching data:", error);
+       
       }
     } else if (frenchiseToken && franchiseRefferal) {
       const config = {
@@ -185,7 +171,7 @@ function Dashboard() {
           setFilteredDataSource(res.data.data);
         })
         .catch((err) => {
-          console.log("error", err);
+
         });
     } else if (bussinessDeveloperToken || bussinessDeveloperReferralId) {
       const config = {
@@ -203,17 +189,16 @@ function Dashboard() {
           config
         )
         .then((res) => {
-          console.log("Bussiness responebhejo-> ", res.data);
           setData(res.data.users);
 
           setFilteredDataSource(res.data.users);
         })
         .catch((err) => {
-          console.log("error", err);
+          
         });
     }
   };
-  // console.log(data);
+
   const handleVerifyClick = (id) => {
     const token =
       localStorage.getItem("adminToken") ||
@@ -224,7 +209,7 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`, 
       },
     };
     axios
@@ -248,17 +233,16 @@ function Dashboard() {
     let data = {
       _id: id,
     };
-    console.log(id);
+    
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`,
       },
     };
 
     axios
       .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
       .then((res) => {
-        console.log(res.data);
         setAadhar(res.data.result.aadhar);
         setPan(res.data.result.pan);
         fetchUserDocuments(res.data.result.userid);
@@ -275,7 +259,6 @@ function Dashboard() {
 
   const handleCancel = () => {
     setVisible(false);
-    // Perform any action needed when the user clicks Cancel or closes the dialog
   };
 
   const buttonStyle = {
@@ -355,7 +338,6 @@ function Dashboard() {
     setIsSubAdmin(subadmin);
   };
   const handleMenuClick = (e) => {
-    console.log(e.key);
     if (e.key === "verify") {
       handleVerifyClick(myID);
     }
@@ -365,7 +347,6 @@ function Dashboard() {
     if (e.key === "edit") {
       editModal();
       fetchUserDetailsForEdit(myID);
-      console.log(myID);
     }
     if (e.key === "block") {
       blockUnblock(myID);
@@ -405,7 +386,6 @@ function Dashboard() {
 
   //   ------------------------------
   const fetchUserDocuments = (userid) => {
-    //console.log(userid,'131');
     let token =
       localStorage.getItem("adminToken") ||
       localStorage.getItem("subAdminToken");
@@ -414,14 +394,13 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`,
       },
     };
 
     axios
       .post(`${apiurl}` + "/admin/fetch-user-document-adminside", data, config)
       .then((res) => {
-        console.log(res.data.result[0].userType);
         setUserTypeView(res.data.result[0].userType);
         if (res.data.result.length > 0) {
           if (res.data.result[0].userTpe === "indian") {
@@ -448,11 +427,9 @@ function Dashboard() {
         }
       })
       .catch((err) => {
-        console.log(err);
+      
       });
   };
-
-  //    image download-----
 
   const downloadAadharFrontImage = (frontImage) => {
     const link = document.createElement("a");
@@ -475,9 +452,7 @@ function Dashboard() {
     link.download = "image.jpg";
     link.click();
   };
-  //   --------
-
-  //--------- user details Edit section
+  
 
   const fetchUserDetailsForEdit = (id) => {
     const token =
@@ -488,13 +463,12 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`, 
       },
     };
     axios
       .post(`${apiurl}` + "/admin/fetch-particular-user-details", data, config)
       .then((result) => {
-        console.log(result.data.result, "327");
         setUserType(result.data.result.userType);
         const dateTimeString = result.data.result.dob;
         const date = new Date(dateTimeString);
@@ -504,7 +478,6 @@ function Dashboard() {
           2,
           "0"
         )}-${parts[1].padStart(2, "0")}`;
-        console.log(result.data.result.userType);
         if (result.data.result.userType === "indian") {
           setEditUserData({
             fname: result.data.result.fname,
@@ -530,7 +503,6 @@ function Dashboard() {
         }
       })
       .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -550,17 +522,12 @@ function Dashboard() {
   };
 
   const handleDobChange = (e) => {
-    // setEditUserData((editUserData) => ({
-    //     ...editUserData,
-    //     dob: date,
-    // }));]
-    console.log(e.target.value);
+    
     setEditUserData({ ...editUserData, dob: e.target.value });
   };
   // save edit value
   const editModalSubmit = (e) => {
     e.preventDefault();
-    console.log(myID, userType);
     if (userType === "indian") {
       const data = {
         userWhat: "indian",
@@ -574,11 +541,10 @@ function Dashboard() {
         pan: editUserData.pan,
         gender: editUserData.gender,
       };
-      console.log(data);
       const token = localStorage.getItem("adminToken");
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+          Authorization: `Bearer ${token}`,
         },
       };
       axios
@@ -604,11 +570,10 @@ function Dashboard() {
         Id_No: editUserData.Id_No,
         gender: editUserData.gender,
       };
-      console.log(data);
       const token = localStorage.getItem("adminToken");
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+          Authorization: `Bearer ${token}`,
         },
       };
       axios
@@ -634,7 +599,7 @@ function Dashboard() {
         deleteUser(id);
       },
       onCancel() {
-        console.log("Deletion cancelled.");
+        
       },
     });
   };
@@ -645,7 +610,7 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`, 
       },
     };
     axios
@@ -655,7 +620,7 @@ function Dashboard() {
         message.success("Deleted Successfully");
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
 
@@ -690,7 +655,7 @@ function Dashboard() {
           });
       },
       onCancel() {
-        console.log("Deletion cancelled");
+        
       },
     });
   };
@@ -699,12 +664,12 @@ function Dashboard() {
   const searchUser = (value) => {
     setSearchText(value);
 
-    const searchNumber = Number(value); // Convert search value to a Number
+    const searchNumber = Number(value); 
 
     const filteredData = data.filter((record) => {
-      // Search by number field
+      
       if (record.phone === searchNumber) {
-        // Replace "numberField" with your actual field name
+     
         return true;
       }
 
@@ -754,17 +719,16 @@ function Dashboard() {
         axios
           .post(`${apiurl}` + "/admin/manage-subadmin", data, config)
           .then((res) => {
-            console.log(res.data);
             message.success(res.data.message);
             fetchData();
           })
           .catch((err) => {
-            console.log(err.response.data.message);
+          
           });
       },
       onCancel() { },
     });
-    console.log(myID);
+  
   };
 
   const gotoDashboard = ()=>{
@@ -773,9 +737,6 @@ function Dashboard() {
 
   return (
     <>
-      {/* <div>
-                <Button className='home_btm' type='primary' onClick={home}>Home</Button>
-            </div> */}
       <Modal
         className="document_verification"
         title="Documents Verification"
@@ -817,7 +778,6 @@ function Dashboard() {
               <hr />
 
               <h6>Aadhar Back Side</h6>
-              {/* <p>Aadhar Number:  <span style={{ fontWeight: 'bold' }}>{aadhar}</span></p> */}
               {!imageError ? (
                 <img
                   src={aadharBackImageSide.placeholder}
@@ -906,12 +866,9 @@ function Dashboard() {
           <div className="user-table">
             <Table
               dataSource={filteredDataSource}
-
-              // dataSource={data}
               style={{
                 width: "fit-content",
                 textOverflow: "ellipsis",
-                // overflow: "hidden",
                 whiteSpace: "nowrap",
               }}
               columns={columns}
@@ -940,7 +897,6 @@ function Dashboard() {
               Submit
             </Button>,
           ]}
-        //footer={null}
         >
           <div className="edit-container">
             <div>
@@ -1058,17 +1014,6 @@ function Dashboard() {
               </Row>
             </div>
             <div>
-              {/* <Row style={{ marginBottom: "5px" }}>
-                <Col span={12}>Date of Birth :</Col>
-                <Col span={12}>
-                  <input
-                    type="date"
-                    name="dob"
-                    value={editUserData.dob}
-                    onChange={handleDobChange}
-                  />
-                </Col>
-              </Row> */}
             </div>
           </div>
         </Modal>

@@ -23,8 +23,6 @@ const ManageSubscription = () => {
 
   //isBlock
   const [isBlocked, setIsBlock] = useState(true);
-
-  // const [filteredDataSource, setFilteredDataSource] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,9 +37,7 @@ const ManageSubscription = () => {
         `${apiurl}` + "/admin/fetch-user-details", config
       );
       setData(response.data.result);
-      console.log(response.data.result);
-      // setFilteredDataSource(response.data.result);
-      // setLength(response.data.result.length);
+      
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -55,7 +51,7 @@ const ManageSubscription = () => {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
@@ -97,7 +93,6 @@ const ManageSubscription = () => {
         return <span>{finalYear}</span>;
       },
     },
-    //  { title: 'Subscription', dataIndex: 'paymentStatus', key: 'paymentStatus' },
     {
       title: "Subscription",
       dataIndex: "paymentStatus",
@@ -111,7 +106,7 @@ const ManageSubscription = () => {
         }else{
            cellStyle = { color: "#F6BE00" };
         }
-        // const cellStyle = paymentStatus ? { color: "green" } : { color: "red" };
+    
         return (
           <span style={cellStyle}>
             {paymentStatus && paymentCount > 0 ? "Running" : ""}
@@ -122,7 +117,6 @@ const ManageSubscription = () => {
         );
       },
     },
-    // { title: 'Reffered ID', dataIndex: 'reffered_id', key: 'reffered_id' },
     {
       title: "Status",
       dataIndex: "status",
@@ -175,18 +169,6 @@ const ManageSubscription = () => {
     if (e.key === "verify") {
       handleVerifyClick(myID);
     }
-    // if (e.key === 'view') {
-
-    //     handleViewClick(myID)
-    // }
-    // if (e.key === 'edit') {
-    //     editModal()
-    //     fetchUserDetailsForEdit(myID)
-    //     console.log(myID)
-    // }
-    // if (e.key === 'delete') {
-    //     confirmDelete(myID);
-    // }
     if (e.key === "block") {
       blockUnblock(myID);
     }
@@ -232,7 +214,7 @@ const ManageSubscription = () => {
           });
       },
       onCancel() {
-        console.log("Deletion cancelled");
+       
       },
     });
   };
@@ -257,7 +239,7 @@ const ManageSubscription = () => {
         };
     axios.get(`${apiurl}` + "/admin/find_Users_On_The_Basis_Of_Payment_Status",config)
     .then((res)=>{
-      console.log(res.data);
+    
       if(data === 'Runnig Stage'){
         setData(res.data.runningUsers)
       }else if(data === 'Trial Stage'){
@@ -268,7 +250,7 @@ const ManageSubscription = () => {
       
     })
     .catch((err=>{
-      console.log(err.response.data.message)
+      
     }))
   }
 
@@ -281,7 +263,7 @@ const ManageSubscription = () => {
     let data = {
       userid:dropDownValue
     }
-    console.log(data);
+   
     const token = localStorage.getItem("adminToken");
     const config = {
       headers: {
@@ -290,7 +272,7 @@ const ManageSubscription = () => {
     };
     axios.post(`${apiurl}` + "/admin/fetch_particular_user_payment_Status",data,config)
     .then((res)=>{
-      console.log(res.data.user)
+      
       setData([res.data.user])
     })
     .catch((err=>{
@@ -303,8 +285,6 @@ const ManageSubscription = () => {
   }
   return (
     <>
-      {/* <div className="manage-subscription-page"> */}
-      {/* <div className="manage-subscription-card"> */}
       <div className="manage-subscription-heading">
         <div className="manage-subscription-navbar">
           <p style={{color:'#000'}}> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer'}}/> &nbsp;Manage Subscription</p>
@@ -333,7 +313,6 @@ const ManageSubscription = () => {
 
         <div className="user-subscription-table">
           <Table
-            // dataSource={filteredDataSource}
             style={{textOverflow:'ellipsis', whiteSpace:'nowrap'}}
             dataSource={data}
             columns={columns}
@@ -347,8 +326,6 @@ const ManageSubscription = () => {
           />
         </div>
       </div>
-      {/* </div> */}
-      {/* </div> */}
       <ToastContainer />
     </>
   );

@@ -1,34 +1,34 @@
 .share-icon {
     display: flex;
-    gap: 20px;  /* Adjust the value according to your preference */
+    gap: 20px; 
   }
   
   
   
   .social-icon:hover {
-    background-color: #f0f0f0; /* Change background color on hover */
+    background-color: #f0f0f0; 
   }
   
-  /* Customize styles for each social media icon */
+ 
   .social-icon.facebook {
-    background-color: #fff; /* Facebook blue */
-    color: #1877f2;             /* White icon color */
+    background-color: #fff; 
+    color: #1877f2;            
   }
   
   .social-icon.twitter {
-    background-color: #fff; /* Twitter blue */
-    color: #1da1f2;              /* White icon color */
+    background-color: #fff; 
+    color: #1da1f2;           
   }
   
   .social-icon.linkedin {
-    background-color: #fff; /* LinkedIn blue */
-    color: #0077b5;              /* White icon color */
+    background-color: #fff;
+    color: #0077b5;             
   }
   
   .social-icon.whatsapp {
-    background-color: #25d366; /* WhatsApp green */
+    background-color: #25d366; 
     color: #fff;
-    border-radius:6px;              /* White icon color */
+    border-radius:6px;
   }
   
   .social-icon.instagram {

@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 function AdminSideBarMenu({ route, isOpen, toggleSidebar }) {
-  console.log("Sidebar Toggle", toggleSidebar);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
