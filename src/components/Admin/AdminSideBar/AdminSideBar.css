@@ -37,11 +37,23 @@
     top: 0;
 }
 
+
 .admin_logo {
-    font-size: 18px;
-    line-height: 0;
-    color: black;
-}
+    font-family: "Arial", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin: 0;
+    color: gray;
+  }
+  
+  .admin_logo:hover {
+    color: #007bff;
+    transition: color 0.3s ease-in-out;
+  }
+
+
+
 
 .admin-icon {
     font-size: 22px;
