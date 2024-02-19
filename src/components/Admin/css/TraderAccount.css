@@ -1,39 +1,42 @@
-.trading-container{
-    width: 100%;
-    height: calc(100vh - 100px );
-    border-radius: 5px;
-    position: sticky;
+* {
+  font-family: Roboto;
+}
+.trading-container {
+  width: 100%;
+  height: calc(100vh - 100px);
+  border-radius: 5px;
+  position: sticky;
+}
+.header-trading-account {
+  width: 100%;
+  height: max-content;
+  z-index: 10;
+  background: #01015d;
+  border-radius: 5px;
+  box-shadow: 2px 10px 10px #717171;
+}
 
+.header-trading-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
 }
-.header-trading-account{
-    width:100%;
-    height: max-content;
-    z-index: 10;
-    background: #01015d;
-    border-radius: 5px;
-    box-shadow: 2px 10px 10px #717171;
+.header-trading-content p {
+  color: wheat;
+  font-size: 1.2rem;
+}
+.trading-drop-down {
+  display: flex;
+  gap: 5px;
+}
+.total-wallet {
+  width: 80px;
+  height: 32px;
+  color: #11100c96; 
+  background-color: #ffd700; 
+  border-color: #ffd700;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.header-trading-content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px ;
-}
-.header-trading-content p{
-    color: wheat;
-    font-size: 1.2rem;
-    font-family: Calibri;
-}
-.trading-drop-down{
-    display: flex;
-    gap: 5px;
-}
-.total-wallet{
-    width: 80px;
-    height: 32px;
-    color: #11100c96; /* For text color */
-    background-color: #FFD700; /* For background color */
-    border-color: #FFD700;    border-radius: 5px;
-    text-align: center;
-}

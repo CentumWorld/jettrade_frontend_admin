@@ -125,8 +125,7 @@ function Dashboard() {
         setData(response.data.result);
         setFilteredDataSource(response.data.result);
         setLength(response.data.result.length);
-      } catch (error) {
-      }
+      } catch (error) {}
     } else if (stateToken && stateHandlerRefferalID) {
       try {
         const config = {
@@ -147,9 +146,7 @@ function Dashboard() {
 
         setFilteredDataSource(response.data.data);
         setLength(response.data.data.length);
-      } catch (error) {
-       
-      }
+      } catch (error) {}
     } else if (frenchiseToken && franchiseRefferal) {
       const config = {
         headers: { Authorization: `Bearer ${frenchiseToken}` },
@@ -165,14 +162,11 @@ function Dashboard() {
           config
         )
         .then((res) => {
-
           setData(res.data.data);
 
           setFilteredDataSource(res.data.data);
         })
-        .catch((err) => {
-
-        });
+        .catch((err) => {});
     } else if (bussinessDeveloperToken || bussinessDeveloperReferralId) {
       const config = {
         headers: { Authorization: `Bearer ${bussinessDeveloperToken}` },
@@ -184,7 +178,7 @@ function Dashboard() {
       axios
         .post(
           `${apiurl}` +
-          "/businessDeveloper/get-all-users-in-business-developer",
+            "/businessDeveloper/get-all-users-in-business-developer",
           requestData,
           config
         )
@@ -193,9 +187,7 @@ function Dashboard() {
 
           setFilteredDataSource(res.data.users);
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     }
   };
 
@@ -209,7 +201,7 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
@@ -233,7 +225,7 @@ function Dashboard() {
     let data = {
       _id: id,
     };
-    
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -426,9 +418,7 @@ function Dashboard() {
           setLoading(false);
         }
       })
-      .catch((err) => {
-      
-      });
+      .catch((err) => {});
   };
 
   const downloadAadharFrontImage = (frontImage) => {
@@ -452,7 +442,6 @@ function Dashboard() {
     link.download = "image.jpg";
     link.click();
   };
-  
 
   const fetchUserDetailsForEdit = (id) => {
     const token =
@@ -463,7 +452,7 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
@@ -502,8 +491,7 @@ function Dashboard() {
           });
         }
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   const editInputChange = (e) => {
@@ -522,7 +510,6 @@ function Dashboard() {
   };
 
   const handleDobChange = (e) => {
-    
     setEditUserData({ ...editUserData, dob: e.target.value });
   };
   // save edit value
@@ -598,9 +585,7 @@ function Dashboard() {
       onOk() {
         deleteUser(id);
       },
-      onCancel() {
-        
-      },
+      onCancel() {},
     });
   };
   const deleteUser = (id) => {
@@ -610,7 +595,7 @@ function Dashboard() {
     };
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     };
     axios
@@ -619,9 +604,7 @@ function Dashboard() {
         fetchData();
         message.success("Deleted Successfully");
       })
-      .catch((err) => {
-       
-      });
+      .catch((err) => {});
   };
 
   //block  or unblock
@@ -654,9 +637,7 @@ function Dashboard() {
             message.warning("Something went wrong!");
           });
       },
-      onCancel() {
-        
-      },
+      onCancel() {},
     });
   };
 
@@ -664,12 +645,10 @@ function Dashboard() {
   const searchUser = (value) => {
     setSearchText(value);
 
-    const searchNumber = Number(value); 
+    const searchNumber = Number(value);
 
     const filteredData = data.filter((record) => {
-      
       if (record.phone === searchNumber) {
-     
         return true;
       }
 
@@ -722,18 +701,15 @@ function Dashboard() {
             message.success(res.data.message);
             fetchData();
           })
-          .catch((err) => {
-          
-          });
+          .catch((err) => {});
       },
-      onCancel() { },
+      onCancel() {},
     });
-  
   };
 
-  const gotoDashboard = ()=>{
-    navigate('/admindashboard/dashboard');
-  }
+  const gotoDashboard = () => {
+    navigate("/admindashboard/dashboard");
+  };
 
   return (
     <>
@@ -844,16 +820,26 @@ function Dashboard() {
         <div className="admin-dashboard-card">
           <div className="profile-verification-heading">
             <div className="txt-btn">
-              <h5 style={{ fontFamily: "Calibri" }}><BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;Trader Profile Details</h5>
-              {token || subadminToken?<NavLink
-                className="create-user"
-                to="/admindashboard/createuser"
-                exact
-                activeClassName="active"
-                activeStyle={activeStyle}
-              >
-                + Create Trader
-              </NavLink>:""}
+              <h5 >
+                <BiArrowBack
+                  onClick={gotoDashboard}
+                  style={{ cursor: "pointer" }}
+                />
+                &nbsp;Trader Profile Details
+              </h5>
+              {token || subadminToken ? (
+                <NavLink
+                  className="create-user"
+                  to="/admindashboard/createuser"
+                  exact
+                  activeClassName="active"
+                  activeStyle={activeStyle}
+                >
+                  + Create Trader
+                </NavLink>
+              ) : (
+                ""
+              )}
             </div>
             <Search
               placeholder="Enter search text"
@@ -1013,8 +999,7 @@ function Dashboard() {
                 </Col>
               </Row>
             </div>
-            <div>
-            </div>
+            <div></div>
           </div>
         </Modal>
       </div>

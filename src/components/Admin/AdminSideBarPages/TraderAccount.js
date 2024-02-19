@@ -13,9 +13,10 @@ import {
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import enIN from "date-fns/locale/en-IN";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import axios from "axios";
+import { BiArrowBack } from 'react-icons/bi';
 import baseUrl from "../../../baseUrl";
 
 const apiurl = baseUrl.apiUrl
@@ -23,6 +24,7 @@ const { TabPane } = Tabs;
 
 const { Option } = Select;
 const TraderAccount = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [selectedDate, onDateChange] = useState(null);
   const [totalAmount, setToalAmount] = useState(50000);
@@ -315,12 +317,16 @@ const TraderAccount = () => {
       console.log(err.response.data.message)
     })
   }
+ const gotoHome = ()=>{
+    navigate("/admindashboard/user")
+  }
+ 
   return (
     <>
       <div className="trading-container">
         <div className="header-trading-account">
           <div className="header-trading-content">
-            <p>Trader Accounts Details</p>
+          <div className="trader-account-heading d-flex justify-center "> <BiArrowBack onClick={gotoHome} style={{cursor:'pointer',color:'wheat'}}/> <p style={{marginTop:'10px'}}>&nbsp;Trader Accounts Details</p></div>
             <div className="trading-drop-down">
               <div className="total-wallet">
                 <FaRupeeSign />

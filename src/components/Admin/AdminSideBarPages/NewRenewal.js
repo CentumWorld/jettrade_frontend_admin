@@ -192,11 +192,12 @@ const NewRenewal = () => {
                 placeholder="User ID"
                 onChange={searchByUserID}
                 value={searchByUserId}
+                style={{fontFamily:'Roboto'}}
               />
               {
                 buttonDisable ? <Button type="primary" onClick={filterData} style={{ background: 'white', color: 'black' ,marginBottom: "10px"}} disabled={!searchByUserId}>Search</Button>
                 
-                : <Button type="primary" onClick={filterDataRenewal} style={{ background: 'white', color: 'black' }} disabled={!searchByUserId}>Search</Button>}
+                : <Button type="primary" onClick={filterDataRenewal} style={{ background: 'white', color: 'black',fontFamily:'Roboto' }} disabled={!searchByUserId}>Search</Button>}
             </div>
           </div>
                 </div>

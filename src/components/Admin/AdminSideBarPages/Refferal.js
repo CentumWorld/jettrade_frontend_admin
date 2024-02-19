@@ -15,7 +15,6 @@ import {
 } from "antd";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
 import aadharImage from "../../../img/aadhar.jpg";
 import aadharBackImage from "../../../img/Aadhaar-back.jpg";
 import panImage from "../../../img/pan.jpg";
@@ -33,7 +32,7 @@ const Refferal = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [refferalData, setRefferalData] = useState([]);
-  const [length, setLength] = useState(null);
+  // const [length, setLength] = useState(null);
   const [visible, setVisible] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [aadhar, setAadhar] = useState("");
@@ -57,10 +56,10 @@ const Refferal = () => {
     file: null,
   });
 
-  const buttonStyle = {
-    marginRight: "5px",
-    marginBottom: "5px",
-  };
+  // const buttonStyle = {
+  //   marginRight: "5px",
+  //   marginBottom: "5px",
+  // };
 
   // edit user details -----------
   const [userType, setUserType] = useState("");
@@ -91,7 +90,7 @@ const Refferal = () => {
     setIsEditModalVisible(false);
   };
 
-  //   --------------
+
 
   // search bar -------------
   const adminToken = localStorage.getItem("adminToken");
@@ -100,7 +99,6 @@ const Refferal = () => {
 
   const handleSearch = (value) => {
     setSearchText(value);
-    // Perform search or other operations based on the search text
     console.log("Performing search for:", value);
   };
   // -------------
@@ -846,8 +844,8 @@ const Refferal = () => {
 
       <div className="refferral-dashboard">
         <div className="refferal-dashboard-card">
-          <div className="refferal-profile-verification-heading">
-            <h5 style={{ fontFamily: "Calibri", display: "inline-block" }}>
+          <div className="member-profile-details">
+            <h5>
               <BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;Member Profile Details
             </h5>
             {adminToken||isBusiness || subadminToken?<NavLink
@@ -896,7 +894,7 @@ const Refferal = () => {
       <div>
         <Modal
           title={
-            <span style={{ color: "#5e72e4", fontFamily: "Calibri" }}>
+            <span style={{ color: "#5e72e4",fontWeight:700 }}>
               EDIT INFORMATION
             </span>
           }

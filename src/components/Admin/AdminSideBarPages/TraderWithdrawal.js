@@ -13,8 +13,9 @@ import {
 } from "date-fns";
 import { utcToZonedTime } from "date-fns-tz";
 import enIN from "date-fns/locale/en-IN";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
+import { BiArrowBack } from 'react-icons/bi';
 import axios from "axios";
 import baseUrl from "../../../baseUrl";
 
@@ -22,6 +23,7 @@ const apiurl = baseUrl.apiUrl
 
 const { Option } = Select;
 const TraderWithdrawal = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [selectedDate, onDateChange] = useState(null);
   const [totalAmount, setToalAmount] = useState(0);
@@ -263,12 +265,16 @@ const TraderWithdrawal = () => {
       console.log(err)
     })
   };
+
+ const gotoHome = ()=> {
+  navigate("/admindashboard/user")
+ }
   return (
     <>
       <div className="trading-container">
         <div className="header-trading-account">
           <div className="header-trading-content">
-            <p>Trader Withdrawal Details</p>
+          <div className="trader-withdrawal-heading d-flex justify-center "><BiArrowBack onClick={gotoHome} style={{cursor:'pointer',color:'wheat'}}/><p>Trader Withdrawal Details</p></div>
             <div className="trading-drop-down">
               <div className="total-wallet">
                 <FaRupeeSign />
