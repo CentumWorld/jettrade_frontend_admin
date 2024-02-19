@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState} from "react";
 import "../css/NewRenewal.css";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
@@ -12,14 +12,12 @@ import {
   Select,
   Form,
   Input,
-  Checkbox,
 } from "antd";
 import FrenchieRegister from "./Register/FrenchieRegister";
 import axios from "axios";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import aadharFront from "../../../img/aadhar.jpg";
 import allState from "./AllStateAndDistrict";
-import { DownOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import baseUrl from "../../../baseUrl";
 

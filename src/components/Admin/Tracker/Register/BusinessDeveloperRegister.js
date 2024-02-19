@@ -247,7 +247,7 @@ const BusinessDeveloperRegister = (props) => {
         <>
             <div>
                 <Modal
-                    title="Member Register"
+                   title={<span style={{ color: '#1677ff' }}>Member Register</span>}
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}
@@ -407,9 +407,9 @@ const BusinessDeveloperRegister = (props) => {
                             />
                         </div>
                         <div className='state-field'>
-                            <label>Business Developer ID</label>
+                            <label>member ID</label>
                             <Input type='text'
-                                placeholder='Businesss Developer Id'
+                                placeholder='Member ID'
                                 name="stateRegisterId"
                                 value={stateRegisterData.stateRegisterId}
                                 onChange={stateRegiInputs}

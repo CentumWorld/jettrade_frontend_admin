@@ -230,11 +230,12 @@ const FrenchieRegister = (props) => {
         <>
             <div>
                 <Modal
-                    title="Franchise Register Page"
+                  title={<span style={{ color: '#1677ff' }}>Franchise Register</span>}
                     open={props.isModalVisible}
                     onCancel={props.closeModal}
                     onOk={handleFrenchaeRegiSubmit}
                     okText={loading ? <Spin /> : 'Submit'}
+                
                 >
                     <div className='form-container'>
                         <div className='state-field'>

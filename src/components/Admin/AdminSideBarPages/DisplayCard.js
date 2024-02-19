@@ -902,7 +902,7 @@ const DisplayCard = () => {
             </div>
             <div className="trading-chart-view">
               <span style={{ color: "yellow", cursor: "pointer" }}>
-                ₹{totalWalletAmount}
+                ₹{totalWalletAmount.toFixed(2)}
               </span>
             </div>
           </div>
