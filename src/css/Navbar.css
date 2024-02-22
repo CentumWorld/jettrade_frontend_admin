@@ -3,6 +3,23 @@
     border: 1px solid black;
 } */
 
+.navbar-toggler{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    margin: 1rem 1rem 0 0;
+}
+
+.jtf-logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1rem;
+}
+
+
 .wallet-ammount{
     font-weight: 800;
 }
@@ -37,13 +54,13 @@
     color: purple;
 }
 
-form label {
-    font-weight: bold;
-}
+
 
 .nav-item button {
     width: 100px;
 }
+
+
 
 @media only screen and (max-width: 365px) {
     .jtf-logo{
