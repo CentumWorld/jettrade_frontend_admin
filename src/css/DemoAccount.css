@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:'Roboto',sans-serif
 }
 .demo_account{
     display: flex;
@@ -68,7 +69,7 @@
 .demo_metatrade_five_heading p{
     font-size: 18px;
     font-weight:700;
-    font-family: cursive;
+    font-family:'Roboto',sans-serif;
 }
 .demo_meta_trade_content p{
     font-size: 16px;
@@ -134,7 +135,7 @@
 .demo_three_div_small p{
     font-size: 16px;
     font-weight: bold;
-    font-family: cursive;
+    font-family: 'Roboto',sans-serif;
 }
 .demo_metatrade_five_div{
     width: 100%;

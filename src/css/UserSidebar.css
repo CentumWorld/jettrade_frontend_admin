@@ -2,13 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:'Roboto',sans-serif;
 }
 .main-container{
     position: sticky;
     top: 70px;
 }
 .userSidebar{
-   /* background: rgb(241, 239, 239);  */
    background: #fff;
    color: rgb(37, 35, 35);
    height: 91vh;
@@ -28,7 +28,7 @@
     padding: 15px 10px;
 }
 .logo {
-    font-family: "Arial", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
     font-weight: bold;
     text-transform: capitalize;
@@ -64,10 +64,6 @@
     margin: 10px 20px;
     font-weight: 600;
 }
-/* .deposit_button button{
-    justify-content: center;
-    align-items: center;
-} */
 .user_sidebar_link{
     display: flex;
     color: rgb(34, 31, 31);
@@ -75,7 +71,6 @@
     padding: 10px 15px;
     font-size: 16px;
     font-weight: 500;
-    /* font-family: 'Times New Roman', Times, serif; */
 
 }
 a{
@@ -96,7 +91,6 @@ a{
     padding: 10px 15px;
     font-size: 16px;
     font-weight: 500;
-    /* font-family: 'Times New Roman', Times, serif; */
 }
 .user_sidebar_link_small:hover{
     border-right: 2px solid rgb(199, 27, 27);
@@ -114,7 +108,6 @@ a{
     padding: 10px 15px;
     font-size: 16px;
     font-weight: 500;
-    /* font-family: 'Times New Roman', Times, serif; */
     justify-content: space-between;
 }
 .menu_item{

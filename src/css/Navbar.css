@@ -1,7 +1,4 @@
-/* .container-fluid  {
-    width: 100%;
-    border: 1px solid black;
-} */
+
 
 .navbar-toggler{
     position: absolute;
@@ -40,6 +37,7 @@
     color: rgb(54, 8, 54);
     font-weight: bold;
     margin-left: .5rem;
+    font-family:'Roboto',sans-serif;
    
 }
 .navbar{

@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Calibri;
+    font-family:'Roboto',sans-serif;
 }
 .manage-investment-card{
     width: 80%;

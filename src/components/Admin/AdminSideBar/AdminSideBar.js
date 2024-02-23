@@ -274,7 +274,7 @@ function AdminSideBar() {
 
       <div className="user-notification">
         <Modal
-          title={<h6 style={{ color: '#007BFF', fontWeight: 700, fontFamily: 'Calibri', fontSize: '20px' }}>Notifications</h6>}
+          title={<h6 style={{ color: '#007BFF', fontWeight: 700, fontFamily: "'Roboto',sans-serif", fontSize: '20px' }}>Notifications</h6>}
           className="user-notification-title"
           open={openNotificationModal}
           onOk={handleOk}

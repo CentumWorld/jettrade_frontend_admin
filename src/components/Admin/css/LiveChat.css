@@ -3,7 +3,7 @@
   height: 80vh;
   /* background: #fff; */
   color: #212121;
-  font-family: Calibri;
+  font-family:'Roboto',sans-serif;
   display: flex;
   /* place-items: center; */
   justify-content: center;
@@ -214,7 +214,7 @@ body {
   border-right: 1px dotted #607d8b;
 
   outline: none;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .chat-window .chat-footer button {
@@ -249,7 +249,7 @@ body {
   cursor: pointer;
   text-align: left;
   font-weight: 600;
-  font-family: Calibri;
+  font-family: 'Roboto',sans-serif;
   font-size: 18px;
   padding-top: 5px;
   padding-left: 2px;

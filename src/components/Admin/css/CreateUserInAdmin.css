@@ -21,14 +21,14 @@
 }
 .registration-body p{
     text-align: center;
-    font-family: Calibri;
+    font-family:'Roboto',sans-serif;
     font-weight: 600; 
 }
 .input_label p{
     text-align: start;
     margin-bottom: 0px;
     font-weight: 600;
-    font-family: Calibri;
+    font-family: 'Roboto',sans-serif;
 }
 
 .gender-dob{
@@ -74,7 +74,7 @@
     text-align: start;
     margin-bottom: 0px;
     font-weight: 600;
-    font-family: Calibri;
+    font-family: 'Roboto',sans-serif;
 }
 .custom-placeholder-input::placeholder{
     color:#808080;
@@ -87,7 +87,7 @@
 }
 .submit-footer p{
     font-weight: 500;
-    font-family: Calibri;
+    font-family: 'Roboto',sans-serif;
 }
 .submit-footer button{
     margin-left: 10px;
