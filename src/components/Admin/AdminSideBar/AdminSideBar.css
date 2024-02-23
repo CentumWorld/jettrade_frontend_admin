@@ -76,6 +76,7 @@
   height: 50px;
   background-color: rgba(128, 128, 128, 0.189);
   transition: all 200ms ease-in-out;
+  text-decoration: none;
 }
 
 .admin_sidebar_link_small {
