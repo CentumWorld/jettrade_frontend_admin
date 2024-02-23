@@ -1,5 +1,14 @@
 import React, { useCallback, useContext, useState, useEffect } from "react";
-import { Form, Input, message, Tabs, Select, Checkbox, Menu, Dropdown } from "antd";
+import {
+  Form,
+  Input,
+  message,
+  Tabs,
+  Select,
+  Checkbox,
+  Menu,
+  Dropdown,
+} from "antd";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,13 +19,12 @@ import { ToastContainer, toast } from "react-toastify";
 import baseUrl from "../baseUrl";
 import FrenchieRegister from "./Admin/Tracker/Register/FrenchieRegister";
 import allState from "./Admin/Tracker/AllStateAndDistrict";
-import { MdVerified } from 'react-icons/md'
-import {ImCross} from 'react-icons/im'
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import { MdVerified } from "react-icons/md";
+import { ImCross } from "react-icons/im";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
-
-const apiurl = baseUrl.apiUrl
+const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -24,12 +32,13 @@ const FranchiseAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const [correct, setCorrect] = useState(false);
-  const [incorrect, setIncorrect] = useState(false)
+  const [incorrect, setIncorrect] = useState(false);
   const [franchiseAdmin, setFranchiseAdmin] = useState({
     franchiseAdmin_id: "",
     franchiseAdmin_password: "",
   });
-  const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
+  const mobileNumberRegex =
+    /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
   const [stateFrenchise, setStateFrenchise] = useState([]);
   const [stateRegisterData, setStateRegisterData] = useState({
     fname: "",
@@ -40,9 +49,9 @@ const FranchiseAdminLogin = (props) => {
     state: "",
     stateRegisterId: "",
     password: "",
-    referralid: '',
+    referralid: "",
     city: [],
-    referredId: ""
+    referredId: "",
   });
   const [aadharImage, setAadharImage] = useState({
     file: null,
@@ -60,7 +69,18 @@ const FranchiseAdminLogin = (props) => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
   const [errorMessage, setErrorMessage] = useState("");
+  const [officialId, setOfficialId] = useState("BMM-BMM1653");
+  const [selectedOption, setSelectedOption] = useState("referral");
 
+  const handleDropdownChange = (value) => {
+    console.log(value);
+    setSelectedOption(value);
+    if (value === "official") {
+      setStateRegisterData({ ...stateRegisterData, referredId: officialId });
+    } else {
+      setStateRegisterData({ ...stateRegisterData, referredId: "" });
+    }
+  };
 
   const handleTabChange = (key) => {
     setActiveTab(key);
@@ -77,64 +97,75 @@ const FranchiseAdminLogin = (props) => {
     console.log(e.target.value);
   };
 
-
   const adminLogin = (e) => {
     e.preventDefault();
-    axios.post(`${apiurl}` + "/admin/frenchise-login", {
-      frenchiseId: franchiseAdmin.franchiseAdmin_id,
-      password: franchiseAdmin.franchiseAdmin_password,
-    })
+    axios
+      .post(`${apiurl}` + "/admin/frenchise-login", {
+        frenchiseId: franchiseAdmin.franchiseAdmin_id,
+        password: franchiseAdmin.franchiseAdmin_password,
+      })
       .then((response) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("franchiseToken", response.data.frenchiseToken);
         console.log(response.data);
-        localStorage.setItem("frenchiseId", response.data.frenchiseDetails.frenchiseId);
-        localStorage.setItem("frenchFname", response.data.frenchiseDetails.fname);
-        localStorage.setItem("franchiseRefferal", response.data.frenchiseDetails.referralId);
+        localStorage.setItem(
+          "frenchiseId",
+          response.data.frenchiseDetails.frenchiseId
+        );
+        localStorage.setItem(
+          "frenchFname",
+          response.data.frenchiseDetails.fname
+        );
+        localStorage.setItem(
+          "franchiseRefferal",
+          response.data.frenchiseDetails.referralId
+        );
         setFranchiseAdmin({ stateAdmin_id: "", stateAdmin_password: "" });
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
-        message.warning(error.response.data.message)
+        message.warning(error.response.data.message);
       });
     setShow(false);
   };
 
   const switchTab = useCallback((appKey) => {
-    if (appKey === '2') {
+    if (appKey === "2") {
       setIsModalVisible(true);
     }
-  }, [])
+  }, []);
 
   const verifyReferralID = () => {
-    console.log(stateRegisterData.referredId)
+    console.log(stateRegisterData.referredId);
     let data = {
-      refferId: stateRegisterData.referredId
-    }
+      refferId: stateRegisterData.referredId,
+    };
 
-    axios.post(`${apiurl}` + '/admin/verify-franchie-before-registration', data)
+    axios
+      .post(`${apiurl}` + "/admin/verify-franchie-before-registration", data)
       .then((res) => {
         setCorrect(true);
-        setIncorrect(false)
-        console.log(res.data)
+        setIncorrect(false);
+        console.log(res.data);
         setStateFrenchise(res.data.stateUserState);
-
       })
       .catch((err) => {
         setCorrect(false);
         setIncorrect(true);
         setStateFrenchise([]);
-      })
-  }
+      });
+  };
   const handleStateChange = (value) => {
     // Update the selected state in stateRegisterData
     setSelectedCities([]);
     setStateRegisterData({ ...stateRegisterData, state: value });
 
-    const selectedState = allState.states.find((stateItem) => stateItem.state === value);
+    const selectedState = allState.states.find(
+      (stateItem) => stateItem.state === value
+    );
 
-    console.log(selectedState.districts)
+    console.log(selectedState.districts);
     if (selectedState) {
       setSelectedCities(selectedState.districts);
     } else {
@@ -143,45 +174,58 @@ const FranchiseAdminLogin = (props) => {
   };
 
   const handleClickAadharFrontImage = (e) => {
-
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
       //preview shoe
-      setAadharImage({ file: e.target.files[0] })
+      setAadharImage({ file: e.target.files[0] });
     } else {
       message.error("Invalid File !! ");
       aadharImage.file = null;
     }
-  }
+  };
 
-  const handleClickBackAadharFrontImage = (e)=>{
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+  const handleClickBackAadharFrontImage = (e) => {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
       //preview shoe
-      setBackAadharImage({ file: e.target.files[0] })
+      setBackAadharImage({ file: e.target.files[0] });
     } else {
       message.error("Invalid File !! ");
       aadharImage.file = null;
     }
-  }
+  };
   const handleClickPanCardImage = (e) => {
-
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
       //preview shoe
-      setPanImage({ file: e.target.files[0] })
+      setPanImage({ file: e.target.files[0] });
     } else {
       message.error("Invalid File !! ");
       panImage.file = null;
     }
-  }
+  };
 
   const franchiseRegister = (value) => {
+    console.log(value);
     setLoading(true);
-    console.log(value, aadharImage.file, panImage.file, stateRegisterData.referredId)
+    console.log(
+      value,
+      aadharImage.file,
+      panImage.file,
+      stateRegisterData.referredId
+    );
     const formData = new FormData();
-    formData.append("referredId", stateRegisterData.referredId)
+    formData.append("referredId", stateRegisterData.referredId);
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
-    formData.append("phone",'+' + value.mobile);
+    formData.append("phone", "+" + value.mobile);
     // formData.append("phone", value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
@@ -192,9 +236,10 @@ const FranchiseAdminLogin = (props) => {
     formData.append("franchiseState", value.state);
     formData.append("franchiseCity", value.city);
 
-    axios.post(`${apiurl}` + "/admin/create-frenchise", formData)
+    axios
+      .post(`${apiurl}` + "/admin/create-frenchise", formData)
       .then((res) => {
-        setShow(false)
+        setShow(false);
         message.success(res.data.message);
         setLoading(false);
       })
@@ -203,23 +248,27 @@ const FranchiseAdminLogin = (props) => {
         setErrorMessage(err.response.data.message);
         setLoading(false);
         // message.warning(err.response.data.message);
-      })
-  }
-
-
+      });
+  };
 
   return (
     <>
       <ToastContainer />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>{activeTab === "1" ? "Franchise Login" : "Registration"}</Modal.Title>
+          <Modal.Title style={{ fontFamily: "Calibri", fontSize: "20px" }}>
+            {activeTab === "1" ? "Franchise Login" : "Registration"}
+          </Modal.Title>
         </Modal.Header>
         {errorMessage && ( // Conditionally render error message
-    <div className="error-message">{errorMessage}</div>
-  )}
+          <div className="error-message">{errorMessage}</div>
+        )}
         <Modal.Body>
-          <Tabs defaultActiveKey="1"  activeKey={activeTab} onChange={handleTabChange}>
+          <Tabs
+            defaultActiveKey="1"
+            activeKey={activeTab}
+            onChange={handleTabChange}
+          >
             <TabPane tab="Sign In" key="1">
               <div className="form-content">
                 <form onSubmit={adminLogin} autoComplete="off">
@@ -267,36 +316,54 @@ const FranchiseAdminLogin = (props) => {
             </TabPane>
             <TabPane tab="Sign Up" key="2">
               <Form name="basic" onFinish={franchiseRegister}>
+                <Form.Item label="Select">
+                  <Select
+                    value={selectedOption}
+                    onChange={handleDropdownChange}
+                  >
+                    <Option value="official">Official ID</Option>
+                    <Option value="referral"> Put Referral ID</Option>
+                  </Select>
+                </Form.Item>
+
                 <Form.Item
                   label="Referral Id"
                   name="referralId"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter referal ID',
-                    },
-                  ]}
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Please enter referal ID",
+                  //   },
+                  // ]}
                 >
-                  <Input placeholder='Referal ID' onChange={(e) => setStateRegisterData({ referredId: e.target.value })} />
+                  {selectedOption === "official" && (
+                    <Input
+                      placeholder="Referal ID"
+                      value={officialId}
+                      disabled
+                    />
+                  )}
+                  {selectedOption === "referral" && (
+                    <Input
+                      placeholder="Referal ID"
+                      onChange={(e) =>
+                        setStateRegisterData({ referredId: e.target.value })
+                      }
+                    />
+                  )}
                 </Form.Item>
-                {/* <div style={{ display: "flex", justifyContent: 'space-between' }}><Button className="rounded-button" onClick={verifyReferralID}>Verify</Button>
-                  <div>
-                    {correct ? <small style={{color:"green"}}><MdVerified style={{ fontSize: "20px" }} />&nbsp; Verify successful</small> : ""}
-                    {incorrect ? <small style={{color:"red"}}><ImCross style={{ fontSize: "20px" }} />&nbsp; Invalid referral id</small> : ""}
-                  </div>
-                </div> */}
-                
+
                 <Form.Item
                   label="First name"
                   name="fname"
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter first name',
+                      message: "Please enter first name",
                     },
                   ]}
                 >
-                  <Input placeholder='First name' />
+                  <Input placeholder="First name" />
                 </Form.Item>
                 <Form.Item
                   label="Last name"
@@ -304,11 +371,11 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter last name',
+                      message: "Please enter last name",
                     },
                   ]}
                 >
-                  <Input placeholder='Last name' />
+                  <Input placeholder="Last name" />
                 </Form.Item>
                 <Form.Item
                   label="Email"
@@ -316,11 +383,11 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter your email',
+                      message: "Please enter your email",
                     },
                     {
-                      type: 'email',
-                      message: 'Please enter a valid email address',
+                      type: "email",
+                      message: "Please enter a valid email address",
                     },
                   ]}
                 >
@@ -332,15 +399,15 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter your mobile number',
+                      message: "Please enter your mobile number",
                     },
                     {
                       pattern: mobileNumberRegex,
-                      message: 'Please enter a valid Indian mobile number',
+                      message: "Please enter a valid Indian mobile number",
                     },
                   ]}
                 >
-                  <PhoneInput country={'in'} placeholder="Mobile no" />
+                  <PhoneInput country={"in"} placeholder="Mobile no" />
                 </Form.Item>
                 <Form.Item
                   label="Gender"
@@ -348,7 +415,7 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please select your gender',
+                      message: "Please select your gender",
                     },
                   ]}
                 >
@@ -361,36 +428,14 @@ const FranchiseAdminLogin = (props) => {
                     <Option value="Other">Other</Option>
                   </Select>
                 </Form.Item>
-                {/* <Form.Item
-                  label="Select a State"
-                  name="state"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please select a state',
-                    },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select State"
-                    value={stateRegisterData.state}
-                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                    onChange={handleStateChange}
-                  >
-                    {stateFrenchise.map(stateItem => (
-                      <Option key={stateItem} value={stateItem}>
-                        {stateItem}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item> */}
+
                 <Form.Item
                   label="Select a State"
                   name="state"
                   rules={[
                     {
                       required: true,
-                      message: 'Please select a state',
+                      message: "Please select a state",
                     },
                   ]}
                 >
@@ -401,10 +446,10 @@ const FranchiseAdminLogin = (props) => {
                     onChange={handleStateChange}
                   >
                     {allState.states.map((stateObj, index) => (
-                        <Option key={index} value={stateObj.state}>
-                          {stateObj.state}
-                        </Option>
-                      ))}
+                      <Option key={index} value={stateObj.state}>
+                        {stateObj.state}
+                      </Option>
+                    ))}
                   </Select>
                 </Form.Item>
 
@@ -414,7 +459,7 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please select city',
+                      message: "Please select city",
                     },
                   ]}
                 >
@@ -436,12 +481,13 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please upload front aadhar an image',
+                      message: "Please upload front aadhar an image",
                     },
                   ]}
                 >
-                  <Input type='file'
-                    placeholder='Front aadhar'
+                  <Input
+                    type="file"
+                    placeholder="Front aadhar"
                     name="aadhar"
                     onChange={handleClickAadharFrontImage}
                   />
@@ -452,22 +498,21 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please upload back aadhar an image',
+                      message: "Please upload back aadhar an image",
                     },
                   ]}
                 >
-                  <Input type='file'
-                    placeholder='Back aadhar'
+                  <Input
+                    type="file"
+                    placeholder="Back aadhar"
                     name="backaadhar"
                     onChange={handleClickBackAadharFrontImage}
                   />
                 </Form.Item>
-                <Form.Item
-                  label="Upload Pan Image (JPG/PNG)"
-                  name="pan"
-                >
-                  <Input type='file'
-                    placeholder='Pan'
+                <Form.Item label="Upload Pan Image (JPG/PNG)" name="pan">
+                  <Input
+                    type="file"
+                    placeholder="Pan"
                     name="pan"
                     onChange={handleClickPanCardImage}
                   />
@@ -478,7 +523,7 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter your user ID',
+                      message: "Please enter your user ID",
                     },
                   ]}
                 >
@@ -492,24 +537,28 @@ const FranchiseAdminLogin = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please enter your password',
+                      message: "Please enter your password",
                     },
                   ]}
                 >
                   <Input.Password placeholder="Password" />
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-                  {loading ? "Submitting..." : "Submit"}
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ float: "right" }}
+                  >
+                    {loading ? "Submitting..." : "Submit"}
                   </Button>
                 </Form.Item>
               </Form>
             </TabPane>
           </Tabs>
-
         </Modal.Body>
-      </Modal></>
-  )
-}
+      </Modal>
+    </>
+  );
+};
 
-export default FranchiseAdminLogin
+export default FranchiseAdminLogin;

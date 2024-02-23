@@ -225,6 +225,17 @@ const StateAdminLogin = (props) => {
             <TabPane tab="Sign Up" key="2">
               <div className="state-register">
                 <Form name="basic" onFinish={stateRegister}>
+                <Form.Item
+                    label="Referred ID"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please enter official id',
+                      },
+                    ]}
+                  >
+                    <Input value={"admin@123"} disabled />
+                  </Form.Item>
                   <Form.Item
                     label="First Name"
                     name="fname"
