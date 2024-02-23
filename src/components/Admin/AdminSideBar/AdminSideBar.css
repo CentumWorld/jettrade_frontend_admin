@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: Roboto;
+  font-family: 'Roboto',sans-serif;
 }
 
 .admin-sidebar-main-container {
@@ -67,6 +67,7 @@
   padding: 10px 15px;
   font-size: 20px;
   align-items: center;
+ 
 }
 
 .admin_sidebar_link:hover {

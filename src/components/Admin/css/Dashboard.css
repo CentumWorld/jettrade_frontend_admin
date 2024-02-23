@@ -1,5 +1,5 @@
 * {
-  font-family: Roboto;
+  font-family: 'Roboto',sans-serif;
 }
 
 .home_btm {
@@ -76,7 +76,7 @@
 .document_verification .ant-modal-title {
   font-size: 20px;
   color: #5e72e4;
-  font-family: Calibri;
+  font-family: 'Roboto',sans-serif;
 }
 
 /* media query */

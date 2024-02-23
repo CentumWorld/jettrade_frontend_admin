@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family:'Roboto',sans-serif;
 }
 
 
@@ -217,19 +218,19 @@
     padding: 10px 10px 16px 0px;
     color: #828ca0;
     font-size: 14px;
-    font-family: sans-serif;
+    font-family: 'Roboto',sans-serif;
     width: 120px;
 }
 .create-account-table tbody tr td{
     font-size: 14px;
 }
 .create-account-table tbody tr td small{
-    font-family: cursive;
+    font-family:'Roboto',sans-serif;
     font-size: 14px;
     color: rgb(245, 162, 67);
 }
 .create-account-table tbody tr td strong{
-    font-family: cursive;
+    font-family:'Roboto',sans-serif;
     color: #0b0b16;
     font: 12px;
 }
