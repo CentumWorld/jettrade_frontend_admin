@@ -2,7 +2,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../App";
 import Button from "react-bootstrap/Button";
@@ -43,28 +42,14 @@ function AdminLogin(props) {
         localStorage.setItem("adminToken", response.data.token);
         localStorage.setItem("adminId", response.data.admin_id);
         localStorage.setItem("adminRefferalId",response.data.referralId)
+        message.success("Login successful!");
+
         setAdmin({ admin_id: "", admin_password: "" }); // Use setAdmin to reset the state
         navigate("/admindashboard");
       })
       .catch((error) => {
-        console.log("Not login");
-        if (error.response.status === 422) {
-          toast.warning(
-            "Please Fill all Details!",
-            {
-              autoClose: 2000,
-              theme: "dark",
-            },
-            1000
-          );
-          setAdmin({ admin_id: "", admin_password: "" }); // Use setAdmin to reset the state
-        }
-        if (error.response.status === 404) {
-          toast.warning("Invalid Credential!", {
-            autoClose: 2000,
-            theme: "dark",
-          });
-        }
+
+        message.warning(error.response.data.message)
       });
     setShow(false);
   };
@@ -73,7 +58,7 @@ function AdminLogin(props) {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title >Admin Login</Modal.Title>
+          <Modal.Title>Admin Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-content">
@@ -122,7 +107,6 @@ function AdminLogin(props) {
         </Modal.Body>
       </Modal>
 
-      <ToastContainer />
     </>
   );
 }

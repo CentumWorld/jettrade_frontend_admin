@@ -41,7 +41,7 @@ const VideoPlayer = ({
   const navigate = useNavigate();
   
   const token = localStorage.getItem("adminToken") || localStorage.getItem("stateHandlerToken") || localStorage.getItem("bussinessAdminToken")
-                || localStorage.getItem("videoCreatorToken");
+                || localStorage.getItem("videoCreatorToken")|| localStorage.getItem("subAdminToken");
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

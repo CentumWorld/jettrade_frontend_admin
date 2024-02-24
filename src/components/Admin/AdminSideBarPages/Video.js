@@ -21,7 +21,7 @@ const Video = () => {
   const [confirmVisible, setConfirmVisible] = useState(false);
 
   const token = localStorage.getItem("stateHandlerToken") || localStorage.getItem("adminToken") || localStorage.getItem("bussinessAdminToken")
-                || localStorage.getItem("videoCreatorToken") || localStorage.getItem("franchiseToken");
+                || localStorage.getItem("videoCreatorToken") || localStorage.getItem("franchiseToken") || localStorage.getItem("subAdminToken")
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
