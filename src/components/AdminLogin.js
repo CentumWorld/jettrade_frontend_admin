@@ -73,7 +73,7 @@ function AdminLogin(props) {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}>Admin Login</Modal.Title>
+          <Modal.Title >Admin Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form-content">
