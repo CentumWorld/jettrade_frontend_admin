@@ -45,6 +45,10 @@ const franchiseAdminRoutes = [
     icon: <SiPivotaltracker />,
     subRoutes: [
       {
+        path: "tracker/create-member",
+        name: "Members",
+      },
+      {
         path: "tracker/traders",
         name: "Traders",
       },
