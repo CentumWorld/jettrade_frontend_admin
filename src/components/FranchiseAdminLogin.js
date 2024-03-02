@@ -484,11 +484,13 @@ const FranchiseAdminLogin = (props) => {
                       message: "Please upload front aadhar an image",
                     },
                   ]}
+                  
                 >
                   <Input
                     type="file"
                     placeholder="Front aadhar"
                     name="aadhar"
+                    accept=".jpg, .jpeg, .png"
                     onChange={handleClickAadharFrontImage}
                   />
                 </Form.Item>
@@ -506,6 +508,7 @@ const FranchiseAdminLogin = (props) => {
                     type="file"
                     placeholder="Back aadhar"
                     name="backaadhar"
+                    accept=".jpg, .jpeg, .png"
                     onChange={handleClickBackAadharFrontImage}
                   />
                 </Form.Item>
@@ -514,6 +517,7 @@ const FranchiseAdminLogin = (props) => {
                     type="file"
                     placeholder="Pan"
                     name="pan"
+                    accept=".jpg, .jpeg, .png"
                     onChange={handleClickPanCardImage}
                   />
                 </Form.Item>

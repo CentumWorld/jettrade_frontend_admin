@@ -1,334 +1,345 @@
-import React, { useState } from 'react';
-import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu, Table } from 'antd';
-import allState from '../AllStateAndDistrict';
-import axios from 'axios';
-import { message,Spin } from 'antd';
-import baseUrl from '../../../../baseUrl';
-import './css/StateRegister.css'
+import React, { useState } from "react";
+import {
+  Modal,
+  Button,
+  Input,
+  Select,
+  Checkbox,
+  Dropdown,
+  Menu,
+  Table,
+} from "antd";
+import allState from "../AllStateAndDistrict";
+import axios from "axios";
+import { message, Spin } from "antd";
+import baseUrl from "../../../../baseUrl";
+import "./css/StateRegister.css";
 
-const apiurl = baseUrl.apiUrl
+const apiurl = baseUrl.apiUrl;
 
 const { Option } = Select;
 
 const StateRegister = (props) => {
-    // const navigate = useNavigate();
-    const {updateData} = props;
-    
-    const [selectedStates, setSelectedStates] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [stateRegisterData, setStateRegisterData] = useState({
-        fname: "",
-        lname: "",
-        email: "",
-        phone: "",
-        gender: "",
-        state: '',
-        stateRegisterId: "",
-        password: "",
-        referredId: "admin@123", // Add the new field here
+  // const navigate = useNavigate();
+  const { updateData } = props;
 
-    });
-    const [aadharImage, setAadharImage] = useState({
-        file: null,
-    });
-    const [backsideAadhar,setBackAadharImage] = useState({
-        file:null
-    })
-    const [panImage, setPanImage] = useState({
-        file: null,
-    });
-    const [spin, setSpin] = useState(false);
-    const handleCheckboxChange = (state) => {
-        if (selectedStates.includes(state)) {
-            setSelectedStates(selectedStates.filter(selected => selected !== state));
-        } else {
-            setSelectedStates([...selectedStates, state]);
-        }
+  const [selectedStates, setSelectedStates] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [stateRegisterData, setStateRegisterData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    gender: "",
+    state: "",
+    stateRegisterId: "",
+    password: "",
+    referredId: "admin@123", // Add the new field here
+  });
+  const [aadharImage, setAadharImage] = useState({
+    file: null,
+  });
+  const [backsideAadhar, setBackAadharImage] = useState({
+    file: null,
+  });
+  const [panImage, setPanImage] = useState({
+    file: null,
+  });
+  const [spin, setSpin] = useState(false);
+  const handleCheckboxChange = (state) => {
+    if (selectedStates.includes(state)) {
+      setSelectedStates(
+        selectedStates.filter((selected) => selected !== state)
+      );
+    } else {
+      setSelectedStates([...selectedStates, state]);
+    }
+  };
+  const stateRegiInputs = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    // Handle all fields except referredId
+    if (name !== "referredId") {
+      setStateRegisterData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+
+  //handle front aadhar image function
+  const handleClickAadharFrontImage = (e) => {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      //preview shoe
+      setAadharImage({ file: e.target.files[0] });
+    } else {
+      message.error("Invalid File !! ");
+      panImage.file = null;
+    }
+  };
+  // back side adhar
+  const handleClickBackAadharFrontImage = (e) => {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      //preview shoe
+      setBackAadharImage({ file: e.target.files[0] });
+    } else {
+      message.error("Invalid File !! ");
+      panImage.file = null;
+    }
+  };
+
+  //hadle pan card image function
+  const handleClickPanCardImage = (e) => {
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpeg"
+    ) {
+      //preview shoe
+      setPanImage({ file: e.target.files[0] });
+    } else {
+      message.error("Invalid File !! ");
+      panImage.file = null;
+    }
+  };
+
+  const handleStateRegiSubmit = async (e) => {
+    const dataList = "update List";
+    setLoading(true);
+    e.preventDefault();
+    console.log(aadharImage.file);
+    const formData = new FormData();
+    formData.append("fname", stateRegisterData.fname);
+    formData.append("lname", stateRegisterData.lname);
+    formData.append("email", stateRegisterData.email);
+    formData.append("phone", stateRegisterData.phone);
+    formData.append("gender", stateRegisterData.gender);
+    formData.append("password", stateRegisterData.password);
+    formData.append("stateHandlerId", stateRegisterData.stateRegisterId);
+    formData.append("adhar_front_side", aadharImage.file);
+    formData.append("adhar_back_side", backsideAadhar.file);
+    formData.append("panCard", panImage.file);
+    formData.append("selectedState", selectedStates);
+    formData.append("referredId", stateRegisterData.referredId);
+
+    console.log(formData, "44");
+
+    const token = localStorage.getItem("adminToken");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+      },
     };
-    const stateRegiInputs = (e) => {
-        e.preventDefault();
-        const { name, value } = e.target;
+    axios
+      .post(`${apiurl}` + "/admin/create_State_Handler", formData, config)
+      .then((res) => {
+        message.success(res.data.message);
+        setStateRegisterData({
+          fname: "",
+          lname: "",
+          email: "",
+          phone: "",
+          gender: "",
+          state: "",
+          stateRegisterId: "",
+          password: "",
+        });
+        setLoading(false);
+        setSelectedStates([]);
+        setAadharImage({ file: null });
+        setPanImage({ file: null });
+        updateData(dataList);
+      })
+      .catch((err) => {
+        setLoading(false);
+        message.error(err.response.data.message);
+      });
+  };
 
-        // Handle all fields except referredId
-        if (name !== 'referredId') {
-            setStateRegisterData((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
-    }
-    
+  const menu = (
+    <Menu>
+      <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+        {allState.states.map((state) => (
+          <Menu.Item key={state.state}>
+            <Checkbox
+              onChange={() => handleCheckboxChange(state.state)}
+              checked={selectedStates.includes(state.state)}
+            >
+              {state.state}
+            </Checkbox>
+          </Menu.Item>
+        ))}
+      </div>
+    </Menu>
+  );
 
-    //handle front aadhar image function
-    const handleClickAadharFrontImage = (e) => {
+  return (
+    <>
+      <div>
+        <Modal
+          title={<h6 style={{ color: "#007BFF" }}>BMM Register</h6>}
+          open={props.isModalVisible}
+          onCancel={props.closeModal}
+          onOk={handleStateRegiSubmit}
+          okText={loading ? <Spin /> : "Submit"}
+        >
+          <div className="form-container">
+            <div className="state-field">
+              <label>Referred ID</label>
+              <Input
+                placeholder="Referred ID"
+                name="referredId"
+                value={stateRegisterData.referredId}
+                onChange={stateRegiInputs}
+                disabled
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  border: "1px solid #ccc",
+                }}
+              />
+            </div>
+            <div className="state-field">
+              <label>First Name</label>
+              <Input
+                placeholder="First Name"
+                name="fname"
+                value={stateRegisterData.fname}
+                onChange={stateRegiInputs}
+              />
+            </div>
+            <div className="state-field">
+              <label>Last Name</label>
+              <Input
+                placeholder="Last Name"
+                name="lname"
+                value={stateRegisterData.lname}
+                onChange={stateRegiInputs}
+              />
+            </div>
+            <div className="state-field">
+              <label>Email</label>
+              <Input
+                placeholder="Email"
+                name="email"
+                value={stateRegisterData.email}
+                onChange={stateRegiInputs}
+              />
+            </div>
+            <div className="state-field">
+              <label>Phone</label>
+              <Input
+                placeholder="Phone"
+                name="phone"
+                value={stateRegisterData.phone}
+                onChange={stateRegiInputs}
+              />
+            </div>
 
-        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-            //preview shoe
-            setAadharImage({ file: e.target.files[0] })
-        } else {
-            message.error("Invalid File !! ");
-            panImage.file = null;
-        }
-    }
-    // back side adhar
-    const handleClickBackAadharFrontImage = (e)=>{
-        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-            //preview shoe
-            setBackAadharImage({ file: e.target.files[0] })
-        } else {
-            message.error("Invalid File !! ");
-            panImage.file = null;
-        }
-    }
+            {/* <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}> */}
 
-    //hadle pan card image function
-    const handleClickPanCardImage = (e) => {
-
-        if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-            //preview shoe
-            setPanImage({ file: e.target.files[0] })
-        } else {
-            message.error("Invalid File !! ");
-            panImage.file = null;
-        }
-    }
-
-
-    const handleStateRegiSubmit = async (e) => {
-        const dataList = "update List"
-        setLoading(true);
-        e.preventDefault();
-        console.log(aadharImage.file);
-        const formData = new FormData();
-        formData.append("fname", stateRegisterData.fname);
-        formData.append("lname", stateRegisterData.lname);
-        formData.append("email", stateRegisterData.email);
-        formData.append("phone", stateRegisterData.phone);
-        formData.append("gender", stateRegisterData.gender);
-        formData.append("password", stateRegisterData.password);
-        formData.append("stateHandlerId", stateRegisterData.stateRegisterId);
-        formData.append("adhar_front_side", aadharImage.file);
-        formData.append("adhar_back_side", backsideAadhar.file);
-        formData.append("panCard", panImage.file);
-        formData.append("selectedState",selectedStates);
-        formData.append("referredId", stateRegisterData.referredId);
-
-
-        console.log(formData, "44");
-
-            const token = localStorage.getItem('adminToken');
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`, // Set the 'Authorization' header with the token
+            <div className="state-field">
+              <label>Gender</label>
+              <br />
+              <Select
+                placeholder="Select Gender"
+                name="gender"
+                value={stateRegisterData.gender}
+                onChange={(value) =>
+                  setStateRegisterData((prevData) => ({
+                    ...prevData,
+                    gender: value,
+                  }))
                 }
-            }
-            axios.post(`${apiurl}`+"/admin/create_State_Handler",formData,config)
-            .then((res)=>{
-                message.success(res.data.message)
-                setStateRegisterData({
-                    fname: "",
-                    lname: "",
-                    email: "",
-                    phone: "",
-                    gender: "",
-                    state: '',
-                    stateRegisterId: "",
-                    password: "",
-                });
-                setLoading(false);
-                setSelectedStates([]);
-                setAadharImage({ file: null });
-                setPanImage({ file: null });
-                updateData(dataList)
-
-            })
-            .catch(err=>{
-                setLoading(false);
-                message.error(err.response.data.message);
-            })
-
-    };
-
-
-    const menu = (
-        <Menu>
-            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                {allState.states.map(state => (
-                    <Menu.Item key={state.state}>
-                        <Checkbox
-                            onChange={() => handleCheckboxChange(state.state)}
-                            checked={selectedStates.includes(state.state)}
-                        >
-                            {state.state}
-                        </Checkbox>
-                    </Menu.Item>
-                ))}
+                style={{ width: "100%" }}
+              >
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Other">Other</Option>
+              </Select>
             </div>
-        </Menu>
-    );
-
-    
-
-
-
-    return (
-        <>  
-            <div>
-                <Modal
-                    title={<h6 style={{ color: '#007BFF' }}>BMM Register</h6>}
-                    open={props.isModalVisible}
-                    onCancel={props.closeModal}
-                    onOk={handleStateRegiSubmit}
-                    okText={loading?<Spin/> : 'Submit'}
-                >
-                    <div className='form-container'>
-                        <div className='state-field'>
-                            <label >Referred ID</label>
-                            <Input
-                                placeholder='Referred ID'
-                                name="referredId"
-                                value={stateRegisterData.referredId}
-                                onChange={stateRegiInputs}
-                                disabled
-                                style={{
-                                    backgroundColor: 'white',
-                                    color: 'black',
-                                    border: '1px solid #ccc',
-                                }}                        
-                                    />
-                        </div>
-                        <div className='state-field'>
-
-                            <label>First Name</label>
-                            <Input
-                                placeholder='First Name'
-                                name="fname"
-                                value={stateRegisterData.fname}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Last Name</label>
-                            <Input
-                                placeholder='Last Name'
-                                name="lname"
-                                value={stateRegisterData.lname}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Email</label>
-                            <Input
-                                placeholder='Email'
-                                name="email"
-                                value={stateRegisterData.email}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Phone</label>
-                            <Input
-                                placeholder='Phone'
-                                name="phone"
-                                value={stateRegisterData.phone}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                      
-
-
-                        {/* <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}> */}
-
-
-                            <div className='state-field'>
-                                <label>Gender</label><br />
-                                <Select placeholder="Select Gender"
-                                    name="gender"
-                                    value={stateRegisterData.gender}
-                                    onChange={(value)=>
-                                        setStateRegisterData((prevData)=>({
-                                            ...prevData,
-                                            gender:value
-                                        }))
-                                    }
-
-                                    style={{ width: '100%' }}>
-                                    <Option value='Male'>Male</Option>
-                                    <Option value='Female'>Female</Option>
-                                    <Option value='Other'>Other</Option>
-                                </Select>
-                            </div>
-                            <div className='state-field'>
-                                <label>State</label><br />
-                                <Dropdown overlay={menu}
-                                    name="state"
-                                    value={stateRegisterData.state}
-                                    onChange={stateRegiInputs}
-                                    trigger={['click']}
-                                    
-
-                                >
-                                    <Button style={{width:'100%'}}>Select state</Button>
-                                </Dropdown>
-                                <div>
-                                    <strong>Selected States:</strong>
-                                    <ul>
-                                        {selectedStates.map(state => (
-                                            <li key={state}>{state}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                      
-                        <div className='state-field'>
-                            <label>Front side aadhar</label>
-                            <Input type='file'
-                                placeholder='Aadhar'
-                                name="aadhar"
-                                onChange={handleClickAadharFrontImage}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Back side aadhar</label>
-                            <Input type='file'
-                                placeholder='Aadhar'
-                                name="aadhar"
-                                onChange={handleClickBackAadharFrontImage}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Pan </label>
-                            <Input type='file'
-                                placeholder='Pan'
-                                name="pan"
-                                onChange={handleClickPanCardImage}
-
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>BMM ID</label>
-                            <Input type='text'
-                                placeholder='BMM Id'
-                                name="stateRegisterId"
-                                value={stateRegisterData.stateRegisterId}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                        <div className='state-field'>
-                            <label>Password</label>
-                            <Input.Password
-                                placeholder='Password'
-                                name="password"
-                                value={stateRegisterData.password}
-                                onChange={stateRegiInputs}
-                            />
-                        </div>
-                    </div>
-                </Modal>
-
+            <div className="state-field">
+              <label>State</label>
+              <br />
+              <Dropdown
+                overlay={menu}
+                name="state"
+                value={stateRegisterData.state}
+                onChange={stateRegiInputs}
+                trigger={["click"]}
+              >
+                <Button style={{ width: "100%" }}>Select state</Button>
+              </Dropdown>
+              <div>
+                <strong>Selected States:</strong>
+                <ul>
+                  {selectedStates.map((state) => (
+                    <li key={state}>{state}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-        </>
-    );
+
+            <div className="state-field">
+              <label>Front side aadhar(JPG/PNG)</label>
+              <Input
+                type="file"
+                placeholder="Aadhar"
+                name="aadhar"
+                accept=".jpg,.png,.jpeg"
+                onChange={handleClickAadharFrontImage}
+              />
+            </div>
+            <div className="state-field">
+              <label>Back side aadhar(JPG/PNG)</label>
+              <Input
+                type="file"
+                placeholder="Aadhar"
+                name="aadhar"
+                accept=".jpg,.png,.jpeg"
+                onChange={handleClickBackAadharFrontImage}
+              />
+            </div>
+            <div className="state-field">
+              <label>Pan(JPG/PNG) </label>
+              <Input
+                type="file"
+                placeholder="Pan"
+                name="pan"
+                accept=".jpg,.png,.jpeg"
+                onChange={handleClickPanCardImage}
+              />
+            </div>
+            <div className="state-field">
+              <label>BMM ID</label>
+              <Input
+                type="text"
+                placeholder="BMM Id"
+                name="stateRegisterId"
+                value={stateRegisterData.stateRegisterId}
+                onChange={stateRegiInputs}
+              />
+            </div>
+            <div className="state-field">
+              <label>Password</label>
+              <Input.Password
+                placeholder="Password"
+                name="password"
+                value={stateRegisterData.password}
+                onChange={stateRegiInputs}
+              />
+            </div>
+          </div>
+        </Modal>
+      </div>
+    </>
+  );
 };
 
 export default StateRegister;

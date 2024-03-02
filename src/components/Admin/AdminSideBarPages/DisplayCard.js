@@ -21,7 +21,7 @@ import {
 } from "antd";
 import { FaRupeeSign } from "react-icons/fa";
 import ShareModal from "../../../common/ShareModal";
-import card from '../../../img/JTF.gif'
+import card from "../../../img/JTF.gif";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
@@ -74,13 +74,10 @@ const DisplayCard = () => {
   const [openSharModal, setOpenShareModal] = useState(false);
   const [referralId, setReferralId] = useState("");
   const handleMenuClick = (e) => {
-    
     if (e.key === "chat-with-admin") {
-      
       navigate("/admindashboard/chat/frenchisee-handler-chat");
     }
     if (e.key === "chat-with-sho") {
-      
       navigate("/admindashboard/chat/frenchise-chat-with-SHO");
     }
     if (e.key === "chat-with-bd") {
@@ -89,9 +86,7 @@ const DisplayCard = () => {
   };
 
   const handleStateMenuClick = (e) => {
-    
     if (e.key === "chat-with-admin") {
-      
       navigate("/admindashboard/chat/state-handler-chat");
     }
     if (e.key === "chat-with-frenchise") {
@@ -100,13 +95,10 @@ const DisplayCard = () => {
   };
 
   const handleAdminChatMenuClick = (e) => {
-   
     if (e.key === "chat-with-traders") {
-   ;
       navigate("/admindashboard/trader-chat");
     }
     if (e.key === "chat-with-referrals") {
-      
       navigate("/admindashboard/refferal-chat");
     }
     if (e.key === "chat-with-state-handlers") {
@@ -124,7 +116,6 @@ const DisplayCard = () => {
   const handleTrackerDetailsMenuClick = (e) => {
     console.log(e.key);
     if (e.key === "state-details") {
-   
       navigate("/admindashboard/tracker/state-tracer");
     }
     if (e.key === "frenchise-details") {
@@ -136,9 +127,7 @@ const DisplayCard = () => {
   };
 
   const handleBusinessChatMenuClick = (e) => {
-    
     if (e.key === "chat-with-admin") {
-     
       navigate("/admindashboard/chat/businessD-chat");
     }
     if (e.key === "chat-with-frenchise") {
@@ -184,7 +173,6 @@ const DisplayCard = () => {
     </Menu>
   );
 
-  
   const businessChatMenu = (
     <Menu onClick={handleBusinessChatMenuClick}>
       <Menu.Item key="chat-with-admin">Chat with Admin</Menu.Item>
@@ -274,9 +262,7 @@ const DisplayCard = () => {
           }).format(res.data.totalSubscriptionAmount);
           setTotalAmount(formattedRupees);
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     }
   };
   const callApiToTotalUserRunningTrialExpire = () => {
@@ -301,14 +287,11 @@ const DisplayCard = () => {
             expirePercentage: res.data.expiredPercentage,
           });
         })
-        .catch((err) => {
-
-        });
+        .catch((err) => {});
     }
   };
 
   const callApiToEligibaleWithdrawalForState = () => {
-    
     const config = {
       headers: { Authorization: `Bearer ${isStateHandler}` },
     };
@@ -320,13 +303,10 @@ const DisplayCard = () => {
       .then((res) => {
         setPaymentModal(res.data.updatedState.firstPayment);
       })
-      .catch((err) => {
-       
-      });
+      .catch((err) => {});
   };
 
   const callApiToEligibaleWithdrawalForFranchise = () => {
-    
     const config = {
       headers: { Authorization: `Bearer ${isFrenchise}` },
     };
@@ -340,16 +320,12 @@ const DisplayCard = () => {
         config
       )
       .then((res) => {
-       
         setPaymentModal(res.data.updatedFranchise.firstPayment);
       })
-      .catch((err) => {
-      
-      });
+      .catch((err) => {});
   };
 
   const callApiToEligibaleWithdrawalForBD = () => {
-    
     const config = {
       headers: { Authorization: `Bearer ${isBusinessHandler}` },
     };
@@ -364,12 +340,9 @@ const DisplayCard = () => {
         config
       )
       .then((res) => {
-       
         setPaymentModal(res.data.updatedBusinessDeveloper.firstPayment);
       })
-      .catch((err) => {
-        
-      });
+      .catch((err) => {});
   };
 
   const openWithrawalModalFunction = () => {
@@ -381,11 +354,9 @@ const DisplayCard = () => {
       axios
         .get(`${apiurl}` + "/state/get-own-state-details", config)
         .then((res) => {
-
           setPaymentModal(res.data.data.firstPayment);
           setStateHandlerTotalWallet(res.data.data.stateHandlerWallet);
           setVerifyDate(res.data.data.verifyDate);
-          
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
@@ -397,14 +368,12 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(30 - differenceInDays);
-          
+
           if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForState();
           }
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     } else if (isBusinessHandler) {
       setOpenStateHandlerModal(true);
       const config = {
@@ -417,13 +386,13 @@ const DisplayCard = () => {
         )
         .then((res) => {
           setStateHandlerTotalWallet(res.data.data.businessDeveloperWallet);
-          
+
           setPaymentModal(res.data.data.firstPayment);
           setVerifyDate(res.data.data.verifyDate);
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          
+
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
@@ -432,15 +401,12 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(7 - differenceInDays);
-         
 
           if (differenceInDays > 7) {
             callApiToEligibaleWithdrawalForBD();
           }
         })
-        .catch((err) => {
-          
-        });
+        .catch((err) => {});
     } else if (isFrenchise) {
       setOpenStateHandlerModal(true);
       const config = {
@@ -455,7 +421,7 @@ const DisplayCard = () => {
 
           const isoDateString = res.data.data.verifyDate;
           const convertedDateString = isoDateString.substring(0, 10);
-          
+
           const currentDate = new Date();
           const date = new Date(convertedDateString);
 
@@ -464,15 +430,12 @@ const DisplayCard = () => {
             differenceInMilliseconds / (1000 * 60 * 60 * 24)
           );
           setDayDifference(30 - differenceInDays);
-          
 
           if (differenceInDays > 30) {
             callApiToEligibaleWithdrawalForFranchise();
           }
         })
-        .catch((err) => {
-        
-        });
+        .catch((err) => {});
     }
   };
   const withdrawalAmountSubmit = () => {
@@ -490,7 +453,6 @@ const DisplayCard = () => {
       axios
         .post(`${apiurl}` + "/state/create-state-payment-request", data, config)
         .then((res) => {
-          
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -519,7 +481,6 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -547,7 +508,6 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-       
           message.success(
             "Payment request successful, It will be credited within 48 hours."
           );
@@ -559,8 +519,6 @@ const DisplayCard = () => {
         });
     }
   };
-
- 
 
   const callApiToStateUpiDetails = () => {
     const config = {
@@ -641,12 +599,9 @@ const DisplayCard = () => {
       axios
         .post(`${apiurl}` + "/state/get-state-own-bank-details", data, config)
         .then((res) => {
-      
           setStateBankDetails(res.data.stateBankDetails);
         })
-        .catch((err) => {
-       
-        });
+        .catch((err) => {});
     }
   };
 
@@ -666,12 +621,9 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          
           setStateBankDetails(res.data.franchiseBankDetails);
         })
-        .catch((err) => {
-         
-        });
+        .catch((err) => {});
     }
   };
 
@@ -692,35 +644,28 @@ const DisplayCard = () => {
           config
         )
         .then((res) => {
-          
           setStateBankDetails(res.data.businessDeveloperBankDetails);
         })
-        .catch((err) => {
-         
-        });
+        .catch((err) => {});
     }
   };
- 
 
   const copyToClipboard = () => {
-    const input = document.createElement('input');
+    const input = document.createElement("input");
     input.value = ReferralId;
     document.body.appendChild(input);
     input.select();
-    input.setSelectionRange(0, 99999); 
-  
+    input.setSelectionRange(0, 99999);
+
     try {
-      document.execCommand('copy');
+      document.execCommand("copy");
       message.success("Text copied to clipboard: " + ReferralId);
     } catch (error) {
-      
       message.error("Copy to clipboard failed. Please try manually.");
     }
-  
+
     document.body.removeChild(input);
   };
-  
-  
 
   useEffect(() => {
     if (isStateHandler) {
@@ -738,9 +683,7 @@ const DisplayCard = () => {
           );
           const data = await response.json();
           setWalletAmount(data.data.stateHandlerWallet);
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
       fetchStateDetails();
     } else if (isFrenchise) {
@@ -758,9 +701,7 @@ const DisplayCard = () => {
           );
           const data = await response.json();
           setWalletAmount(data.data.frenchiseWallet);
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
       fetchFracnhiseDetails();
     } else if (isBusinessHandler) {
@@ -779,9 +720,7 @@ const DisplayCard = () => {
           );
           const data = await response.json();
           setWalletAmount(data.data.businessDeveloperWallet);
-        } catch (error) {
-          
-        }
+        } catch (error) {}
       }
 
       fetchBussinessDetails();
@@ -804,12 +743,10 @@ const DisplayCard = () => {
             return formatter.format(adminWallet);
           }
 
-          const adminWallet = data.data.adminWallet; 
-          const formattedAdminWallet = formatIndianRupees(adminWallet); 
+          const adminWallet = data.data.adminWallet;
+          const formattedAdminWallet = formatIndianRupees(adminWallet);
           setWalletAmount(formattedAdminWallet);
-        } catch (error) {
-         
-        }
+        } catch (error) {}
       }
       fetchAdminDetails();
     }
@@ -832,15 +769,16 @@ const DisplayCard = () => {
       />
       <div className="card1-container">
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="d-flex">
               <h6 style={{ textAlign: "start" }}>UserID :</h6>{" "}
@@ -866,15 +804,16 @@ const DisplayCard = () => {
         )}
 
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="trading-chart">
               <h6>Share and Earn</h6>
@@ -888,21 +827,26 @@ const DisplayCard = () => {
         )}
 
         {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}>
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <div className="trading-chart">
               <h6>Total Wallet Amount</h6>
             </div>
             <div className="trading-chart-view">
               <span style={{ color: "yellow", cursor: "pointer" }}>
-                {(totalWalletAmount)}
+                {totalWalletAmount.toLocaleString("en-IN", {
+                  style: "currency",
+                  currency: "INR",
+                })}
               </span>
             </div>
           </div>
@@ -913,15 +857,16 @@ const DisplayCard = () => {
           isStateHandler ||
           isFrenchise ||
           isBusinessHandler) && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="centumo">
               <h6>CENTUMO Swap</h6>
@@ -940,58 +885,62 @@ const DisplayCard = () => {
         )}
 
         {isAdmin && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <RunningProgressiveBar percent={progressiveBar} />
           </div>
         )}
         {isAdmin && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <TrialProgressiveBar percent={progressiveBar} />
           </div>
         )}
         {isAdmin && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <ExpireProgressiveBar percent={progressiveBar} />
           </div>
         )}
 
         {isStateHandler || isBusinessHandler || isFrenchise ? (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="live-chat">
               <h6>Withdrawal</h6>
@@ -1009,15 +958,16 @@ const DisplayCard = () => {
         ) : null}
 
         {isAdmin && (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="trading-chart">
               <h6>Total Subscription Amount</h6>
@@ -1030,15 +980,16 @@ const DisplayCard = () => {
           </div>
         )}
 
-        <div className="card1"
-         style={{
-          backgroundImage: `url(${card})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center"
-        }}
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <div className="trading-chart">
             <h6>Trading Chart</h6>
@@ -1052,15 +1003,16 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
-        <div className="card1"
-         style={{
-          backgroundImage: `url(${card})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center"
-        }}
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <div className="user-details">
             <h6>Trader Details</h6>
@@ -1075,15 +1027,16 @@ const DisplayCard = () => {
           </div>
         </div>
 
-        <div className="card1"
-         style={{
-          backgroundImage: `url(${card})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center"
-        }}
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <div className="refferal-details">
             <h6>Member Details</h6>
@@ -1099,15 +1052,16 @@ const DisplayCard = () => {
         </div>
 
         {isAdmin || isSubAdmin ? (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="refferal-details">
               <h6>Tracker</h6>
@@ -1124,15 +1078,16 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        <div className="card1"
-         style={{
-          backgroundImage: `url(${card})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center"
-        }}
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <div className="push-notification-card">
             <h6>Push Notification</h6>
@@ -1147,15 +1102,16 @@ const DisplayCard = () => {
           </div>
         </div>
         {isAdmin || isSubAdmin ? (
-          <div className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center"
-          }}
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
             <div className="subscription-card">
               <h6>Subscription</h6>
@@ -1171,15 +1127,16 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        <div className="card1"
-         style={{
-          backgroundImage: `url(${card})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center bottom",
-          display:"flex",
-          flexDirection:"column",
-          alignItems:"center"
-        }}
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <div className="refferal-payout">
             <h6>Referral Payout</h6>
@@ -1285,9 +1242,13 @@ const DisplayCard = () => {
         >
           {isStateHandler || isFrenchise ? (
             <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
-               {verifyDate === undefined? "You are not veriyfy yet!": `You can request for withdrawal after  ${dayDifference} days` }
+              {verifyDate === undefined
+                ? "You are not veriyfy yet!"
+                : `You can request for withdrawal after  ${dayDifference} days`}
             </h5>
-          ) : ""}
+          ) : (
+            ""
+          )}
         </Modal>
       )}
     </>

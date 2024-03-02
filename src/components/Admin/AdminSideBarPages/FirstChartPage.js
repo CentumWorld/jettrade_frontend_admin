@@ -1,11 +1,15 @@
 // TradingViewWidget.jsx
 
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi"
+
 import '../AdminSideBarPages/FirstChartPage.css'
 
 let tvScriptLoadingPromise;
 
 export default function TradingViewWidget() {
+  const navigate = useNavigate();
   const onLoadScriptRef = useRef();
 
   useEffect(
@@ -57,12 +61,22 @@ export default function TradingViewWidget() {
     []
   );
 
+  const gotoDashboard = ()=>{
+    navigate('/admindashboard/dashboard')
+  }
+
   return (
+    <>
+    <div className='heading'>
+      <p><BiArrowBack onClick={gotoDashboard} style={{cursor:'pointer'}}/>&nbsp;Trading Chart</p>
+    </div>
     <div className='tradingview-widget-container'>
       <div id='tradingview_86a77' />
       {/* <div className="tradingview-widget-copyright">
         <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a>
       </div> */}
     </div>
+    </>
+    
   );
 }

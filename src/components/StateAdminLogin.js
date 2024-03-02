@@ -346,6 +346,7 @@ const StateAdminLogin = (props) => {
                     <Input type='file'
                       placeholder='Front aadhar'
                       name="aadhar"
+                      accept=".jpg,.png,.jpeg"
                       onChange={handleClickAadharFrontImage}
                     />
                   </Form.Item>
@@ -362,6 +363,7 @@ const StateAdminLogin = (props) => {
                     <Input type='file'
                       placeholder='Aadhar'
                       name="Back aadhar"
+                      accept=".jpg,.png,.jpeg"
                       onChange={handleClickBackAadharFrontImage}
                     />
                   </Form.Item>
@@ -378,6 +380,7 @@ const StateAdminLogin = (props) => {
                     <Input type='file'
                       placeholder='Pan'
                       name="pan"
+                      accept=".jpg,.png,.jpeg"
                       onChange={handleClickPanCardImage}
                     />
                   </Form.Item>
