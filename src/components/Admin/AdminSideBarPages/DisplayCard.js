@@ -1003,7 +1003,9 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
-        <div
+        
+        {isAdmin || isSubAdmin ? (
+          <div
           className="card1"
           style={{
             backgroundImage: `url(${card})`,
@@ -1014,6 +1016,7 @@ const DisplayCard = () => {
             alignItems: "center",
           }}
         >
+        
           <div className="user-details">
             <h6>Trader Details</h6>
           </div>
@@ -1026,8 +1029,11 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+        ):null}
 
-        <div
+        {isAdmin || isSubAdmin ? (
+          
+          <div
           className="card1"
           style={{
             backgroundImage: `url(${card})`,
@@ -1050,6 +1056,7 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+        ):null}
 
         {isAdmin || isSubAdmin ? (
           <div
@@ -1127,6 +1134,7 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
+        {isAdmin || isSubAdmin ? (
         <div
           className="card1"
           style={{
@@ -1151,6 +1159,7 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
+        ) : null}
       </div>
 
       {paymentModal ? (

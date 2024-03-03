@@ -44,6 +44,7 @@ function Navbar() {
   const isStateHandler = localStorage.getItem("stateHandlerToken");
   const isSubAdminToken = localStorage.getItem("subAdminToken");
   const isAdminToken = localStorage.getItem("adminToken");
+  const isVideoCreatorToken = localStorage.getItem("videoCreatorToken");
 
   useEffect(() => {
     if(isStateHandlerToken){
@@ -300,12 +301,12 @@ function Navbar() {
             Profile
           </Menu.Item>
         )}
-        {(!isAdminToken && !isSubAdminToken) && (
+        {(!isAdminToken && !isSubAdminToken && !isVideoCreatorToken) && (
           <Menu.Item key="account" onClick={handleAccountModalOpen}>
             Add Account Details
           </Menu.Item>
         )}
-        {(!isSubAdminToken) && (
+        {(!isSubAdminToken && !isVideoCreatorToken) && (
           <Menu.Item key="wallet">
             Wallet <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
           </Menu.Item>

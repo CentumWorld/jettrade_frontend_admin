@@ -225,7 +225,7 @@ function AdminSideBar() {
     } else if (isFranchise) {
       setUser(name);
     } else if (isCreatorVideo) {
-      setUser(name);
+      setUser("Video Creator");
     }
   };
 
