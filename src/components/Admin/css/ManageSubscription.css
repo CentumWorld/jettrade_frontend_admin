@@ -17,9 +17,9 @@
     overflow: hidden;
 }
 .manage-subscription-heading p{
-    font-size: 20px;
-    font-weight: 600;
-    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    color: wheat;
 }
 .manage-subscription-navbar{
     display: flex;

@@ -16,6 +16,8 @@ import {
   MdAutorenew,
   MdUnsubscribe,
 } from "react-icons/md";
+import { BiMoney } from 'react-icons/bi';
+
 import { GiTrade } from "react-icons/gi";
 import { RiUserShared2Fill } from "react-icons/ri";
 import { AiFillVideoCamera } from "react-icons/ai";
@@ -103,16 +105,13 @@ const subAdminRoutes = [
           name: "Manage Subscription",
           // icon: <MdUnsubscribe />
         },
-        // {
-        //     path:"manage/investment",
-        //     name:"Manage Investment"
-        // },
-        // {
-        //   path: "manage/investor-refferal-payout",
-        //   name: "Referral Payout",
-        //   // icon: <FaAmazonPay />
-        // },
+       
       ],
+    },
+    {
+      path: "/admindashboard/manage/investor-refferal-payout",
+      name: "Referral Payout",
+      icon: <BiMoney />,
     },
     // {
     //   path: "/admindashboard",

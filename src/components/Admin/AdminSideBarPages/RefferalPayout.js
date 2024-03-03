@@ -740,7 +740,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Reffer Business ID",
+      title: "Reffer Member ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -1060,7 +1060,12 @@ const RefferalPayout = () => {
     // { title: "Credit Amount", dataIndex: "creditAmount", key: "creditAmount" },
     { title: "Type", dataIndex: "Type", key: "Type" },
     { title: "Refer BMM ID", dataIndex: "refferUserId", key: "refferUserId" },
-    { title: "Date", dataIndex: "Date", key: "Date", render: (text) => moment(text).format("DD/MM/YY HH:mm:ss") },
+    {
+      title: "Date",
+      dataIndex: "Date",
+      key: "Date",
+      render: (text) => moment(text).format("DD/MM/YY HH:mm:ss"),
+    },
   ];
 
   const handleRoleChange = (value) => {
@@ -1122,9 +1127,7 @@ const RefferalPayout = () => {
                 <Select.Option value="trader">User</Select.Option>
                 <Select.Option value="member">Member</Select.Option>
                 <Select.Option value="franchise">Franchise</Select.Option>
-                <Select.Option value="statehandler">
-                  BMM
-                </Select.Option>
+                <Select.Option value="statehandler">BMM</Select.Option>
               </Select>
             )}
 
@@ -1137,9 +1140,7 @@ const RefferalPayout = () => {
               >
                 <Select.Option value="member">Member</Select.Option>
                 <Select.Option value="franchise">Franchise</Select.Option>
-                <Select.Option value="statehandler">
-                  BMM
-                </Select.Option>
+                <Select.Option value="statehandler">BMM</Select.Option>
               </Select>
             )}
 
@@ -1278,39 +1279,56 @@ const RefferalPayout = () => {
         )}
 
         {!businessId && !franchiseToken && (
-          <TabPane tab="BMM Payout" key="3">
-            <div>
-              <Table
-                columns={columnsState}
-                dataSource={stateHandlerDetails}
-                scroll={{ x: true, y: 320 }}
-                style={{
-                  width: "fit-content",
-                  textOverflow: "ellipsis",
-                  // overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              />
-            </div>
-          </TabPane>
+          <React.Fragment>
+            <TabPane tab="BMM Payout" key="3">
+              <div>
+                <Table
+                  columns={columnsState}
+                  dataSource={stateHandlerDetails}
+                  scroll={{ x: true, y: 320 }}
+                  style={{
+                    width: "fit-content",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                />
+              </div>
+            </TabPane>
+          </React.Fragment>
         )}
 
         {!businessId && (
-          <TabPane tab="Franchise Payout" key="4">
-            <div>
-              <Table
-                columns={columnsFranch}
-                dataSource={franchiseDetails}
-                scroll={{ x: true, y: 320 }}
-                style={{
-                  width: "fit-content",
-                  textOverflow: "ellipsis",
-                  // overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-              />
-            </div>
-          </TabPane>
+          <React.Fragment>
+            <TabPane tab="Franchise Payout" key="4">
+              <div>
+                <Table
+                  columns={columnsFranch}
+                  dataSource={franchiseDetails}
+                  scroll={{ x: true, y: 320 }}
+                  style={{
+                    width: "fit-content",
+                    textOverflow: "ellipsis",
+                    // overflow: "hidden",
+                    whiteSpace: "nowrap",
+                  }}
+                />
+              </div>
+            </TabPane>
+            <TabPane tab="Members Payout" key="2">
+              <div>
+                <Table
+                  columns={columnsMember}
+                  dataSource={refferralsDetails}
+                  scroll={{ x: true, y: 320 }}
+                  style={{
+                    width: "fit-content",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                />
+              </div>
+            </TabPane>
+          </React.Fragment>
         )}
 
         {/* {!stateHandlerToken && (

@@ -16,6 +16,8 @@ import {
   MdAutorenew,
   MdUnsubscribe,
 } from "react-icons/md";
+import { BiMoney } from 'react-icons/bi';
+
 import { GiTrade } from "react-icons/gi";
 import { RiUserShared2Fill } from "react-icons/ri";
 import { AiFillVideoCamera } from "react-icons/ai";
@@ -122,6 +124,7 @@ const Adminroutes = [
       },
     ],
   },
+  
   // {
   //   path: "/admindashboard",
   //   name: "Chat",
