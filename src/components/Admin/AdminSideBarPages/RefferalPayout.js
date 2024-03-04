@@ -1278,6 +1278,24 @@ const RefferalPayout = () => {
           </TabPane>
         )}
 
+        {isSubAdmin && (
+          <TabPane tab="Member Payout" key="2">
+            <div>
+              <Table
+                columns={memberDataInState}
+                dataSource={refferralsDetails}
+                scroll={{ x: true, y: 320 }}
+                style={{
+                  width: "fit-content",
+                  textOverflow: "ellipsis",
+                  // overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              />
+            </div>
+          </TabPane>
+        )}
+
         {!businessId && !franchiseToken && (
           <React.Fragment>
             <TabPane tab="BMM Payout" key="3">
@@ -1314,20 +1332,7 @@ const RefferalPayout = () => {
                 />
               </div>
             </TabPane>
-            <TabPane tab="Members Payout" key="2">
-              <div>
-                <Table
-                  columns={columnsMember}
-                  dataSource={refferralsDetails}
-                  scroll={{ x: true, y: 320 }}
-                  style={{
-                    width: "fit-content",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                />
-              </div>
-            </TabPane>
+          
           </React.Fragment>
         )}
 
