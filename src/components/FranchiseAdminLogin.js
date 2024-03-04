@@ -1,13 +1,10 @@
-import React, { useCallback, useContext, useState, useEffect } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   Form,
   Input,
   message,
   Tabs,
   Select,
-  Checkbox,
-  Menu,
-  Dropdown,
 } from "antd";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +12,9 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { UserOutlined, UnlockOutlined } from "@ant-design/icons";
 import { UserContext } from "../App";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import baseUrl from "../baseUrl";
-import FrenchieRegister from "./Admin/Tracker/Register/FrenchieRegister";
 import allState from "./Admin/Tracker/AllStateAndDistrict";
-import { MdVerified } from "react-icons/md";
-import { ImCross } from "react-icons/im";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -28,11 +22,11 @@ const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
 const { Option } = Select;
 
+const MAX_FILE_SIZE_MB = 2;
+
 const FranchiseAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
-  const [correct, setCorrect] = useState(false);
-  const [incorrect, setIncorrect] = useState(false);
   const [franchiseAdmin, setFranchiseAdmin] = useState({
     franchiseAdmin_id: "",
     franchiseAdmin_password: "",
@@ -71,9 +65,57 @@ const FranchiseAdminLogin = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [officialId, setOfficialId] = useState("BMM-BMM1653");
   const [selectedOption, setSelectedOption] = useState("referral");
+  const [aadharImageSizeError, setAadharImageSizeError] = useState(null);
+  const [backAadharImageSizeError, setBackAadharImageSizeError] = useState(null);
+  const [panImageSizeError, setPanImageSizeError] = useState(null);
+  const [setCorrect, setSetCorrect] = useState(false);
+const [setIncorrect, setSetIncorrect] = useState(false);
+
+
+  const handleFileUpload = (e, setImageState, setImageSizeError) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      if (!beforeUpload(file, setImageSizeError)) {
+        setImageState({ file: null });
+        return;
+      }
+
+      setImageState({ file });
+
+      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        setImageSizeError(`File size exceeds ${MAX_FILE_SIZE_MB} MB`);
+      } else {
+        setImageSizeError(null);
+      }
+    }
+  };
+
+  const beforeUpload = (file, setImageSizeError) => {
+    if (!isFileTypeAllowed(file)) {
+      setImageSizeError('Only JPG and PNG files are allowed!');
+      return false;
+    }
+  
+    if (!isFileSizeAllowed(file, 2)) {
+      setImageSizeError(`File size must be less than 2MB`);
+      return false;
+    }
+  
+    return true;
+  };
+
+  const isFileTypeAllowed = (file) => {
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    return allowedTypes.includes(file.type);
+  };
+  
+  const isFileSizeAllowed = (file, maxSize) => {
+    const fileSizeInMB = file.size / (1024 * 1024); // Convert to MB
+    return fileSizeInMB <= maxSize;
+  };
 
   const handleDropdownChange = (value) => {
-    console.log(value);
     setSelectedOption(value);
     if (value === "official") {
       setStateRegisterData({ ...stateRegisterData, referredId: officialId });
@@ -94,7 +136,6 @@ const FranchiseAdminLogin = (props) => {
   };
   const handleInputs = (e) => {
     setFranchiseAdmin({ ...franchiseAdmin, [e.target.name]: e.target.value });
-    console.log(e.target.value);
   };
 
   const adminLogin = (e) => {
@@ -108,7 +149,6 @@ const FranchiseAdminLogin = (props) => {
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("franchiseToken", response.data.frenchiseToken);
-        console.log(response.data);
         localStorage.setItem(
           "frenchiseId",
           response.data.frenchiseDetails.frenchiseId
@@ -137,7 +177,6 @@ const FranchiseAdminLogin = (props) => {
   }, []);
 
   const verifyReferralID = () => {
-    console.log(stateRegisterData.referredId);
     let data = {
       refferId: stateRegisterData.referredId,
     };
@@ -147,7 +186,6 @@ const FranchiseAdminLogin = (props) => {
       .then((res) => {
         setCorrect(true);
         setIncorrect(false);
-        console.log(res.data);
         setStateFrenchise(res.data.stateUserState);
       })
       .catch((err) => {
@@ -157,7 +195,6 @@ const FranchiseAdminLogin = (props) => {
       });
   };
   const handleStateChange = (value) => {
-    // Update the selected state in stateRegisterData
     setSelectedCities([]);
     setStateRegisterData({ ...stateRegisterData, state: value });
 
@@ -165,7 +202,6 @@ const FranchiseAdminLogin = (props) => {
       (stateItem) => stateItem.state === value
     );
 
-    console.log(selectedState.districts);
     if (selectedState) {
       setSelectedCities(selectedState.districts);
     } else {
@@ -174,59 +210,25 @@ const FranchiseAdminLogin = (props) => {
   };
 
   const handleClickAadharFrontImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setAadharImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      aadharImage.file = null;
-    }
+    handleFileUpload(e, setAadharImage, setAadharImageSizeError);
   };
 
   const handleClickBackAadharFrontImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setBackAadharImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      aadharImage.file = null;
-    }
+    handleFileUpload(e, setBackAadharImage, setBackAadharImageSizeError);
   };
+
   const handleClickPanCardImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setPanImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
-    }
+    handleFileUpload(e, setPanImage, setPanImageSizeError);
   };
 
   const franchiseRegister = (value) => {
-    console.log(value);
     setLoading(true);
-    console.log(
-      value,
-      aadharImage.file,
-      panImage.file,
-      stateRegisterData.referredId
-    );
     const formData = new FormData();
     formData.append("referredId", stateRegisterData.referredId);
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
     formData.append("phone", "+" + value.mobile);
-    // formData.append("phone", value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
     formData.append("frenchiseId", value.userId);
@@ -244,10 +246,8 @@ const FranchiseAdminLogin = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        // setShow(false)
         setErrorMessage(err.response.data.message);
         setLoading(false);
-        // message.warning(err.response.data.message);
       });
   };
 
@@ -260,7 +260,7 @@ const FranchiseAdminLogin = (props) => {
             {activeTab === "1" ? "Franchise Login" : "Registration"}
           </Modal.Title>
         </Modal.Header>
-        {errorMessage && ( // Conditionally render error message
+        {errorMessage && (
           <div className="error-message">{errorMessage}</div>
         )}
         <Modal.Body>
@@ -329,12 +329,6 @@ const FranchiseAdminLogin = (props) => {
                 <Form.Item
                   label="Referral Id"
                   name="referralId"
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please enter referal ID",
-                  //   },
-                  // ]}
                 >
                   {selectedOption === "official" && (
                     <Input
@@ -476,27 +470,29 @@ const FranchiseAdminLogin = (props) => {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  label="Front aadhar image (JPG/PNG)"
+                  label="Front Aadhar Image (JPG/PNG)"
                   name="aadhar"
+                  help={aadharImageSizeError}
+                  validateStatus={aadharImageSizeError ? "error" : ""}
                   rules={[
                     {
                       required: true,
-                      message: "Please upload front aadhar an image",
+                      message: 'Please upload front Aadhar image',
                     },
                   ]}
-                  
                 >
-                  <Input
-                    type="file"
-                    placeholder="Front aadhar"
+                  <Input type='file'
+                    placeholder='Front Aadhar'
                     name="aadhar"
-                    accept=".jpg, .jpeg, .png"
+                    accept=".jpg,.png,.jpeg"
                     onChange={handleClickAadharFrontImage}
                   />
                 </Form.Item>
                 <Form.Item
                   label="Back aadhar image (JPG/PNG)"
                   name="backaadhar"
+                  help={backAadharImageSizeError}
+                  validateStatus={backAadharImageSizeError ? "error" : ""}
                   rules={[
                     {
                       required: true,
@@ -512,7 +508,12 @@ const FranchiseAdminLogin = (props) => {
                     onChange={handleClickBackAadharFrontImage}
                   />
                 </Form.Item>
-                <Form.Item label="Upload Pan Image (JPG/PNG)" name="pan">
+                <Form.Item
+                  label="Upload Pan Image (JPG/PNG)"
+                  name="pan"
+                  help={panImageSizeError}
+                  validateStatus={panImageSizeError ? "error" : ""}
+                >
                   <Input
                     type="file"
                     placeholder="Pan"
@@ -534,7 +535,6 @@ const FranchiseAdminLogin = (props) => {
                   <Input placeholder="User ID" />
                 </Form.Item>
 
-                {/* Password */}
                 <Form.Item
                   label="Password"
                   name="password"
