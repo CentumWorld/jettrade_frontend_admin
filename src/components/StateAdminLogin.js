@@ -15,10 +15,8 @@ import "../css/BmmLoginSingup.css";
 
 const apiurl = baseUrl.apiUrl;
 const { TabPane } = Tabs;
-// const mobileNumberRegex = /^[6789]\d{9}$/;
 const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
 const { Option } = Select;
-
 
 const StateAdminLogin = (props) => {
   const { state, dispatch } = useContext(UserContext);
@@ -28,15 +26,12 @@ const StateAdminLogin = (props) => {
     stateAdmin_password: "",
   });
   const [stateRefferalId, setStateRefferalId] = useState("");
-  // console.log("state id----->", stateRefferalId);
-
   const [show, setShow] = useState(true);
   const handleClose = () => setShow((prev) => !prev);
   props.stateLoginFunc(show);
 
   const handleInputs = (e) => {
     setStateAdmin({ ...stateAdmin, [e.target.name]: e.target.value });
-    console.log(e.target.value);
   };
 
   const [aadharImage, setAadharImage] = useState({
@@ -51,11 +46,70 @@ const StateAdminLogin = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
+  const [aadharImageSizeError, setAadharImageSizeError] = useState(null);
+  const [backAadharImageSizeError, setBackAadharImageSizeError] = useState(null);
+  const [panImageSizeError, setPanImageSizeError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-
 
   const handleTabChange = (key) => {
     setActiveTab(key);
+  };
+
+  const isFileTypeAllowed = (file) => {
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    return allowedTypes.includes(file.type);
+  };
+
+  const isFileSizeAllowed = (file, maxSize) => {
+    const fileSizeInMB = file.size / (1024 * 1024); // Convert to MB
+    return fileSizeInMB <= maxSize;
+  };
+
+  const beforeUpload = (file, setImageSizeError) => {
+    if (!isFileTypeAllowed(file)) {
+      message.error('Only JPG and PNG files are allowed!');
+      return false;
+    }
+
+    if (!isFileSizeAllowed(file, 2)) {
+      setImageSizeError(`File size must be less than 2MB`);
+      return false;
+    }
+
+    return true;
+  };
+
+  const customRequest = ({ file, onSuccess, onError }) => {
+    setTimeout(() => {
+      onSuccess('ok');
+    }, 1000);
+  };
+
+  const handleClickAadharFrontImage = (e) => {
+    const file = e.target.files[0];
+
+    if (beforeUpload(file, setAadharImageSizeError)) {
+      setAadharImageSizeError(null);
+      setAadharImage({ file });
+    }
+  };
+
+  const handleClickBackAadharFrontImage = (e) => {
+    const file = e.target.files[0];
+
+    if (beforeUpload(file, setBackAadharImageSizeError)) {
+      setBackAadharImageSizeError(null);
+      setBackAadharImage({ file });
+    }
+  };
+
+  const handleClickPanCardImage = (e) => {
+    const file = e.target.files[0];
+
+    if (beforeUpload(file, setPanImageSizeError)) {
+      setPanImageSizeError(null);
+      setPanImage({ file });
+    }
   };
 
   const adminLogin = (e) => {
@@ -65,116 +119,58 @@ const StateAdminLogin = (props) => {
       password: stateAdmin.stateAdmin_password,
     })
       .then((response) => {
-        console.log(response.data);
         dispatch({ type: "USER", payload: true });
         localStorage.setItem("login", true);
         localStorage.setItem("stateHandlerToken", response.data.statehandlerToken);
         localStorage.setItem("stateHandlerRefferalID", response.data.stateHandlerDetails.referralId);
         localStorage.setItem("stateHandlerName", response.data.stateHandlerDetails.fname)
         localStorage.setItem("stateHandlerId", response.data.stateHandlerDetails.stateHandlerId)
-        setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" }); // Use setAdmin to reset the state
+        setStateAdmin({ stateAdmin_id: "", stateAdmin_password: "" });
         navigate("/admindashboard/dashboard");
       })
       .catch((error) => {
-        message.warning(error.response.data.message)
+        message.warning(error.response.data.message);
       });
     setShow(false);
   };
 
-  const isFileTypeAllowed = (file) => {
-    const allowedTypes = ['image/jpeg', 'image/png'];
-    return allowedTypes.includes(file.type);
-  };
-
-  // Function to display an error message for invalid file types
-  const beforeUpload = (file) => {
-    if (!isFileTypeAllowed(file)) {
-      message.error('Only JPG and PNG files are allowed!');
-    }
-    return isFileTypeAllowed(file);
-  };
-
-  // Custom function to handle file uploads
-  const customRequest = ({ file, onSuccess, onError }) => {
-    // Simulate file upload or implement your actual file upload logic here
-    setTimeout(() => {
-      onSuccess('ok');
-    }, 1000);
-  };
-
-  const handleClickAadharFrontImage = (e) => {
-
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-      //preview shoe
-      setAadharImage({ file: e.target.files[0] })
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
-    }
-  }
-
-  const handleClickBackAadharFrontImage = (e)=>{
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-      //preview shoe
-      setBackAadharImage({ file: e.target.files[0] })
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
-    }
-  }
-  const handleClickPanCardImage = (e) => {
-
-    if (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg') {
-      //preview shoe
-      setPanImage({ file: e.target.files[0] })
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
-    }
-  }
-
   const stateRegister = (value) => {
     setLoading(true);
-    console.log(value, aadharImage.file)
     const formData = new FormData();
     formData.append("fname", value.fname);
     formData.append("lname", value.lname);
     formData.append("email", value.email);
-    formData.append("phone",'+' + value.mobile);
-    // formData.append("phone", value.mobile);
+    formData.append("phone", '+' + value.mobile);
     formData.append("gender", value.gender);
     formData.append("password", value.password);
     formData.append("stateHandlerId", value.userId);
     formData.append("adhar_front_side", aadharImage.file);
-    formData.append("adhar_back_side", backAadharImage.file)
-    formData.append("panCard",panImage.file);
+    formData.append("adhar_back_side", backAadharImage.file);
+    formData.append("panCard", panImage.file);
     formData.append("selectedState", value.state);
     formData.append("referredId", "admin@123");
 
     axios.post(`${apiurl}` + "/admin/create_State_Handler", formData)
       .then((res) => {
-        console.log(res.data)
-        handleClose()
-        message.success(res.data.message)
+        handleClose();
+        message.success(res.data.message);
         setLoading(false);
-        
       })
       .catch((err) => {
-        // message.warning(err.response.data.message)
         setErrorMessage(err.response.data.message);
         setLoading(false);
-      })
-  }
+      });
+  };
 
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title style={{fontFamily:'Calibri',fontSize:'20px'}}> {activeTab === "1" ? "BMM Login" : "Registration"}</Modal.Title>
+          <Modal.Title style={{ fontFamily: 'Calibri', fontSize: '20px' }}> {activeTab === "1" ? "BMM Login" : "Registration"}</Modal.Title>
         </Modal.Header>
-        {errorMessage && ( // Conditionally render error message
-    <div className="error-message">{errorMessage}</div>
-  )}
+        {errorMessage && (
+          <div className="error-message">{errorMessage}</div>
+        )}
         <Modal.Body>
           <Tabs defaultActiveKey="1" activeKey={activeTab} onChange={handleTabChange}>
             <TabPane tab="Sign In" key="1">
@@ -225,7 +221,7 @@ const StateAdminLogin = (props) => {
             <TabPane tab="Sign Up" key="2">
               <div className="state-register">
                 <Form name="basic" onFinish={stateRegister}>
-                <Form.Item
+                  <Form.Item
                     label="Referred ID"
                     rules={[
                       {
@@ -290,7 +286,7 @@ const StateAdminLogin = (props) => {
                       },
                     ]}
                   >
-                    <PhoneInput  country={'in'}  placeholder="Mobile no" />
+                    <PhoneInput country={'in'} placeholder="Mobile no" />
                   </Form.Item>
                   <Form.Item
                     label="Gender"
@@ -334,35 +330,39 @@ const StateAdminLogin = (props) => {
                     </Select>
                   </Form.Item>
                   <Form.Item
-                    label="Front aadhar Image (JPG/PNG)"
+                    label="Front Aadhar Image (JPG/PNG)"
                     name="aadhar"
+                    help={aadharImageSizeError}
+                    validateStatus={aadharImageSizeError ? "error" : ""}
                     rules={[
                       {
                         required: true,
-                        message: 'Please upload front aadhar an image',
+                        message: 'Please upload front Aadhar image',
                       },
                     ]}
                   >
                     <Input type='file'
-                      placeholder='Front aadhar'
+                      placeholder='Front Aadhar'
                       name="aadhar"
                       accept=".jpg,.png,.jpeg"
                       onChange={handleClickAadharFrontImage}
                     />
                   </Form.Item>
                   <Form.Item
-                    label="Back aadhar Image (JPG/PNG)"
+                    label="Back Aadhar Image (JPG/PNG)"
                     name="backaadhar"
+                    help={backAadharImageSizeError}
+                    validateStatus={backAadharImageSizeError ? "error" : ""}
                     rules={[
                       {
                         required: true,
-                        message: 'Please upload back aadhar an image',
+                        message: 'Please upload back Aadhar image',
                       },
                     ]}
                   >
                     <Input type='file'
-                      placeholder='Aadhar'
-                      name="Back aadhar"
+                      placeholder='Back Aadhar'
+                      name="Back Aadhar"
                       accept=".jpg,.png,.jpeg"
                       onChange={handleClickBackAadharFrontImage}
                     />
@@ -370,10 +370,12 @@ const StateAdminLogin = (props) => {
                   <Form.Item
                     label="Upload Pan Image (JPG/PNG)"
                     name="pan"
+                    help={panImageSizeError}
+                    validateStatus={panImageSizeError ? "error" : ""}
                     rules={[
                       {
                         required: true,
-                        message: 'Please upload pan image',
+                        message: 'Please upload Pan image',
                       },
                     ]}
                   >
@@ -396,8 +398,6 @@ const StateAdminLogin = (props) => {
                   >
                     <Input placeholder="User ID" />
                   </Form.Item>
-
-                  {/* Password */}
                   <Form.Item
                     label="Password"
                     name="password"
@@ -411,15 +411,14 @@ const StateAdminLogin = (props) => {
                     <Input.Password placeholder="Password" />
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit"  loading={loading}style={{ float: "right" }}>
-                    {loading ? "Submitting..." : "Submit"}
+                    <Button type="primary" htmlType="submit" loading={loading} style={{ float: "right" }}>
+                      {loading ? "Submitting..." : "Submit"}
                     </Button>
                   </Form.Item>
                 </Form>
               </div>
             </TabPane>
           </Tabs>
-
         </Modal.Body>
       </Modal>
     </>
