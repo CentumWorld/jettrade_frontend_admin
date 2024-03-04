@@ -826,7 +826,7 @@ const Frenchie = () => {
               style={{
                 color: "#007BFF",
                 fontWeight: 700,
-                fontFamily: "Calibri",
+                fontFamily: "'Roboto',sans-serif",
                 fontSize: "18px",
               }}
             >

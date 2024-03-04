@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from "antd";
 import allState from "../AllStateAndDistrict";
+import PhoneInput from 'react-phone-input-2';
 import axios from "axios";
 import { message, Spin } from "antd";
 import baseUrl from "../../../../baseUrl";
@@ -290,6 +291,7 @@ const FrenchieRegister = (props) => {
                 name="phone"
                 value={stateRegisterData.phone}
                 onChange={stateRegiInputs}
+                
               />
             </div>
             {/* <div className='d-flex justify-content-between' style={{ display: 'flex', flexDirection: 'column' }}> */}
