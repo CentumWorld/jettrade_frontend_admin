@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Input, Select, Checkbox, Dropdown, Menu } from "antd";
 import allState from "../AllStateAndDistrict";
-import PhoneInput from 'react-phone-input-2';
 import axios from "axios";
 import { message, Spin } from "antd";
 import baseUrl from "../../../../baseUrl";
-import { MdVerified } from "react-icons/md";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
@@ -23,7 +24,7 @@ const FrenchieRegister = (props) => {
     fname: "",
     lname: "",
     email: "",
-    phone: "",
+    // phone: "",
     gender: "",
     state: "",
     stateRegisterId: "",
@@ -32,6 +33,7 @@ const FrenchieRegister = (props) => {
     city: [],
     referredId: localStorage.getItem("stateHandlerRefferalID"),
   });
+  const [phoneNumber, setPhoneNumber] = useState(0);
   const [aadharImage, setAadharImage] = useState({
     file: null,
   });
@@ -126,6 +128,7 @@ const FrenchieRegister = (props) => {
   };
 
   const handleFrenchaeRegiSubmit = async (e) => {
+    console.log(phoneNumber, 131);
     const frenchData = "update";
     setLoading(true);
     e.preventDefault();
@@ -138,7 +141,7 @@ const FrenchieRegister = (props) => {
     formData.append("fname", stateRegisterData.fname);
     formData.append("lname", stateRegisterData.lname);
     formData.append("email", stateRegisterData.email);
-    formData.append("phone", stateRegisterData.phone);
+    formData.append("phone",'+' + phoneNumber);
     formData.append("gender", stateRegisterData.gender);
     formData.append("password", stateRegisterData.password);
     formData.append("frenchiseId", stateRegisterData.stateRegisterId);
@@ -225,7 +228,7 @@ const FrenchieRegister = (props) => {
         message.warning(err.response.data.message);
       });
   };
-  
+
   const handleState = (value) => {
     setStateRegisterData({ city: [] });
     console.log(value);
@@ -235,6 +238,10 @@ const FrenchieRegister = (props) => {
     }));
   };
 
+  const phoneChange = (value)=>{
+    setPhoneNumber(value)
+    // console.log(value)
+  }
   return (
     <>
       <div>
@@ -255,7 +262,6 @@ const FrenchieRegister = (props) => {
                 onChange={stateRegiInputs}
                 disabled
               />
-             
             </div>
             <div className="state-field">
               <label>First Name</label>
@@ -286,12 +292,18 @@ const FrenchieRegister = (props) => {
             </div>
             <div className="state-field">
               <label>Phone</label>
-              <Input
+              {/* <Input
                 placeholder="Phone"
                 name="phone"
                 value={stateRegisterData.phone}
                 onChange={stateRegiInputs}
-                
+              /> */}
+              <PhoneInput
+                name="phone"
+                value={stateRegisterData.phone}
+                onChange={(e) => phoneChange(e)}
+                country={"in"}
+                placeholder="Mobile no"
               />
             </div>
             {/* <div className='d-flex justify-content-between' style={{ display: 'flex', flexDirection: 'column' }}> */}
@@ -319,7 +331,7 @@ const FrenchieRegister = (props) => {
             <div className="state-field">
               <label>State</label>
               <br />
-             
+
               <Select
                 placeholder="Select state"
                 name="state"
@@ -359,7 +371,7 @@ const FrenchieRegister = (props) => {
             </div>
             {/* </div> */}
             <div className="state-field">
-              <label>Front side aadhar(JPG/PNG)</label>
+              <label>Front side Aadhaar(JPG/PNG)</label>
               <Input
                 type="file"
                 placeholder="Front side aadhar"
@@ -369,7 +381,7 @@ const FrenchieRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Back side aadhar(JPG/PNG)</label>
+              <label>Back side Aadhaar(JPG/PNG)</label>
               <Input
                 type="file"
                 placeholder="Back side aadhar"
@@ -379,7 +391,7 @@ const FrenchieRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Pan(JPG/PNG) </label>
+              <label>Pan Card(JPG/PNG) </label>
               <Input
                 type="file"
                 placeholder="Pan"

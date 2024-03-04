@@ -15,6 +15,9 @@ import { message, Spin } from "antd";
 import baseUrl from "../../../../baseUrl";
 import TextArea from "antd/es/input/TextArea";
 import moment from "moment";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
 
 const apiurl = baseUrl.apiUrl;
 
@@ -27,12 +30,12 @@ const BusinessDeveloperRegister = (props) => {
   const [loading, setLoading] = useState(false);
   const [city, setCity] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
-
+  const [phoneNumber, setPhoneNumber] = useState(0);
   const [stateRegisterData, setStateRegisterData] = useState({
     fname: "",
     lname: "",
     email: "",
-    phone: "",
+    // phone: "",
     gender: "",
     state: "",
     stateRegisterId: "",
@@ -155,7 +158,7 @@ const BusinessDeveloperRegister = (props) => {
     formData.append("fname", stateRegisterData.fname);
     formData.append("lname", stateRegisterData.lname);
     formData.append("email", stateRegisterData.email);
-    formData.append("phone", stateRegisterData.phone);
+    formData.append("phone", '+' + phoneNumber);
     formData.append("gender", stateRegisterData.gender);
     formData.append("password", stateRegisterData.password);
     formData.append("memberid", stateRegisterData.stateRegisterId);
@@ -264,6 +267,10 @@ const BusinessDeveloperRegister = (props) => {
     }));
   };
 
+  const phoneChange = (value)=>{
+    setPhoneNumber(value)
+    // console.log(value)
+  }
   return (
     <>
       <div>
@@ -315,11 +322,18 @@ const BusinessDeveloperRegister = (props) => {
             </div>
             <div className="state-field">
               <label>Phone</label>
-              <Input
+              {/* <Input
                 placeholder="Phone"
                 name="phone"
                 value={stateRegisterData.phone}
                 onChange={stateRegiInputs}
+              /> */}
+              <PhoneInput
+                name="phone"
+                value={stateRegisterData.phone}
+                onChange={(e) => phoneChange(e)}
+                country={"in"}
+                placeholder="Mobile no"
               />
             </div>
             {/* <div className='d-flex justify-content-between' style={{display: 'flex', flexDirection: 'column'}}> */}
@@ -338,6 +352,7 @@ const BusinessDeveloperRegister = (props) => {
                 }
                 style={{ width: "100%" }}
               >
+                <Option value="">Gender</Option>
                 <Option value="Male">Male</Option>
                 <Option value="Female">Female</Option>
                 <Option value="Other">Other</Option>
@@ -355,7 +370,7 @@ const BusinessDeveloperRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>DOB</label>
+              <label>Date Of Birth</label>
               <br />
               <DatePicker
                 name="dob"
@@ -366,7 +381,7 @@ const BusinessDeveloperRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Aadhar no.</label>
+              <label>Aadhaar no.</label>
               <Input
                 placeholder="Aadhar no."
                 name="aadhar"
@@ -375,7 +390,7 @@ const BusinessDeveloperRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Front aadhar card(JPG/PNG)</label>
+              <label>Front Side Aadhaar card(JPG/PNG)</label>
               <Input
                 type="file"
                 placeholder="Front aadhar card"
@@ -385,7 +400,7 @@ const BusinessDeveloperRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Back aadhar card(JPG/PNG)</label>
+              <label>Back Side Aadhaar card(JPG/PNG)</label>
               <Input
                 type="file"
                 placeholder="Back aadhar card"
@@ -395,7 +410,7 @@ const BusinessDeveloperRegister = (props) => {
               />
             </div>
             <div className="state-field">
-              <label>Pan(JPG/PNG) </label>
+              <label>Pan Card(JPG/PNG) </label>
               <Input
                 type="file"
                 placeholder="Pan"
