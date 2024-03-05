@@ -6,6 +6,7 @@ import axios from "axios";
 import { message, Spin } from "antd";
 import baseUrl from "../../../../baseUrl";
 import { MdVerified } from "react-icons/md";
+import { colors, sliderClasses } from "@mui/material";
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
@@ -42,6 +43,9 @@ const FrenchieRegister = (props) => {
     file: null,
   });
   const [spin, setSpin] = useState(false);
+  const [adharerror,setAddharError] = useState("");
+  const [adharbackerror,setAddharbackError] = useState("");
+  const [panerror,setPanError] = useState("")
 
   useEffect(() => {
     const cities =
@@ -85,43 +89,49 @@ const FrenchieRegister = (props) => {
 
   //handle front aadhar image function
   const handleClickAadharFrontImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setAadharImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile);
+  if (selectedFile) {
+      if (selectedFile.size >= 2 * 1024 * 1024) {
+        setAddharError("File size is more than 2MB");
+        // Handle the case when the file size is more than 2MB
+        setAadharImage({ file: null });
+      } else {
+        setAddharError("");
+        setAadharImage({ file: selectedFile });
+      }
     }
   };
-
+  
   // handle addhar back side
   const handleClickBackAadharFrontImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setBackAadharImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
+    const selectedFile = e.target.files[0]
+    console.log(selectedFile);
+    if (selectedFile) {
+      if (selectedFile.size >= 2 * 1024 * 1024) {
+        setAddharbackError("File size is more than 2MB");
+        // Handle the case when the file size is more than 2MB
+        setBackAadharImage({ file: null });
+      } else {
+        setAddharbackError("");
+        setBackAadharImage({ file: selectedFile });
+      }
     }
   };
 
   //hadle pan card image function
   const handleClickPanCardImage = (e) => {
-    if (
-      e.target.files[0].type === "image/png" ||
-      e.target.files[0].type === "image/jpeg"
-    ) {
-      //preview shoe
-      setPanImage({ file: e.target.files[0] });
-    } else {
-      message.error("Invalid File !! ");
-      panImage.file = null;
+    const selectedFile = e.target.files[0]
+   console.log(selectedFile);
+    if (selectedFile) {
+      if (selectedFile.size >= 2 * 1024 * 1024) {
+        setPanError("File size is more than 2MB");
+        // Handle the case when the file size is more than 2MB
+        setPanImage({ file: null });
+      } else {
+        setPanError("");
+        setPanImage({ file: selectedFile });
+      }
     }
   };
 
@@ -367,6 +377,7 @@ const FrenchieRegister = (props) => {
                 accept=".jpg, .jpeg, .png"
                 onChange={handleClickAadharFrontImage}
               />
+            <p style={{color:"red"}}>{adharerror}</p>
             </div>
             <div className="state-field">
               <label>Back side aadhar(JPG/PNG)</label>
@@ -377,6 +388,7 @@ const FrenchieRegister = (props) => {
                 accept=".jpg, .jpeg, .png"
                 onChange={handleClickBackAadharFrontImage}
               />
+               <p style={{color:"red"}}>{adharbackerror}</p>
             </div>
             <div className="state-field">
               <label>Pan(JPG/PNG) </label>
@@ -387,6 +399,7 @@ const FrenchieRegister = (props) => {
                 accept=".jpg, .jpeg, .png"
                 onChange={handleClickPanCardImage}
               />
+               <p style={{color:"red"}}>{panerror}</p>
             </div>
             <div className="state-field">
               <label>Franchise ID</label>
