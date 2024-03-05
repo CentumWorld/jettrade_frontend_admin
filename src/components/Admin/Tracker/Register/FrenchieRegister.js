@@ -7,7 +7,6 @@ import baseUrl from "../../../../baseUrl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 const mobileNumberRegex = /^(\+\d{1,4}[-.●\s]?)?\(?\d{1,4}\)?[-.●\s]?\d{1,10}$/;
-import { colors, sliderClasses } from "@mui/material";
 
 const apiurl = baseUrl.apiUrl;
 const { Option } = Select;
