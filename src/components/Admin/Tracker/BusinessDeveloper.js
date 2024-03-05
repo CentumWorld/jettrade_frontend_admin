@@ -828,7 +828,7 @@ const BusinessDeveloper = () => {
       <div className="new-renewal-container">
         <div className="new-renewal-header">
           <div className="new-renewal-content">
-            <span style={{ color: "wheat", display:"flex" }}>
+            <span style={{ color: "wheat", display:"flex", alignItems:"center" }}>
               <BiArrowBack
                 style={{ cursor: "pointer" }}
                 onClick={gotoDashboard}
