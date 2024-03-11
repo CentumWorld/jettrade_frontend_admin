@@ -1,5 +1,5 @@
 const baseUrl = {
-    apiUrl:'https://apijtf.jettradefx.in',
+    apiUrl:'http://localhost:4000',
   };
   
   export default baseUrl;

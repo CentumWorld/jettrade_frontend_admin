@@ -701,7 +701,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Reffer Franchise ID",
+      title: "Reffer ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
@@ -740,7 +740,7 @@ const RefferalPayout = () => {
       key: "Type",
     },
     {
-      title: "Reffer Member ID",
+      title: "Reffer ID",
       dataIndex: "refferUserId",
       key: "refferUserId",
     },
