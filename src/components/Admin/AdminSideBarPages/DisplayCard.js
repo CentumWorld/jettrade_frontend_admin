@@ -826,7 +826,7 @@ const DisplayCard = () => {
           </div>
         )}
 
-        {(isAdmin || isStateHandler || isFrenchise ) && (
+        {(isAdmin  ) && (
           <div
             className="card1"
             style={{
@@ -930,7 +930,7 @@ const DisplayCard = () => {
           </div>
         )}
 
-        {isStateHandler || isBusinessHandler || isFrenchise ? (
+        {/* {isStateHandler || isBusinessHandler || isFrenchise ? (
           <div
             className="card1"
             style={{
@@ -953,6 +953,35 @@ const DisplayCard = () => {
               >
                 withdraw : <BsWallet2 />
               </span>
+            </div>
+          </div>
+        ) : null} */}
+
+        {isStateHandler || isBusinessHandler || isFrenchise ? (
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div className="live-chat">
+              <h6>CENTUMO RIG</h6>
+            </div>
+
+            <div className="centumo-link">
+              <a
+                href="https://centumworldrig.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "yellow", cursor: "pointer" }}
+              >
+                Click me
+              </a>
             </div>
           </div>
         ) : null}
