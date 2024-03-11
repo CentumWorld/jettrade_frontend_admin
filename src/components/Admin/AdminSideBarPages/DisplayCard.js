@@ -1252,7 +1252,7 @@ const DisplayCard = () => {
           {isStateHandler || isFrenchise ? (
             <h5 style={{ fontWeight: 600, fontStyle: "Calibri" }}>
               {verifyDate === undefined
-                ? "You are not veriyfy yet!"
+                ? "You are not verify yet!"
                 : `You can request for withdrawal after  ${dayDifference} days`}
             </h5>
           ) : (
