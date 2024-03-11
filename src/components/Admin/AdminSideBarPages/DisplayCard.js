@@ -826,7 +826,7 @@ const DisplayCard = () => {
           </div>
         )}
 
-        {(isAdmin || isStateHandler || isFrenchise || isBusinessHandler) && (
+        {(isAdmin || isStateHandler || isFrenchise ) && (
           <div
             className="card1"
             style={{
