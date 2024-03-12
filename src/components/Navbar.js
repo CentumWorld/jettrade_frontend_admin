@@ -17,8 +17,9 @@ import AccountModal from "./AccountModal";
 import centumPDF from "../../src/utils/pdf/CENTUMWORLDFRANCHISEMODULE.pdf";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
-import adminAv from "../img/admin-av.png"
+import adminAv from "../img/admin-av.png";
 import baseUrl from "../baseUrl";
+import ChangePssword from "./Admin/common/ChangePssword";
 const apiurl = baseUrl.apiUrl;
 
 function Navbar() {
@@ -38,7 +39,8 @@ function Navbar() {
   const isFrachiseToken = localStorage.getItem("franchiseToken");
   const [isAccountModalVisible, setAccountModalVisible] = useState(false);
   const [userAv, setUserAv] = useState(null);
-  
+  const [changePasswordModal, setChangePasswordModelOpen] = useState(false);
+
   const isBussinessDeveloperToken = localStorage.getItem("bussinessAdminToken");
   const isFrenchise = localStorage.getItem("franchiseToken");
   const isStateHandler = localStorage.getItem("stateHandlerToken");
@@ -47,17 +49,16 @@ function Navbar() {
   const isVideoCreatorToken = localStorage.getItem("videoCreatorToken");
 
   useEffect(() => {
-    if(isStateHandlerToken){
+    if (isStateHandlerToken) {
       fetchSHOProfilePicture();
-    }
-    else if(isFrachiseToken){
+    } else if (isFrachiseToken) {
       fetchFranchProfilePicture();
-    }else{
+    } else {
       // fetchBussinessProfilePicture();
     }
-  })
+  });
 
-  const fetchSHOProfilePicture =  async () => {
+  const fetchSHOProfilePicture = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${isStateHandlerToken}`,
@@ -67,14 +68,18 @@ function Navbar() {
       userid: localStorage.getItem("stateHandlerId"),
     };
     try {
-      const res = await axios.post(`${apiurl}`+"/state/get-sho-profile-photo", data, config );
+      const res = await axios.post(
+        `${apiurl}` + "/state/get-sho-profile-photo",
+        data,
+        config
+      );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  const fetchFranchProfilePicture =  async () => {
+  const fetchFranchProfilePicture = async () => {
     const config = {
       headers: {
         Authorization: `Bearer ${isFrachiseToken}`,
@@ -84,13 +89,17 @@ function Navbar() {
       userid: localStorage.getItem("frenchiseId"),
     };
     try {
-      const res = await axios.post(`${apiurl}`+"/franchise/get-franchise-profile-photo", data, config );
+      const res = await axios.post(
+        `${apiurl}` + "/franchise/get-franchise-profile-photo",
+        data,
+        config
+      );
       setUserAv(res.data.data.imageUrl);
     } catch (err) {
       console.log(err.message);
     }
   };
-  
+
   // const fetchBussinessProfilePicture =  async () => {
   //   const config = {
   //     headers: {
@@ -119,7 +128,6 @@ function Navbar() {
     setModalVisible(false);
   };
 
- 
   useEffect(() => {
     if (isStateHandler) {
       async function fetchStateDetails() {
@@ -213,8 +221,7 @@ function Navbar() {
       }
       fetchAdminDetails();
     }
-  }, [
-  ]);
+  }, []);
 
   const openUserLoginFuction = () => setUserShow(true);
   const pull_data = (data) => setUserShow(data);
@@ -250,17 +257,17 @@ function Navbar() {
 
     const menu = (
       <Menu onClick={adminSubAdminModal}>
-         <Menu.Item key="admin">Admin</Menu.Item>
-        <Menu.Item key="subadmin">Back Office</Menu.Item> 
+        {/* <Menu.Item key="admin">Admin</Menu.Item>
+        <Menu.Item key="subadmin">Back Office</Menu.Item> */}
         <Menu.Item key="sho">BMM</Menu.Item>
         <Menu.Item key="franchise">Franchise</Menu.Item>
-         {/* <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
+        {/* <Menu.Item key="bussinessDev">BusinessDeveloper</Menu.Item> */}
         {/* <Menu.Item key="video">Video Creator</Menu.Item>  */}
       </Menu>
-    );  
+    );
 
     const handleLogout = () => {
-      fetch(`${apiurl}`+"/admin/logout", {
+      fetch(`${apiurl}` + "/admin/logout", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -301,14 +308,20 @@ function Navbar() {
             Profile
           </Menu.Item>
         )}
-        {(!isAdminToken && !isSubAdminToken && !isVideoCreatorToken) && (
+        {!isAdminToken && !isSubAdminToken && !isVideoCreatorToken && (
           <Menu.Item key="account" onClick={handleAccountModalOpen}>
             Add Account Details
           </Menu.Item>
         )}
-        {(!isSubAdminToken && !isVideoCreatorToken) && (
+        {/* {!isSubAdminToken && !isVideoCreatorToken && (
           <Menu.Item key="wallet">
-            Wallet <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
+            Wallet{" "}
+            <span className="wallet-ammount">Rs.{totalWalletAmount}</span>{" "}
+          </Menu.Item>
+        )} */}
+        {!isAdminToken && !isSubAdminToken && !isVideoCreatorToken && (
+          <Menu.Item key="password" onClick={changePasswordModelOpen}>
+            Change password
           </Menu.Item>
         )}
         {/* {(isStateHandlerToken || isFrachiseToken) && (
@@ -326,13 +339,18 @@ function Navbar() {
     if (login) {
       return (
         <>
-        <ToastContainer />
+          <ToastContainer />
           <Dropdown overlay={userMenu} trigger={["click"]}>
             <img
               src={userAv || adminAv}
               height={50}
               width={50}
-              style={{ marginRight: "1rem", borderRadius: "100%", objectFit: "cover",cursor:'pointer' }}
+              style={{
+                marginRight: "1rem",
+                borderRadius: "100%",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
               // onClick={fetchSHOProfilePicture()}
             />
           </Dropdown>
@@ -359,12 +377,23 @@ function Navbar() {
     }
   };
 
-
-  
-
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const changePasswordModelOpen = () => {
+    setChangePasswordModelOpen(true);
+  };
+
+  const handleClosePasswordModal = () => {
+    setChangePasswordModelOpen(false);
+  };
+
+  const handlePasswordChange = (newPassword) => {
+    console.log("New password received:", newPassword);
+    
+  };
+
   return (
     <>
       <nav className="navbar navbar-box navbar-expand-lg navbar-light bg-light">
@@ -373,7 +402,12 @@ function Navbar() {
             <h3>JETTRADE FX </h3>
           </div>
           <div>
-            <img src={logo} alt="" style={{ width: "100px", height: "35px" }} className="jtf-logo" />
+            <img
+              src={logo}
+              alt=""
+              style={{ width: "100px", height: "35px" }}
+              className="jtf-logo"
+            />
           </div>
           <div>
             <button
@@ -383,17 +417,16 @@ function Navbar() {
               data-bs-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
               onClick={handleToggle}
-              aria-expanded={isExpanded ? 'true' : 'false'}
+              aria-expanded={isExpanded ? "true" : "false"}
               aria-label="Toggle navigation"
             >
               <span className="navbar-toggler-icon" />
             </button>
           </div>
         </div>
-        
-        <div  className={`collapse navbar-collapse ${
-            isExpanded ? "show" : ""
-          }`}
+
+        <div
+          className={`collapse navbar-collapse ${isExpanded ? "show" : ""}`}
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -417,9 +450,11 @@ function Navbar() {
         )}
         {videoCreatorShow ? (
           <VideoCreatorLogin VideoCreatorLoginFunc={pullVideoCreator} />
-        ) : ("")
+        ) : (
+          ""
+        )}
 
-        }
+        {changePasswordModal ? <ChangePssword onCloseModal={handleClosePasswordModal} onPasswordChange={handlePasswordChange}/> : ""}
       </nav>
     </>
   );
