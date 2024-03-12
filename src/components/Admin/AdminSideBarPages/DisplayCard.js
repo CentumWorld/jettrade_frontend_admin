@@ -826,6 +826,7 @@ const DisplayCard = () => {
           </div>
         )}
 
+        {/* {(isAdmin  ) && (
         {/* {isAdmin && (
           <div
             className="card1"
@@ -1161,21 +1162,21 @@ const DisplayCard = () => {
           </div>
         ) : null}
 
-        {isAdmin || isSubAdmin ? (
-          <div
-            className="card1"
-            style={{
-              backgroundImage: `url(${card})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center bottom",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div className="refferal-payout">
-              <h6>Referral Payout</h6>
-            </div>
+        {isAdmin || isSubAdmin || isStateHandler || isFrenchise ? (
+        <div
+          className="card1"
+          style={{
+            backgroundImage: `url(${card})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div className="refferal-payout">
+            <h6>Referral Payout</h6>
+          </div>
 
             <div className="subscription-card">
               <span
