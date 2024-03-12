@@ -391,6 +391,7 @@ const BusinessDeveloperRegister = (props) => {
               <label>Aadhaar no.</label>
               <Input
                 placeholder="Aadhar no."
+                maxLength="12"
                 name="aadhar"
                 value={stateRegisterData.aadhar}
                 onChange={stateRegiInputs}
