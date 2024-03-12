@@ -826,7 +826,7 @@ const DisplayCard = () => {
           </div>
         )}
 
-        {(isAdmin  ) && (
+        {/* {isAdmin && (
           <div
             className="card1"
             style={{
@@ -850,7 +850,7 @@ const DisplayCard = () => {
               </span>
             </div>
           </div>
-        )}
+        )} */}
 
         {(isAdmin ||
           isSubAdmin ||
@@ -1032,60 +1032,58 @@ const DisplayCard = () => {
             </span>
           </div>
         </div>
-        
-        {isAdmin || isSubAdmin ? (
-          <div
-          className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-        
-          <div className="user-details">
-            <h6>Trader Details</h6>
-          </div>
-          <div className="user-details-view">
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={viewUserDetails}
-            >
-              View
-            </span>
-          </div>
-        </div>
-        ):null}
 
         {isAdmin || isSubAdmin ? (
-          
           <div
-          className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div className="refferal-details">
-            <h6>Member Details</h6>
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div className="user-details">
+              <h6>Trader Details</h6>
+            </div>
+            <div className="user-details-view">
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={viewUserDetails}
+              >
+                View
+              </span>
+            </div>
           </div>
-          <div className="refferal-details-view">
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={viewRefferalrDetails}
-            >
-              View
-            </span>
+        ) : null}
+
+        {isAdmin || isSubAdmin ? (
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div className="refferal-details">
+              <h6>Member Details</h6>
+            </div>
+            <div className="refferal-details-view">
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={viewRefferalrDetails}
+              >
+                View
+              </span>
+            </div>
           </div>
-        </div>
-        ):null}
+        ) : null}
 
         {isAdmin || isSubAdmin ? (
           <div
@@ -1164,30 +1162,30 @@ const DisplayCard = () => {
         ) : null}
 
         {isAdmin || isSubAdmin ? (
-        <div
-          className="card1"
-          style={{
-            backgroundImage: `url(${card})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center bottom",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div className="refferal-payout">
-            <h6>Referral Payout</h6>
-          </div>
+          <div
+            className="card1"
+            style={{
+              backgroundImage: `url(${card})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center bottom",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div className="refferal-payout">
+              <h6>Referral Payout</h6>
+            </div>
 
-          <div className="subscription-card">
-            <span
-              style={{ color: "yellow", cursor: "pointer" }}
-              onClick={refferalPayoutTrader}
-            >
-              view
-            </span>
+            <div className="subscription-card">
+              <span
+                style={{ color: "yellow", cursor: "pointer" }}
+                onClick={refferalPayoutTrader}
+              >
+                view
+              </span>
+            </div>
           </div>
-        </div>
         ) : null}
       </div>
 
